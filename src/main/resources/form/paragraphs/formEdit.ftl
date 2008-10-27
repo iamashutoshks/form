@@ -12,7 +12,8 @@
       [/#if]
     [/#if]
     [#if content.rows == 1]
-        <input type="text" name="${content.controlName}" id="${content.controlName}" />
+
+        <input ${content.password?string("type=\"password\"", "type=\"text\"")} name="${content.controlName}" id="${content.controlName}" />
     [#else]
         <textarea id="${content.controlName}" rows="${content.rows}"></textarea>
     [/#if]
