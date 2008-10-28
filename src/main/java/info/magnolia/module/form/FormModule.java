@@ -63,14 +63,14 @@ public class FormModule {
         return validators;
     }
 
-    public Validation getValidator(final String name) {
-        for (int i = 0; i < this.validators.size(); i++) {
-            Validation val = (Validation)this.validators.get(i);
-            if(StringUtils.equals(name, val.getName())) {
-                return val;
+    public Validation getValidatorByName(final String name) {
+
+        return (Validation) CollectionUtils.find(this.validators, new Predicate() {
+            public boolean evaluate(Object object) {
+                return StringUtils.equals(((Validation) object).getName(), name);
             }
-        }
-        return null;
+        });
+
     }
 
     public void setValidators(List validators) {
@@ -78,7 +78,7 @@ public class FormModule {
     }
 
     public void addValidators(Validation validator) {
-        this.validators.add(validators);
+        this.validators.add(validator);
     }
 
 

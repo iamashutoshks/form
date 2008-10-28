@@ -75,14 +75,16 @@ System.out.println(MgnlContext.getParameters());
             node = (Content) iterator.next();
 
             if (node.hasNodeData("controlName")) {
+
                 key = node.getNodeData("controlName").getString();
                 value = (String) MgnlContext.getParameter(key);
+
                 if(StringUtils.isEmpty(value) && isMandatory(node) ) {
                     addErrorMessage(key, "mandatory");
                 } else if (!StringUtils.isEmpty(value)) {
                     if(node.hasNodeData("validation")) {
                       String validation = node.getNodeData("validation").getString();
-                      Validation val = FormModule.getInstance().getValidator(validation);
+                      Validation val = FormModule.getInstance().getValidatorByName(validation);
                       if(val != null && !val.validate(value)) {
                           errorMessages.put(key, val.getMessage());
                       }
@@ -93,7 +95,7 @@ System.out.println(MgnlContext.getParameters());
     }
 
     private void addErrorMessage(String field, String validation) {
-        FormModule.getInstance().getValidators();
+
         if(StringUtils.equals("mandatory", validation)) {
             errorMessages.put(field, content.getNodeData("mandatoryErrorMessage").getString());
         }
@@ -103,7 +105,7 @@ System.out.println(MgnlContext.getParameters());
     private boolean isMandatory(Content node) {
         boolean mandatory = false;
         try {
-            if(node.hasContent("mandatory") && node.getNodeData("mandatory").getBoolean()){
+            if(node.hasNodeData("mandatory") && node.getNodeData("mandatory").getBoolean()){
                 mandatory = true;
             }
         } catch (RepositoryException e) {

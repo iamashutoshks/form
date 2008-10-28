@@ -1,19 +1,20 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
-<!-- end form
+
 [#if model.errorMessages?size > 0]
   <div class="text error">
-    <h1>Something went wrong!</h1>
+    <h1>${content.errorTitle}</h1>
     <ul>
     ${actionResult}
-    [#list model.errorMessages as i]
+    [#assign keys = model.errorMessages?keys]
+    [#list keys as key]
       <li>
-        <a href="#${i}">Lorem ipsum dolor sit amet consectetuer elit.</a>
+        <a href="#${key}">${key}: ${model.errorMessages[key]}</a>
       </li>
     [/#list]
     </ul>
   </div>
 [/#if]
--->
+
 <div class="form-wrapper" >
 <form id="${content.formName?default("form0")}" method="post" action="" enctype="multipart/form-data" >
 [#if content.requiredMessage?has_content]
