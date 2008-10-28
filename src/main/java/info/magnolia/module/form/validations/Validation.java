@@ -17,6 +17,7 @@ package info.magnolia.module.form.validations;
 public class Validation {
 
     private String message;
+    private String name;
 
     public boolean validate(String value) {
         return true;
@@ -28,5 +29,13 @@ public class Validation {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

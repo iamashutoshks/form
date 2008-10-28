@@ -19,18 +19,23 @@ import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.context.WebContext;
+import info.magnolia.module.form.FormModule;
+import info.magnolia.module.form.validations.Validation;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
+
+import javax.jcr.RepositoryException;
+
+import org.apache.commons.lang.StringUtils;
 
 
 public class FormModel extends RenderingModelImpl{
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
 
-    private List errorMessages = new ArrayList();
+    private Map errorMessages = new HashMap();
 
     public FormModel(Content content, Renderable renderable, RenderingModel parent) {
         super(content, renderable, parent);
@@ -38,16 +43,16 @@ public class FormModel extends RenderingModelImpl{
 
     public String execute() {
         log.debug("Executing " + this.getClass().getName());
-
+System.out.println(MgnlContext.getParameters());
         try {
-            if (!hasData()) {
-                return "empty";
+            if (!hasFormData()) {
+                return "";
             }
             validate();
 
             if (errorMessages.size() == 0) {
                 // send mail to admin and confirmation to sender
-                // display thatnks message
+                // display thanks message
                 return "success";
             } else {
                 // display validation fields, error message
@@ -60,11 +65,11 @@ public class FormModel extends RenderingModelImpl{
     }
 
     private void validate() throws Exception {
+
         String key;
         String value;
         Content node;
         Iterator iterator = this.getContent().getContent("controls").getChildren().iterator();
-        System.out.println(((WebContext)MgnlContext.getInstance()).getRequest().getParameterMap());
 
         while (iterator.hasNext()) {
             node = (Content) iterator.next();
@@ -72,28 +77,51 @@ public class FormModel extends RenderingModelImpl{
             if (node.hasNodeData("controlName")) {
                 key = node.getNodeData("controlName").getString();
                 value = (String) MgnlContext.getParameter(key);
-                System.out.println(key + ":" + value);
-
+                if(StringUtils.isEmpty(value) && isMandatory(node) ) {
+                    addErrorMessage(key, "mandatory");
+                } else if (!StringUtils.isEmpty(value)) {
+                    if(node.hasNodeData("validation")) {
+                      String validation = node.getNodeData("validation").getString();
+                      Validation val = FormModule.getInstance().getValidator(validation);
+                      if(val != null && !val.validate(value)) {
+                          errorMessages.put(key, val.getMessage());
+                      }
+                    }
+                }
             }
+        }
+    }
 
+    private void addErrorMessage(String field, String validation) {
+        FormModule.getInstance().getValidators();
+        if(StringUtils.equals("mandatory", validation)) {
+            errorMessages.put(field, content.getNodeData("mandatoryErrorMessage").getString());
         }
 
-
     }
 
-    private boolean hasData() {
-        return true;
+    private boolean isMandatory(Content node) {
+        boolean mandatory = false;
+        try {
+            if(node.hasContent("mandatory") && node.getNodeData("mandatory").getBoolean()){
+                mandatory = true;
+            }
+        } catch (RepositoryException e) {
+            log.debug("node has no mandatory property" + node.getHandle());
+        }
+        return mandatory;
     }
 
-    public List getErrorMessages() {
+    private boolean hasFormData() {
+        return (MgnlContext.getPostedForm() != null);
+    }
+
+    public Map getErrorMessages() {
         return errorMessages;
     }
 
-    public void setErrorMessages(List errorMessages) {
+    public void setErrorMessages(Map errorMessages) {
         this.errorMessages = errorMessages;
     }
-
-
-
 
 }

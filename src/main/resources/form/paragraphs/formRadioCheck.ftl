@@ -8,13 +8,13 @@
 	<h4>${content.title}</h4>
 [/#if]
 [#if content.legend?has_content]
-<fieldset>
+<fieldset ${content.horizontal?string("class=\"mod\"", "")} >
   <legend>${content.legend}</legend>
 [/#if]
 [#assign values=content.values?split("\r\n")]
   [#list content.labels?split("\r\n") as label]
-    <label for="${values[label_index]}">
-    <input id="${values[label_index]}" name="${content.controlName}" type="${content.type}" value="${values[label_index]}"/>
+    <label for="${content.controlName}_${label_index}">
+    <input id="${content.controlName}_${label_index}" name="${content.controlName}" type="${content.type}" value="${values[label_index]}"/>
      ${label}
     </label>
   [/#list]

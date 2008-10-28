@@ -1,4 +1,5 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
+<!-- end form
 [#if model.errorMessages?size > 0]
   <div class="text error">
     <h1>Something went wrong!</h1>
@@ -12,7 +13,7 @@
     </ul>
   </div>
 [/#if]
-
+-->
 <div class="form-wrapper" >
 <form id="${content.formName?default("form0")}" method="post" action="" enctype="multipart/form-data" >
 [#if content.requiredMessage?has_content]

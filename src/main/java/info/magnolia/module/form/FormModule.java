@@ -14,10 +14,16 @@
  */
 package info.magnolia.module.form;
 
+import info.magnolia.cms.core.Content;
+import info.magnolia.cms.core.ItemType;
 import info.magnolia.module.form.validations.Validation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -55,6 +61,16 @@ public class FormModule {
 
     public List getValidators() {
         return validators;
+    }
+
+    public Validation getValidator(final String name) {
+        for (int i = 0; i < this.validators.size(); i++) {
+            Validation val = (Validation)this.validators.get(i);
+            if(StringUtils.equals(name, val.getName())) {
+                return val;
+            }
+        }
+        return null;
     }
 
     public void setValidators(List validators) {
