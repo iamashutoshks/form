@@ -14,7 +14,7 @@
 	    [#assign keys = model.errorMessages?keys]
 	    [#list keys as key]
 	      <li>
-	        <a href="#${key}">${key}: ${model.errorMessages[key]}</a>
+	        <a href="#${key}">${model.errorMessages[key]}</a>
 	      </li>
 	    [/#list]
 	    </ul>

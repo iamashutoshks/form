@@ -85,13 +85,13 @@ public class FormModel extends RenderingModelImpl{
                 value = (String) MgnlContext.getParameter(key);
 
                 if(StringUtils.isEmpty(value) && isMandatory(node) ) {
-                    addErrorMessage(key, "mandatory");
+                    addErrorMessage(key, "mandatory", node);
                 } else if (!StringUtils.isEmpty(value)) {
                     if(node.hasNodeData("validation")) {
                       String validation = node.getNodeData("validation").getString();
                       Validation val = FormModule.getInstance().getValidatorByName(validation);
                       if(val != null && !val.validate(value)) {
-                          errorMessages.put(key, val.getMessage());
+                          errorMessages.put(key, node.getNodeData("title").getString() + "  " + val.getMessage());
                       }
                     }
                 }
@@ -99,10 +99,10 @@ public class FormModel extends RenderingModelImpl{
         }
     }
 
-    private void addErrorMessage(String field, String validation) {
+    private void addErrorMessage(String field, String validation, Content node) {
 
         if(StringUtils.equals("mandatory", validation)) {
-            errorMessages.put(field, content.getNodeData("mandatoryErrorMessage").getString());
+            errorMessages.put(field, node.getNodeData("title").getString() + "  " + content.getNodeData("mandatoryErrorMessage").getString());
         }
 
     }
