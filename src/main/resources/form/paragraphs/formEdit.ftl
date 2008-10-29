@@ -1,6 +1,6 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
-<div>
+<div ${model.style!} >
 [@cms.adminOnly]
     <div >[@cms.editBar /]</div>
 [/@cms.adminOnly]
@@ -12,8 +12,7 @@
       [/#if]
     [/#if]
     [#if content.rows == 1]
-
-        <input type="text" name="${content.controlName}" id="${content.controlName}" value="${params[content.controlName]!}"/>
+        <input type="text" name="${content.controlName}" id="${content.controlName}" /><!-- todo: value="${params[content.controlName]!}" -->
     [#else]
         <textarea id="${content.controlName}" name="${content.controlName}" rows="${content.rows}"></textarea>
     [/#if]

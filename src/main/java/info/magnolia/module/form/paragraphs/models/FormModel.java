@@ -30,7 +30,11 @@ import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 
-
+/**
+ *
+ * @author tmiyar
+ *
+ */
 public class FormModel extends RenderingModelImpl{
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
@@ -43,11 +47,12 @@ public class FormModel extends RenderingModelImpl{
 
     public String execute() {
         log.debug("Executing " + this.getClass().getName());
-System.out.println(MgnlContext.getParameters());
+        System.out.println("el pater " + content.getHandle());
         try {
             if (!hasFormData()) {
                 return "";
             }
+
             validate();
 
             if (errorMessages.size() == 0) {

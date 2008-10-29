@@ -18,20 +18,23 @@ import info.magnolia.cms.beans.config.Renderable;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
-import info.magnolia.context.MgnlContext;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import javax.jcr.RepositoryException;
 
+import org.apache.commons.lang.StringUtils;
 
-public class FormControlsModel extends RenderingModelImpl{
+/**
+ *
+ * @author tmiyar
+ *
+ */
+public class FormControlsModel extends RenderingModelImpl {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormControlsModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory
+            .getLogger(FormControlsModel.class);
 
     private String value;
+    private String style = "";
 
     public FormControlsModel(Content content, Renderable renderable, RenderingModel parent) {
         super(content, renderable, parent);
@@ -39,8 +42,33 @@ public class FormControlsModel extends RenderingModelImpl{
 
     public String execute() {
         log.debug("Executing " + this.getClass().getName());
-        //this.getRenderable().
+
+        //set style for error messages
+        handleStyle();
+
         return "";
+    }
+
+    private void handleStyle() {
+        if (this.parentModel instanceof FormModel) {
+            FormModel formModel = (FormModel) this.parentModel;
+
+            // set style
+            if (formModel.getErrorMessages().containsKey(content.getNodeData("controlName").getString())) {
+                this.style = "class=\"error\"";
+            }
+            try {
+                //TODO: move to specific edit control model class??
+                if (StringUtils.isEmpty(this.style) && content.hasNodeData("editLength")) {
+                    String style2 = content.getNodeData("editLength").getString();
+                    if (!StringUtils.isEmpty(style2)) {
+                        this.style = "class=\"" + style2 + "\"";
+                    }
+                }
+            } catch (RepositoryException e) {
+                log.debug("can't get style", e);
+            }
+        }
     }
 
     public String getValue() {
@@ -49,6 +77,14 @@ public class FormControlsModel extends RenderingModelImpl{
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 
 }
