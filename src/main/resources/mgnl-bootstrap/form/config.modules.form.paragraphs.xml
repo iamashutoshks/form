@@ -100,6 +100,9 @@
     <sv:property sv:name="i18nBasename" sv:type="String">
       <sv:value>info.magnolia.module.form.messages</sv:value>
     </sv:property>
+    <sv:property sv:name="modelClass" sv:type="String">
+      <sv:value>info.magnolia.module.form.paragraphs.models.FormControlsModel</sv:value>
+    </sv:property>
     <sv:property sv:name="templatePath" sv:type="String">
       <sv:value>/form/paragraphs/formGroupSelect.ftl</sv:value>
     </sv:property>
@@ -132,7 +135,7 @@
         <sv:value>2006-05-01T21:40:11.258+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-27T11:37:28.451+01:00</sv:value>
+        <sv:value>2008-10-29T09:22:31.233+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -151,6 +154,9 @@
     </sv:property>
     <sv:property sv:name="i18nBasename" sv:type="String">
       <sv:value>info.magnolia.module.form.messages</sv:value>
+    </sv:property>
+    <sv:property sv:name="modelClass" sv:type="String">
+      <sv:value>info.magnolia.module.form.paragraphs.models.FormControlsModel</sv:value>
     </sv:property>
     <sv:property sv:name="templatePath" sv:type="String">
       <sv:value>/form/paragraphs/formGroupSelectGroups.ftl</sv:value>
@@ -184,7 +190,7 @@
         <sv:value>2006-05-01T21:40:11.258+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-27T11:56:31.753+01:00</sv:value>
+        <sv:value>2008-10-29T09:22:26.779+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -203,6 +209,9 @@
     </sv:property>
     <sv:property sv:name="i18nBasename" sv:type="String">
       <sv:value>info.magnolia.module.form.messages</sv:value>
+    </sv:property>
+    <sv:property sv:name="modelClass" sv:type="String">
+      <sv:value>info.magnolia.module.form.paragraphs.models.FormControlsModel</sv:value>
     </sv:property>
     <sv:property sv:name="templatePath" sv:type="String">
       <sv:value>/form/paragraphs/formRadioCheck.ftl</sv:value>
@@ -236,7 +245,7 @@
         <sv:value>2006-05-01T21:40:11.258+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-27T11:41:31.128+01:00</sv:value>
+        <sv:value>2008-10-29T09:22:17.050+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -255,6 +264,9 @@
     </sv:property>
     <sv:property sv:name="i18nBasename" sv:type="String">
       <sv:value>info.magnolia.module.form.messages</sv:value>
+    </sv:property>
+    <sv:property sv:name="modelClass" sv:type="String">
+      <sv:value>info.magnolia.module.form.paragraphs.models.FormControlsModel</sv:value>
     </sv:property>
     <sv:property sv:name="templatePath" sv:type="String">
       <sv:value>/form/paragraphs/formEdit.ftl</sv:value>
@@ -288,7 +300,7 @@
         <sv:value>2006-05-01T21:40:21.994+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-22T11:44:42.794+02:00</sv:value>
+        <sv:value>2008-10-29T09:22:12.357+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -307,6 +319,9 @@
     </sv:property>
     <sv:property sv:name="i18nBasename" sv:type="String">
       <sv:value>info.magnolia.module.form.messages</sv:value>
+    </sv:property>
+    <sv:property sv:name="modelClass" sv:type="String">
+      <sv:value>info.magnolia.module.form.paragraphs.models.FormControlsModel</sv:value>
     </sv:property>
     <sv:property sv:name="templatePath" sv:type="String">
       <sv:value>/form/paragraphs/formFile.ftl</sv:value>
@@ -340,7 +355,7 @@
         <sv:value>2006-05-01T21:40:21.994+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-23T17:09:40.768+02:00</sv:value>
+        <sv:value>2008-10-29T09:22:05.326+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -359,6 +374,9 @@
     </sv:property>
     <sv:property sv:name="i18nBasename" sv:type="String">
       <sv:value>info.magnolia.module.form.messages</sv:value>
+    </sv:property>
+    <sv:property sv:name="modelClass" sv:type="String">
+      <sv:value>info.magnolia.module.form.paragraphs.models.FormControlsModel</sv:value>
     </sv:property>
     <sv:property sv:name="templatePath" sv:type="String">
       <sv:value>/form/paragraphs/formSubmit.ftl</sv:value>
@@ -392,7 +410,7 @@
         <sv:value>2006-05-01T21:40:01.144+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-22T11:44:35.354+02:00</sv:value>
+        <sv:value>2008-10-29T09:21:58.248+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
