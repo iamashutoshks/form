@@ -66,5 +66,10 @@
       <artifactId>magnolia-module-baukasten</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-module-mail</artifactId>
+      <version>3.7-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 </project>

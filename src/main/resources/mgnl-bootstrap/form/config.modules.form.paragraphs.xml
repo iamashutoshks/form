@@ -84,6 +84,61 @@
       </sv:property>
     </sv:node>
   </sv:node>
+  <sv:node sv:name="formGroupEdit">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>mgnl:contentNode</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:uuid" sv:type="String">
+      <sv:value>04ca5183-6ae1-4a06-876d-207d9c000b6d</sv:value>
+    </sv:property>
+    <sv:property sv:name="description" sv:type="String">
+      <sv:value>paragraph.formGroupEdit.description</sv:value>
+    </sv:property>
+    <sv:property sv:name="dialog" sv:type="String">
+      <sv:value>formGroupEdit</sv:value>
+    </sv:property>
+    <sv:property sv:name="i18nBasename" sv:type="String">
+      <sv:value>info.magnolia.module.form.messages</sv:value>
+    </sv:property>
+    <sv:property sv:name="modelClass" sv:type="String">
+      <sv:value>info.magnolia.module.form.paragraphs.models.FormControlsModel</sv:value>
+    </sv:property>
+    <sv:property sv:name="templatePath" sv:type="String">
+      <sv:value>/form/paragraphs/formGroupEdit.ftl</sv:value>
+    </sv:property>
+    <sv:property sv:name="title" sv:type="String">
+      <sv:value>paragraph.formGroupEdit.title</sv:value>
+    </sv:property>
+    <sv:property sv:name="type" sv:type="String">
+      <sv:value>freemarker</sv:value>
+    </sv:property>
+    <sv:node sv:name="MetaData">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:metaData</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:Data" sv:type="String">
+        <sv:value>MetaData</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+        <sv:value>false</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:activatorid" sv:type="String">
+        <sv:value>superuser</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:authorid" sv:type="String">
+        <sv:value>superuser</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:creationdate" sv:type="String">
+        <sv:value>2004-11-03T09:03:29.016+01:00</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+        <sv:value>2006-05-01T21:40:11.258+02:00</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+        <sv:value>2008-10-30T14:13:03.474+01:00</sv:value>
+      </sv:property>
+    </sv:node>
+  </sv:node>
   <sv:node sv:name="formGroupSelect">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:contentNode</sv:value>

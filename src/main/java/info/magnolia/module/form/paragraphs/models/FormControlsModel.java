@@ -18,6 +18,7 @@ import info.magnolia.cms.beans.config.Renderable;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
+import info.magnolia.context.MgnlContext;
 
 import javax.jcr.RepositoryException;
 
@@ -42,14 +43,15 @@ public class FormControlsModel extends RenderingModelImpl {
 
     public String execute() {
         log.debug("Executing " + this.getClass().getName());
-
+        //set default or user input
+        handleValue();
         //set style for error messages
         handleStyle();
 
         return "";
     }
 
-    private void handleStyle() {
+    protected void handleStyle() {
         if (this.parentModel instanceof FormModel) {
             FormModel formModel = (FormModel) this.parentModel;
 
@@ -57,22 +59,31 @@ public class FormControlsModel extends RenderingModelImpl {
             if (formModel.getErrorMessages().containsKey(content.getNodeData("controlName").getString())) {
                 this.style = "class=\"error\"";
             }
-            try {
-                //TODO: move to specific edit control model class??
-                if (StringUtils.isEmpty(this.style) && content.hasNodeData("editLength")) {
-                    String style2 = content.getNodeData("editLength").getString();
-                    if (!StringUtils.isEmpty(style2)) {
-                        this.style = "class=\"" + style2 + "\"";
-                    }
-                }
-            } catch (RepositoryException e) {
-                log.debug("can't get style", e);
-            }
         }
     }
 
     public String getValue() {
+
         return value;
+    }
+
+    protected void handleValue() {
+        //has default value?
+        String val = null;
+        try {
+            val = MgnlContext.getParameter(this.content.getNodeData("controlName").getString());
+            if(val == null) {
+                if(content.hasNodeData("default")) {
+                    val = content.getNodeData("default").getString();
+                }
+            }
+        } catch (RepositoryException e) {
+
+        }
+        if(val == null) {
+            val = "";
+        }
+        this.value = val;
     }
 
     public void setValue(String value) {

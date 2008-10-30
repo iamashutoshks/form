@@ -5,8 +5,11 @@
 
     [#assign values=content.values?split("\r\n")]
 	[#list content.labels?split("\r\n") as label]
-
-		<option value="${values[label_index]}" >${label}</option>
+        [#assign selected=""]
+		  [#if model.value == values[label_index]]
+		    [#assign selected="selected"]
+		  [/#if]
+		<option value="${values[label_index]}" ${selected} >${label}</option>
     [/#list]
 
 </optgroup>

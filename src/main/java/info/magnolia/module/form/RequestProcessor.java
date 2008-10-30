@@ -13,7 +13,8 @@
  *
  */
 package info.magnolia.module.form;
-/*
+
+import info.magnolia.cms.core.Content;
 import info.magnolia.cms.mail.MgnlMailFactory;
 import info.magnolia.cms.mail.templates.MgnlEmail;
 
@@ -21,26 +22,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-*/
+
 public class RequestProcessor {
-  /*
+  public static void sendMail(Map parameters, Content content) {
     MgnlEmail email;
     try {
 
-            Map parameters = new HashMap(request.getParameterMap());
-            parameters.put("all", body.toString());
-            email = MgnlMailFactory.getInstance().getEmailFromTemplate(template, parameters);
-        email.setToList(to);
-        email.setCcList(cc);
-        email.setBccList(bcc);
-        email.setReplyToList(replyTo);
-        email.setFrom(from);
-        email.setSubject(subject);
+       StringBuffer body = new StringBuffer();
+
+       parameters.put("all", body.toString());
+       email = MgnlMailFactory.getInstance().getEmailFromTemplate("/modules/form/mailTemplates/contactFormMail", parameters);
+        email.setToList(content.getNodeData("To").getString());
+        email.setCcList("");
+        email.setBccList("");
+        email.setReplyToList("");
+        email.setFrom();
+        email.setSubject("kk");
         MgnlMailFactory.getInstance().getEmailHandler().prepareAndSendMail(email);
     }
     catch (Exception e) {
         // you may want to warn the user redirecting him to a different page...
-        log.error(e.getMessage(), e);
+e.printStackTrace();
     }
-*/
+
+  }
 }

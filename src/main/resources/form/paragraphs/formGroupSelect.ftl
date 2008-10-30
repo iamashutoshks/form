@@ -2,7 +2,7 @@
 
 <div>
 [@cms.adminOnly]
-    <div >[@cms.editBar /]</div>
+    [@cms.editBar /]
 [/@cms.adminOnly]
 [#if content.title?has_content]
 <label for="${content.controlName}">

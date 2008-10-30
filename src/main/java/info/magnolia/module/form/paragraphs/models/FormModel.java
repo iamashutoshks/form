@@ -18,8 +18,10 @@ import info.magnolia.cms.beans.config.Renderable;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.RequestFormUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.FormModule;
+import info.magnolia.module.form.RequestProcessor;
 import info.magnolia.module.form.validations.Validation;
 
 import java.util.HashMap;
@@ -47,7 +49,6 @@ public class FormModel extends RenderingModelImpl{
 
     public String execute() {
         log.debug("Executing " + this.getClass().getName());
-        System.out.println("el pater " + content.getHandle());
         try {
             if (!hasFormData()) {
                 return "";
@@ -57,10 +58,11 @@ public class FormModel extends RenderingModelImpl{
 
             if (errorMessages.size() == 0) {
                 // send mail to admin and confirmation to sender
-                // display thanks message
+                RequestProcessor.sendMail(MgnlContext.getParameters(), content);
                 return "success";
             } else {
                 // display validation fields, error message
+
                 return "failed";
             }
         } catch (Exception e) {
@@ -71,43 +73,43 @@ public class FormModel extends RenderingModelImpl{
 
     private void validate() throws Exception {
 
-        String key;
-        String value;
-        Content node;
-        Iterator iterator = this.getContent().getContent("controls").getChildren().iterator();
+        if (this.getContent().hasContent("controls")) {
+            Iterator iterator = this.getContent().getContent("controls").getChildren().iterator();
 
+            validate(iterator);
+        }
+    }
+
+    protected void validate(Iterator iterator) throws RepositoryException {
         while (iterator.hasNext()) {
-            node = (Content) iterator.next();
+            final Content node = (Content) iterator.next();
 
             if (node.hasNodeData("controlName")) {
 
-                key = node.getNodeData("controlName").getString();
-                value = (String) MgnlContext.getParameter(key);
+                final String key = node.getNodeData("controlName").getString();
+                final String value = MgnlContext.getParameter(key);
 
-                if(StringUtils.isEmpty(value) && isMandatory(node) ) {
-                    addErrorMessage(key, "mandatory", node);
-                } else if (!StringUtils.isEmpty(value)) {
-                    if(node.hasNodeData("validation")) {
-                      String validation = node.getNodeData("validation").getString();
-                      Validation val = FormModule.getInstance().getValidatorByName(validation);
-                      if(val != null && !val.validate(value)) {
-                          errorMessages.put(key, node.getNodeData("title").getString() + "  " + val.getMessage());
-                      }
+                if (StringUtils.isEmpty(value) && isMandatory(node)) {
+                    addErrorMessage(key, content.getNodeData("mandatoryErrorMessage").getString(), node);
+
+                } else if (!StringUtils.isEmpty(value) && node.hasNodeData("validation")) {
+
+                    String validation = node.getNodeData("validation").getString();
+                    Validation val = FormModule.getInstance().getValidatorByName(validation);
+                    if (val != null && !val.validate(value)) {
+                        addErrorMessage(key, val.getMessage(), node);
                     }
                 }
             }
-        }
+        } //end while
     }
 
-    private void addErrorMessage(String field, String validation, Content node) {
-
-        if(StringUtils.equals("mandatory", validation)) {
-            errorMessages.put(field, node.getNodeData("title").getString() + "  " + content.getNodeData("mandatoryErrorMessage").getString());
-        }
+    protected void addErrorMessage(String field, String message, Content node) {
+            errorMessages.put(field, node.getNodeData("title").getString() + "  " + message);
 
     }
 
-    private boolean isMandatory(Content node) {
+    protected boolean isMandatory(Content node) {
         boolean mandatory = false;
         try {
             if(node.hasNodeData("mandatory") && node.getNodeData("mandatory").getBoolean()){
@@ -119,7 +121,7 @@ public class FormModel extends RenderingModelImpl{
         return mandatory;
     }
 
-    private boolean hasFormData() {
+    protected boolean hasFormData() {
         return (MgnlContext.getPostedForm() != null);
     }
 

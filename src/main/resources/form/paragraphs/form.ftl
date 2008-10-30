@@ -37,7 +37,7 @@
 	</fieldset>
 	</form>
 	  <div>
-	    [@cms.newBar contentNodeCollectionName="controls" paragraph="formEdit,formGroupSelect,formRadioCheck,formSubmit,formFile" /]
+	    [@cms.newBar contentNodeCollectionName="controls" paragraph="formEdit,formGroupEdit,formGroupSelect,formRadioCheck,formSubmit,formFile" /]
 	  </div>
 	</div> <!-- end form -->
 [/#if] <!-- end else -->

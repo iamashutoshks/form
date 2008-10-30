@@ -4,7 +4,7 @@
 
 <div>
 [@cms.adminOnly]
-    <div >[@cms.editBar /]</div>
+    [@cms.editBar /]
 [/@cms.adminOnly]
 [#if content.lineAbove]<hr />[/#if]
      <a href="${link}" id="${content.controlName}">
