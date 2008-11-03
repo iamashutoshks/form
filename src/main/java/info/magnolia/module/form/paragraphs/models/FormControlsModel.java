@@ -14,6 +14,8 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
+import java.util.Map;
+
 import info.magnolia.cms.beans.config.Renderable;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
@@ -52,15 +54,40 @@ public class FormControlsModel extends RenderingModelImpl {
     }
 
     protected void handleStyle() {
-        if (this.parentModel instanceof FormModel) {
-            FormModel formModel = (FormModel) this.parentModel;
+        Map errorMessages = this.getFormErrorMessages();
+        if (errorMessages != null) {
 
             // set style
-            if (formModel.getErrorMessages().containsKey(content.getNodeData("controlName").getString())) {
+            if (errorMessages.containsKey(content.getNodeData("controlName").getString())) {
                 this.style = "class=\"error\"";
+            }
+            try {
+                //TODO: move to specific edit control model class??
+                if (StringUtils.isEmpty(this.style) && content.hasNodeData("editLength")) {
+                    String style2 = content.getNodeData("editLength").getString();
+                    if (!StringUtils.isEmpty(style2)) {
+                        this.style = "class=\"" + style2 + "\"";
+                    }
+                }
+            } catch (RepositoryException e) {
+                log.debug("can't get style", e);
             }
         }
     }
+
+    protected Map getFormErrorMessages() {
+        RenderingModelImpl model = this;
+
+        while(model != null) {
+            if(model.getParentModel() instanceof FormModel) {
+                return ((FormModel)model.getParentModel()).getErrorMessages();
+            }
+            model = (RenderingModelImpl) model.getParentModel();
+        }
+        return null;
+    }
+
+
 
     public String getValue() {
 
@@ -69,21 +96,21 @@ public class FormControlsModel extends RenderingModelImpl {
 
     protected void handleValue() {
         //has default value?
-        String val = null;
+        String[] val = null;
         try {
-            val = MgnlContext.getParameter(this.content.getNodeData("controlName").getString());
+            val = MgnlContext.getParameterValues(this.content.getNodeData("controlName").getString());
             if(val == null) {
                 if(content.hasNodeData("default")) {
-                    val = content.getNodeData("default").getString();
+                    val = new String[]{content.getNodeData("default").getString()};
                 }
             }
         } catch (RepositoryException e) {
 
         }
         if(val == null) {
-            val = "";
+            val = new String[]{""};
         }
-        this.value = val;
+        this.value = StringUtils.join(val, "*");
     }
 
     public void setValue(String value) {

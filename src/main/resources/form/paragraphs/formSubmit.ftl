@@ -2,9 +2,7 @@
 
 
 <div class="button-wrapper" >
-[@cms.adminOnly]
-    [@cms.editBar /]
-[/@cms.adminOnly]
+[@cms.editBar /]
     <input name="${content.controlName}" id="${content.controlName}" type="submit" value="${content.buttonText}" />
 </div>
 

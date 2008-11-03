@@ -56,9 +56,10 @@ public class FormModel extends RenderingModelImpl{
 
             validate();
 
-            if (errorMessages.size() == 0) {
+            if (errorMessages.size() == 0 && this.getContent().hasNodeData("requestProcessor")) {
                 // send mail to admin and confirmation to sender
-                RequestProcessor.sendMail(MgnlContext.getParameters(), content);
+                RequestProcessor processor = FormModule.getInstance().getRequestProcessor(this.getContent().getNodeData("requestProcessor").getString());
+                processor.process(MgnlContext.getParameters(), content);
                 return "success";
             } else {
                 // display validation fields, error message
@@ -90,14 +91,14 @@ public class FormModel extends RenderingModelImpl{
                 final String value = MgnlContext.getParameter(key);
 
                 if (StringUtils.isEmpty(value) && isMandatory(node)) {
-                    addErrorMessage(key, content.getNodeData("mandatoryErrorMessage").getString(), node);
+                    addErrorMessage(key, "mandatory", node);
 
                 } else if (!StringUtils.isEmpty(value) && node.hasNodeData("validation")) {
 
                     String validation = node.getNodeData("validation").getString();
                     Validation val = FormModule.getInstance().getValidatorByName(validation);
                     if (val != null && !val.validate(value)) {
-                        addErrorMessage(key, val.getMessage(), node);
+                        addErrorMessage(key, val.getName(), node);
                     }
                 }
             }
@@ -105,7 +106,9 @@ public class FormModel extends RenderingModelImpl{
     }
 
     protected void addErrorMessage(String field, String message, Content node) {
-            errorMessages.put(field, node.getNodeData("title").getString() + "  " + message);
+
+        errorMessages.put(field, node.getNodeData("title").getString() + "  "
+                + MgnlContext.getMessages("info.magnolia.module.form.messages").get(message));
 
     }
 

@@ -59,6 +59,15 @@ public class FormModule {
         this.requestProcessors.add(requestProcessor);
     }
 
+    public RequestProcessor getRequestProcessor(final String name) {
+        return (RequestProcessor) CollectionUtils.find(this.requestProcessors, new Predicate() {
+            public boolean evaluate(Object object) {
+                return StringUtils.equals(((RequestProcessor) object).getName(), name);
+            }
+        });
+
+    }
+
     public List getValidators() {
         return validators;
     }

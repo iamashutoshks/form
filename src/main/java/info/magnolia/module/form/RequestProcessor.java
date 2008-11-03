@@ -17,33 +17,68 @@ package info.magnolia.module.form;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.mail.MgnlMailFactory;
 import info.magnolia.cms.mail.templates.MgnlEmail;
+import info.magnolia.cms.mail.templates.impl.FreemarkerEmail;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
+/**
+ *
+ * @author tmiyar
+ *
+ */
 public class RequestProcessor {
-  public static void sendMail(Map parameters, Content content) {
-    MgnlEmail email;
-    try {
 
-       StringBuffer body = new StringBuffer();
+    private String name;
 
-       parameters.put("all", body.toString());
-       email = MgnlMailFactory.getInstance().getEmailFromTemplate("/modules/form/mailTemplates/contactFormMail", parameters);
-        email.setToList(content.getNodeData("To").getString());
-        email.setCcList("");
-        email.setBccList("");
-        email.setReplyToList("");
-        email.setFrom();
-        email.setSubject("kk");
+    public void process(Map parameters, Content content) throws Exception {
+        sendContactEMail(parameters, content);
+        sendConfirmationEMail(parameters, content);
+    }
+
+    protected void sendContactEMail(Map parameters, Content content) throws Exception {
+
+        String body = content.getNodeData("contactMailBody").getString("<br />");
+        String from = content.getNodeData("contactMailFrom").getString();
+        String subject = content.getNodeData("contactMailSubject").getString();
+        String to = content.getNodeData("contactMailTo").getString();
+
+        sendMail(parameters, body, from, subject, to);
+    }
+
+    protected void sendConfirmationEMail(Map parameters, Content content) throws Exception {
+
+        if(content.getNodeData("sendConfirmation").getBoolean()) {
+            String body = content.getNodeData("confirmMailBody").getString("<br />");
+            String from = content.getNodeData("confirmMailFrom").getString();
+            String subject = content.getNodeData("confirmMailSubject").getString();
+            String to = content.getNodeData("confirmMailTo").getString();
+
+            sendMail(parameters, body, from, subject, to);
+        }
+    }
+
+    protected void sendMail(Map parameters, String body, String from, String subject, String to) throws Exception {
+        MgnlEmail email;
+
+        email = MgnlMailFactory.getInstance().getEmailFromType("freemarker");
+        email.setBody(body, parameters);
+        ((FreemarkerEmail)email).setFrom(from, parameters);
+        ((FreemarkerEmail)email).setSubject(subject, parameters);
+        ((FreemarkerEmail)email).setToList(to, parameters);
+        email.setParameters(parameters);
+
         MgnlMailFactory.getInstance().getEmailHandler().prepareAndSendMail(email);
-    }
-    catch (Exception e) {
-        // you may want to warn the user redirecting him to a different page...
-e.printStackTrace();
+
+
     }
 
-  }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 }
