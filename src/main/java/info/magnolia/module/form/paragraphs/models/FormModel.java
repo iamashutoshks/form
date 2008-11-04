@@ -19,6 +19,7 @@ import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.baukasten.templates.MainTemplateModel;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.RequestProcessor;
 import info.magnolia.module.form.validations.Validation;
@@ -36,7 +37,7 @@ import org.apache.commons.lang.StringUtils;
  * @author tmiyar
  *
  */
-public class FormModel extends RenderingModelImpl{
+public class FormModel extends MainTemplateModel{
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
 

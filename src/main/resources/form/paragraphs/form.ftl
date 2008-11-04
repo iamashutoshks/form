@@ -1,5 +1,5 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
-[@cms.editBar /]
+
 [#if actionResult == "success"]
     <div class="text success">
         <h1>${content.successTitle}</h1>
@@ -25,10 +25,10 @@
                 <p class="required"><span>${content.requiredSymbol?default("*")}</span> ${content.requiredMessage}</p>
             [/#if]
             <fieldset>
-                <input type="hidden" name="field" value="" />
                 [#if content.formTitle?has_content]
                     <h2>${content.formTitle}</h2>
                 [/#if]
+                <input type="text" style="display:none;" name="field" value="" />
                 [#if content.controls?exists]
                     [@cms.contentNodeIterator contentNodeCollectionName="controls"]
                         [@cms.includeTemplate/]
