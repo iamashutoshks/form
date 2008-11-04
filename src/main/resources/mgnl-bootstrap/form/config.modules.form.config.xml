@@ -129,7 +129,7 @@
         <sv:value>info.magnolia.module.form.validations.ValidateExpression</sv:value>
       </sv:property>
       <sv:property sv:name="expression" sv:type="String">
-        <sv:value>^\\S+@\\S+$</sv:value>
+        <sv:value>^\S+@\S+$</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -142,7 +142,7 @@
           <sv:value>2008-10-24T11:02:30.573+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T16:35:57.849+01:00</sv:value>
+          <sv:value>2008-11-04T16:18:33.983+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

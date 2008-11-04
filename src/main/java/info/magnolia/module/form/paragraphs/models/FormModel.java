@@ -64,7 +64,6 @@ public class FormModel extends MainTemplateModel{
                 return "success";
             } else {
                 // display validation fields, error message
-
                 return "failed";
             }
         } catch (Exception e) {
@@ -75,7 +74,7 @@ public class FormModel extends MainTemplateModel{
     }
 
     private boolean isHoneyPotEmpty() {
-        if(StringUtils.isEmpty(this.getContent().getNodeData("field").getString())) {
+        if(StringUtils.isEmpty(MgnlContext.getParameter("field"))) {
             return true;
         }
         return false;
