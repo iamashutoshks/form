@@ -8,6 +8,6 @@
         [/@cms.contentNodeIterator]
     [/#if]
     <div>
-        [@cms.newBar contentNodeCollectionName="edits" paragraph="formGroupEditItem" /]</div>
+        [@cms.newBar contentNodeCollectionName="edits" paragraph="formGroupEditItem" /]
     </div>
 </div>

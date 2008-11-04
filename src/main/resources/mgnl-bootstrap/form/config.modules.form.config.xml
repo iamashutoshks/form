@@ -184,6 +184,9 @@
       <sv:property sv:name="class" sv:type="String">
         <sv:value>info.magnolia.module.form.RequestProcessor</sv:value>
       </sv:property>
+      <sv:property sv:name="loggerName" sv:type="String">
+        <sv:value>log-form</sv:value>
+      </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:metaData</sv:value>
@@ -195,7 +198,7 @@
           <sv:value>2008-10-31T15:57:41.882+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T15:58:22.618+01:00</sv:value>
+          <sv:value>2008-11-03T13:07:19.310+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

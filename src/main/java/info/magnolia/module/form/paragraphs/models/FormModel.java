@@ -18,7 +18,6 @@ import info.magnolia.cms.beans.config.Renderable;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.RequestFormUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.RequestProcessor;
@@ -43,6 +42,7 @@ public class FormModel extends RenderingModelImpl{
 
     private Map errorMessages = new HashMap();
 
+
     public FormModel(Content content, Renderable renderable, RenderingModel parent) {
         super(content, renderable, parent);
     }
@@ -56,10 +56,10 @@ public class FormModel extends RenderingModelImpl{
 
             validate();
 
-            if (errorMessages.size() == 0 && this.getContent().hasNodeData("requestProcessor")) {
+            if (errorMessages.size() == 0 && this.getContent().hasNodeData("requestProcessor") && isHoneyPotEmpty()) {
                 // send mail to admin and confirmation to sender
-                RequestProcessor processor = FormModule.getInstance().getRequestProcessor(this.getContent().getNodeData("requestProcessor").getString());
-                processor.process(MgnlContext.getParameters(), content);
+                RequestProcessor processor = FormModule.getInstance().getRequestProcessor("default");
+                processor.process(content);
                 return "success";
             } else {
                 // display validation fields, error message
@@ -68,8 +68,16 @@ public class FormModel extends RenderingModelImpl{
             }
         } catch (Exception e) {
             log.error("error validating form", e);
+            errorMessages.put("Error",MgnlContext.getMessages("info.magnolia.module.form.messages").get("generic") );
             return "failed";
         }
+    }
+
+    private boolean isHoneyPotEmpty() {
+        if(StringUtils.isEmpty(this.getContent().getNodeData("field").getString())) {
+            return true;
+        }
+        return false;
     }
 
     private void validate() throws Exception {
@@ -135,5 +143,7 @@ public class FormModel extends RenderingModelImpl{
     public void setErrorMessages(Map errorMessages) {
         this.errorMessages = errorMessages;
     }
+
+
 
 }

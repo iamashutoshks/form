@@ -382,27 +382,27 @@
           </sv:property>
         </sv:node>
       </sv:node>
-      <sv:node sv:name="requestProcessor">
+      <sv:node sv:name="redirect">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
-          <sv:value>2efc6ccf-83c6-4903-b76d-953d1202c71a</sv:value>
+          <sv:value>59029f53-ef05-408f-ae81-16e2335b2258</sv:value>
         </sv:property>
         <sv:property sv:name="buttonLabel" sv:type="String">
-          <sv:value>dialog.form.tabSubmit.requestProcessor.buttonLabel</sv:value>
+          <sv:value>-</sv:value>
         </sv:property>
         <sv:property sv:name="controlType" sv:type="String">
-          <sv:value>select</sv:value>
+          <sv:value>link</sv:value>
+        </sv:property>
+        <sv:property sv:name="description" sv:type="String">
+          <sv:value>dialog.form.tabSubmit.redirect.description</sv:value>
+        </sv:property>
+        <sv:property sv:name="extension" sv:type="String">
+          <sv:value>html</sv:value>
         </sv:property>
         <sv:property sv:name="label" sv:type="String">
-          <sv:value>dialog.form.tabSubmit.requestProcessor.label</sv:value>
-        </sv:property>
-        <sv:property sv:name="path" sv:type="String">
-          <sv:value>/modules/form/config/requestProcessors</sv:value>
-        </sv:property>
-        <sv:property sv:name="repository" sv:type="String">
-          <sv:value>config</sv:value>
+          <sv:value>dialog.form.tabSubmit.redirect.label</sv:value>
         </sv:property>
         <sv:property sv:name="type" sv:type="String">
           <sv:value>String</sv:value>
@@ -427,10 +427,62 @@
             <sv:value>2004-11-03T08:48:09.632+01:00</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+            <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+            <sv:value>2008-11-04T10:18:58.411+01:00</sv:value>
+          </sv:property>
+        </sv:node>
+      </sv:node>
+      <sv:node sv:name="trackMail">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:contentNode</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:uuid" sv:type="String">
+          <sv:value>c2ff8f24-4ec3-4d0c-851a-5263b272fb26</sv:value>
+        </sv:property>
+        <sv:property sv:name="buttonLabel" sv:type="String">
+          <sv:value>-</sv:value>
+        </sv:property>
+        <sv:property sv:name="controlType" sv:type="String">
+          <sv:value>checkboxSwitch</sv:value>
+        </sv:property>
+        <sv:property sv:name="description" sv:type="String">
+          <sv:value>dialog.tabSubmit.trackMail.description</sv:value>
+        </sv:property>
+        <sv:property sv:name="label" sv:type="String">
+          <sv:value>dialog.tabSubmit.trackMail.label</sv:value>
+        </sv:property>
+        <sv:property sv:name="selected" sv:type="String">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="type" sv:type="String">
+          <sv:value>Boolean</sv:value>
+        </sv:property>
+        <sv:node sv:name="MetaData">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:metaData</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:Data" sv:type="String">
+            <sv:value>MetaData</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+            <sv:value>false</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:activatorid" sv:type="String">
+            <sv:value>superuser</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:authorid" sv:type="String">
+            <sv:value>superuser</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:creationdate" sv:type="String">
+            <sv:value>2004-11-03T08:48:09.632+01:00</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:lastaction" sv:type="Date">
             <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
           </sv:property>
           <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-            <sv:value>2008-10-31T16:25:58.407+01:00</sv:value>
+            <sv:value>2008-11-04T10:19:56.321+01:00</sv:value>
           </sv:property>
         </sv:node>
       </sv:node>

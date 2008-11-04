@@ -25,6 +25,7 @@
                 <p class="required"><span>${content.requiredSymbol?default("*")}</span> ${content.requiredMessage}</p>
             [/#if]
             <fieldset>
+                <input type="hidden" name="field" value="" />
                 [#if content.formTitle?has_content]
                     <h2>${content.formTitle}</h2>
                 [/#if]
