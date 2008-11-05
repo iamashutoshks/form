@@ -32,9 +32,7 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public class FormControlsModel extends RenderingModelImpl {
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory
-            .getLogger(FormControlsModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormControlsModel.class);
 
     private String value;
     private String style = "";
@@ -44,7 +42,7 @@ public class FormControlsModel extends RenderingModelImpl {
     }
 
     public String execute() {
-        log.debug("Executing " + this.getClass().getName());
+        log.debug("Executing {}", this.getClass());
         //set default or user input
         handleValue();
         //set style for error messages
@@ -87,10 +85,7 @@ public class FormControlsModel extends RenderingModelImpl {
         return null;
     }
 
-
-
     public String getValue() {
-
         return value;
     }
 
@@ -98,7 +93,7 @@ public class FormControlsModel extends RenderingModelImpl {
         //has default value?
         String[] val = null;
         try {
-            val = MgnlContext.getParameterValues(this.content.getNodeData("controlName").getString());
+            val = MgnlContext.getParameterValues(content.getNodeData("controlName").getString());
             if(val == null) {
                 if(content.hasNodeData("default")) {
                     val = new String[]{content.getNodeData("default").getString()};
