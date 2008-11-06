@@ -14,16 +14,21 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
+import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.Renderable;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.context.WebContext;
 import info.magnolia.module.baukasten.templates.MainTemplateModel;
+import info.magnolia.module.baukasten.util.BKUtil;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.RequestProcessor;
 import info.magnolia.module.form.validations.Validation;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -61,6 +66,7 @@ public class FormModel extends MainTemplateModel{
                 // send mail to admin and confirmation to sender
                 RequestProcessor processor = FormModule.getInstance().getRequestProcessor("default");
                 processor.process(content);
+                redirect();
                 return "success";
             } else {
                 // display validation fields, error message
@@ -70,6 +76,49 @@ public class FormModel extends MainTemplateModel{
             log.error("error validating form", e);
             errorMessages.put("Error",MgnlContext.getMessages("info.magnolia.module.form.messages").get("generic") );
             return "failed";
+        }
+    }
+
+    public String resolveLink(Content content){
+        String link = content.getNodeData("link").getString();
+        String linkType = content.getNodeData("linkType").getString();
+
+        if(StringUtils.equals(linkType, "external")) {
+            if(!link.startsWith("http://")){
+                link = "http://"+link;
+            }
+            return link;
+        } else {
+            HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+            try {
+                return BKUtil.createLink(hm.getContentByUUID(link));
+            } catch (RepositoryException e) {
+                return "Can't resolve node with uuid " + link;
+            }
+        }
+    }
+
+    private void redirect() throws Exception {
+
+        if(content.hasNodeData("redirect")) {
+            String url = content.getNodeData("redirect").getString();
+            if(!StringUtils.isEmpty(url)) {
+                Boolean external = content.getNodeData("external").getBoolean();
+                if(external) {
+                    if(!url.startsWith("http://")){
+                        url = "http://"+url;
+                    }
+                } else {
+                    HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+                    try {
+                        url = BKUtil.createLink(hm.getContentByUUID(url));
+                    } catch (RepositoryException e) {
+                        log.error("Can't resolve node with uuid " + url);
+                        throw new Exception(e);
+                    }
+                }
+                ((WebContext)MgnlContext.getInstance()).getResponse().sendRedirect(url);
+            }
         }
     }
 
