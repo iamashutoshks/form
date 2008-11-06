@@ -23,7 +23,7 @@ import info.magnolia.cms.beans.config.Paragraph;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.baukasten.util.BKUtil;
+import info.magnolia.module.baukasten.util.BaukastenUtil;
 
 /**
  *
@@ -45,7 +45,7 @@ public class FormParagraph extends Paragraph {
         } else {
             HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
             try {
-                return BKUtil.createLink(hm.getContentByUUID(link));
+                return BaukastenUtil.createLink(hm.getContentByUUID(link));
             } catch (RepositoryException e) {
                 return "Can't resolve node with uuid " + link;
             }
