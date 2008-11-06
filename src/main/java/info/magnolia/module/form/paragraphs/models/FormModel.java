@@ -23,7 +23,7 @@ import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.baukasten.templates.MainTemplateModel;
-import info.magnolia.module.baukasten.util.BKUtil;
+import info.magnolia.module.baukasten.util.BaukastenUtil;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.RequestProcessor;
 import info.magnolia.module.form.validations.Validation;
@@ -91,7 +91,7 @@ public class FormModel extends MainTemplateModel{
         } else {
             HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
             try {
-                return BKUtil.createLink(hm.getContentByUUID(link));
+                return BaukastenUtil.createLink(hm.getContentByUUID(link));
             } catch (RepositoryException e) {
                 return "Can't resolve node with uuid " + link;
             }
@@ -111,7 +111,7 @@ public class FormModel extends MainTemplateModel{
                 } else {
                     HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
                     try {
-                        url = BKUtil.createLink(hm.getContentByUUID(url));
+                        url = BaukastenUtil.createLink(hm.getContentByUUID(url));
                     } catch (RepositoryException e) {
                         log.error("Can't resolve node with uuid " + url);
                         throw new Exception(e);
