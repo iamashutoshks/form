@@ -103,7 +103,7 @@ public class FormModel extends MainTemplateModel{
         if(content.hasNodeData("redirect")) {
             String url = content.getNodeData("redirect").getString();
             if(!StringUtils.isEmpty(url)) {
-                Boolean external = content.getNodeData("external").getBoolean();
+                boolean external = content.getNodeData("external").getBoolean();
                 if(external) {
                     if(!url.startsWith("http://")){
                         url = "http://"+url;
