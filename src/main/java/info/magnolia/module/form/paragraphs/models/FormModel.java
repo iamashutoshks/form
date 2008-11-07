@@ -79,25 +79,6 @@ public class FormModel extends MainTemplateModel{
         }
     }
 
-    public String resolveLink(Content content){
-        String link = content.getNodeData("link").getString();
-        String linkType = content.getNodeData("linkType").getString();
-
-        if(StringUtils.equals(linkType, "external")) {
-            if(!link.startsWith("http://")){
-                link = "http://"+link;
-            }
-            return link;
-        } else {
-            HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
-            try {
-                return BaukastenUtil.createLink(hm.getContentByUUID(link));
-            } catch (RepositoryException e) {
-                return "Can't resolve node with uuid " + link;
-            }
-        }
-    }
-
     private void redirect() throws Exception {
 
         if(content.hasNodeData("redirect")) {
@@ -111,7 +92,7 @@ public class FormModel extends MainTemplateModel{
                 } else {
                     HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
                     try {
-                        url = BaukastenUtil.createLink(hm.getContentByUUID(url));
+                        url = BaukastenUtil.createLink(hm.getContent(url));
                     } catch (RepositoryException e) {
                         log.error("Can't resolve node with uuid " + url);
                         throw new Exception(e);
