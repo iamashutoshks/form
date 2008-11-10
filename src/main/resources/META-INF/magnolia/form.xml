@@ -16,7 +16,6 @@
     <dependency>
       <name>baukasten</name>
       <version>1.0/*</version>
-      <optional>true</optional>
     </dependency>
   </dependencies>
 </module>

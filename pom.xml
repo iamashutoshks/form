@@ -30,8 +30,19 @@
   <dependencies>
     <dependency>
       <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-module-baukasten</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
       <artifactId>magnolia-core</artifactId>
       <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-module-mail</artifactId>
+      <version>3.7-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -60,16 +71,6 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-module-baukasten</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-module-mail</artifactId>
-      <version>3.7-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
