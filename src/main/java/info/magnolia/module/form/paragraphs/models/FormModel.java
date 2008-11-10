@@ -92,7 +92,7 @@ public class FormModel extends MainTemplateModel{
                 } else {
                     HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
                     try {
-                        url = BaukastenUtil.createLink(hm.getContent(url));
+                        url = BaukastenUtil.createLink(hm.getContentByUUID(url));
                     } catch (RepositoryException e) {
                         log.error("Can't resolve node with uuid " + url);
                         throw new Exception(e);
