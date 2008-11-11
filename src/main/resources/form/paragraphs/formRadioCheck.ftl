@@ -15,7 +15,7 @@
         [#if model.value == values[label_index]]
             [#assign checked="checked=\"checked\""]
         [/#if]
-        <label for="${content.controlName}_${label_index}">
+        <label id="${content.controlName}_label" for="${content.controlName}_${label_index}">
             <input id="${content.controlName}_${label_index}" name="${content.controlName}" type="${content.type}" value="${values[label_index]}" ${checked} />
                 ${label}
         </label>

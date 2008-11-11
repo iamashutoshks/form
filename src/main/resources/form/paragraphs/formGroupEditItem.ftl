@@ -1,7 +1,7 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 [@cms.editBar /]
 [#if content.title?has_content]
-    <label ${model.style!} for="${content.controlName}">
+    <label ${model.style!} id="${content.controlName}_label" for="${content.controlName}">
         ${content.title}
     [#if content.mandatory]
          <dfn title="required">*</dfn>

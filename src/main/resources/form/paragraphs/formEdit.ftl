@@ -3,7 +3,7 @@
 <div ${model.style!} >
 [@cms.editBar /]
     [#if content.title?has_content]
-        <label class="${content.editLength!}" for="${content.controlName}">
+        <label id="${content.controlName}_label" class="${content.editLength!}" for="${content.controlName}">
             ${content.title}
         [#if content.mandatory]
             <dfn title="required">*</dfn>

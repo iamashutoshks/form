@@ -13,7 +13,7 @@
                 [#assign keys = model.errorMessages?keys]
                 [#list keys as key]
                     <li>
-                        <a href="#${key}">${model.errorMessages[key]}</a>
+                        <a href="#${key}_label">${model.errorMessages[key]}</a>
                     </li>
                 [/#list]
             </ul>
@@ -36,9 +36,9 @@
                 [/#if]
             </fieldset>
         </form>
-    <div>
-        [@cms.newBar contentNodeCollectionName="controls" paragraph="formEdit,formGroupEdit,formGroupSelect,formRadioCheck,formSubmit,formFile" /]
-    </div>
+        <div>
+            [@cms.newBar contentNodeCollectionName="controls"  paragraph="${templateDef.mainArea.paragraphsAsStringList}"/]
+        </div>
     </div> <!-- end form -->
 [/#if] <!-- end else -->
 
