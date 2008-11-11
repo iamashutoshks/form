@@ -12,9 +12,6 @@
   <sv:property sv:name="jcr:uuid" sv:type="String">
     <sv:value>26620eca-9aa5-4303-842f-f2035e5ceb9d</sv:value>
   </sv:property>
-  <sv:property sv:name="class" sv:type="String">
-    <sv:value>info.magnolia.module.form.paragraphs.FormParagraph</sv:value>
-  </sv:property>
   <sv:property sv:name="description" sv:type="String">
     <sv:value>form description</sv:value>
   </sv:property>
