@@ -111,11 +111,20 @@ public class FormModel extends MainTemplateModel{
     }
 
     private void validate() throws Exception {
+        Iterator itFieldsets;
+        Iterator iterator;
+        Content fieldset;
+        if (this.getContent().hasContent("fieldsets")) {
+            itFieldsets = this.getContent().getContent("fieldsets").getChildren().iterator();
 
-        if (this.getContent().hasContent("controls")) {
-            Iterator iterator = this.getContent().getContent("controls").getChildren().iterator();
+            while (itFieldsets.hasNext()) {
+                fieldset = (Content) itFieldsets.next();
+                if(fieldset.hasContent("fields")) {
+                    iterator = fieldset.getContent("fields").getChildren().iterator();
 
-            validate(iterator);
+                    validate(iterator);
+                }
+            }
         }
     }
 

@@ -4,10 +4,11 @@
 [@cms.editBar /]
     [#if content.title?has_content]
         <label id="${content.controlName}_label" class="${content.editLength!}" for="${content.controlName}">
-            ${content.title}
-        [#if content.mandatory]
-            <dfn title="required">*</dfn>
-        [/#if]
+            <span>${content.title}
+            [#if content.mandatory]
+                <dfn title="required">*</dfn>
+            [/#if]
+            </span>
     [/#if]
     [#if content.rows == 1]
         <input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!}"/>

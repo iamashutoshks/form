@@ -136,7 +136,7 @@
         </sv:property>
       </sv:node>
     </sv:node>
-    <sv:node sv:name="requiredMessage">
+    <sv:node sv:name="formText">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
@@ -144,16 +144,19 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>9220eaa4-775d-4756-882f-6f23f24f43ff</sv:value>
+        <sv:value>097b318b-10c6-40eb-bb79-c7b5ea9aee3c</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.tabMain.requiredMessage.description</sv:value>
+        <sv:value>dialog.form.tabMain.formText.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.tabMain.requiredMessage.label</sv:value>
+        <sv:value>dialog.form.tabMain.formText.label</sv:value>
+      </sv:property>
+      <sv:property sv:name="rows" sv:type="String">
+        <sv:value>2</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -169,7 +172,7 @@
           <sv:value>2008-09-25T13:57:00.582+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T11:53:13.603+01:00</sv:value>
+          <sv:value>2008-11-11T16:31:06.401+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -219,7 +222,7 @@
       <sv:value>mix:lockable</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>324c9651-1464-4f0a-b405-3e142c6fff3e</sv:value>
+      <sv:value>779ea138-f0ee-4973-9d17-6509da562d6c</sv:value>
     </sv:property>
     <sv:property sv:name="controlType" sv:type="String">
       <sv:value>tab</sv:value>
@@ -252,7 +255,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>0e2d2f51-7110-4b97-9dd1-ac53c8f092bf</sv:value>
+        <sv:value>adc3603b-721d-44a9-bf8b-5a4abc89585d</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
@@ -289,7 +292,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>c3d3bff3-5968-4c23-999b-71c8b5d69891</sv:value>
+        <sv:value>568fc48e-751d-43c7-b9ee-7ba84bbbc815</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
@@ -326,7 +329,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>9e9f6592-aa80-44c9-9869-2e0da96854bc</sv:value>
+        <sv:value>18775068-8323-4cb7-b6ac-063e67cb8315</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
@@ -360,7 +363,7 @@
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>59029f53-ef05-408f-ae81-16e2335b2258</sv:value>
+        <sv:value>a6306446-c64e-4d83-9c16-63e286636537</sv:value>
       </sv:property>
       <sv:property sv:name="buttonLabel" sv:type="String">
         <sv:value>dialog.form.tabSubmit.redirect.buttonLabel</sv:value>
@@ -409,7 +412,7 @@
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>338f701f-9673-4a68-8eb5-c6d7fac05a84</sv:value>
+        <sv:value>05650520-a37a-48a7-84cc-d9d7fce35db0</sv:value>
       </sv:property>
       <sv:property sv:name="buttonLabel" sv:type="String">
         <sv:value>dialog.tabSubmit.external.buttonLabel</sv:value>
@@ -461,7 +464,7 @@
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>c2ff8f24-4ec3-4d0c-851a-5263b272fb26</sv:value>
+        <sv:value>bcfc8bbe-fdbf-490a-9788-c4b788e403e4</sv:value>
       </sv:property>
       <sv:property sv:name="buttonLabel" sv:type="String">
         <sv:value>dialog.tabSubmit.trackMail.buttonLabel</sv:value>

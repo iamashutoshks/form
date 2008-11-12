@@ -7,7 +7,9 @@
             [@cms.includeTemplate/]
         [/@cms.contentNodeIterator]
     [/#if]
-    <div>
-        [@cms.newBar contentNodeCollectionName="edits" paragraph="formGroupEditItem" /]
-    </div>
+    [#if mgnl.editMode]
+        <div>
+            [@cms.newBar contentNodeCollectionName="edits" paragraph="formGroupEditItem" /]
+        </div>
+    [/#if]
 </div>

@@ -19,26 +19,24 @@
             </ul>
         </div> <!-- end error message -->
     [/#if]
+
+    <div class="text">
+        <h1>${content.formTitle!}</h1>
+        <p>${content.formText!}</p>
+    </div><!-- end text -->
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="multipart/form-data" >
-            [#if content.requiredMessage?has_content]
-                <p class="required"><span>${content.requiredSymbol?default("*")}</span> ${content.requiredMessage}</p>
-            [/#if]
-            <fieldset>
-                [#if content.formTitle?has_content]
-                    <h2>${content.formTitle}</h2>
-                [/#if]
+
                 <input type="text" style="display:none;" name="field" value="" />
-                [#if content.controls?exists]
-                    [@cms.contentNodeIterator contentNodeCollectionName="controls"]
+                [#if content.fieldsets?exists]
+                    [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]
                         [@cms.includeTemplate/]
                     [/@cms.contentNodeIterator]
                 [/#if]
-            </fieldset>
+                [#if mgnl.editMode]
+                    <div>[@cms.newBar contentNodeCollectionName="fieldsets"  paragraph="formGroupFields"/]</div>
+                [/#if]
         </form>
-        <div>
-            [@cms.newBar contentNodeCollectionName="controls"  paragraph="${templateDef.mainArea.paragraphsAsStringList}"/]
-        </div>
     </div> <!-- end form -->
 [/#if] <!-- end else -->
 
