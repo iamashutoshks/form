@@ -4,7 +4,11 @@
 [@cms.editBar /]
     [#if content.title?has_content]
         <label id="${content.controlName}_label" class="${content.editLength!}" for="${content.controlName}">
-            <span>${content.title}
+            <span>
+            [#if model.style?index_of("error") > -1]
+                <em>${i18n['form.error.field']}</em>
+            [/#if]
+            ${content.title}
             [#if content.mandatory]
                 <dfn title="required">*</dfn>
             [/#if]
