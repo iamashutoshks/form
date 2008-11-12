@@ -1,8 +1,7 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
-[#if mgnl.editMode]
-    [@cms.editBar /]
-[/#if]
+
+[@cms.editBar /]
 
 [#assign parent = content?parent]
 [#if content.rightText?has_content]
@@ -20,12 +19,9 @@
     [/#if]
 </fieldset>
 
+[@cms.newBar contentNodeCollectionName="fields"  paragraph="${model.parentModel.paragraphsAsStringList}"/]
 
-[#if mgnl.editMode]
 
-[@cms.newBar contentNodeCollectionName="fields"  paragraph="formEdit,formGroupEdit,formFile,formGroupSelect,formRadioCheck,formSubmit"/]
-
-[/#if]
 
 
 

@@ -22,6 +22,7 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
+import info.magnolia.module.baukasten.templates.MainTemplate;
 import info.magnolia.module.baukasten.templates.MainTemplateModel;
 import info.magnolia.module.baukasten.util.BaukastenUtil;
 import info.magnolia.module.form.FormModule;
@@ -181,6 +182,11 @@ public class FormModel extends MainTemplateModel{
 
     public void setErrorMessages(Map errorMessages) {
         this.errorMessages = errorMessages;
+    }
+
+    public String getParagraphsAsStringList() {
+        final MainTemplate templateDef = (MainTemplate) this.getRenderable();
+        return templateDef.getMainArea().getParagraphsAsStringList();
     }
 
 
