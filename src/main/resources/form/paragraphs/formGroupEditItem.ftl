@@ -6,7 +6,7 @@
 [#if content.title?has_content]
     <label ${model.style!} id="${content.controlName}_label" for="${content.controlName}">
         <span>
-            [#if model.style?index_of("error") > -1]
+            [#if !model.isValid()]
                 <em>${i18n['form.error.field']}</em>
             [/#if]
             ${content.title}

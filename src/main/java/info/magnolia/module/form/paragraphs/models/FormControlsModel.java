@@ -36,6 +36,7 @@ public class FormControlsModel extends RenderingModelImpl {
 
     private String value;
     private String style = "";
+    private boolean valid;
 
     public FormControlsModel(Content content, Renderable renderable, RenderingModel parent) {
         super(content, renderable, parent);
@@ -43,6 +44,7 @@ public class FormControlsModel extends RenderingModelImpl {
 
     public String execute() {
         log.debug("Executing {}", this.getClass());
+        Validate();
         //set default or user input
         handleValue();
         //set style for error messages
@@ -51,26 +53,39 @@ public class FormControlsModel extends RenderingModelImpl {
         return "";
     }
 
-    protected void handleStyle() {
+    private void Validate() {
+        valid = true;
         Map errorMessages = this.getFormErrorMessages();
         if (errorMessages != null) {
-
-            // set style
+         // set style
             if (errorMessages.containsKey(content.getNodeData("controlName").getString())) {
-                this.style = "class=\"error\"";
-            }
-            try {
-                //TODO: move to specific edit control model class??
-                if (StringUtils.isEmpty(this.style) && content.hasNodeData("editLength")) {
-                    String style2 = content.getNodeData("editLength").getString();
-                    if (!StringUtils.isEmpty(style2)) {
-                        this.style = "class=\"" + style2 + "\"";
-                    }
-                }
-            } catch (RepositoryException e) {
-                log.debug("can't get style", e);
+                valid = false;
             }
         }
+
+    }
+
+    protected void handleStyle() {
+        if (!isValid()) {
+            this.style = "class=\"error\"";
+        }
+        try {
+            // TODO: move to specific edit control model class??
+            if (StringUtils.isEmpty(this.style)
+                    && content.hasNodeData("editLength")) {
+                String style2 = content.getNodeData("editLength").getString();
+                if (!StringUtils.isEmpty(style2)) {
+                    this.style = "class=\"" + style2 + "\"";
+                }
+            }
+        } catch (RepositoryException e) {
+            log.debug("can't get style", e);
+        }
+
+    }
+
+    public boolean isValid() {
+        return valid;
     }
 
     protected Map getFormErrorMessages() {
