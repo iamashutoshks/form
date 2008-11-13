@@ -512,12 +512,12 @@
       </sv:node>
     </sv:node>
   </sv:node>
-  <sv:node sv:name="tabEmail">
+  <sv:node sv:name="tabContactEmail">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:contentNode</sv:value>
     </sv:property>
     <sv:property sv:name="jcr:uuid" sv:type="String">
-      <sv:value>b96f6c8b-8f23-4378-8e20-82b7f7947d50</sv:value>
+      <sv:value>4bf0f7fd-b976-44bc-9b82-b0982b0d2a97</sv:value>
     </sv:property>
     <sv:property sv:name="controlType" sv:type="String">
       <sv:value>tab</sv:value>
@@ -526,7 +526,7 @@
       <sv:value>info.magnolia.module.form.messages</sv:value>
     </sv:property>
     <sv:property sv:name="label" sv:type="String">
-      <sv:value>dialog.tabEmail.label</sv:value>
+      <sv:value>dialog.form.tabContactEmail.label</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -551,7 +551,7 @@
         <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-31T16:20:34.200+01:00</sv:value>
+        <sv:value>2008-11-13T15:59:06.959+01:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="contactMailFrom">
@@ -559,16 +559,16 @@
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>65a841f6-c6dd-4d63-8626-b5f8a25cad56</sv:value>
+        <sv:value>29dc963e-e32c-4a71-9428-988fdd32aba9</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailFrom.description</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailFrom.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailFrom.label</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailFrom.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -599,7 +599,7 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:14:27.139+01:00</sv:value>
+          <sv:value>2008-11-13T15:58:11.162+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -608,16 +608,16 @@
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>511f086c-1c4c-4cde-8bcc-d2fa85e80c4e</sv:value>
+        <sv:value>2ce7ef86-e1db-44fb-bb15-b0d26ed16dd4</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailTo.description</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailTo.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailTo.label</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailTo.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -648,7 +648,7 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:15:11.780+01:00</sv:value>
+          <sv:value>2008-11-13T15:58:20.672+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -657,16 +657,16 @@
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>94382c4f-f4bc-494d-afbf-685b0ddac70f</sv:value>
+        <sv:value>6a3f793b-ea98-4400-8701-d274d01dbd4a</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailSubject.description</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailSubject.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailSubject.label</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailSubject.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -697,8 +697,171 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:15:52.589+01:00</sv:value>
+          <sv:value>2008-11-13T15:58:33.814+01:00</sv:value>
         </sv:property>
+      </sv:node>
+    </sv:node>
+    <sv:node sv:name="contentType">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:contentNode</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>57af34d2-5537-43fa-bcf2-ecbce1098b0a</sv:value>
+      </sv:property>
+      <sv:property sv:name="controlType" sv:type="String">
+        <sv:value>select</sv:value>
+      </sv:property>
+      <sv:property sv:name="label" sv:type="String">
+        <sv:value>dialog.form.tabContactMail.contentType.label</sv:value>
+      </sv:property>
+      <sv:property sv:name="type" sv:type="String">
+        <sv:value>String</sv:value>
+      </sv:property>
+      <sv:node sv:name="MetaData">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:metaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:Data" sv:type="String">
+          <sv:value>MetaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:activatorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:authorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:creationdate" sv:type="String">
+          <sv:value>2004-11-03T08:48:09.632+01:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+          <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+          <sv:value>2008-11-13T14:26:00.715+01:00</sv:value>
+        </sv:property>
+      </sv:node>
+      <sv:node sv:name="options">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:contentNode</sv:value>
+        </sv:property>
+        <sv:property sv:name="jcr:uuid" sv:type="String">
+          <sv:value>81ac4ba6-1225-4b2a-9bf2-a3148a619493</sv:value>
+        </sv:property>
+        <sv:node sv:name="MetaData">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:metaData</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:Data" sv:type="String">
+            <sv:value>MetaData</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+            <sv:value>false</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:activatorid" sv:type="String">
+            <sv:value>superuser</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:authorid" sv:type="String">
+            <sv:value>superuser</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:creationdate" sv:type="String">
+            <sv:value>2004-11-03T08:52:04.490+01:00</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+            <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:lastmodified" sv:type="String">
+            <sv:value>2004-11-04T11:43:09.536+01:00</sv:value>
+          </sv:property>
+        </sv:node>
+        <sv:node sv:name="html">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:contentNode</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:uuid" sv:type="String">
+            <sv:value>f6ab5c18-278d-4389-aa07-241d7efcb42b</sv:value>
+          </sv:property>
+          <sv:property sv:name="label" sv:type="String">
+            <sv:value>dialog.form.tabContactMail.contentType.option.html</sv:value>
+          </sv:property>
+          <sv:property sv:name="selected" sv:type="String">
+            <sv:value>false</sv:value>
+          </sv:property>
+          <sv:property sv:name="value" sv:type="String">
+            <sv:value>html</sv:value>
+          </sv:property>
+          <sv:node sv:name="MetaData">
+            <sv:property sv:name="jcr:primaryType" sv:type="Name">
+              <sv:value>mgnl:metaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:Data" sv:type="String">
+              <sv:value>MetaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+              <sv:value>false</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activatorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:authorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:creationdate" sv:type="String">
+              <sv:value>2004-11-03T08:53:21.660+01:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+              <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+              <sv:value>2008-11-13T14:26:12.731+01:00</sv:value>
+            </sv:property>
+          </sv:node>
+        </sv:node>
+        <sv:node sv:name="text">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:contentNode</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:uuid" sv:type="String">
+            <sv:value>2729b4ab-dc4e-42f3-b99c-45dc87925470</sv:value>
+          </sv:property>
+          <sv:property sv:name="label" sv:type="String">
+            <sv:value>dialog.form.tabContactMail.contentType.option.text</sv:value>
+          </sv:property>
+          <sv:property sv:name="selected" sv:type="String">
+            <sv:value>true</sv:value>
+          </sv:property>
+          <sv:property sv:name="value" sv:type="String">
+            <sv:value>text</sv:value>
+          </sv:property>
+          <sv:node sv:name="MetaData">
+            <sv:property sv:name="jcr:primaryType" sv:type="Name">
+              <sv:value>mgnl:metaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:Data" sv:type="String">
+              <sv:value>MetaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+              <sv:value>false</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activatorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:authorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:creationdate" sv:type="String">
+              <sv:value>2004-11-03T08:53:21.660+01:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+              <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+              <sv:value>2008-11-13T14:25:48.303+01:00</sv:value>
+            </sv:property>
+          </sv:node>
+        </sv:node>
       </sv:node>
     </sv:node>
     <sv:node sv:name="contactMailBody">
@@ -706,16 +869,16 @@
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>31adf733-a967-406d-96b1-13d63fad3373</sv:value>
+        <sv:value>1f072471-1a7f-46cd-a44a-3f316d16d1c4</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailSubject.description</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailSubject.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.contactMailBody.label</sv:value>
+        <sv:value>dialog.form.tabContactEmail.contactMailBody.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>10</sv:value>
@@ -746,9 +909,52 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:16:38.877+01:00</sv:value>
+          <sv:value>2008-11-13T15:58:57.596+01:00</sv:value>
         </sv:property>
       </sv:node>
+    </sv:node>
+  </sv:node>
+  <sv:node sv:name="tabConfirmEmail">
+    <sv:property sv:name="jcr:primaryType" sv:type="Name">
+      <sv:value>mgnl:contentNode</sv:value>
+    </sv:property>
+    <sv:property sv:name="jcr:uuid" sv:type="String">
+      <sv:value>b96f6c8b-8f23-4378-8e20-82b7f7947d50</sv:value>
+    </sv:property>
+    <sv:property sv:name="controlType" sv:type="String">
+      <sv:value>tab</sv:value>
+    </sv:property>
+    <sv:property sv:name="i18nBasename" sv:type="String">
+      <sv:value>info.magnolia.module.form.messages</sv:value>
+    </sv:property>
+    <sv:property sv:name="label" sv:type="String">
+      <sv:value>dialog.form.tabConfirmEmail.label</sv:value>
+    </sv:property>
+    <sv:node sv:name="MetaData">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:metaData</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:Data" sv:type="String">
+        <sv:value>MetaData</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+        <sv:value>false</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:activatorid" sv:type="String">
+        <sv:value>superuser</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:authorid" sv:type="String">
+        <sv:value>superuser</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:creationdate" sv:type="String">
+        <sv:value>2004-11-03T08:47:58.474+01:00</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+        <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
+      </sv:property>
+      <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+        <sv:value>2008-11-13T15:57:16.359+01:00</sv:value>
+      </sv:property>
     </sv:node>
     <sv:node sv:name="sendConfirmation">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -758,13 +964,13 @@
         <sv:value>28c9d5b0-0035-473f-9f70-7262f6c545fa</sv:value>
       </sv:property>
       <sv:property sv:name="buttonLabel" sv:type="String">
-        <sv:value>dialog.tabEmail.sendConfirmation.label</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.sendConfirmation.buttonLabel</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.sendConfirmation.label</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.sendConfirmation.label</sv:value>
       </sv:property>
       <sv:property sv:name="selected" sv:type="String">
         <sv:value>false</sv:value>
@@ -795,7 +1001,7 @@
           <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:17:26.107+01:00</sv:value>
+          <sv:value>2008-11-13T16:09:17.638+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -810,10 +1016,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailFrom.description</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailFrom.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailFrom.label</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailFrom.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -844,7 +1050,7 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:18:10.216+01:00</sv:value>
+          <sv:value>2008-11-13T15:59:58.774+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -859,10 +1065,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailTo.description</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailTo.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailTo.label</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailTo.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -893,7 +1099,7 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:18:50.624+01:00</sv:value>
+          <sv:value>2008-11-13T16:00:20.226+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -908,10 +1114,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailSubject.description</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailSubject.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailSubject.label</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailSubject.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -942,7 +1148,7 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:19:29.154+01:00</sv:value>
+          <sv:value>2008-11-13T16:00:40.224+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -957,10 +1163,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailBody.description</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailBody.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.tabEmail.confirmMailBody.label</sv:value>
+        <sv:value>dialog.form.tabConfirmEmail.confirmMailBody.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>10</sv:value>
@@ -991,7 +1197,7 @@
           <sv:value>2006-05-01T21:47:32.903+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-31T16:20:19.483+01:00</sv:value>
+          <sv:value>2008-11-13T16:01:00.927+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
