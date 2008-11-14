@@ -85,20 +85,15 @@ public class FormModel extends MainTemplateModel{
         if(content.hasNodeData("redirect")) {
             String url = content.getNodeData("redirect").getString();
             if(!StringUtils.isEmpty(url)) {
-                boolean external = content.getNodeData("external").getBoolean();
-                if(external) {
-                    if(!url.startsWith("http://")){
-                        url = "http://"+url;
-                    }
-                } else {
-                    HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
-                    try {
-                        url = BaukastenUtil.createLink(hm.getContentByUUID(url));
-                    } catch (RepositoryException e) {
-                        log.error("Can't resolve node with uuid " + url);
-                        throw new Exception(e);
-                    }
+
+                HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
+                try {
+                    url = BaukastenUtil.createLink(hm.getContentByUUID(url));
+                } catch (RepositoryException e) {
+                    log.error("Can't resolve node with uuid " + url);
+                    throw new Exception(e);
                 }
+
                 ((WebContext)MgnlContext.getInstance()).getResponse().sendRedirect(url);
             }
         }
