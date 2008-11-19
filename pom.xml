@@ -15,7 +15,7 @@
 
   <properties>
     <magnoliaVersion>3.7-SNAPSHOT</magnoliaVersion>
-    <documentationURL>http://documentation.magnolia.info/modules/baukasten.html</documentationURL>
+    <documentationURL>http://documentation.magnolia.info/modules/standard-templating-kit.html</documentationURL>
   </properties>
   <issueManagement>
     <system>Jira</system>
@@ -30,7 +30,7 @@
   <dependencies>
     <dependency>
       <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-module-baukasten</artifactId>
+      <artifactId>magnolia-module-standard-templating-kit</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
