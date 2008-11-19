@@ -42,7 +42,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-mail</artifactId>
-      <version>3.7-SNAPSHOT</version>
+      <version>${magnoliaVersion}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
