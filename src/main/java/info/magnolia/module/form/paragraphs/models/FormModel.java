@@ -17,19 +17,17 @@ package info.magnolia.module.form.paragraphs.models;
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.Renderable;
 import info.magnolia.cms.beans.config.RenderingModel;
-import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
-import info.magnolia.module.baukasten.templates.MainTemplate;
-import info.magnolia.module.baukasten.templates.MainTemplateModel;
-import info.magnolia.module.baukasten.util.BaukastenUtil;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.RequestProcessor;
 import info.magnolia.module.form.validations.Validation;
+import info.magnolia.module.standardtemplatingkit.templates.MainTemplate;
+import info.magnolia.module.standardtemplatingkit.templates.MainTemplateModel;
+import info.magnolia.module.standardtemplatingkit.util.StandardTemplatingKitUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -88,7 +86,7 @@ public class FormModel extends MainTemplateModel{
 
                 HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
                 try {
-                    url = BaukastenUtil.createLink(hm.getContentByUUID(url));
+                    url = StandardTemplatingKitUtil.createLink(hm.getContentByUUID(url));
                 } catch (RepositoryException e) {
                     log.error("Can't resolve node with uuid " + url);
                     throw new Exception(e);
