@@ -14,7 +14,7 @@
   <description/>
 
   <properties>
-    <magnoliaVersion>3.7-SNAPSHOT</magnoliaVersion>
+    <magnoliaVersion>4.0-SNAPSHOT</magnoliaVersion>
     <documentationURL>http://documentation.magnolia.info/modules/standard-templating-kit.html</documentationURL>
   </properties>
   <issueManagement>
