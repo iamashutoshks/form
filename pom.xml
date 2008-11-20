@@ -14,7 +14,7 @@
   <description/>
 
   <properties>
-    <magnoliaVersion>4.0-SNAPSHOT</magnoliaVersion>
+    <magnoliaVersion>4.0-m1</magnoliaVersion>
     <documentationURL>http://documentation.magnolia.info/modules/standard-templating-kit.html</documentationURL>
   </properties>
   <issueManagement>
@@ -31,7 +31,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-standard-templating-kit</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.0-m1</version>
     </dependency>
     <dependency>
       <groupId>info.magnolia</groupId>
