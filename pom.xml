@@ -9,9 +9,9 @@
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-m1</version>
   <name>magnolia-module-form</name>
-  <description/>
+  <description />
 
   <properties>
     <magnoliaVersion>4.0-m1</magnoliaVersion>
@@ -22,9 +22,9 @@
     <url>http://jira.magnolia.info/browse/MME</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:http://svn.magnolia.info/svn/projects/media-edition/trunk/magnolia-module-form</connection>
-    <developerConnection>scm:svn:http://svn.magnolia.info/svn/projects/media-edition/trunk/magnolia-module-form</developerConnection>
-    <url>http://svn.magnolia.info/view/projects/media-edition/trunk/magnolia-module-form</url>
+    <connection>scm:svn:http://svn.magnolia.info/svn/projects/media-edition/tags/magnolia-module-form-1.0-m1</connection>
+    <developerConnection>scm:svn:http://svn.magnolia.info/svn/projects/media-edition/tags/magnolia-module-form-1.0-m1</developerConnection>
+    <url>http://svn.magnolia.info/view/projects/media-edition/tags/magnolia-module-form-1.0-m1</url>
   </scm>
 
   <dependencies>
