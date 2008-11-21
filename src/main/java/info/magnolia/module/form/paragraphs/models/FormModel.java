@@ -26,7 +26,7 @@ import info.magnolia.module.form.RequestProcessor;
 import info.magnolia.module.form.validations.Validation;
 import info.magnolia.module.standardtemplatingkit.templates.MainTemplate;
 import info.magnolia.module.standardtemplatingkit.templates.MainTemplateModel;
-import info.magnolia.module.standardtemplatingkit.util.StandardTemplatingKitUtil;
+import info.magnolia.module.standardtemplatingkit.util.STKUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -86,7 +86,7 @@ public class FormModel extends MainTemplateModel{
 
                 HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
                 try {
-                    url = StandardTemplatingKitUtil.createLink(hm.getContentByUUID(url));
+                    url = STKUtil.createLink(hm.getContentByUUID(url));
                 } catch (RepositoryException e) {
                     log.error("Can't resolve node with uuid " + url);
                     throw new Exception(e);
