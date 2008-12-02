@@ -15,7 +15,7 @@
         [#assign data=label?split(":")]
         [#list parentmodel.value?split("*") as modelValue]
             [#if modelValue == data[1]]
-                [#assign selected="selected"]
+                [#assign selected="selected=\"selected\""]
                 [#break]
             [/#if]
         [/#list]

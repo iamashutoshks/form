@@ -30,7 +30,7 @@
                 [#assign selected=""]
                 [#assign data=label?split(":")]
                 [#if model.value == data[1] ]
-                    [#assign selected="selected"]
+                    [#assign selected="selected=\"selected\""]
                 [/#if]
                 <option value="${data[1]}" ${selected} >${data[0]}</option>
             [/#list]
