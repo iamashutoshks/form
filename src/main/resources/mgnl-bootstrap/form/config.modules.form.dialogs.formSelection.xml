@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="formRadioCheck" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:mgnl="http://www.magnolia.info/jcr/mgnl"
+<sv:node sv:name="formSelection" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:mgnl="http://www.magnolia.info/jcr/mgnl"
   xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:rep="internal" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
   xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:fn_old="http://www.w3.org/2004/10/xpath-functions" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:jcrfn="http://www.jcp.org/jcr/xpath-functions/1.0">
@@ -13,7 +13,7 @@
     <sv:value>info.magnolia.module.form.messages</sv:value>
   </sv:property>
   <sv:property sv:name="label" sv:type="String">
-    <sv:value>dialog.form.radiocheck.label</sv:value>
+    <sv:value>dialog.form.selection.label</sv:value>
   </sv:property>
   <sv:node sv:name="MetaData">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -38,7 +38,7 @@
       <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2008-10-27T12:14:54.166+01:00</sv:value>
+      <sv:value>2008-12-01T09:13:29.030+01:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:template" sv:type="String">
       <sv:value>sampleTwoColumns</sv:value>
@@ -58,7 +58,7 @@
       <sv:value>tab</sv:value>
     </sv:property>
     <sv:property sv:name="label" sv:type="String">
-      <sv:value>dialog.form.radiocheck.tabMain.label</sv:value>
+      <sv:value>dialog.form.selection.tabMain.label</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -83,7 +83,7 @@
         <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-27T12:14:42.324+01:00</sv:value>
+        <sv:value>2008-12-01T09:15:24.209+01:00</sv:value>
       </sv:property>
     </sv:node>
     <sv:node sv:name="controlName">
@@ -97,10 +97,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.controlName.description</sv:value>
+        <sv:value>dialog.form.selection.tabMain.controlName.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.controlName.label</sv:value>
+        <sv:value>dialog.form.selection.tabMain.controlName.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -131,7 +131,7 @@
           <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T12:12:30.275+01:00</sv:value>
+          <sv:value>2008-12-01T09:13:43.118+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -146,10 +146,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.title.description</sv:value>
+        <sv:value>dialog.form.selection.tabMain.title.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.title.label</sv:value>
+        <sv:value>dialog.form.selection.tabMain.title.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -180,7 +180,7 @@
           <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T12:12:59.540+01:00</sv:value>
+          <sv:value>2008-12-01T09:13:56.098+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -195,10 +195,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.legend.description</sv:value>
+        <sv:value>dialog.form.selection.tabMain.legend.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.legend.label</sv:value>
+        <sv:value>dialog.form.selection.tabMain.legend.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -229,7 +229,7 @@
           <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T12:13:28.018+01:00</sv:value>
+          <sv:value>2008-12-01T09:14:07.871+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -244,7 +244,7 @@
         <sv:value>radio</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.type.label</sv:value>
+        <sv:value>dialog.form.selection.tabMain.type.label</sv:value>
       </sv:property>
       <sv:property sv:name="type" sv:type="String">
         <sv:value>String</sv:value>
@@ -272,7 +272,7 @@
           <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T12:13:37.140+01:00</sv:value>
+          <sv:value>2008-12-01T09:14:14.061+01:00</sv:value>
         </sv:property>
       </sv:node>
       <sv:node sv:name="options">
@@ -308,6 +308,49 @@
             <sv:value>2004-11-04T11:43:09.536+01:00</sv:value>
           </sv:property>
         </sv:node>
+        <sv:node sv:name="select">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:contentNode</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:uuid" sv:type="String">
+            <sv:value>15feebf8-0847-4a6d-900f-f67a4c541b06</sv:value>
+          </sv:property>
+          <sv:property sv:name="label" sv:type="String">
+            <sv:value>dialog.form.selection.tabMain.type.option.select</sv:value>
+          </sv:property>
+          <sv:property sv:name="selected" sv:type="String">
+            <sv:value>true</sv:value>
+          </sv:property>
+          <sv:property sv:name="value" sv:type="String">
+            <sv:value>select</sv:value>
+          </sv:property>
+          <sv:node sv:name="MetaData">
+            <sv:property sv:name="jcr:primaryType" sv:type="Name">
+              <sv:value>mgnl:metaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:Data" sv:type="String">
+              <sv:value>MetaData</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+              <sv:value>false</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activatorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:authorid" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:creationdate" sv:type="String">
+              <sv:value>2004-11-03T08:53:21.660+01:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+              <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+              <sv:value>2008-12-01T09:16:21.687+01:00</sv:value>
+            </sv:property>
+          </sv:node>
+        </sv:node>
         <sv:node sv:name="radio">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
@@ -316,7 +359,7 @@
             <sv:value>a59b7423-ed68-4462-8c8b-1e37adc47342</sv:value>
           </sv:property>
           <sv:property sv:name="label" sv:type="String">
-            <sv:value>dialog.form.radiocheck.tabMain.type.option.radio</sv:value>
+            <sv:value>dialog.form.selection.tabMain.type.option.radio</sv:value>
           </sv:property>
           <sv:property sv:name="selected" sv:type="String">
             <sv:value>true</sv:value>
@@ -347,7 +390,7 @@
               <sv:value>2006-05-01T21:47:54.785+02:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2008-10-27T13:36:59.517+01:00</sv:value>
+              <sv:value>2008-12-01T09:16:13.750+01:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
@@ -359,7 +402,7 @@
             <sv:value>84685f80-8826-463d-a43e-ca691472d8fa</sv:value>
           </sv:property>
           <sv:property sv:name="label" sv:type="String">
-            <sv:value>dialog.form.radiocheck.tabMain.type.option.checkbox</sv:value>
+            <sv:value>dialog.form.selection.tabMain.type.option.checkbox</sv:value>
           </sv:property>
           <sv:property sv:name="value" sv:type="String">
             <sv:value>checkbox</sv:value>
@@ -387,7 +430,7 @@
               <sv:value>2006-05-01T21:47:54.795+02:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-              <sv:value>2008-10-27T13:37:18.368+01:00</sv:value>
+              <sv:value>2008-12-01T09:16:33.249+01:00</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>
@@ -401,13 +444,13 @@
         <sv:value>100d4a24-154e-4364-8f7c-cb0a12e1df4d</sv:value>
       </sv:property>
       <sv:property sv:name="buttonLabel" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.horizontal.buttonLabel</sv:value>
+        <sv:value>dialog.form.selection.tabMain.horizontal.buttonLabel</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.horizontal.label</sv:value>
+        <sv:value>dialog.form.selection.tabMain.horizontal.label</sv:value>
       </sv:property>
       <sv:property sv:name="selected" sv:type="String">
         <sv:value>false</sv:value>
@@ -438,7 +481,7 @@
           <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-28T11:56:43.506+01:00</sv:value>
+          <sv:value>2008-12-01T09:14:32.254+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -453,10 +496,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.labels.description</sv:value>
+        <sv:value>dialog.form.selection.tabMain.labels.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.labels.label</sv:value>
+        <sv:value>dialog.form.selection.tabMain.labels.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>5</sv:value>
@@ -487,56 +530,7 @@
           <sv:value>2006-05-01T21:47:54.795+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T14:25:47.728+01:00</sv:value>
-        </sv:property>
-      </sv:node>
-    </sv:node>
-    <sv:node sv:name="values">
-      <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:contentNode</sv:value>
-      </sv:property>
-      <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>65de2ee9-e17d-4c53-b812-06b7a33e012b</sv:value>
-      </sv:property>
-      <sv:property sv:name="controlType" sv:type="String">
-        <sv:value>edit</sv:value>
-      </sv:property>
-      <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.value.description</sv:value>
-      </sv:property>
-      <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.value.label</sv:value>
-      </sv:property>
-      <sv:property sv:name="rows" sv:type="String">
-        <sv:value>5</sv:value>
-      </sv:property>
-      <sv:property sv:name="type" sv:type="String">
-        <sv:value>String</sv:value>
-      </sv:property>
-      <sv:node sv:name="MetaData">
-        <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:metaData</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:Data" sv:type="String">
-          <sv:value>MetaData</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:activated" sv:type="Boolean">
-          <sv:value>false</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:activatorid" sv:type="String">
-          <sv:value>superuser</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:authorid" sv:type="String">
-          <sv:value>superuser</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:creationdate" sv:type="String">
-          <sv:value>2004-11-03T08:48:09.632+01:00</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:lastaction" sv:type="Date">
-          <sv:value>2006-05-01T21:47:54.795+02:00</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T14:25:16.467+01:00</sv:value>
+          <sv:value>2008-12-01T09:14:41.311+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -551,10 +545,10 @@
         <sv:value>edit</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.default.description</sv:value>
+        <sv:value>dialog.form.selection.tabMain.default.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.radiocheck.tabMain.default.label</sv:value>
+        <sv:value>dialog.form.selection.tabMain.default.label</sv:value>
       </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
@@ -585,7 +579,7 @@
           <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-30T11:49:12.035+01:00</sv:value>
+          <sv:value>2008-12-01T09:15:04.630+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
