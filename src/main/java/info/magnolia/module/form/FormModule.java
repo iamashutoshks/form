@@ -14,8 +14,6 @@
  */
 package info.magnolia.module.form;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
 import info.magnolia.module.form.validations.Validation;
 
 import java.util.ArrayList;

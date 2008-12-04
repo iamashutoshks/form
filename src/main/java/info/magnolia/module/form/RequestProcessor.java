@@ -14,17 +14,13 @@
  */
 package info.magnolia.module.form;
 
-import info.magnolia.cms.beans.runtime.Document;
-import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.mail.MailConstants;
-import info.magnolia.cms.mail.MgnlMailFactory;
-import info.magnolia.cms.mail.templates.MailAttachment;
+import info.magnolia.cms.mail.MailModule;
+import info.magnolia.cms.mail.handlers.LoggingLevel;
 import info.magnolia.cms.mail.templates.MgnlEmail;
-import info.magnolia.cms.mail.templates.impl.FreemarkerEmail;
+import info.magnolia.cms.mail.util.MailUtil;
 import info.magnolia.context.MgnlContext;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,74 +50,45 @@ public class RequestProcessor {
     protected void sendContactEMail(Content content) throws Exception {
 
         String body = content.getNodeData("contactMailBody")
-                .getString("<br />");
+                .getString();
         String from = content.getNodeData("contactMailFrom").getString();
         String subject = content.getNodeData("contactMailSubject").getString();
         String to = content.getNodeData("contactMailTo").getString();
+        String contentType = content.getNodeData("contentType").getString();
 
-        sendMail(body, from, subject, to);
+        sendMail(body, from, subject, to, contentType);
     }
 
     protected void sendConfirmationEMail(Content content) throws Exception {
 
         if (content.getNodeData("sendConfirmation").getBoolean()) {
-            String body = content.getNodeData("confirmMailBody").getString(
-                    "<br />");
+            String body = content.getNodeData("confirmMailBody").getString();
             String from = content.getNodeData("confirmMailFrom").getString();
             String subject = content.getNodeData("confirmMailSubject")
                     .getString();
             String to = content.getNodeData("confirmMailTo").getString();
+            String contentType = content.getNodeData("contentType").getString();
 
-            sendMail(body, from, subject, to);
+            sendMail(body, from, subject, to, contentType);
         }
     }
 
-    protected void sendMail(String body, String from, String subject, String to)
+    protected void sendMail(String body, String from, String subject, String to, String contentType)
             throws Exception {
         MgnlEmail email;
 
         Map parameters = getParameters();
-        email = MgnlMailFactory.getInstance().getEmailFromType("freemarker");
+        List attachments = MailUtil.createAttachmentList();
+        email = MailModule.getInstance().getFactory().getEmailFromType(parameters, "freemarker", contentType, attachments);
+        email.setFrom(from);
+        email.setSubject(subject);
+        email.setToList(to);
+        email.setBody(body);
 
-        Map attachments = getAttachments();
-        ((FreemarkerEmail) email).setBody(body, parameters, attachments);
-        ((FreemarkerEmail) email).setFrom(from, parameters);
-        ((FreemarkerEmail) email).setSubject(subject, parameters);
-        ((FreemarkerEmail) email).setToList(to, parameters);
-
-        MgnlMailFactory.getInstance().getEmailHandler().prepareAndSendMail(
-                email);
+        MailModule.getInstance().getHandler().sendMail(email);
 
     }
 
-    protected Map getAttachments() {
-        Map attachments = new HashMap();
-        try {
-            // get any possible attachment
-            MultipartForm form = (MultipartForm) MgnlContext.getPostedForm();
-            Map docs = form.getDocuments();
-            List list = new ArrayList();
-
-            Iterator i = (Iterator) docs.entrySet().iterator();
-
-            while (i.hasNext()) {
-                Entry pairs = (Entry) i.next();
-                Document doc = (Document) pairs.getValue();
-
-                if (doc != null) {
-                    list.add(new MailAttachment(doc.getFile().toURL(), (String) pairs.getKey()));
-                }
-
-                attachments.put(MailConstants.ATTRIBUTE_ATTACHMENT, list);
-
-            }
-
-        } catch (Exception e) {
-
-        }
-        return attachments;
-
-    }
 
     protected Map getParameters() {
         // getparametermap does not work as expected
@@ -132,8 +99,8 @@ public class RequestProcessor {
         while (i.hasNext()) {
             Entry pairs = (Entry) i.next();
             String key = (String) pairs.getKey();
-            result.put(key, StringUtils.replace(StringUtils.join(MgnlContext
-                    .getParameterValues(key), "__"), "\r\n", "<br />"));
+            result.put(key, StringUtils.join(MgnlContext
+                    .getParameterValues(key), "__"));
 
         }
         return result;
@@ -144,15 +111,7 @@ public class RequestProcessor {
         if (content.getNodeData("trackMail").getBoolean()) {
 
             Map params = getParameters();
-            Iterator i = (Iterator) params.entrySet().iterator();
-            StringBuffer buf = new StringBuffer();
-            while (i.hasNext()) {
-                Entry pairs = (Entry) i.next();
-                buf.append(" " + pairs.getKey() + " : " + pairs.getValue()
-                        + ",");
-            }
-            org.apache.log4j.Logger.getLogger(this.getLoggerName()).log(LoggingLevel.FORM_TRAIL,
-                    StringUtils.remove(StringUtils.chomp(buf.toString(), ","), "<br />"));
+            MailUtil.logMail(params, loggerName);
         }
     }
 

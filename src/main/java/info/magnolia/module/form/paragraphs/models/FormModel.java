@@ -61,7 +61,7 @@ public class FormModel extends MainTemplateModel{
 
             validate();
 
-            if (errorMessages.size() == 0 && this.getContent().hasNodeData("requestProcessor") && isHoneyPotEmpty()) {
+            if (errorMessages.size() == 0 && isHoneyPotEmpty()) {
                 // send mail to admin and confirmation to sender
                 RequestProcessor processor = FormModule.getInstance().getRequestProcessor("default");
                 processor.process(content);
