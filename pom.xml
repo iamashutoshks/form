@@ -11,20 +11,20 @@
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>magnolia-module-form</name>
-  <description />
+  <description></description>
 
   <properties>
     <magnoliaVersion>4.0-SNAPSHOT</magnoliaVersion>
-    <documentationURL>http://documentation.magnolia.info/modules/standard-templating-kit.html</documentationURL>
+    <documentationURL>http://documentation.magnolia.info/modules/form.html</documentationURL>
   </properties>
   <issueManagement>
     <system>Jira</system>
-    <url>http://jira.magnolia.info/browse/MME</url>
+    <url>http://jira.magnolia.info/browse/MGNLFORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:http://svn.magnolia.info/svn/projects/media-edition/trunk/magnolia-module-form</connection>
-    <developerConnection>scm:svn:http://svn.magnolia.info/svn/projects/media-edition/trunk/magnolia-module-form</developerConnection>
-    <url>http://svn.magnolia.info/view/projects/media-edition/trunk/magnolia-module-form</url>
+    <connection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</connection>
+    <developerConnection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</developerConnection>
+    <url>http://svn.magnolia.info/view/community/modules/magnolia-module-form/trunk</url>
   </scm>
 
   <dependencies>
