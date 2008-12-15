@@ -33,7 +33,7 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.cms.beans.config.Renderable;
+import info.magnolia.cms.beans.config.RenderableDefinition;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
@@ -55,8 +55,8 @@ public class FormControlsModel extends RenderingModelImpl {
     private String style = "";
     private boolean valid;
 
-    public FormControlsModel(Content content, Renderable renderable, RenderingModel parent) {
-        super(content, renderable, parent);
+    public FormControlsModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+        super(content, definition, parent);
     }
 
     public String execute() {

@@ -34,7 +34,7 @@
 package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.cms.beans.config.ContentRepository;
-import info.magnolia.cms.beans.config.Renderable;
+import info.magnolia.cms.beans.config.RenderableDefinition;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
@@ -65,8 +65,8 @@ public class FormModel extends MainTemplateModel{
     private Map errorMessages = new HashMap();
 
 
-    public FormModel(Content content, Renderable renderable, RenderingModel parent) {
-        super(content, renderable, parent);
+    public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+        super(content, definition, parent);
     }
 
     public String execute() {
@@ -195,7 +195,7 @@ public class FormModel extends MainTemplateModel{
     }
 
     public String getParagraphsAsStringList() {
-        final MainTemplate templateDef = (MainTemplate) this.getRenderable();
+        final MainTemplate templateDef = (MainTemplate) this.getDefinition();
         return templateDef.getMainArea().getParagraphsAsStringList();
     }
 
