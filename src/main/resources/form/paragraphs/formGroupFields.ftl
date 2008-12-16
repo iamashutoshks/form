@@ -1,12 +1,11 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
 
-[@cms.editBar /]
-
 [#assign parent = content?parent]
-[#if content.rightText?has_content]
-    <p class="required"><span>${parent.requiredSymbol?default("*")}</span> ${content.rightText}</p>
-[/#if]
+
+<p class="required"><span>${parent.requiredSymbol?default("*")}</span> ${parent.rightText!""}</p>
+
+[@cms.editBar editLabel="Edit Fieldset" /]
 <fieldset>
 
     [#if content.title?has_content]

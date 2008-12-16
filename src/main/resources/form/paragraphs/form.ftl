@@ -19,7 +19,7 @@
             </ul>
         </div> <!-- end error message -->
     [/#if]
-
+    [@cms.editBar editLabel="Edit Form Settings" moveLabel="" deleteLabel="" paragraph="form" /]
     <div class="text">
         <h1>${content.formTitle!}</h1>
         <p>${content.formText!}</p>
@@ -34,7 +34,7 @@
                     [/@cms.contentNodeIterator]
                 [/#if]
                 [#if mgnl.editMode]
-                    <div>[@cms.newBar contentNodeCollectionName="fieldsets"  paragraph="formGroupFields"/]</div>
+                    <div>[@cms.newBar contentNodeCollectionName="fieldsets"  newLabel="New Fieldset" paragraph="formGroupFields"/]</div>
                 [/#if]
         </form>
     </div> <!-- end form -->
