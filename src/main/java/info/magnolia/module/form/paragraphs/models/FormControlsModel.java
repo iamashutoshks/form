@@ -109,10 +109,10 @@ public class FormControlsModel extends RenderingModelImpl {
         RenderingModelImpl model = this;
 
         while(model != null) {
-            if(model.getParentModel() instanceof FormModel) {
-                return ((FormModel)model.getParentModel()).getErrorMessages();
+            if(model.getParent() instanceof FormModel) {
+                return ((FormModel)model.getParent()).getErrorMessages();
             }
-            model = (RenderingModelImpl) model.getParentModel();
+            model = (RenderingModelImpl) model.getParent();
         }
         return null;
     }

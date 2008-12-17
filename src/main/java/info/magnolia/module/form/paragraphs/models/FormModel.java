@@ -43,8 +43,8 @@ import info.magnolia.context.WebContext;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.RequestProcessor;
 import info.magnolia.module.form.validations.Validation;
-import info.magnolia.module.standardtemplatingkit.templates.MainTemplate;
-import info.magnolia.module.standardtemplatingkit.templates.MainTemplateModel;
+import info.magnolia.module.standardtemplatingkit.templates.STKTemplate;
+import info.magnolia.module.standardtemplatingkit.templates.STKTemplateModel;
 import info.magnolia.module.standardtemplatingkit.util.STKUtil;
 import org.apache.commons.lang.StringUtils;
 
@@ -58,7 +58,7 @@ import java.util.Map;
  * @author tmiyar
  *
  */
-public class FormModel extends MainTemplateModel{
+public class FormModel extends STKTemplateModel{
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
 
@@ -195,8 +195,8 @@ public class FormModel extends MainTemplateModel{
     }
 
     public String getParagraphsAsStringList() {
-        final MainTemplate templateDef = (MainTemplate) this.getDefinition();
-        return templateDef.getMainArea().getParagraphsAsStringList();
+        final STKTemplate templateDef = (STKTemplate) this.getDefinition();
+        return STKUtil.asStringList(templateDef.getMainArea().getParagraphs());
     }
 
 
