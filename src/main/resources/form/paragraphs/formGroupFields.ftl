@@ -18,7 +18,7 @@
     [/#if]
 </fieldset>
 
-[@cms.newBar contentNodeCollectionName="fields"  paragraph="${model.parentModel.paragraphsAsStringList}"/]
+[@cms.newBar contentNodeCollectionName="fields"  paragraph="${model.parent.paragraphsAsStringList}"/]
 
 
 

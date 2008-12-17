@@ -3,7 +3,7 @@
     <div style="float:right;height:20px;width:100px">[@cms.editBar /]</div>
 [/#if]
 [#assign parent = content?parent]
-[#assign parentmodel = model.parentModel]
+
 [#if !mgnl.editMode]
 <optgroup id="${parent?parent.controlName}_${content.controlName}" label="${content.title}"  >
 [#else]
@@ -13,7 +13,7 @@
     [#list content.labels?split("\r\n") as label]
         [#assign selected=""]
         [#assign data=label?split(":")]
-        [#list parentmodel.value?split("*") as modelValue]
+        [#list model.parent.value?split("*") as modelValue]
             [#if modelValue == data[1]]
                 [#assign selected="selected=\"selected\""]
                 [#break]
