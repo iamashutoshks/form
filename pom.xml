@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -9,9 +8,9 @@
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-m2</version>
   <name>magnolia-module-form</name>
-  <description></description>
+  <description />
 
   <properties>
     <magnoliaVersion>4.0-m2</magnoliaVersion>
@@ -22,9 +21,9 @@
     <url>http://jira.magnolia.info/browse/MGNLFORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</connection>
-    <developerConnection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</developerConnection>
-    <url>http://svn.magnolia.info/view/community/modules/magnolia-module-form/trunk</url>
+    <connection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/tags/magnolia-module-form-1.0-m2</connection>
+    <developerConnection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/tags/magnolia-module-form-1.0-m2</developerConnection>
+    <url>http://svn.magnolia.info/view/community/modules/magnolia-module-form/tags/magnolia-module-form-1.0-m2</url>
   </scm>
 
   <dependencies>
