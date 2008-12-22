@@ -9,7 +9,7 @@
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>magnolia-module-form</name>
+  <name>Magnolia Form Module</name>
   <description />
 
   <properties>
