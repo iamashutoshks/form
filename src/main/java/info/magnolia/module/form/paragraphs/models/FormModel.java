@@ -38,6 +38,8 @@ import info.magnolia.cms.beans.config.RenderableDefinition;
 import info.magnolia.cms.beans.config.RenderingModel;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
+import info.magnolia.cms.i18n.MessagesManager;
+import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.form.FormModule;
@@ -59,11 +61,12 @@ import java.util.Map;
  *
  */
 public class FormModel extends STKTemplateModel{
-
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
 
-    private Map errorMessages = new HashMap();
+    private static final String MSG_BASENAME = "info.magnolia.module.form.messages";
+    private static final String DEFAULT_ERROR_MSG = "generic";
 
+    private Map errorMessages = new HashMap();
 
     public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
@@ -90,7 +93,7 @@ public class FormModel extends STKTemplateModel{
             }
         } catch (Exception e) {
             log.error("error validating form", e);
-            errorMessages.put("Error",MgnlContext.getMessages("info.magnolia.module.form.messages").get("generic") );
+            errorMessages.put("Error", getMessage(DEFAULT_ERROR_MSG));
             return "failed";
         }
     }
@@ -164,10 +167,7 @@ public class FormModel extends STKTemplateModel{
     }
 
     protected void addErrorMessage(String field, String message, Content node) {
-
-        errorMessages.put(field, node.getNodeData("title").getString() + "  "
-                + MgnlContext.getMessages("info.magnolia.module.form.messages").get(message));
-
+        errorMessages.put(field, node.getNodeData("title").getString() + "  " + getMessage(message));
     }
 
     protected boolean isMandatory(Content node) {
@@ -177,7 +177,7 @@ public class FormModel extends STKTemplateModel{
                 mandatory = true;
             }
         } catch (RepositoryException e) {
-            log.debug("node has no mandatory property" + node.getHandle());
+            log.debug("Node {} has no 'mandatory' property.", node.getHandle());
         }
         return mandatory;
     }
@@ -199,6 +199,9 @@ public class FormModel extends STKTemplateModel{
         return STKUtil.asStringList(templateDef.getMainArea().getParagraphs());
     }
 
-
+    private String getMessage(String key) {
+        final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
+        return messages.get(key);
+    }
 
 }
