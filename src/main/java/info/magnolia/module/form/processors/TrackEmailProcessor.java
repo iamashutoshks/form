@@ -31,57 +31,44 @@
  * intact.
  *
  */
-package info.magnolia.module.form;
+package info.magnolia.module.form.processors;
 
-import info.magnolia.module.form.validators.Validator;
+import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import info.magnolia.cms.core.Content;
+import info.magnolia.cms.mail.util.MailUtil;
+import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
  *
  * @author tmiyar
  *
  */
-public class FormModule {
+public class TrackEmailProcessor extends BaseFormProcessorImpl {
 
-    private List validators = new ArrayList();
+    private String loggerName;
 
-    private static FormModule instance;
+    public String process(FormModel model) {
 
-    public FormModule() {
-        instance = this;
+        Content content = model.getContent();
+        if (content.getNodeData("trackMail").getBoolean()) {
+
+            Map params = getParameters();
+            MailUtil.logMail(params, loggerName);
+        } else {
+            return getName() + " failed";
+        }
+
+        return "";
     }
 
-    public static FormModule getInstance() {
-        return instance;
+    public String getLoggerName() {
+        return loggerName;
     }
 
-    public List getValidators() {
-        return validators;
+    public void setLoggerName(String loggerName) {
+        this.loggerName = loggerName;
     }
-
-    public Validator getValidatorByName(final String name) {
-
-        return (Validator) CollectionUtils.find(this.validators, new Predicate() {
-            public boolean evaluate(Object object) {
-                return StringUtils.equals(((Validator) object).getName(), name);
-            }
-        });
-
-    }
-
-    public void setValidators(List validators) {
-        this.validators = validators;
-    }
-
-    public void addValidators(Validator validator) {
-        this.validators.add(validator);
-    }
-
 
 }
+

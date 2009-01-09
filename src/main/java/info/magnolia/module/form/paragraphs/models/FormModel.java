@@ -43,11 +43,13 @@ import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.form.FormModule;
-import info.magnolia.module.form.RequestProcessor;
-import info.magnolia.module.form.validations.Validation;
+import info.magnolia.module.form.processing.FormProcessing;
+import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.module.form.validators.Validator;
 import info.magnolia.module.standardtemplatingkit.templates.STKTemplate;
 import info.magnolia.module.standardtemplatingkit.templates.STKTemplateModel;
 import info.magnolia.module.standardtemplatingkit.util.STKUtil;
+
 import org.apache.commons.lang.StringUtils;
 
 import javax.jcr.RepositoryException;
@@ -65,6 +67,8 @@ public class FormModel extends STKTemplateModel{
 
     private static final String MSG_BASENAME = "info.magnolia.module.form.messages";
     private static final String DEFAULT_ERROR_MSG = "generic";
+    private static final String SUCCESS = "success";
+    private static final String FAILURE = "failure";
 
     private Map errorMessages = new HashMap();
 
@@ -83,18 +87,22 @@ public class FormModel extends STKTemplateModel{
 
             if (errorMessages.size() == 0 && isHoneyPotEmpty()) {
                 // send mail to admin and confirmation to sender
-                RequestProcessor processor = FormModule.getInstance().getRequestProcessor("default");
-                processor.process(content);
-                redirect();
-                return "success";
+                FormProcessing processing = FormProcessing.Factory.getDefaultProcessing();
+                String result = processing.process(((FormParagraph)definition).getFormProcessors(), this);
+                if (StringUtils.isEmpty(result)) {
+                    redirect();
+                    return SUCCESS;
+                } else {
+                    throw new Exception();
+                }
             } else {
                 // display validation fields, error message
-                return "failed";
+                return FAILURE;
             }
         } catch (Exception e) {
             log.error("error validating form", e);
             errorMessages.put("Error", getMessage(DEFAULT_ERROR_MSG));
-            return "failed";
+            return FAILURE;
         }
     }
 
@@ -157,7 +165,7 @@ public class FormModel extends STKTemplateModel{
                 } else if (!StringUtils.isEmpty(value) && node.hasNodeData("validation")) {
 
                     String validation = node.getNodeData("validation").getString();
-                    Validation val = FormModule.getInstance().getValidatorByName(validation);
+                    Validator val = FormModule.getInstance().getValidatorByName(validation);
                     if (val != null && !val.validate(value)) {
                         addErrorMessage(key, val.getName(), node);
                     }

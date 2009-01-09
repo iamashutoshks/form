@@ -37,7 +37,7 @@
       <sv:value>294ed21c-6d55-4440-b29e-174ad11a12d9</sv:value>
     </sv:property>
     <sv:property sv:name="class" sv:type="String">
-      <sv:value>info.magnolia.module.form.validations.Validation</sv:value>
+      <sv:value>info.magnolia.module.form.validators.Validator</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -53,7 +53,7 @@
         <sv:value>2008-10-24T11:02:30.573+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-24T12:02:11.139+02:00</sv:value>
+        <sv:value>2009-01-08T15:55:16.717+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -68,7 +68,7 @@
       <sv:value>2bdebc30-3425-42cf-9824-b32090ee9361</sv:value>
     </sv:property>
     <sv:property sv:name="class" sv:type="String">
-      <sv:value>info.magnolia.module.form.validations.ValidateExpression</sv:value>
+      <sv:value>info.magnolia.module.form.validators.ValidateExpression</sv:value>
     </sv:property>
     <sv:property sv:name="expression" sv:type="String">
       <sv:value>[0-9]*</sv:value>
@@ -87,7 +87,7 @@
         <sv:value>2008-10-24T11:02:30.573+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-10-24T11:22:49.824+02:00</sv:value>
+        <sv:value>2009-01-08T15:55:33.099+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>
@@ -102,7 +102,7 @@
       <sv:value>d828a939-ed77-4bc1-9642-d5e012c192f3</sv:value>
     </sv:property>
     <sv:property sv:name="class" sv:type="String">
-      <sv:value>info.magnolia.module.form.validations.ValidateExpression</sv:value>
+      <sv:value>info.magnolia.module.form.validators.ValidateExpression</sv:value>
     </sv:property>
     <sv:property sv:name="expression" sv:type="String">
       <sv:value>^\S+@\S+$</sv:value>
@@ -118,7 +118,7 @@
         <sv:value>2008-10-24T11:02:30.573+02:00</sv:value>
       </sv:property>
       <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-        <sv:value>2008-11-04T16:18:33.983+01:00</sv:value>
+        <sv:value>2009-01-08T15:55:43.993+01:00</sv:value>
       </sv:property>
     </sv:node>
   </sv:node>

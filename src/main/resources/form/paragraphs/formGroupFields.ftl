@@ -1,9 +1,7 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
 
-[#assign parent = content?parent]
-
-<p class="required"><span>${parent.requiredSymbol?default("*")}</span> ${parent.rightText!""}</p>
+<p class="required"><span>${model.requiredSymbol!""}</span> ${model.rightText!""}</p>
 
 [@cms.editBar editLabel="Edit Fieldset" /]
 <fieldset>
@@ -18,7 +16,7 @@
     [/#if]
 </fieldset>
 
-[@cms.newBar contentNodeCollectionName="fields"  paragraph="${model.parent.paragraphsAsStringList}"/]
+[@cms.newBar newLabel="New Field" contentNodeCollectionName="fields"  paragraph="${model.parent.paragraphsAsStringList}"/]
 
 
 

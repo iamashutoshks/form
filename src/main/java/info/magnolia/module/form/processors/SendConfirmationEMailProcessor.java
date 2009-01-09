@@ -31,57 +31,38 @@
  * intact.
  *
  */
-package info.magnolia.module.form;
+package info.magnolia.module.form.processors;
 
-import info.magnolia.module.form.validators.Validator;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
  *
  * @author tmiyar
  *
  */
-public class FormModule {
+public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {
 
-    private List validators = new ArrayList();
+    public String process(FormModel model) {
 
-    private static FormModule instance;
+        Content content = model.getContent();
+        if (content.getNodeData("sendConfirmation").getBoolean()) {
+            String body = content.getNodeData("confirmMailBody").getString();
+            String from = content.getNodeData("confirmMailFrom").getString();
+            String subject = content.getNodeData("confirmMailSubject")
+                    .getString();
+            String to = content.getNodeData("confirmMailTo").getString();
+            String contentType = content.getNodeData("confirmContentType").getString();
 
-    public FormModule() {
-        instance = this;
-    }
-
-    public static FormModule getInstance() {
-        return instance;
-    }
-
-    public List getValidators() {
-        return validators;
-    }
-
-    public Validator getValidatorByName(final String name) {
-
-        return (Validator) CollectionUtils.find(this.validators, new Predicate() {
-            public boolean evaluate(Object object) {
-                return StringUtils.equals(((Validator) object).getName(), name);
+            try {
+                sendMail(body, from, subject, to, contentType);
+            } catch (Exception e) {
+                return getName() + " failed";
             }
-        });
+        }
 
+        return "";
     }
-
-    public void setValidators(List validators) {
-        this.validators = validators;
-    }
-
-    public void addValidators(Validator validator) {
-        this.validators.add(validator);
-    }
-
 
 }
+

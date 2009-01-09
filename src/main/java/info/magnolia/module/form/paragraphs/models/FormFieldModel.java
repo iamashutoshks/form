@@ -48,14 +48,14 @@ import java.util.Map;
  * @author tmiyar
  *
  */
-public class FormControlsModel extends RenderingModelImpl {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormControlsModel.class);
+public class FormFieldModel extends RenderingModelImpl {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormFieldModel.class);
 
     private String value;
     private String style = "";
     private boolean valid;
 
-    public FormControlsModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+    public FormFieldModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
     }
 
@@ -150,6 +150,22 @@ public class FormControlsModel extends RenderingModelImpl {
 
     public void setStyle(String style) {
         this.style = style;
+    }
+
+    public String getRightText() {
+        try {
+            return content.getParent().getParent().getNodeData("rightText").getString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getRequiredSymbol() {
+        try {
+            return content.getParent().getParent().getNodeData("requiredSymbol").getString();
+        } catch (Exception e) {
+            return "";
+        }
     }
 
 }

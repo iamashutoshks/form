@@ -31,29 +31,23 @@
  * intact.
  *
  */
-package info.magnolia.module.form.validations;
+package info.magnolia.module.form.processing;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import info.magnolia.cms.util.FactoryUtil;
+import info.magnolia.module.form.paragraphs.models.FormModel;
 
-public class ValidateExpression extends Validation {
-    public String expression;
+/**
+ *
+ * @author tmiyar
+ *
+ */
+public interface FormProcessing {
 
-    public boolean validate(String value) {
-        Pattern patern = Pattern.compile(this.getExpression());
-        Matcher fit = patern.matcher(value);
-        if (fit.matches()) {
-            return true;
-        } else {
-            return false;
+        public String process(FormProcessor[] processors, FormModel model);
+
+        public static class Factory {
+            public static FormProcessing getDefaultProcessing() {
+                return (FormProcessing) FactoryUtil.getSingleton(FormProcessing.class);
+            }
         }
-    }
-
-    public String getExpression() {
-        return expression;
-    }
-
-    public void setExpression(String expression) {
-        this.expression = expression;
-    }
 }

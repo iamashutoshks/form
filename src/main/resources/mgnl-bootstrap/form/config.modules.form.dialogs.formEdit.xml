@@ -102,6 +102,9 @@
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.controlName.label</sv:value>
       </sv:property>
+      <sv:property sv:name="required" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
       </sv:property>
@@ -131,7 +134,7 @@
           <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T11:56:58.403+01:00</sv:value>
+          <sv:value>2009-01-08T11:22:42.725+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -151,6 +154,9 @@
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.title.label</sv:value>
       </sv:property>
+      <sv:property sv:name="required" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
       </sv:property>
@@ -180,7 +186,7 @@
           <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-          <sv:value>2008-10-27T11:57:10.497+01:00</sv:value>
+          <sv:value>2009-01-08T11:23:51.505+01:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

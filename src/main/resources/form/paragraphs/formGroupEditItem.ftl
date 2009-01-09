@@ -20,6 +20,4 @@
 [#if content.title?has_content]
     </label>
 [/#if]
-[#if content.description?has_content]
-    <span>${content.description}</span>
-[/#if]
+

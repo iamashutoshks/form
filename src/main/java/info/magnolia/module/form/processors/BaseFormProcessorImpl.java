@@ -31,13 +31,16 @@
  * intact.
  *
  */
-package info.magnolia.module.form;
+package info.magnolia.module.form.processors;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.mail.MailModule;
 import info.magnolia.cms.mail.templates.MgnlEmail;
 import info.magnolia.cms.mail.util.MailUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.form.paragraphs.models.FormModel;
+import info.magnolia.module.form.processing.FormProcessor;
+
 import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
@@ -51,42 +54,25 @@ import java.util.Map.Entry;
  * @author tmiyar
  *
  */
-public class RequestProcessor {
+public abstract class BaseFormProcessorImpl implements FormProcessor {
 
     private String name;
 
-    private String loggerName;
+    private boolean enabled;
 
-    public void process(Content content) throws Exception {
-        sendContactEMail(content);
-        sendConfirmationEMail(content);
-        logFormParameters(content);
-    }
 
-    protected void sendContactEMail(Content content) throws Exception {
-
-        String body = content.getNodeData("contactMailBody")
-                .getString();
-        String from = content.getNodeData("contactMailFrom").getString();
-        String subject = content.getNodeData("contactMailSubject").getString();
-        String to = content.getNodeData("contactMailTo").getString();
-        String contentType = content.getNodeData("contentType").getString();
-
-        sendMail(body, from, subject, to, contentType);
-    }
-
-    protected void sendConfirmationEMail(Content content) throws Exception {
-
-        if (content.getNodeData("sendConfirmation").getBoolean()) {
-            String body = content.getNodeData("confirmMailBody").getString();
-            String from = content.getNodeData("confirmMailFrom").getString();
-            String subject = content.getNodeData("confirmMailSubject")
-                    .getString();
-            String to = content.getNodeData("confirmMailTo").getString();
-            String contentType = content.getNodeData("contentType").getString();
-
-            sendMail(body, from, subject, to, contentType);
+    public String process(FormProcessor processors[], FormModel model) throws Exception {
+        String result = "";
+        for (int i = 0; i < processors.length; i++) {
+            FormProcessor processor = processors[i];
+            if(processor.isEnabled()){
+                result = processor.process(model);
+                if(StringUtils.isEmpty(result)) {
+                    break;
+                }
+            }
         }
+        return result;
     }
 
     protected void sendMail(String body, String from, String subject, String to, String contentType)
@@ -122,15 +108,6 @@ public class RequestProcessor {
         return result;
     }
 
-    protected void logFormParameters(Content content) {
-
-        if (content.getNodeData("trackMail").getBoolean()) {
-
-            Map params = getParameters();
-            MailUtil.logMail(params, loggerName);
-        }
-    }
-
     public String getName() {
         return name;
     }
@@ -139,12 +116,13 @@ public class RequestProcessor {
         this.name = name;
     }
 
-    public String getLoggerName() {
-        return loggerName;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setLoggerName(String loggerName) {
-        this.loggerName = loggerName;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 }
+

@@ -31,9 +31,9 @@
  * intact.
  *
  */
-package info.magnolia.module.form.validations;
+package info.magnolia.module.form.validators;
 
-public class Validation {
+public class Validator {
 
     private String message;
     private String name;

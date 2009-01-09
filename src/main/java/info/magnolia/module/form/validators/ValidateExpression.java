@@ -31,57 +31,29 @@
  * intact.
  *
  */
-package info.magnolia.module.form;
+package info.magnolia.module.form.validators;
 
-import info.magnolia.module.form.validators.Validator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
+public class ValidateExpression extends Validator {
+    public String expression;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- *
- * @author tmiyar
- *
- */
-public class FormModule {
-
-    private List validators = new ArrayList();
-
-    private static FormModule instance;
-
-    public FormModule() {
-        instance = this;
+    public boolean validate(String value) {
+        Pattern patern = Pattern.compile(this.getExpression());
+        Matcher fit = patern.matcher(value);
+        if (fit.matches()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public static FormModule getInstance() {
-        return instance;
+    public String getExpression() {
+        return expression;
     }
 
-    public List getValidators() {
-        return validators;
+    public void setExpression(String expression) {
+        this.expression = expression;
     }
-
-    public Validator getValidatorByName(final String name) {
-
-        return (Validator) CollectionUtils.find(this.validators, new Predicate() {
-            public boolean evaluate(Object object) {
-                return StringUtils.equals(((Validator) object).getName(), name);
-            }
-        });
-
-    }
-
-    public void setValidators(List validators) {
-        this.validators = validators;
-    }
-
-    public void addValidators(Validator validator) {
-        this.validators.add(validator);
-    }
-
-
 }
