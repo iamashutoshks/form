@@ -25,7 +25,7 @@
             </label>
       [/#list]
     [#else]
-        <select id="${content.controlName}" name="${content.controlName}" >
+        <select id="${content.controlName}" name="${content.controlName}" ${content.multiple?string("multiple=\"multiple\"", "")}>
             [#list content.labels?split("\r\n") as label]
                 [#assign selected=""]
                 [#assign data=label?split(":")]
