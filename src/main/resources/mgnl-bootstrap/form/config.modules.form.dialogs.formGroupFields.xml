@@ -12,6 +12,9 @@
   <sv:property sv:name="jcr:uuid" sv:type="String">
     <sv:value>866d6aa5-6ce4-4b8d-92ab-4153a9e53df6</sv:value>
   </sv:property>
+  <sv:property sv:name="class" sv:type="String">
+    <sv:value>info.magnolia.module.admininterface.dialogs.ConfiguredDialog</sv:value>
+  </sv:property>
   <sv:property sv:name="i18nBasename" sv:type="String">
     <sv:value>info.magnolia.module.form.messages</sv:value>
   </sv:property>
@@ -32,7 +35,7 @@
       <sv:value>2008-10-10T14:53:26.696+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2008-11-11T15:44:07.964+01:00</sv:value>
+      <sv:value>2009-01-12T11:42:53.210+01:00</sv:value>
     </sv:property>
   </sv:node>
   <sv:node sv:name="tabMain">

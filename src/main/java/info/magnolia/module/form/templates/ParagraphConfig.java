@@ -33,46 +33,20 @@
  */
 package info.magnolia.module.form.templates;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ParagraphConfig {
 
-import org.apache.commons.lang.ArrayUtils;
+    private String name;
 
-import info.magnolia.cms.beans.config.Paragraph;
-import info.magnolia.module.form.processing.FormProcessor;
-
-/**
- *
- * @author tmiyar
- *
- */
-public class FormParagraph extends Paragraph {
-
-    private FormProcessor[] formProcessors = new FormProcessor[0];
-    private List paragraphs = new ArrayList();
-
-    public FormProcessor[] getFormProcessors() {
-        return formProcessors;
+    public String getName() {
+        return name;
     }
 
-    public void addFormProcessor(FormProcessor formProcessor) {
-        formProcessors = (FormProcessor[]) ArrayUtils.add(formProcessors, formProcessor);
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setFormProcessors(FormProcessor[] formProcessors) {
-        this.formProcessors = formProcessors;
-    }
-
-    public List getParagraphs() {
-        return paragraphs;
-    }
-
-    public void setParagraphs(List paragraphs) {
-        this.paragraphs = paragraphs;
-    }
-
-    public void addParagraph(ParagraphConfig paragraph){
-        this.paragraphs.add(paragraph);
+    public String toString() {
+        return this.getName();
     }
 
 }

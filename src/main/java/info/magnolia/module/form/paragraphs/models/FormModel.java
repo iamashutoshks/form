@@ -36,23 +36,26 @@ package info.magnolia.module.form.paragraphs.models;
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.beans.config.RenderableDefinition;
 import info.magnolia.cms.beans.config.RenderingModel;
+import info.magnolia.cms.beans.config.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.i18n.Messages;
+import info.magnolia.cms.link.AbsolutePathTransformer;
+import info.magnolia.cms.link.UUIDLink;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.processing.FormProcessing;
 import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.module.form.templates.ParagraphConfig;
 import info.magnolia.module.form.validators.Validator;
-import info.magnolia.module.standardtemplatingkit.templates.STKTemplate;
-import info.magnolia.module.standardtemplatingkit.templates.STKTemplateModel;
-import info.magnolia.module.standardtemplatingkit.util.STKUtil;
 
 import org.apache.commons.lang.StringUtils;
 
 import javax.jcr.RepositoryException;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -62,7 +65,8 @@ import java.util.Map;
  * @author tmiyar
  *
  */
-public class FormModel extends STKTemplateModel{
+public class FormModel extends RenderingModelImpl {
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
 
     private static final String MSG_BASENAME = "info.magnolia.module.form.messages";
@@ -114,7 +118,8 @@ public class FormModel extends STKTemplateModel{
 
                 HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
                 try {
-                    url = STKUtil.createLink(hm.getContentByUUID(url));
+                    Content node = hm.getContentByUUID(url);
+                    url = FormModel.createLink(node);
                 } catch (RepositoryException e) {
                     log.error("Can't resolve node with uuid " + url);
                     throw new Exception(e);
@@ -203,13 +208,35 @@ public class FormModel extends STKTemplateModel{
     }
 
     public String getParagraphsAsStringList() {
-        final STKTemplate templateDef = (STKTemplate) this.getDefinition();
-        return STKUtil.asStringList(templateDef.getMainArea().getParagraphs());
+        final FormParagraph def = (FormParagraph) this.getDefinition();
+        return asStringList(def.getParagraphs());
     }
 
     private String getMessage(String key) {
         final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
         return messages.get(key);
+    }
+
+    public static String createLink(Content node) {
+        if(node == null){
+            return null;
+        }
+        UUIDLink link = new UUIDLink();
+        link.setNode(node);
+        link.setRepository(node.getHierarchyManager().getName());
+        return new AbsolutePathTransformer(true, true, true).transform(link);
+    }
+
+    public static String asStringList(Collection items){
+        StringBuffer list = new StringBuffer();
+        for (Iterator iterator = items.iterator(); iterator.hasNext();) {
+            ParagraphConfig def = (ParagraphConfig) iterator.next();
+            list.append(def.toString());
+            if(iterator.hasNext()){
+                list.append(", ");
+            }
+        }
+        return list.toString();
     }
 
 }

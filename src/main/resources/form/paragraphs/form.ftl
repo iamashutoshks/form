@@ -34,7 +34,7 @@
                     [/@cms.contentNodeIterator]
                 [/#if]
                 [#if mgnl.editMode]
-                    <div>[@cms.newBar contentNodeCollectionName="fieldsets"  newLabel="New Fieldset" paragraph="formGroupFields"/]</div>
+                    <div>[@cms.newBar contentNodeCollectionName="fieldsets"  newLabel="New Fieldset" paragraph="formGroupFields" /]</div>
                 [/#if]
         </form>
     </div> <!-- end form -->
