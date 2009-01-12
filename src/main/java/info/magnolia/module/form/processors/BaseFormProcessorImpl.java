@@ -34,12 +34,12 @@
 package info.magnolia.module.form.processors;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.mail.MailModule;
-import info.magnolia.cms.mail.templates.MgnlEmail;
-import info.magnolia.cms.mail.util.MailUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.paragraphs.models.FormModel;
 import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.mail.MailModule;
+import info.magnolia.module.mail.templates.MgnlEmail;
+import info.magnolia.module.mail.util.MailUtil;
 
 import org.apache.commons.lang.StringUtils;
 

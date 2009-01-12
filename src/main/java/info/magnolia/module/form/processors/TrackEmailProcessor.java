@@ -36,8 +36,8 @@ package info.magnolia.module.form.processors;
 import java.util.Map;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.mail.util.MailUtil;
 import info.magnolia.module.form.paragraphs.models.FormModel;
+import info.magnolia.module.mail.util.MailUtil;
 
 /**
  *
