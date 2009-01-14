@@ -33,9 +33,9 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.cms.beans.config.RenderableDefinition;
-import info.magnolia.cms.beans.config.RenderingModel;
-import info.magnolia.cms.beans.config.RenderingModelImpl;
+import info.magnolia.module.templating.RenderableDefinition;
+import info.magnolia.module.templating.RenderingModel;
+import info.magnolia.module.templating.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import org.apache.commons.lang.StringUtils;

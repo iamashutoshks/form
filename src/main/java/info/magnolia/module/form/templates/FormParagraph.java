@@ -38,8 +38,8 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import info.magnolia.cms.beans.config.Paragraph;
 import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.templating.Paragraph;
 
 /**
  *
