@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>info.magnolia</groupId>
+    <artifactId>magnolia-parent-pom-community-module</artifactId>
+    <version>6-SNAPSHOT</version>
+  </parent>
+  <groupId>info.magnolia</groupId>
+  <artifactId>magnolia-module-form</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Magnolia Form Module</name>
+  <description />
+
+  <properties>
+    <magnoliaVersion>4.0-SNAPSHOT</magnoliaVersion>
+    <documentationURL>http://documentation.magnolia.info/modules/form.html</documentationURL>
+  </properties>
+  <issueManagement>
+    <system>Jira</system>
+    <url>http://jira.magnolia.info/browse/MGNLFORM</url>
+  </issueManagement>
+  <scm>
+    <connection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</connection>
+    <developerConnection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</developerConnection>
+    <url>http://svn.magnolia.info/view/community/modules/magnolia-module-form/trunk</url>
+  </scm>
+
+  <dependencies>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-core</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-module-mail</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-gui</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-module-admininterface</artifactId>
+      <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-module-templating</artifactId>
+      <version>${magnoliaVersion}</version>
+    </dependency>
+     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
