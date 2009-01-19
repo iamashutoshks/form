@@ -13,7 +13,7 @@
     <sv:value>paragraph.formFile.description</sv:value>
   </sv:property>
   <sv:property sv:name="dialog" sv:type="String">
-    <sv:value>formEdit</sv:value>
+    <sv:value>formFile</sv:value>
   </sv:property>
   <sv:property sv:name="i18nBasename" sv:type="String">
     <sv:value>info.magnolia.module.form.messages</sv:value>
