@@ -14,16 +14,16 @@
 
   <properties>
     <magnoliaVersion>4.0-SNAPSHOT</magnoliaVersion>
-    <documentationURL>http://documentation.magnolia.info/modules/form.html</documentationURL>
+    <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
   <issueManagement>
     <system>Jira</system>
-    <url>http://jira.magnolia.info/browse/MGNLFORM</url>
+    <url>http://jira.magnolia-cms.com/browse/MGNLFORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</connection>
-    <developerConnection>scm:svn:http://svn.magnolia.info/svn/community/modules/magnolia-module-form/trunk</developerConnection>
-    <url>http://svn.magnolia.info/view/community/modules/magnolia-module-form/trunk</url>
+    <connection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/trunk</connection>
+    <developerConnection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/trunk</developerConnection>
+    <url>http://svn.magnolia-cms.com/view/community/modules/magnolia-module-form/trunk</url>
   </scm>
 
   <dependencies>
