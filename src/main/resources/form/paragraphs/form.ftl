@@ -2,13 +2,13 @@
 
 [#if actionResult == "success"]
     <div class="text success">
-        <h1>${content.successTitle}</h1>
-        <p>${content.successMessage}</p>
+        <h1>${content.successTitle!i18n['form.default.successTitle']}</h1>
+        <p>${content.successMessage!}</p>
     </div><!-- end text -->
 [#else]
     [#if model.errorMessages?size > 0]
         <div class="text error">
-            <h1>${content.errorTitle}</h1>
+            <h1>${content.errorTitle!i18n['form.default.errorTitle']}</h1>
             <ul>
                 [#assign keys = model.errorMessages?keys]
                 [#list keys as key]
