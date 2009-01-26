@@ -1,6 +1,10 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
-<div id="${content.controlName}" >
+[#if content.controlName?has_content]
+    <div id="${content.controlName}" >
+[#else]
+    <div>
+[/#if]
 [@cms.editBar /]
     [#if content.edits?exists]
         [#if mgnl.editMode]
