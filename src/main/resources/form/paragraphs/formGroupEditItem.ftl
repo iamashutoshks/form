@@ -9,7 +9,7 @@
             [/#if]
             ${content.title}
             [#if content.mandatory]
-                 <dfn title="required">*</dfn>
+                 <dfn title="required">${model.requiredSymbol!}</dfn>
             [/#if]
         </span>
 [/#if]
