@@ -239,4 +239,20 @@ public class FormModel extends RenderingModelImpl {
         return list.toString();
     }
 
+    public String getRequiredSymbol() {
+        try {
+            return content.getNodeData("requiredSymbol").getString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public String getRightText() {
+        try {
+            return content.getNodeData("rightText").getString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
 }

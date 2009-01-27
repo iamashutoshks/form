@@ -154,7 +154,7 @@ public class FormFieldModel extends RenderingModelImpl {
 
     public String getRightText() {
         try {
-            return content.getParent().getParent().getNodeData("rightText").getString();
+            return ((FormModel) this.getParent()).getRightText();
         } catch (Exception e) {
             return "";
         }
@@ -162,7 +162,13 @@ public class FormFieldModel extends RenderingModelImpl {
 
     public String getRequiredSymbol() {
         try {
-            return content.getParent().getParent().getNodeData("requiredSymbol").getString();
+            RenderingModel tempModel = this.getParent();
+            while (!(tempModel instanceof FormModel)) {
+                tempModel = tempModel.getParent();
+            }
+
+            return ((FormModel) tempModel).getRequiredSymbol();
+
         } catch (Exception e) {
             return "";
         }
