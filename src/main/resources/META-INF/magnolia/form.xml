@@ -13,9 +13,5 @@
       <name>core</name>
       <version>4.0/*</version>
     </dependency>
-    <dependency>
-      <name>standard-templating-kit</name>
-      <version>1.0/*</version>
-    </dependency>
   </dependencies>
 </module>
