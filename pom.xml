@@ -13,7 +13,7 @@
   <description />
 
   <properties>
-    <magnoliaVersion>4.0-SNAPSHOT</magnoliaVersion>
+    <magnoliaVersion>4.0-rc1</magnoliaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
   <issueManagement>
@@ -68,3 +68,4 @@
     </dependency>
   </dependencies>
 </project>
+
