@@ -8,12 +8,12 @@
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-rc2</version>
   <name>Magnolia Form Module</name>
   <description />
 
   <properties>
-    <magnoliaVersion>4.0-rc1</magnoliaVersion>
+    <magnoliaVersion>4.0-rc2</magnoliaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
   <issueManagement>
@@ -21,9 +21,9 @@
     <url>http://jira.magnolia-cms.com/browse/MGNLFORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/trunk</connection>
-    <developerConnection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/trunk</developerConnection>
-    <url>http://svn.magnolia-cms.com/view/community/modules/magnolia-module-form/trunk</url>
+    <connection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/tags/magnolia-module-form-1.0-rc2</connection>
+    <developerConnection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/tags/magnolia-module-form-1.0-rc2</developerConnection>
+    <url>http://svn.magnolia-cms.com/view/community/modules/magnolia-module-form/tags/magnolia-module-form-1.0-rc2</url>
   </scm>
 
   <dependencies>
@@ -55,6 +55,7 @@
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-templating</artifactId>
       <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
     </dependency>
      <dependency>
       <groupId>javax.servlet</groupId>
