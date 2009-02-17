@@ -18,7 +18,7 @@
         <div style="float:right;height:20px;width:100px">[@cms.editBar /]</div>
 [/#if]
 
-<input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!}"/>
+<input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
 
 [#if content.title?has_content]
     </label>

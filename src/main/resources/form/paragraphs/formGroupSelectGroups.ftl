@@ -14,12 +14,12 @@
         [#assign selected=""]
         [#assign data=label?split(":")]
         [#list model.parent.value?split("*") as modelValue]
-            [#if modelValue == data[1]]
+            [#if modelValue == data[1]!data[0]]
                 [#assign selected="selected=\"selected\""]
                 [#break]
             [/#if]
         [/#list]
-        <option value="${data[1]}" ${selected} >${data[0]}</option>
+        <option value="${data[1]!data[0]!?html}" ${selected} >${data[0]}</option>
     [/#list]
 [#if !mgnl.editMode]
 </optgroup>

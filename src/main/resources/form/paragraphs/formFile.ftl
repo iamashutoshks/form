@@ -6,7 +6,7 @@
         <label id="${content.controlName}_label" for="${content.controlName}">
             ${content.title}
     [/#if]
-        <input type="file" name="${content.controlName}" id="${content.controlName}" value="${model.value!}"/>
+        <input type="file" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
     [#if content.title?has_content]
         </label>
     [/#if]

@@ -21,7 +21,7 @@
             [/#if]
 
             <label id="${content.controlName}_label" for="${content.controlName}_${label_index}">
-                <input id="${content.controlName}_${label_index}" name="${content.controlName}" type="${content.type}" value="${data[1]!data[0]}" ${checked} />
+                <input id="${content.controlName}_${label_index}" name="${content.controlName}" type="${content.type}" value="${data[1]!data[0]!?html}" ${checked} />
                     ${data[0]}
             </label>
       [/#list]
@@ -33,7 +33,7 @@
                 [#if model.value == data[1]!data[0] ]
                     [#assign selected="selected=\"selected\""]
                 [/#if]
-                <option value="${data[1]!data[0]}" ${selected} >${data[0]}</option>
+                <option value="${data[1]!data[0]!?html}" ${selected} >${data[0]}</option>
             [/#list]
         </select>
     [/#if]
