@@ -15,12 +15,13 @@
         [#list content.labels?split("\r\n") as label]
             [#assign checked=""]
             [#assign data=label?split(":")]
-            [#if model.value == data[1] ]
+
+            [#if model.value == data[1]!data[0] ]
                 [#assign checked="checked=\"checked\""]
             [/#if]
 
             <label id="${content.controlName}_label" for="${content.controlName}_${label_index}">
-                <input id="${content.controlName}_${label_index}" name="${content.controlName}" type="${content.type}" value="${data[1]}" ${checked} />
+                <input id="${content.controlName}_${label_index}" name="${content.controlName}" type="${content.type}" value="${data[1]!data[0]}" ${checked} />
                     ${data[0]}
             </label>
       [/#list]
@@ -29,10 +30,10 @@
             [#list content.labels?split("\r\n") as label]
                 [#assign selected=""]
                 [#assign data=label?split(":")]
-                [#if model.value == data[1] ]
+                [#if model.value == data[1]!data[0] ]
                     [#assign selected="selected=\"selected\""]
                 [/#if]
-                <option value="${data[1]}" ${selected} >${data[0]}</option>
+                <option value="${data[1]!data[0]}" ${selected} >${data[0]}</option>
             [/#list]
         </select>
     [/#if]
