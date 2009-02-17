@@ -19,7 +19,7 @@
             </ul>
         </div> <!-- end error message -->
     [/#if]
-    [@cms.editBar editLabel="Edit Form Settings" moveLabel="" deleteLabel="" paragraph="form" /]
+    [@cms.editBar editLabel="Edit Form Settings" moveLabel="" deleteLabel="" /]
     <div class="text">
         <h1>${content.formTitle!}</h1>
         <p>${content.formText!}</p>
