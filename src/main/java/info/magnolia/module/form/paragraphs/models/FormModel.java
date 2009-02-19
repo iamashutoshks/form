@@ -34,15 +34,13 @@
 package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.cms.beans.config.ContentRepository;
+import info.magnolia.link.LinkUtil;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 import info.magnolia.module.templating.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.HierarchyManager;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.i18n.Messages;
-import info.magnolia.cms.link.AbsolutePathTransformer;
-import info.magnolia.cms.link.UUIDLink;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.form.FormModule;
@@ -116,10 +114,9 @@ public class FormModel extends RenderingModelImpl {
             String url = content.getNodeData("redirect").getString();
             if(!StringUtils.isEmpty(url)) {
 
-                HierarchyManager hm = MgnlContext.getHierarchyManager(ContentRepository.WEBSITE);
                 try {
-                    Content node = hm.getContentByUUID(url);
-                    url = FormModel.createLink(node);
+
+                    url = LinkUtil.createAbsoluteLink(ContentRepository.WEBSITE, url);
                 } catch (RepositoryException e) {
                     log.error("Can't resolve node with uuid " + url);
                     throw new Exception(e);
@@ -215,16 +212,6 @@ public class FormModel extends RenderingModelImpl {
     private String getMessage(String key) {
         final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
         return messages.get(key);
-    }
-
-    public static String createLink(Content node) {
-        if(node == null){
-            return null;
-        }
-        UUIDLink link = new UUIDLink();
-        link.setNode(node);
-        link.setRepository(node.getHierarchyManager().getName());
-        return new AbsolutePathTransformer(true, true, true).transform(link);
     }
 
     public static String asStringList(Collection items){
