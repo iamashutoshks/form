@@ -13,7 +13,7 @@
   <description />
 
   <properties>
-    <magnoliaVersion>4.0-rc2</magnoliaVersion>
+    <magnoliaVersion>4.0-rc4</magnoliaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
   <issueManagement>
