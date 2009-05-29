@@ -21,8 +21,8 @@
     [/#if]
     [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" deleteLabel="" /]
     <div class="text">
-        <h1>${content.formTitle!}</h1>
-        <p>${content.formText!}</p>
+        <h1>${content.formTitle!?html}</h1>
+        <p>${content.formText!?html}</p>
     </div><!-- end text -->
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="multipart/form-data" >
