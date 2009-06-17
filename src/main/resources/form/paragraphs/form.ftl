@@ -19,7 +19,11 @@
             </ul>
         </div> <!-- end error message -->
     [/#if]
-    [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" deleteLabel="" /]
+    [#if mgnl.editMode]
+    <div style="clear: both" >
+    	[@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" deleteLabel="" /]
+    </div>
+    [/#if]
     <div class="text">
         <h1>${content.formTitle!?html}</h1>
         <p>${content.formText!?html}</p>
