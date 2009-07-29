@@ -80,6 +80,7 @@ public class FormModel extends RenderingModelImpl {
 
     public String execute() {
         log.debug("Executing " + this.getClass().getName());
+        String result = "";
         try {
             if (!hasFormData()) {
                 return "";
@@ -90,7 +91,7 @@ public class FormModel extends RenderingModelImpl {
             if (errorMessages.size() == 0 && isHoneyPotEmpty()) {
                 // send mail to admin and confirmation to sender
                 FormProcessing processing = FormProcessing.Factory.getDefaultProcessing();
-                String result = processing.process(((FormParagraph)definition).getFormProcessors(), this);
+                result = processing.process(((FormParagraph)definition).getFormProcessors(), this);
                 if (StringUtils.isEmpty(result)) {
                     redirect();
                     return SUCCESS;
@@ -102,8 +103,12 @@ public class FormModel extends RenderingModelImpl {
                 return FAILURE;
             }
         } catch (Exception e) {
-            log.error("error validating form", e);
-            errorMessages.put("Error", getMessage(DEFAULT_ERROR_MSG));
+            if(StringUtils.isNotEmpty(result)) {
+                errorMessages.put("Error", result);
+            } else {
+                errorMessages.put("Error", getMessage(DEFAULT_ERROR_MSG));
+            }
+
             return FAILURE;
         }
     }

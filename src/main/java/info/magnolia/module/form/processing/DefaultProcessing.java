@@ -33,6 +33,8 @@
  */
 package info.magnolia.module.form.processing;
 
+import org.apache.commons.lang.StringUtils;
+
 import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
@@ -48,6 +50,10 @@ public class DefaultProcessing implements FormProcessing {
             FormProcessor processor = processors[i];
             if(processor.isEnabled()){
                 result += processor.process(model);
+                if(StringUtils.isNotEmpty(result)) {
+                    //stops processing if there is an error
+                    break;
+                }
             }
         }
         return result;
