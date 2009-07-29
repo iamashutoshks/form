@@ -193,7 +193,8 @@ public class FormModel extends RenderingModelImpl {
     }
 
     protected boolean hasFormData() {
-        return (MgnlContext.getPostedForm() != null);
+        return (MgnlContext.getPostedForm() != null
+                &&  MgnlContext.getParameter("paragraphUUID").equals(content.getUUID()));
     }
 
     public Map getErrorMessages() {

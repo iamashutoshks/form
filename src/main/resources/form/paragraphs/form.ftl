@@ -32,6 +32,7 @@
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="multipart/form-data" >
 
                 <input type="text" style="display:none;" name="field" value="" />
+                <input type="text" style="display:none;" name="paragraphUUID" value="${content.@uuid}" />
                 [#if content.fieldsets?exists]
                     [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]
                         [@cms.includeTemplate/]
