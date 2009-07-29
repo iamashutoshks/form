@@ -182,7 +182,11 @@ public class FormModel extends RenderingModelImpl {
     }
 
     protected void addErrorMessage(String field, String message, Content node) {
-        errorMessages.put(field, node.getNodeData("title").getString() + ": " + getMessage(message));
+        String errorMessage = getMessage("form.user.errorMessage." + message);
+        if(StringUtils.isEmpty(errorMessage) || StringUtils.startsWith(errorMessage, "???")) {
+            errorMessage = getMessage(message);
+        }
+        errorMessages.put(field, node.getNodeData("title").getString() + ": " + errorMessage);
     }
 
     protected boolean isMandatory(Content node) {
