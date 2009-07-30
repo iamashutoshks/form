@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2009 Magnolia International
+ * This file Copyright (c) 2008 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,52 +31,28 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processors;
+package info.magnolia.module.form.util;
 
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.paragraphs.models.FormModel;
-import info.magnolia.module.form.util.FormUtil;
-import info.magnolia.module.mail.util.MailUtil;
+import info.magnolia.cms.i18n.Messages;
+import info.magnolia.cms.i18n.MessagesManager;
 
 /**
  *
  * @author tmiyar
  *
  */
-public class TrackEmailProcessor extends BaseFormProcessorImpl {
+public class FormUtil {
 
-    private static final Logger log = LoggerFactory.getLogger(TrackEmailProcessor.class);
+    private static final String MSG_BASENAME = "info.magnolia.module.form.messages";
 
-    private String loggerName;
-
-    public String process(FormModel model) {
-        try {
-            Content content = model.getContent();
-            if (content.getNodeData("trackMail").getBoolean()) {
-
-                Map params = getParameters();
-                MailUtil.logMail(params, loggerName);
-            }
-        } catch (Exception e) {
-            log.error("Trak email", e);
-            FormUtil.getMessage("TrackEmailProcessor.errorMessage", "");
-        }
-
-        return "";
+    public static String getMessage(String key) {
+        final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
+        return messages.get(key);
     }
 
-    public String getLoggerName() {
-        return loggerName;
-    }
-
-    public void setLoggerName(String loggerName) {
-        this.loggerName = loggerName;
+    public static String getMessage(String key, String defaultMsg) {
+        final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
+        return messages.getWithDefault(key, defaultMsg);
     }
 
 }
-

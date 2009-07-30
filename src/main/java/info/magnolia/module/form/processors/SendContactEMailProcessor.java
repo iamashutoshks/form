@@ -33,8 +33,12 @@
  */
 package info.magnolia.module.form.processors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import info.magnolia.cms.core.Content;
 import info.magnolia.module.form.paragraphs.models.FormModel;
+import info.magnolia.module.form.util.FormUtil;
 
 /**
  *
@@ -43,20 +47,22 @@ import info.magnolia.module.form.paragraphs.models.FormModel;
  */
 public class SendContactEMailProcessor extends BaseFormProcessorImpl {
 
+    private static final Logger log = LoggerFactory.getLogger(SendContactEMailProcessor.class);
+
     public String process(FormModel model) {
-
-        Content content = model.getContent();
-        String body = content.getNodeData("contactMailBody")
-                .getString();
-        String from = content.getNodeData("contactMailFrom").getString();
-        String subject = content.getNodeData("contactMailSubject").getString();
-        String to = content.getNodeData("contactMailTo").getString();
-        String contentType = content.getNodeData("contentType").getString();
-
         try {
+            Content content = model.getContent();
+            String body = content.getNodeData("contactMailBody")
+                    .getString();
+            String from = content.getNodeData("contactMailFrom").getString();
+            String subject = content.getNodeData("contactMailSubject").getString();
+            String to = content.getNodeData("contactMailTo").getString();
+            String contentType = content.getNodeData("contentType").getString();
+
             sendMail(body, from, subject, to, contentType);
         } catch (Exception e) {
-            return getName() + " failed";
+            log.error("Contact email", e);
+            return FormUtil.getMessage("SendContactEMailProcessor.errorMessage", "");
         }
         return "";
     }

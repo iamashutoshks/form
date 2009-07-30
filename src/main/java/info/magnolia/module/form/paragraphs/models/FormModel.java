@@ -47,6 +47,7 @@ import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.processing.FormProcessing;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.ParagraphConfig;
+import info.magnolia.module.form.util.FormUtil;
 import info.magnolia.module.form.validators.Validator;
 
 import org.apache.commons.lang.StringUtils;
@@ -67,7 +68,6 @@ public class FormModel extends RenderingModelImpl {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
 
-    private static final String MSG_BASENAME = "info.magnolia.module.form.messages";
     private static final String DEFAULT_ERROR_MSG = "generic";
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
@@ -106,7 +106,7 @@ public class FormModel extends RenderingModelImpl {
             if(StringUtils.isNotEmpty(result)) {
                 errorMessages.put("Error", result);
             } else {
-                errorMessages.put("Error", getMessage(DEFAULT_ERROR_MSG));
+                errorMessages.put("Error", FormUtil.getMessage(DEFAULT_ERROR_MSG));
             }
 
             return FAILURE;
@@ -182,10 +182,7 @@ public class FormModel extends RenderingModelImpl {
     }
 
     protected void addErrorMessage(String field, String message, Content node) {
-        String errorMessage = getMessage("form.user.errorMessage." + message);
-        if(StringUtils.isEmpty(errorMessage) || StringUtils.startsWith(errorMessage, "???")) {
-            errorMessage = getMessage(message);
-        }
+        String errorMessage = FormUtil.getMessage("form.user.errorMessage." + message, "invalid input");
         errorMessages.put(field, node.getNodeData("title").getString() + ": " + errorMessage);
     }
 
@@ -217,11 +214,6 @@ public class FormModel extends RenderingModelImpl {
     public String getParagraphsAsStringList() {
         final FormParagraph def = (FormParagraph) this.getDefinition();
         return asStringList(def.getParagraphs());
-    }
-
-    private String getMessage(String key) {
-        final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
-        return messages.get(key);
     }
 
     public static String asStringList(Collection items){
