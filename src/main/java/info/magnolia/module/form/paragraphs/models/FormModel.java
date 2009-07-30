@@ -39,8 +39,6 @@ import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 import info.magnolia.module.templating.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
-import info.magnolia.cms.i18n.MessagesManager;
-import info.magnolia.cms.i18n.Messages;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.form.FormModule;
@@ -55,8 +53,8 @@ import org.apache.commons.lang.StringUtils;
 import javax.jcr.RepositoryException;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -72,7 +70,7 @@ public class FormModel extends RenderingModelImpl {
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
 
-    private Map errorMessages = new HashMap();
+    private Map<String, String> errorMessages = new LinkedHashMap<String, String>();
 
     public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
@@ -203,7 +201,7 @@ public class FormModel extends RenderingModelImpl {
                 &&  MgnlContext.getParameter("paragraphUUID").equals(content.getUUID()));
     }
 
-    public Map getErrorMessages() {
+    public Map<String, String> getErrorMessages() {
         return errorMessages;
     }
 
