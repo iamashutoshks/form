@@ -70,7 +70,8 @@ public class FormModel extends RenderingModelImpl {
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
 
-    private Map<String, String> errorMessages = new LinkedHashMap<String, String>();
+    // <String, String>
+    private Map errorMessages = new LinkedHashMap();
 
     public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
@@ -94,6 +95,7 @@ public class FormModel extends RenderingModelImpl {
                     redirect();
                     return SUCCESS;
                 } else {
+                    // MGNLFORM-19:
                     throw new Exception();
                 }
             } else {
@@ -185,6 +187,7 @@ public class FormModel extends RenderingModelImpl {
     }
 
     protected boolean isMandatory(Content node) {
+        // TODO : MGNLFORM-19 : couldnt this simply use NodeDataUtil.getBoolean(node, "mandatory", false); ?
         boolean mandatory = false;
         try {
             if(node.hasNodeData("mandatory") && node.getNodeData("mandatory").getBoolean()){
@@ -201,7 +204,7 @@ public class FormModel extends RenderingModelImpl {
                 &&  MgnlContext.getParameter("paragraphUUID").equals(content.getUUID()));
     }
 
-    public Map<String, String> getErrorMessages() {
+    public Map getErrorMessages() {
         return errorMessages;
     }
 
