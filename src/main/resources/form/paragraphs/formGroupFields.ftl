@@ -4,7 +4,7 @@
 <p class="required"><span>${model.requiredSymbol!""}</span> ${model.rightText!""}</p>
 [/#if]
 
-[@cms.editBar editLabel="Edit Fieldset" /]
+[@cms.editBar editLabel="${i18n['form.fieldset.editLabel']}" /]
 <fieldset>
 
     [#if content.title?has_content]
@@ -17,7 +17,7 @@
     [/#if]
 </fieldset>
 
-[@cms.newBar newLabel="New Field" contentNodeCollectionName="fields"  paragraph="${model.parent.paragraphsAsStringList}"/]
+[@cms.newBar newLabel="${i18n['form.fieldset.fields.newLabel']}" contentNodeCollectionName="fields"  paragraph="${model.parent.paragraphsAsStringList}"/]
 
 
 
