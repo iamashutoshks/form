@@ -39,6 +39,7 @@ import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 import info.magnolia.module.templating.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.form.FormModule;
@@ -71,8 +72,7 @@ public class FormModel extends RenderingModelImpl {
     private static final String FAILURE = "failure";
     private static final String CONTENT_NAME_TEXT_FIELD_GROUP = "edits";
 
-    // <String, String>
-    private Map errorMessages = new LinkedHashMap();
+    private Map<String, String> errorMessages = new LinkedHashMap<String, String>();
 
     public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
@@ -191,16 +191,8 @@ public class FormModel extends RenderingModelImpl {
     }
 
     protected boolean isMandatory(Content node) {
-        // TODO : MGNLFORM-19 : couldnt this simply use NodeDataUtil.getBoolean(node, "mandatory", false); ?
-        boolean mandatory = false;
-        try {
-            if(node.hasNodeData("mandatory") && node.getNodeData("mandatory").getBoolean()){
-                mandatory = true;
-            }
-        } catch (RepositoryException e) {
-            log.debug("Node {} has no 'mandatory' property.", node.getHandle());
-        }
-        return mandatory;
+
+        return NodeDataUtil.getBoolean(node, "mandatory", false);
     }
 
     protected boolean hasFormData() {
