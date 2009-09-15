@@ -69,6 +69,7 @@ public class FormModel extends RenderingModelImpl {
     private static final String DEFAULT_ERROR_MSG = "generic";
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
+    private static final String CONTENT_NAME_TEXT_FIELD_GROUP = "edits";
 
     // <String, String>
     private Map errorMessages = new LinkedHashMap();
@@ -172,10 +173,13 @@ public class FormModel extends RenderingModelImpl {
                 } else if (!StringUtils.isEmpty(value) && node.hasNodeData("validation")) {
 
                     String validation = node.getNodeData("validation").getString();
-                    Validator val = FormModule.getInstance().getValidatorByName(validation);
-                    if (val != null && !val.validate(value)) {
-                        addErrorMessage(key, val.getName(), node);
+                    Validator validator = FormModule.getInstance().getValidatorByName(validation);
+                    if (validator != null && !validator.validate(value)) {
+                        addErrorMessage(key, validator.getName(), node);
                     }
+                } else if (node.hasContent(CONTENT_NAME_TEXT_FIELD_GROUP)) {
+                    Iterator textFieldGroup = node.getContent(CONTENT_NAME_TEXT_FIELD_GROUP).getChildren().iterator();
+                    validate(textFieldGroup);
                 }
             }
         } //end while
