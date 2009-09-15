@@ -83,20 +83,24 @@ public class FormFieldModel extends RenderingModelImpl {
     }
 
     protected void handleStyle() {
+        String cssClass = "";
         if (!isValid()) {
-            this.style = "class=\"error\"";
+            cssClass = "error";
         }
         try {
             // TODO: move to specific edit control model class??
-            if (StringUtils.isEmpty(this.style)
-                    && content.hasNodeData("editLength")) {
+            if (content.hasNodeData("editLength")) {
                 String style2 = content.getNodeData("editLength").getString();
                 if (!StringUtils.isEmpty(style2)) {
-                    this.style = "class=\"" + style2 + "\"";
+                    cssClass = cssClass + " " + style2;
                 }
             }
         } catch (RepositoryException e) {
-            log.debug("can't get style", e);
+            log.debug("failed to get edit control style", e);
+        }
+
+        if (StringUtils.isNotBlank(cssClass)) {
+            style = "class=\"" + cssClass + "\"";
         }
 
     }
