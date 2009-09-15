@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.processors;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.paragraphs.models.FormModel;
 import info.magnolia.module.form.processing.FormProcessor;

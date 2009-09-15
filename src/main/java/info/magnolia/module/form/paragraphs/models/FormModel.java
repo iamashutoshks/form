@@ -200,11 +200,11 @@ public class FormModel extends RenderingModelImpl {
                 &&  MgnlContext.getParameter("paragraphUUID").equals(content.getUUID()));
     }
 
-    public Map getErrorMessages() {
+    public Map<String, String> getErrorMessages() {
         return errorMessages;
     }
 
-    public void setErrorMessages(Map errorMessages) {
+    public void setErrorMessages(Map<String, String> errorMessages) {
         this.errorMessages = errorMessages;
     }
 
