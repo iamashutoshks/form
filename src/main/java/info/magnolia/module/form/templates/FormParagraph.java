@@ -49,7 +49,8 @@ import info.magnolia.module.templating.Paragraph;
 public class FormParagraph extends Paragraph {
 
     private FormProcessor[] formProcessors = new FormProcessor[0];
-    private List<ParagraphConfig> paragraphs = new ArrayList<ParagraphConfig>();
+    // List<ParagraphConfig>
+    private List paragraphs = new ArrayList();
 
     public FormProcessor[] getFormProcessors() {
         return formProcessors;
@@ -63,11 +64,12 @@ public class FormParagraph extends Paragraph {
         this.formProcessors = formProcessors;
     }
 
-    public List<ParagraphConfig> getParagraphs() {
+    // List<ParagraphConfig>
+    public List getParagraphs() {
         return paragraphs;
     }
 
-    public void setParagraphs(List<ParagraphConfig> paragraphs) {
+    public void setParagraphs(List paragraphs) {
         this.paragraphs = paragraphs;
     }
 

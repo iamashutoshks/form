@@ -72,7 +72,7 @@ public class FormFieldModel extends RenderingModelImpl {
 
     private void Validate() {
         valid = true;
-        Map<String, String> errorMessages = this.getFormErrorMessages();
+        Map errorMessages = this.getFormErrorMessages();
         if (errorMessages != null) {
          // set style
             if (errorMessages.containsKey(content.getNodeData("controlName").getString())) {
@@ -109,7 +109,8 @@ public class FormFieldModel extends RenderingModelImpl {
         return valid;
     }
 
-    protected Map<String, String> getFormErrorMessages() {
+    // Map<String, String>
+    protected Map getFormErrorMessages() {
         RenderingModelImpl model = this;
 
         while(model != null) {

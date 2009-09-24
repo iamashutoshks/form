@@ -72,7 +72,8 @@ public class FormModel extends RenderingModelImpl {
     private static final String FAILURE = "failure";
     private static final String CONTENT_NAME_TEXT_FIELD_GROUP = "edits";
 
-    private Map<String, String> errorMessages = new LinkedHashMap<String, String>();
+    // Map<String, String>
+    private Map errorMessages = new LinkedHashMap();
 
     public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
@@ -200,11 +201,11 @@ public class FormModel extends RenderingModelImpl {
                 &&  MgnlContext.getParameter("paragraphUUID").equals(content.getUUID()));
     }
 
-    public Map<String, String> getErrorMessages() {
+    public Map getErrorMessages() {
         return errorMessages;
     }
 
-    public void setErrorMessages(Map<String, String> errorMessages) {
+    public void setErrorMessages(Map errorMessages) {
         this.errorMessages = errorMessages;
     }
 
