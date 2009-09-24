@@ -35,10 +35,6 @@ package info.magnolia.module.form.validators;
 
 public class Validator {
 
-    /**
-     * @deprecated since version 1.0.3
-     */
-    private String message;
     private String name;
 
     public boolean validate(String value) {
