@@ -33,7 +33,11 @@
  */
 package info.magnolia.module.form.setup;
 
+import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.module.DefaultModuleVersionHandler;
+import info.magnolia.module.delta.ArrayDelegateTask;
+import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
+import info.magnolia.module.delta.DeltaBuilder;
 
 /**
  *
@@ -43,7 +47,16 @@ import info.magnolia.module.DefaultModuleVersionHandler;
 public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
 
     public FormModuleVersionHandler() {
+        register(DeltaBuilder.update("1.0.4", "Update edit field styles")
+            .addTask(new ArrayDelegateTask("Update gouped edit fields styles.", "",
+                new CheckAndModifyPropertyValueTask("", "",
+                    ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/s", "value", "s", "form-item-s"),
+                new CheckAndModifyPropertyValueTask("", "",
+                    ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/m", "value", "m", "form-item-m"),
+                new CheckAndModifyPropertyValueTask("", "",
+                    ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/l", "value", "l", "form-item-l")))
 
+        );
     }
 
 }
