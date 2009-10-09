@@ -92,7 +92,12 @@ public class FormFieldModel extends RenderingModelImpl {
             if (content.hasNodeData("editLength")) {
                 String style2 = content.getNodeData("editLength").getString();
                 if (!StringUtils.isEmpty(style2)) {
-                    cssClass = cssClass + " " + style2;
+                    if (!StringUtils.isEmpty(cssClass)) {
+                        cssClass = cssClass + " " + style2;
+                    } else {
+                        cssClass = style2;
+                    }
+
                 }
             }
         } catch (RepositoryException e) {

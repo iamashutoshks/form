@@ -30,17 +30,18 @@
     </div><!-- end text -->
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="multipart/form-data" >
-
-                <input type="hidden" name="field" value="" />
-                <input type="hidden" name="paragraphUUID" value="${content.@uuid}" />
-                [#if content.fieldsets?exists]
-                    [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]
-                        [@cms.includeTemplate/]
-                    [/@cms.contentNodeIterator]
-                [/#if]
-                [#if mgnl.editMode]
-                    <div>[@cms.newBar contentNodeCollectionName="fieldsets"  newLabel="${i18n['form.fieldset.newLabel']}" paragraph="formGroupFields" /]</div>
-                [/#if]
+			<div class="form-item-hidden">
+            	<input type="hidden" name="field" value="" />
+            	<input type="hidden" name="paragraphUUID" value="${content.@uuid}" />
+            </div>
+            [#if content.fieldsets?exists]
+                [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]
+                    [@cms.includeTemplate/]
+                [/@cms.contentNodeIterator]
+            [/#if]
+            [#if mgnl.editMode]
+                <div>[@cms.newBar contentNodeCollectionName="fieldsets"  newLabel="${i18n['form.fieldset.newLabel']}" paragraph="formGroupFields" /]</div>
+            [/#if]
         </form>
     </div> <!-- end form -->
 [/#if] <!-- end else -->

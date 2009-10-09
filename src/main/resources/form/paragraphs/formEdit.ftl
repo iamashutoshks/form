@@ -3,7 +3,7 @@
 <div ${model.style!} >
 [@cms.editBar /]
     [#if content.title?has_content]
-        <label id="${content.controlName}_label" class="${content.editLength!}" for="${content.controlName}">
+        <label for="${content.controlName}">
             <span>
             [#if !model.isValid()]
                 <em>${i18n['form.error.field']}</em>
@@ -13,15 +13,14 @@
                 <dfn title="required">${model.requiredSymbol!}</dfn>
             [/#if]
             </span>
+        </label>
     [/#if]
-    [#if content.rows == 1]
+    [#if content.rows?default(1) == 1]
         <input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
     [#else]
         <textarea id="${content.controlName}" name="${content.controlName}" rows="${content.rows}">${model.value!?html}</textarea>
     [/#if]
-    [#if content.title?has_content]
-      </label>
-    [/#if]
+
     [#if content.description?has_content]
       <span>${content.description}</span>
     [/#if]

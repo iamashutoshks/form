@@ -274,7 +274,7 @@
             <sv:value>false</sv:value>
           </sv:property>
           <sv:property sv:name="value" sv:type="String">
-            <sv:value>s</sv:value>
+            <sv:value>form-item-s</sv:value>
           </sv:property>
           <sv:node sv:name="MetaData">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -317,7 +317,7 @@
             <sv:value>false</sv:value>
           </sv:property>
           <sv:property sv:name="value" sv:type="String">
-            <sv:value>m</sv:value>
+            <sv:value>form-item-m</sv:value>
           </sv:property>
           <sv:node sv:name="MetaData">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -360,7 +360,7 @@
             <sv:value>false</sv:value>
           </sv:property>
           <sv:property sv:name="value" sv:type="String">
-            <sv:value>l</sv:value>
+            <sv:value>form-item-l</sv:value>
           </sv:property>
           <sv:node sv:name="MetaData">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">

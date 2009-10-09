@@ -3,11 +3,10 @@
 <div ${model.style!}>
 [@cms.editBar /]
     [#if content.title?has_content]
-        <label id="${content.controlName}_label" for="${content.controlName}">
+        <label for="${content.controlName}">
             ${content.title}
+    	</label>
     [/#if]
         <input type="file" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
-    [#if content.title?has_content]
-        </label>
-    [/#if]
+
 </div>

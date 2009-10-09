@@ -6,8 +6,9 @@
     <p>${i18n['form.groupselect.note']}</p><br />
     [/#if]
     [#if content.title?has_content]
-        <label id="${content.controlName}_label" for="${content.controlName}">
+        <label for="${content.controlName}">
             ${content.title}
+        </label>
     [/#if]
     [#if !mgnl.editMode]
         <select id="${content.controlName}" name="${content.controlName}" ${content.multiple?string("multiple=\"multiple\"", "")} >
@@ -21,9 +22,7 @@
     [#if !mgnl.editMode]
         </select>
     [/#if]
-    [#if content.title?has_content]
-        </label>
-    [/#if]
+
     <div>
         [@cms.newBar contentNodeCollectionName="groups" paragraph="formGroupSelectGroups" /]
     </div>

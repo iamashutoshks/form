@@ -20,11 +20,10 @@
 		        [#if model.value == data[1]!data[0] ]
 		            [#assign checked="checked=\"checked\""]
 		        [/#if]
-
-		        <label id="${content.controlName}_label" for="${content.controlName}_${label_index}">
-		            <input id="${content.controlName}_${label_index}" name="${content.controlName}" type="${content.type}" value="${data[1]!data[0]!?html}" ${checked} />
-		                ${data[0]}
-		        </label>
+		        <div class="form-item">
+					<input type="${content.type}" id="${content.controlName}_${label_index}" name="${content.controlName}" value="${data[1]!data[0]!?html}" ${checked} />
+			        <label for="${content.controlName}_${label_index}">${data[0]}</label>
+		        </div>
 		  [/#list]
 		[#else]
 		    <select id="${content.controlName}" name="${content.controlName}" ${content.multiple?string("multiple=\"multiple\"", "")}>
