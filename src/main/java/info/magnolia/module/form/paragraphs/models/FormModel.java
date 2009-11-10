@@ -197,7 +197,7 @@ public class FormModel extends RenderingModelImpl {
     }
 
     protected boolean hasFormData() {
-        return (MgnlContext.getPostedForm() != null
+        return (!MgnlContext.getParameters().isEmpty()
                 &&  MgnlContext.getParameter("paragraphUUID").equals(content.getUUID()));
     }
 
