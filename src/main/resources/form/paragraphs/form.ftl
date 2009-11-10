@@ -21,7 +21,7 @@
     [/#if]
     [#if mgnl.editMode]
     <div style="clear: both" >
-    	[@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" deleteLabel="" /]
+        [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" deleteLabel="" /]
     </div>
     [/#if]
     <div class="text">
@@ -29,10 +29,10 @@
         <p>${content.formText!?html}</p>
     </div><!-- end text -->
     <div class="form-wrapper" >
-        <form id="${content.formName?default("form0")}" method="post" action="" enctype="multipart/form-data" >
-			<div class="form-item-hidden">
-            	<input type="hidden" name="field" value="" />
-            	<input type="hidden" name="paragraphUUID" value="${content.@uuid}" />
+        <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
+            <div class="form-item-hidden">
+                <input type="hidden" name="field" value="" />
+                <input type="hidden" name="paragraphUUID" value="${content.@uuid}" />
             </div>
             [#if content.fieldsets?exists]
                 [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]
