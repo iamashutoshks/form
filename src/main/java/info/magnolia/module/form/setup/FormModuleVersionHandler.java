@@ -34,10 +34,15 @@
 package info.magnolia.module.form.setup;
 
 import info.magnolia.cms.beans.config.ContentRepository;
+import info.magnolia.cms.core.ItemType;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.delta.ArrayDelegateTask;
+import info.magnolia.module.delta.BootstrapSingleModuleResource;
 import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.DeltaBuilder;
+import info.magnolia.nodebuilder.task.ErrorHandling;
+import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
+import static info.magnolia.nodebuilder.Ops.*;
 
 /**
  *
@@ -57,6 +62,34 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                     ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/l", "value", "l", "form-item-l")))
 
         );
+        
+        register(DeltaBuilder.update("1.1", "Adds support for hidden and password fields")
+            .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formHidden.xml"))
+            .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formPassword.xml"))
+            .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formHidden.xml"))
+            .addTask(new ModuleNodeBuilderTask("", "", ErrorHandling.strict,
+                getNode("paragraphs/form").then(
+                    getNode("paragraphs").then(
+                        addNode("formPassword", ItemType.CONTENTNODE).then(
+                            addProperty("name", "formPassword")
+                        ),
+                        addNode("formHidden", ItemType.CONTENTNODE).then(
+                            addProperty("name", "formHidden")
+                        )
+                    ),
+                    addNode("parameters", ItemType.CONTENTNODE).then(
+                       addProperty("formEnctype", "multipart/form-data")
+                    )
+                ),
+                getNode("config/validators").then(
+                    addNode("username", ItemType.CONTENTNODE).then(
+                        addProperty("class", "info.magnolia.module.publicuserregistration.validators.UsernameValidator")
+                    ),
+                    addNode("password", ItemType.CONTENTNODE).then(
+                        addProperty("class", "info.magnolia.module.form.validators.PasswordValidator")
+                    )
+                )
+        )));
     }
 
 }
