@@ -67,7 +67,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
             .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formHidden.xml"))
             .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formPassword.xml"))
             .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formHidden.xml"))
-            .addTask(new ModuleNodeBuilderTask("", "", ErrorHandling.strict,
+            .addTask(new ModuleNodeBuilderTask("", "", ErrorHandling.logging,
                 getNode("paragraphs/form").then(
                     getNode("paragraphs").then(
                         addNode("formPassword", ItemType.CONTENTNODE).then(
