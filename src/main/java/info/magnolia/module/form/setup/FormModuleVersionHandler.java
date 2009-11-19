@@ -82,9 +82,6 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                     )
                 ),
                 getNode("config/validators").then(
-                    addNode("username", ItemType.CONTENTNODE).then(
-                        addProperty("class", "info.magnolia.module.publicuserregistration.validators.UsernameValidator")
-                    ),
                     addNode("password", ItemType.CONTENTNODE).then(
                         addProperty("class", "info.magnolia.module.form.validators.PasswordValidator")
                     )
