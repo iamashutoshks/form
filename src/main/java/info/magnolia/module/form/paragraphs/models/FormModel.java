@@ -105,6 +105,7 @@ public class FormModel extends RenderingModelImpl {
                 return FAILURE;
             }
         } catch (Exception e) {
+            log.error("Can't process form.",e);
             if(StringUtils.isNotEmpty(result)) {
                 errorMessages.put("Error", result);
             } else {
@@ -197,8 +198,11 @@ public class FormModel extends RenderingModelImpl {
     }
 
     protected boolean hasFormData() {
-        return (!MgnlContext.getParameters().isEmpty()
-                &&  MgnlContext.getParameter("paragraphUUID").equals(content.getUUID()));
+        final String uuid = MgnlContext.getParameter("paragraphUUID");
+        if(uuid != null && uuid.equals(content.getUUID())){
+            return true;
+        }
+        return false;
     }
 
     public Map getErrorMessages() {
