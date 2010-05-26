@@ -34,21 +34,19 @@
 package info.magnolia.module.form.validators;
 
 import org.apache.commons.lang.StringUtils;
-import info.magnolia.context.MgnlContext;
 
 /**
 *
 * @author zdenekskodik
 * 
 */
-public class PasswordValidator extends NoHTMLValidator {
+public class NoHTMLValidator extends Validator {
     
-    public boolean validate(String psw) {
-        String pswconfirm = MgnlContext.getParameter("passwordConfirmation");
-        if (!StringUtils.equals(psw, pswconfirm)) {
+    public boolean validate(String value) {
+        if (StringUtils.containsAny(value, "<>&")) {
             return false;
         } else {
             return true;
-        }        
+        }      
     }
 }

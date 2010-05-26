@@ -36,7 +36,7 @@ package info.magnolia.module.form.validators;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ValidateExpression extends Validator {
+public class ValidateExpression extends NoHTMLValidator {
     public String expression;
 
     public boolean validate(String value) {
