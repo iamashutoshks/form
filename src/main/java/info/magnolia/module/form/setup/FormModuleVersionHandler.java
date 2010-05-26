@@ -87,6 +87,9 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                     )
                 )
         )));
+        
+        register(DeltaBuilder.update("1.1.1", "Adds validator to prevent HTML injection")
+                .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.config.validators.noHTML.xml")));
     }
 
 }
