@@ -40,12 +40,14 @@ public class ValidateExpression extends NoHTMLValidator {
     public String expression;
 
     public boolean validate(String value) {
-        Pattern patern = Pattern.compile(this.getExpression());
-        Matcher fit = patern.matcher(value);
-        if (fit.matches()) {
-            return true;
+        if (super.validate(value)) {
+            Pattern patern = Pattern.compile(this.getExpression());
+            Matcher fit = patern.matcher(value);
+            if (!fit.matches()) {
+                return false;
+            } return true; 
         } else {
-            return false;
+            return false;   
         }
     }
 

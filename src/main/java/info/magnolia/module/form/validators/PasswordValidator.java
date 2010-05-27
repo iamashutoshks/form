@@ -41,14 +41,12 @@ import info.magnolia.context.MgnlContext;
 * @author zdenekskodik
 * 
 */
-public class PasswordValidator extends NoHTMLValidator {
+public class PasswordValidator extends Validator {
     
     public boolean validate(String psw) {
         String pswconfirm = MgnlContext.getParameter("passwordConfirmation");
         if (!StringUtils.equals(psw, pswconfirm)) {
             return false;
-        } else {
-            return true;
-        }        
+        } return true;        
     }
 }

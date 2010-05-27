@@ -45,8 +45,6 @@ public class NoHTMLValidator extends Validator {
     public boolean validate(String value) {
         if (StringUtils.containsAny(value, "<>&")) {
             return false;
-        } else {
-            return true;
-        }      
+        } return true;     
     }
 }
