@@ -45,8 +45,6 @@ public class PasswordValidator extends Validator {
     
     public boolean validate(String psw) {
         String pswconfirm = MgnlContext.getParameter("passwordConfirmation");
-        if (!StringUtils.equals(psw, pswconfirm)) {
-            return false;
-        } return true;        
+        return StringUtils.equals(psw, pswconfirm); 
     }
 }
