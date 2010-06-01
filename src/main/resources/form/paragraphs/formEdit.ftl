@@ -16,9 +16,9 @@
         </label>
     [/#if]
     [#if content.rows?default(1) == 1]
-        <input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
+        <input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}" maxlength="${content.maxLength!'50'}"/>
     [#else]
-        <textarea id="${content.controlName}" name="${content.controlName}" rows="${content.rows}">${model.value!?html}</textarea>
+        <textarea id="${content.controlName}" name="${content.controlName}" rows="${content.rows}">${model.value!?html}"</textarea>
     [/#if]
 
     [#if content.description?has_content]

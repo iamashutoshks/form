@@ -40,6 +40,8 @@ import info.magnolia.module.delta.ArrayDelegateTask;
 import info.magnolia.module.delta.BootstrapSingleModuleResource;
 import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.DeltaBuilder;
+import info.magnolia.module.delta.CreateNodeTask;
+import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.nodebuilder.task.ErrorHandling;
 import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
 import static info.magnolia.nodebuilder.Ops.*;
@@ -88,8 +90,16 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 )
         )));
         
-        register(DeltaBuilder.update("1.1.1", "Adds validator to prevent HTML injection")
-                .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.config.validators.noHTML.xml")));
+        register(DeltaBuilder.update("1.1.1", "")
+                .addTask(new BootstrapSingleModuleResource("Add noHTML validator", "", "config.modules.form.config.validators.noHTML.xml"))
+                .addTask(new ArrayDelegateTask("Add maxLength for form inputs", "",
+                    new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain", "maxLength", ItemType.CONTENTNODE.getSystemName()),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "controlType", "edit"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "description", "dialog.form.edit.tabMain.maxLength.description"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "label", "dialog.form.edit.tabMain.maxLength.label"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "rows", "1"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "type", "String")))
+        );
     }
 
 }
