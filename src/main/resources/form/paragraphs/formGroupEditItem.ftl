@@ -20,6 +20,6 @@
 [/#if]
 
 
-<input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
+<input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}" maxlength="${content.maxLength!'50'}"/>
 
 </div>

@@ -92,13 +92,20 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         
         register(DeltaBuilder.update("1.1.1", "")
                 .addTask(new BootstrapSingleModuleResource("Add noHTML validator", "", "config.modules.form.config.validators.noHTML.xml"))
-                .addTask(new ArrayDelegateTask("Add maxLength for form inputs", "",
+                .addTask(new ArrayDelegateTask("Add maxLength for formEdit", "",
                     new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain", "maxLength", ItemType.CONTENTNODE.getSystemName()),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "controlType", "edit"),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "description", "dialog.form.edit.tabMain.maxLength.description"),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "label", "dialog.form.edit.tabMain.maxLength.label"),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "rows", "1"),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formEdit/tabMain/maxLength", "type", "String")))
+                .addTask(new ArrayDelegateTask("Add maxLength for formGroupEditItem", "",
+                    new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain", "maxLength", ItemType.CONTENTNODE.getSystemName()),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/maxLength", "controlType", "edit"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/maxLength", "description", "dialog.form.edit.tabMain.maxLength.description"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/maxLength", "label", "dialog.form.edit.tabMain.maxLength.label"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/maxLength", "rows", "1"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/maxLength", "type", "String")))    
         );
     }
 
