@@ -54,18 +54,11 @@ import static info.magnolia.nodebuilder.Ops.*;
 public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
 
     public FormModuleVersionHandler() {
-        register(DeltaBuilder.update("1.0.4", "Update edit field styles")
-            .addTask(new ArrayDelegateTask("Update gouped edit fields styles.", "",
-                new CheckAndModifyPropertyValueTask("", "",
-                    ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/s", "value", "s", "form-item-s"),
-                new CheckAndModifyPropertyValueTask("", "",
-                    ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/m", "value", "m", "form-item-m"),
-                new CheckAndModifyPropertyValueTask("", "",
-                    ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/l", "value", "l", "form-item-l")))
-
-        );
-        
         register(DeltaBuilder.update("1.1", "Adds support for hidden and password fields")
+            .addTask(new ArrayDelegateTask("Update grouped edit fields styles.", "",
+                new CheckAndModifyPropertyValueTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/s", "value", "s", "form-item-s"),
+                new CheckAndModifyPropertyValueTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/m", "value", "m", "form-item-m"),
+                new CheckAndModifyPropertyValueTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/editLength/options/l", "value", "l", "form-item-l")))
             .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formHidden.xml"))
             .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formPassword.xml"))
             .addTask(new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formHidden.xml"))
