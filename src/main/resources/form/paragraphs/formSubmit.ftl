@@ -3,6 +3,6 @@
 
 <div class="button-wrapper" >
 [@cms.editBar /]
-    <input type="submit" value="${content.buttonText?html}" />
+    <input type="submit" value="${content.buttonText!"Submit"?html}" />
 </div>
 
