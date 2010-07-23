@@ -100,6 +100,16 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/maxLength", "rows", "1"),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/maxLength", "type", "String")))    
         );
+        
+        register(DeltaBuilder.update("1.1.3", "")
+                .addTask(new ArrayDelegateTask("Add mandatory field to formSelection", "",
+                    new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain", "mandatory", ItemType.CONTENTNODE.getSystemName()),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "buttonLabel", "dialog.form.edit.tabMain.mandatory.buttonLabel"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "controlType", "checkboxSwitch"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "label", "dialog.form.edit.tabMain.mandatory.label"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "selected", "false"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "type", "Boolean")))
+        );            
     }
 
 }

@@ -1,11 +1,22 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
-<div>
-[@cms.editBar /]
+<div ${model.style!}>
+    [@cms.editBar /]
+    
     [#if content.title?has_content]
-        <h4>${content.title}</h4>
+        <label for="${content.controlName}">
+            <span>
+            [#if !model.isValid()]
+                <em>${i18n['form.error.field']}</em>
+            [/#if]
+            ${content.title!}
+            [#if content.mandatory!false]
+                <dfn title="required">${model.requiredSymbol!}</dfn>
+            [/#if]
+            </span>
+        </label>
     [/#if]
-
+    
     <fieldset ${content.horizontal?string("class=\"mod\"", "")} >
 		[#if content.legend?has_content]
 		        <legend>${content.legend}</legend>
