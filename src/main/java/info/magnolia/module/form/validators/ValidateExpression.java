@@ -37,6 +37,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Regular expression validator.
+ *
  * @author gjoseph
  */
 public class ValidateExpression extends NoHTMLValidator {

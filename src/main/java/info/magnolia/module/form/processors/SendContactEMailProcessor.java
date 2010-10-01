@@ -40,6 +40,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Sends a contact mail, any files submitted are sent as attachments.
+ *
  * @author tmiyar
  */
 public class SendContactEMailProcessor extends BaseFormProcessorImpl {

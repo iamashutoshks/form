@@ -58,6 +58,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * RenderingModel for the form. Iterates into sub paragraphs to find and validate form items. If validation succeeds
+ * it uses the FormProcessors configured on the paragraph to process the submitted form.
+ *
  * @author tmiyar
  */
 public class FormModel extends RenderingModelImpl {

@@ -43,6 +43,8 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
+ * Uses the mail module to log that a form was submitted.
+ *
  * @author tmiyar
  */
 public class TrackEmailProcessor extends BaseFormProcessorImpl {

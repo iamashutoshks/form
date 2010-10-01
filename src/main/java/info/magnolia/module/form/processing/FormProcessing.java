@@ -37,16 +37,23 @@ import info.magnolia.cms.util.FactoryUtil;
 import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
+ * Executes a set of processors on form submission.
+ *
  * @author tmiyar
+ * @see info.magnolia.module.form.paragraphs.models.FormModel
  */
 public interface FormProcessing {
 
     String process(FormProcessor[] processors, FormModel model);
 
-    // TODO the system property that sets the default impl for FormProcessing is defined in magnolia-core
-
+    /**
+     * Factory for looking up the default FormProcessing implementation.
+     */
     public static class Factory {
         public static FormProcessing getDefaultProcessing() {
+
+            // TODO the system property that sets the default impl for FormProcessing is defined in magnolia-core
+
             return (FormProcessing) FactoryUtil.getSingleton(FormProcessing.class);
         }
     }

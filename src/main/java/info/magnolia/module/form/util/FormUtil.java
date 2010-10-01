@@ -37,6 +37,8 @@ import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 
 /**
+ * Utilities class for the form module.
+ *
  * @author tmiyar
  */
 public class FormUtil {

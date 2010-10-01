@@ -40,6 +40,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Sends a confirmation mail, any files submitted are sent as attachments.
+ *
  * @author tmiyar
  */
 public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {

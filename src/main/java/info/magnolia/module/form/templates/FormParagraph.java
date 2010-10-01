@@ -41,7 +41,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
+ *
  * @author tmiyar
+ * @see info.magnolia.module.form.processing.FormProcessor
  */
 public class FormParagraph extends Paragraph {
 

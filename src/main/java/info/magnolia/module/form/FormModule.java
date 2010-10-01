@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Module class for the form module. Maintains a registry of validators.
+ *
  * @author tmiyar
  */
 public class FormModule {

@@ -46,6 +46,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Base implementation for FormProcessors that send mail.
+ *
  * @author tmiyar
  */
 public abstract class BaseFormProcessorImpl implements FormProcessor {

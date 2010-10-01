@@ -37,6 +37,9 @@ import info.magnolia.module.form.paragraphs.models.FormModel;
 import org.apache.commons.lang.StringUtils;
 
 /**
+ * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
+ * processor that returns an error.
+ *
  * @author tmiyar
  */
 public class DefaultProcessing implements FormProcessing {

@@ -34,7 +34,11 @@
 package info.magnolia.module.form.validators;
 
 /**
+ * Base class for validators. Kept in a registry in the module class. The actual validation is performed by FormModel.
+ *
  * @author tmiyar
+ * @see info.magnolia.module.form.FormModule
+ * @see info.magnolia.module.form.paragraphs.models.FormModel
  */
 public class Validator {
 

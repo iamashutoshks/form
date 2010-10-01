@@ -46,6 +46,8 @@ import javax.jcr.RepositoryException;
 import java.util.Map;
 
 /**
+ * RenderingModel for form items. Looks up the parent model to find out if the item passed validation.
+ *
  * @author tmiyar
  */
 public class FormFieldModel extends RenderingModelImpl {

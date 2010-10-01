@@ -36,6 +36,8 @@ package info.magnolia.module.form.processing;
 import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
+ * Processes a submitted form.
+ *
  * @author tmiyar
  */
 public interface FormProcessor {

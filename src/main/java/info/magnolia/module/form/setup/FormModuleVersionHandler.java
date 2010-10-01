@@ -48,6 +48,8 @@ import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
 import static info.magnolia.nodebuilder.Ops.*;
 
 /**
+ * VersionHandler for the form module.
+ *
  * @author tmiyar
  */
 public class FormModuleVersionHandler extends DefaultModuleVersionHandler {

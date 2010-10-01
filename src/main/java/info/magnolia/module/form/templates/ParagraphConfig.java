@@ -33,6 +33,11 @@
  */
 package info.magnolia.module.form.templates;
 
+/**
+ * Configuration bean used to configure what sub paragraphs are available for a form paragraph.
+ *
+ * @see info.magnolia.module.form.templates.FormParagraph
+ */
 public class ParagraphConfig {
 
     private String name;

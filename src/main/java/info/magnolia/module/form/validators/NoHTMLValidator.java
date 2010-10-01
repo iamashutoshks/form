@@ -36,6 +36,8 @@ package info.magnolia.module.form.validators;
 import org.apache.commons.lang.StringUtils;
 
 /**
+ * Validates that a field does not contain html.
+ *
  * @author zdenekskodik
  */
 public class NoHTMLValidator extends Validator {

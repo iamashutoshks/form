@@ -37,6 +37,8 @@ import info.magnolia.context.MgnlContext;
 import org.apache.commons.lang.StringUtils;
 
 /**
+ * Validates that a submitted password matches a confirmation field.
+ *
  * @author zdenekskodik
  */
 public class PasswordValidator extends Validator {
