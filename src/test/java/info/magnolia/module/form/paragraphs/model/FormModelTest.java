@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,48 +31,33 @@
  * intact.
  *
  */
-package info.magnolia.module.form.templates;
+package info.magnolia.module.form.paragraphs.model;
 
-import info.magnolia.module.form.processing.FormProcessor;
-import info.magnolia.module.templating.Paragraph;
-import org.apache.commons.lang.ArrayUtils;
+import info.magnolia.module.form.paragraphs.models.FormModel;
+import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.module.form.templates.ParagraphConfig;
+import junit.framework.TestCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author tmiyar
- */
-public class FormParagraph extends Paragraph {
+public class FormModelTest extends TestCase {
 
-    private FormProcessor[] formProcessors = new FormProcessor[0];
+    public void testParagraphsAsString() {
 
-    // List<ParagraphConfig>
-    private List paragraphs = new ArrayList();
+        List<ParagraphConfig> ps = new ArrayList<ParagraphConfig>();
+        ParagraphConfig p1 = new ParagraphConfig();
+        p1.setName("para1");
+        ps.add(p1);
+        ParagraphConfig p2 = new ParagraphConfig();
+        p2.setName("para2");
+        ps.add(p2);
 
-    public FormProcessor[] getFormProcessors() {
-        return formProcessors;
-    }
+        FormParagraph paragraph = new FormParagraph();
+        paragraph.setParagraphs(ps);
 
-    public void addFormProcessor(FormProcessor formProcessor) {
-        formProcessors = (FormProcessor[]) ArrayUtils.add(formProcessors, formProcessor);
-    }
+        FormModel formModel = new FormModel(null, paragraph, null);
 
-    public void setFormProcessors(FormProcessor[] formProcessors) {
-        this.formProcessors = formProcessors;
-    }
-
-    // List<ParagraphConfig>
-
-    public List getParagraphs() {
-        return paragraphs;
-    }
-
-    public void setParagraphs(List paragraphs) {
-        this.paragraphs = paragraphs;
-    }
-
-    public void addParagraph(ParagraphConfig paragraph) {
-        this.paragraphs.add(paragraph);
+        assertEquals("para1, para2", formModel.getParagraphsAsStringList());
     }
 }

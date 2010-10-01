@@ -34,42 +34,41 @@
 package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.cms.beans.config.ContentRepository;
-import info.magnolia.link.LinkUtil;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.RenderingModelImpl;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
+import info.magnolia.link.LinkUtil;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.processing.FormProcessing;
 import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.templates.ParagraphConfig;
 import info.magnolia.module.form.util.FormUtil;
 import info.magnolia.module.form.validators.Validator;
-
+import info.magnolia.module.templating.RenderableDefinition;
+import info.magnolia.module.templating.RenderingModel;
+import info.magnolia.module.templating.RenderingModelImpl;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
-
-import java.util.Collection;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *
  * @author tmiyar
- *
  */
 public class FormModel extends RenderingModelImpl {
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormModel.class);
+    private static final Logger log = LoggerFactory.getLogger(FormModel.class);
 
-    private static final String DEFAULT_ERROR_MSG = "generic";
+    // ActionResult constants passed to form.ftl
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
+
+    private static final String DEFAULT_ERROR_MSG = "generic";
     private static final String CONTENT_NAME_TEXT_FIELD_GROUP = "edits";
 
     // Map<String, String>
@@ -90,9 +89,9 @@ public class FormModel extends RenderingModelImpl {
             validate();
 
             if (errorMessages.size() == 0 && isHoneyPotEmpty()) {
-                // send mail to admin and confirmation to sender
+
                 FormProcessing processing = FormProcessing.Factory.getDefaultProcessing();
-                result = processing.process(((FormParagraph)definition).getFormProcessors(), this);
+                result = processing.process(((FormParagraph) definition).getFormProcessors(), this);
                 if (StringUtils.isEmpty(result)) {
                     redirect();
                     return SUCCESS;
@@ -105,8 +104,8 @@ public class FormModel extends RenderingModelImpl {
                 return FAILURE;
             }
         } catch (Exception e) {
-            log.error("Can't process form.",e);
-            if(StringUtils.isNotEmpty(result)) {
+            log.error("Can't process form.", e);
+            if (StringUtils.isNotEmpty(result)) {
                 errorMessages.put("Error", result);
             } else {
                 errorMessages.put("Error", FormUtil.getMessage(DEFAULT_ERROR_MSG));
@@ -116,43 +115,36 @@ public class FormModel extends RenderingModelImpl {
         }
     }
 
-    private void redirect() throws Exception {
+    private void redirect() throws RepositoryException, IOException {
 
-        if(content.hasNodeData("redirect")) {
+        if (content.hasNodeData("redirect")) {
             String url = content.getNodeData("redirect").getString();
-            if(!StringUtils.isEmpty(url)) {
+            if (!StringUtils.isEmpty(url)) {
 
-                try {
+                url = LinkUtil.createAbsoluteLink(ContentRepository.WEBSITE, url);
 
-                    url = LinkUtil.createAbsoluteLink(ContentRepository.WEBSITE, url);
-                } catch (RepositoryException e) {
-                    log.error("Can't resolve node with uuid " + url);
-                    throw new Exception(e);
-                }
-
-                ((WebContext)MgnlContext.getInstance()).getResponse().sendRedirect(url);
+                ((WebContext) MgnlContext.getInstance()).getResponse().sendRedirect(url);
             }
         }
     }
 
-    private boolean isHoneyPotEmpty() {
-        if(StringUtils.isEmpty(MgnlContext.getParameter("field"))) {
-            return true;
-        }
-        return false;
+    protected boolean hasFormData() {
+        return StringUtils.equals(MgnlContext.getParameter("paragraphUUID"), content.getUUID());
     }
 
-    private void validate() throws Exception {
-        Iterator itFieldsets;
-        Iterator iterator;
-        Content fieldset;
+    private boolean isHoneyPotEmpty() {
+        // TODO this cant be needed? hasFormData() performs basically the same thing, namely checking if we're being submitted
+        return StringUtils.isEmpty(MgnlContext.getParameter("field"));
+    }
+
+    private void validate() throws RepositoryException {
         if (this.getContent().hasContent("fieldsets")) {
-            itFieldsets = this.getContent().getContent("fieldsets").getChildren().iterator();
+            Iterator itFieldsets = this.getContent().getContent("fieldsets").getChildren().iterator();
 
             while (itFieldsets.hasNext()) {
-                fieldset = (Content) itFieldsets.next();
-                if(fieldset.hasContent("fields")) {
-                    iterator = fieldset.getContent("fields").getChildren().iterator();
+                Content fieldset = (Content) itFieldsets.next();
+                if (fieldset.hasContent("fields")) {
+                    Iterator iterator = fieldset.getContent("fields").getChildren().iterator();
 
                     validate(iterator);
                 }
@@ -166,43 +158,35 @@ public class FormModel extends RenderingModelImpl {
 
             if (node.hasNodeData("controlName")) {
 
-                final String key = node.getNodeData("controlName").getString();
-                final String value = MgnlContext.getParameter(key);
+                final String controlName = node.getNodeData("controlName").getString();
+                final String value = MgnlContext.getParameter(controlName);
 
                 if (StringUtils.isEmpty(value) && isMandatory(node)) {
-                    addErrorMessage(key, "mandatory", node);
+                    addErrorMessage(controlName, "mandatory", node);
 
                 } else if (!StringUtils.isEmpty(value) && node.hasNodeData("validation")) {
 
-                    String validation = node.getNodeData("validation").getString();
-                    Validator validator = FormModule.getInstance().getValidatorByName(validation);
+                    String validatorName = node.getNodeData("validation").getString();
+                    Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
                     if (validator != null && !validator.validate(value)) {
-                        addErrorMessage(key, validator.getName(), node);
+                        addErrorMessage(controlName, validator.getName(), node);
                     }
                 } else if (node.hasContent(CONTENT_NAME_TEXT_FIELD_GROUP)) {
                     Iterator textFieldGroup = node.getContent(CONTENT_NAME_TEXT_FIELD_GROUP).getChildren().iterator();
                     validate(textFieldGroup);
                 }
             }
-        } //end while
+        }
     }
 
     protected void addErrorMessage(String field, String message, Content node) {
+        String title = node.getNodeData("title").getString();
         String errorMessage = FormUtil.getMessage("form.user.errorMessage." + message, "invalid input");
-        errorMessages.put(field, node.getNodeData("title").getString() + ": " + errorMessage);
+        errorMessages.put(field, title + ": " + errorMessage);
     }
 
     protected boolean isMandatory(Content node) {
-
         return NodeDataUtil.getBoolean(node, "mandatory", false);
-    }
-
-    protected boolean hasFormData() {
-        final String uuid = MgnlContext.getParameter("paragraphUUID");
-        if(uuid != null && uuid.equals(content.getUUID())){
-            return true;
-        }
-        return false;
     }
 
     public Map getErrorMessages() {
@@ -214,36 +198,15 @@ public class FormModel extends RenderingModelImpl {
     }
 
     public String getParagraphsAsStringList() {
-        final FormParagraph def = (FormParagraph) this.getDefinition();
-        return asStringList(def.getParagraphs());
-    }
-
-    public static String asStringList(Collection items){
-        StringBuffer list = new StringBuffer();
-        for (Iterator iterator = items.iterator(); iterator.hasNext();) {
-            ParagraphConfig def = (ParagraphConfig) iterator.next();
-            list.append(def.toString());
-            if(iterator.hasNext()){
-                list.append(", ");
-            }
-        }
-        return list.toString();
+        FormParagraph paragraph = (FormParagraph) this.getDefinition();
+        return StringUtils.join(paragraph.getParagraphs(), ", ");
     }
 
     public String getRequiredSymbol() {
-        try {
-            return content.getNodeData("requiredSymbol").getString();
-        } catch (Exception e) {
-            return "";
-        }
+        return NodeDataUtil.getString(content, "requiredSymbol", "");
     }
 
     public String getRightText() {
-        try {
-            return content.getNodeData("rightText").getString();
-        } catch (Exception e) {
-            return "";
-        }
+        return NodeDataUtil.getString(content, "rightText", "");
     }
-
 }

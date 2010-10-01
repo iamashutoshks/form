@@ -33,31 +33,24 @@
  */
 package info.magnolia.module.form.processing;
 
+import info.magnolia.module.form.paragraphs.models.FormModel;
 import org.apache.commons.lang.StringUtils;
 
-import info.magnolia.module.form.paragraphs.models.FormModel;
-
 /**
- *
  * @author tmiyar
- *
  */
 public class DefaultProcessing implements FormProcessing {
 
     public String process(FormProcessor processors[], FormModel model) {
-        String result = "";
-        for (int i = 0; i < processors.length; i++) {
-            FormProcessor processor = processors[i];
-            if(processor.isEnabled()){
-                result += processor.process(model);
-                if(StringUtils.isNotEmpty(result)) {
+        for (FormProcessor processor : processors) {
+            if (processor.isEnabled()) {
+                String result = processor.process(model);
+                if (StringUtils.isNotEmpty(result)) {
                     //stops processing if there is an error
-                    break;
+                    return result;
                 }
             }
         }
-        return result;
+        return "";
     }
-
 }
-

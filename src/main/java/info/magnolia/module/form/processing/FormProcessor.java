@@ -36,14 +36,14 @@ package info.magnolia.module.form.processing;
 import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
- *
  * @author tmiyar
- *
  */
 public interface FormProcessor {
 
-    public String process(FormModel model);
+    /**
+     * @return an error message or either null or the empty string on success
+     */
+    String process(FormModel model);
 
-    public boolean isEnabled();
-
+    boolean isEnabled();
 }

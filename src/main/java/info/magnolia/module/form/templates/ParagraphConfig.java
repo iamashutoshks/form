@@ -48,5 +48,4 @@ public class ParagraphConfig {
     public String toString() {
         return this.getName();
     }
-
 }

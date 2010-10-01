@@ -36,13 +36,11 @@ package info.magnolia.module.form.validators;
 import org.apache.commons.lang.StringUtils;
 
 /**
-*
-* @author zdenekskodik
-* 
-*/
+ * @author zdenekskodik
+ */
 public class NoHTMLValidator extends Validator {
-    
+
     public boolean validate(String value) {
         return !StringUtils.containsAny(value, "<>&");
-    }    
+    }
 }

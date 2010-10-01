@@ -36,17 +36,19 @@ package info.magnolia.module.form.validators;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author gjoseph
+ */
 public class ValidateExpression extends NoHTMLValidator {
+
     public String expression;
 
     public boolean validate(String value) {
-        if (super.validate(value)) {
-            Pattern patern = Pattern.compile(this.getExpression());
-            Matcher fit = patern.matcher(value);
-            return fit.matches(); 
-        } else {
-            return false;   
-        }
+        if (!super.validate(value))
+            return false;
+        Pattern pattern = Pattern.compile(getExpression());
+        Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
     }
 
     public String getExpression() {

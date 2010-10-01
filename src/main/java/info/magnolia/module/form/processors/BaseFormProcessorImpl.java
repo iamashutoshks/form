@@ -34,24 +34,19 @@
 package info.magnolia.module.form.processors;
 
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.form.paragraphs.models.FormModel;
 import info.magnolia.module.form.processing.FormProcessor;
 import info.magnolia.module.mail.MailModule;
+import info.magnolia.module.mail.MgnlMailFactory;
 import info.magnolia.module.mail.templates.MgnlEmail;
 import info.magnolia.module.mail.util.MailUtil;
-
 import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
- *
  * @author tmiyar
- *
  */
 public abstract class BaseFormProcessorImpl implements FormProcessor {
 
@@ -59,50 +54,26 @@ public abstract class BaseFormProcessorImpl implements FormProcessor {
 
     private boolean enabled;
 
+    protected void sendMail(String body, String from, String subject, String to, String contentType) throws Exception {
 
-    public String process(FormProcessor processors[], FormModel model) throws Exception {
-        String result = "";
-        for (int i = 0; i < processors.length; i++) {
-            FormProcessor processor = processors[i];
-            if(processor.isEnabled()){
-                result = processor.process(model);
-                if(StringUtils.isEmpty(result)) {
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
-    protected void sendMail(String body, String from, String subject, String to, String contentType)
-            throws Exception {
-        MgnlEmail email;
+        MgnlMailFactory mgnlMailFactory = MailModule.getInstance().getFactory();
 
         Map parameters = getParameters();
         List attachments = MailUtil.createAttachmentList();
-        email = MailModule.getInstance().getFactory().getEmailFromType(parameters, "freemarker", contentType, attachments);
+
+        MgnlEmail email = mgnlMailFactory.getEmailFromType(parameters, "freemarker", contentType, attachments);
         email.setFrom(from);
         email.setSubject(subject);
         email.setToList(to);
         email.setBody(body);
 
         MailModule.getInstance().getHandler().sendMail(email);
-
     }
 
-
     protected Map getParameters() {
-        // getparametermap does not work as expected
-        Map params = MgnlContext.getParameters();
         Map result = new HashMap();
-        Iterator i = (Iterator) params.entrySet().iterator();
-
-        while (i.hasNext()) {
-            Entry pairs = (Entry) i.next();
-            String key = (String) pairs.getKey();
-            result.put(key, StringUtils.join(MgnlContext
-                    .getParameterValues(key), "__"));
-
+        for (String key : MgnlContext.getParameters().keySet()) {
+            result.put(key, StringUtils.join(MgnlContext.getParameterValues(key), "__"));
         }
         return result;
     }
@@ -122,6 +93,4 @@ public abstract class BaseFormProcessorImpl implements FormProcessor {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
 }
-

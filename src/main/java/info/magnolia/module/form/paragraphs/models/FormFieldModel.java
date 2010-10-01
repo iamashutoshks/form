@@ -33,23 +33,24 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
+import info.magnolia.cms.core.Content;
+import info.magnolia.context.MgnlContext;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 import info.magnolia.module.templating.RenderingModelImpl;
-import info.magnolia.cms.core.Content;
-import info.magnolia.context.MgnlContext;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
 import java.util.Map;
 
 /**
- *
  * @author tmiyar
- *
  */
 public class FormFieldModel extends RenderingModelImpl {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FormFieldModel.class);
+
+    private static final Logger log = LoggerFactory.getLogger(FormFieldModel.class);
 
     private String value;
     private String style = "";
@@ -61,7 +62,7 @@ public class FormFieldModel extends RenderingModelImpl {
 
     public String execute() {
         log.debug("Executing {}", this.getClass());
-        Validate();
+        validate();
         //set default or user input
         handleValue();
         //set style for error messages
@@ -70,16 +71,16 @@ public class FormFieldModel extends RenderingModelImpl {
         return "";
     }
 
-    private void Validate() {
+    // TODO this method doesnt validate, it checks the parent for error messages for this field
+
+    private void validate() {
         valid = true;
-        Map errorMessages = this.getFormErrorMessages();
+        Map errorMessages = getFormErrorMessages();
         if (errorMessages != null) {
-         // set style
-            if (errorMessages.containsKey(content.getNodeData("controlName").getString())) {
+            if (errorMessages.containsKey(getControlName())) {
                 valid = false;
             }
         }
-
     }
 
     protected void handleStyle() {
@@ -107,7 +108,6 @@ public class FormFieldModel extends RenderingModelImpl {
         if (StringUtils.isNotBlank(cssClass)) {
             style = "class=\"" + cssClass + "\"";
         }
-
     }
 
     public boolean isValid() {
@@ -115,39 +115,25 @@ public class FormFieldModel extends RenderingModelImpl {
     }
 
     // Map<String, String>
-    protected Map getFormErrorMessages() {
-        RenderingModelImpl model = this;
-
-        while(model != null) {
-            if(model.getParent() instanceof FormModel) {
-                return ((FormModel)model.getParent()).getErrorMessages();
-            }
-            model = (RenderingModelImpl) model.getParent();
-        }
-        return null;
-    }
 
     public String getValue() {
         return value;
     }
 
     protected void handleValue() {
-        //has default value?
         String[] val = null;
         try {
-            val = MgnlContext.getParameterValues(content.getNodeData("controlName").getString());
-            if(val == null) {
-                if(content.hasNodeData("default")) {
+            val = MgnlContext.getParameterValues(getControlName());
+            if (val == null) {
+                //has default value?
+                if (content.hasNodeData("default")) {
                     val = new String[]{content.getNodeData("default").getString()};
                 }
             }
         } catch (RepositoryException e) {
+        }
 
-        }
-        if(val == null) {
-            val = new String[]{""};
-        }
-        this.value = StringUtils.join(val, "*");
+        this.value = (val != null) ? StringUtils.join(val, "*") : "";
     }
 
     public void setValue(String value) {
@@ -163,25 +149,28 @@ public class FormFieldModel extends RenderingModelImpl {
     }
 
     public String getRightText() {
-        try {
-            return ((FormModel) this.getParent()).getRightText();
-        } catch (Exception e) {
-            return "";
-        }
+        return getFormModel().getRightText();
     }
 
     public String getRequiredSymbol() {
-        try {
-            RenderingModel tempModel = this.getParent();
-            while (!(tempModel instanceof FormModel)) {
-                tempModel = tempModel.getParent();
-            }
-
-            return ((FormModel) tempModel).getRequiredSymbol();
-
-        } catch (Exception e) {
-            return "";
-        }
+        return getFormModel().getRequiredSymbol();
     }
 
+    protected Map getFormErrorMessages() {
+        return getFormModel().getErrorMessages();
+    }
+
+    private String getControlName() {
+        return content.getNodeData("controlName").getString();
+    }
+
+    private FormModel getFormModel() {
+        RenderingModel model = this.parentModel;
+        while (model != null) {
+            if (model instanceof FormModel)
+                return (FormModel) model;
+            model = model.getParent();
+        }
+        return null;
+    }
 }

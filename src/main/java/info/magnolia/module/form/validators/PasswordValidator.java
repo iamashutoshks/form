@@ -33,18 +33,16 @@
  */
 package info.magnolia.module.form.validators;
 
-import org.apache.commons.lang.StringUtils;
 import info.magnolia.context.MgnlContext;
+import org.apache.commons.lang.StringUtils;
 
 /**
-*
-* @author zdenekskodik
-* 
-*/
+ * @author zdenekskodik
+ */
 public class PasswordValidator extends Validator {
-    
-    public boolean validate(String psw) {
-        String pswconfirm = MgnlContext.getParameter("passwordConfirmation");
-        return StringUtils.equals(psw, pswconfirm); 
+
+    public boolean validate(String password) {
+        String confirmation = MgnlContext.getParameter("passwordConfirmation");
+        return StringUtils.equals(password, confirmation);
     }
 }

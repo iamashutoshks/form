@@ -33,17 +33,14 @@
  */
 package info.magnolia.module.form.processors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.module.form.paragraphs.models.FormModel;
 import info.magnolia.module.form.util.FormUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author tmiyar
- *
  */
 public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {
 
@@ -55,21 +52,17 @@ public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {
             if (content.getNodeData("sendConfirmation").getBoolean()) {
                 String body = content.getNodeData("confirmMailBody").getString();
                 String from = content.getNodeData("confirmMailFrom").getString();
-                String subject = content.getNodeData("confirmMailSubject")
-                        .getString();
+                String subject = content.getNodeData("confirmMailSubject").getString();
                 String to = content.getNodeData("confirmMailTo").getString();
                 String contentType = content.getNodeData("confirmContentType").getString();
 
                 sendMail(body, from, subject, to, contentType);
-
             }
         } catch (Exception e) {
-            log.error("Confirmation email" , e);
+            log.error("Confirmation email", e);
             return FormUtil.getMessage("SendConfirmationEMailProcessor.errorMessage", "");
         }
 
         return "";
     }
-
 }
-

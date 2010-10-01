@@ -37,22 +37,19 @@ import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 
 /**
- *
  * @author tmiyar
- *
  */
 public class FormUtil {
 
     private static final String MSG_BASENAME = "info.magnolia.module.form.messages";
 
     public static String getMessage(String key) {
-        final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
+        Messages messages = MessagesManager.getMessages(MSG_BASENAME);
         return messages.get(key);
     }
 
     public static String getMessage(String key, String defaultMsg) {
-        final Messages messages = MessagesManager.getMessages(MSG_BASENAME);
+        Messages messages = MessagesManager.getMessages(MSG_BASENAME);
         return messages.getWithDefault(key, defaultMsg);
     }
-
 }

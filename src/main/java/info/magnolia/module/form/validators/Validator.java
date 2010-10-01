@@ -33,6 +33,9 @@
  */
 package info.magnolia.module.form.validators;
 
+/**
+ * @author tmiyar
+ */
 public class Validator {
 
     private String name;

@@ -33,20 +33,17 @@
  */
 package info.magnolia.module.form.processors;
 
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.module.form.paragraphs.models.FormModel;
 import info.magnolia.module.form.util.FormUtil;
 import info.magnolia.module.mail.util.MailUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
- *
  * @author tmiyar
- *
  */
 public class TrackEmailProcessor extends BaseFormProcessorImpl {
 
@@ -77,6 +74,4 @@ public class TrackEmailProcessor extends BaseFormProcessorImpl {
     public void setLoggerName(String loggerName) {
         this.loggerName = loggerName;
     }
-
 }
-
