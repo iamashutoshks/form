@@ -73,11 +73,7 @@ public abstract class BaseFormProcessorImpl implements FormProcessor {
     }
 
     protected Map getParameters() {
-        Map result = new HashMap();
-        for (String key : MgnlContext.getParameters().keySet()) {
-            result.put(key, StringUtils.join(MgnlContext.getParameterValues(key), "__"));
-        }
-        return result;
+        return MgnlContext.getParameters();
     }
 
     public String getName() {

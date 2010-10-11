@@ -34,6 +34,7 @@
 package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
@@ -123,19 +124,10 @@ public class FormFieldModel extends RenderingModelImpl {
     }
 
     protected void handleValue() {
-        String[] val = null;
-        try {
-            val = MgnlContext.getParameterValues(getControlName());
-            if (val == null) {
-                //has default value?
-                if (content.hasNodeData("default")) {
-                    val = new String[]{content.getNodeData("default").getString()};
-                }
-            }
-        } catch (RepositoryException e) {
-        }
-
-        this.value = (val != null) ? StringUtils.join(val, "*") : "";
+        String val = MgnlContext.getParameter(getControlName());
+        if (val == null)
+            NodeDataUtil.getString(content, "default");
+        this.value = StringUtils.defaultString(val);
     }
 
     public void setValue(String value) {
