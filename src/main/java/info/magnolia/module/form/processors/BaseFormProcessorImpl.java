@@ -33,17 +33,15 @@
  */
 package info.magnolia.module.form.processors;
 
+import java.util.List;
+import java.util.Map;
+
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.processing.FormProcessor;
 import info.magnolia.module.mail.MailModule;
 import info.magnolia.module.mail.MgnlMailFactory;
 import info.magnolia.module.mail.templates.MgnlEmail;
 import info.magnolia.module.mail.util.MailUtil;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Base implementation for FormProcessors that send mail.
