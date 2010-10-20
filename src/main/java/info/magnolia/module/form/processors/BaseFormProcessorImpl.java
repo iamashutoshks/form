@@ -51,7 +51,7 @@ public abstract class BaseFormProcessorImpl implements FormProcessor {
 
     private String name;
 
-    private boolean enabled;
+    private boolean enabled = true;
 
     protected void sendMail(String body, String from, String subject, String to, String contentType, Map<String, String> parameters) throws Exception {
 
