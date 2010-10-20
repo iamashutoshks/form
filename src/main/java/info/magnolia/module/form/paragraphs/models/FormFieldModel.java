@@ -33,18 +33,18 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.context.MgnlContext;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.RenderingModelImpl;
+import javax.jcr.RepositoryException;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.jcr.RepositoryException;
-import java.util.Map;
+import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.module.form.engine.FormField;
+import info.magnolia.module.templating.RenderableDefinition;
+import info.magnolia.module.templating.RenderingModel;
+import info.magnolia.module.templating.RenderingModelImpl;
 
 /**
  * RenderingModel for form items. Looks up the parent model to find out if the item passed validation.
@@ -74,16 +74,9 @@ public class FormFieldModel extends RenderingModelImpl {
         return "";
     }
 
-    // TODO this method doesnt validate, it checks the parent for error messages for this field
-
     private void validate() {
-        valid = true;
-        Map errorMessages = getFormErrorMessages();
-        if (errorMessages != null) {
-            if (errorMessages.containsKey(getControlName())) {
-                valid = false;
-            }
-        }
+        FormField field = getFormModel().getFormField(getControlName());
+        valid = field == null || field.isValid();
     }
 
     protected void handleStyle() {
@@ -117,52 +110,39 @@ public class FormFieldModel extends RenderingModelImpl {
         return valid;
     }
 
-    // Map<String, String>
-
     public String getValue() {
         return value;
     }
 
     protected void handleValue() {
-        String val = MgnlContext.getParameter(getControlName());
+        FormField field = getFormModel().getFormField(getControlName());
+        String val = field != null ? field.getValue() : null;
         if (val == null)
-            NodeDataUtil.getString(content, "default");
+            val = NodeDataUtil.getString(content, "default");
         this.value = StringUtils.defaultString(val);
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
     public String getStyle() {
         return style;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    public String getRightText() {
+    public String getRightText() throws RepositoryException {
         return getFormModel().getRightText();
     }
 
-    public String getRequiredSymbol() {
+    public String getRequiredSymbol() throws RepositoryException {
         return getFormModel().getRequiredSymbol();
-    }
-
-    protected Map getFormErrorMessages() {
-        return getFormModel().getErrorMessages();
     }
 
     private String getControlName() {
         return content.getNodeData("controlName").getString();
     }
 
-    private FormModel getFormModel() {
+    private AbstractFormModel getFormModel() {
         RenderingModel model = this.parentModel;
         while (model != null) {
-            if (model instanceof FormModel)
-                return (FormModel) model;
+            if (model instanceof AbstractFormModel)
+                return (AbstractFormModel) model;
             model = model.getParent();
         }
         return null;

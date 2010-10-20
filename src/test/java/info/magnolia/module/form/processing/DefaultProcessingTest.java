@@ -33,7 +33,9 @@
  */
 package info.magnolia.module.form.processing;
 
-import info.magnolia.module.form.paragraphs.models.FormModel;
+import java.util.Map;
+
+import info.magnolia.cms.core.Content;
 import junit.framework.TestCase;
 
 public class DefaultProcessingTest extends TestCase {
@@ -44,7 +46,7 @@ public class DefaultProcessingTest extends TestCase {
         private boolean processed = false;
         private String returnValue = "";
 
-        public String process(FormModel model) {
+        public String process(Content content, Map<String, String> parameters) {
             processed = true;
             return returnValue;
         }
@@ -72,7 +74,7 @@ public class DefaultProcessingTest extends TestCase {
         MockFormProcessor processor2 = new MockFormProcessor();
 
         DefaultProcessing processing = new DefaultProcessing();
-        String returnValue = processing.process(new FormProcessor[]{processor1, processor2}, null);
+        String returnValue = processing.process(new FormProcessor[]{processor1, processor2}, null, null);
 
         assertEquals("", returnValue);
         assertTrue(processor1.isProcessed());
@@ -87,7 +89,7 @@ public class DefaultProcessingTest extends TestCase {
         processor1.setEnabled(false);
 
         DefaultProcessing processing = new DefaultProcessing();
-        String returnValue = processing.process(new FormProcessor[]{processor1, processor2}, null);
+        String returnValue = processing.process(new FormProcessor[]{processor1, processor2}, null, null);
 
         assertEquals("", returnValue);
         assertFalse(processor1.isProcessed());
@@ -102,7 +104,7 @@ public class DefaultProcessingTest extends TestCase {
         processor1.setReturnValue("error occurred");
 
         DefaultProcessing processing = new DefaultProcessing();
-        String returnValue = processing.process(new FormProcessor[]{processor1, processor2}, null);
+        String returnValue = processing.process(new FormProcessor[]{processor1, processor2}, null, null);
 
         assertEquals("error occurred", returnValue);
         assertTrue(processor1.isProcessed());

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,44 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
-
-import java.util.Map;
+package info.magnolia.module.form.engine;
 
 import org.apache.commons.lang.StringUtils;
 
-import info.magnolia.cms.core.Content;
-
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * Binding and validation result for a field.
  */
-public class DefaultProcessing implements FormProcessing {
+public class FormField {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
+    private String name;
+    private String value;
+    private String errorMessage;
+
+    public boolean isValid() {
+        return StringUtils.isEmpty(errorMessage);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }

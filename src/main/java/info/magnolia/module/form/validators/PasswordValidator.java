@@ -33,8 +33,9 @@
  */
 package info.magnolia.module.form.validators;
 
-import info.magnolia.context.MgnlContext;
 import org.apache.commons.lang.StringUtils;
+
+import info.magnolia.context.MgnlContext;
 
 /**
  * Validates that a submitted password matches a confirmation field.

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,40 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
+package info.magnolia.module.form.paragraphs.models.multistep;
 
-import java.util.Map;
+import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.engine.FormState;
+import info.magnolia.module.form.engine.RedirectWithTokenView;
+import info.magnolia.module.form.engine.View;
+import info.magnolia.module.form.paragraphs.models.AbstractFormModel;
+import info.magnolia.module.templating.RenderableDefinition;
+import info.magnolia.module.templating.RenderingModel;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * Provides multi step support.
  */
-public class DefaultProcessing implements FormProcessing {
+public abstract class AbstractMultiStepForm extends AbstractFormModel {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
+    protected AbstractMultiStepForm(Content content, RenderableDefinition definition, RenderingModel parent) {
+        super(content, definition, parent);
     }
+
+    @Override
+    protected View getValidationSuccessfulView(FormState formState) throws RepositoryException {
+        // Redirect to the next step if there is one
+        String nextStep = getNextPage();
+        if (StringUtils.isNotEmpty(nextStep)) {
+            return new RedirectWithTokenView(nextStep, formState.getToken());
+        }
+        return null;
+    }
+
+    protected abstract String getFirstPage() throws RepositoryException;
+
+    protected abstract String getNextPage() throws RepositoryException;
 }

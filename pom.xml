@@ -13,7 +13,7 @@
   <description />
 
   <properties>
-    <magnoliaVersion>4.2.1</magnoliaVersion>
+    <magnoliaVersion>4.4-SNAPSHOT</magnoliaVersion>
     <javaVersion>1.5</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>

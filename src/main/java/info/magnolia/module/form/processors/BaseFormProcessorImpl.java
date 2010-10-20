@@ -36,7 +36,6 @@ package info.magnolia.module.form.processors;
 import java.util.List;
 import java.util.Map;
 
-import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.processing.FormProcessor;
 import info.magnolia.module.mail.MailModule;
 import info.magnolia.module.mail.MgnlMailFactory;
@@ -54,11 +53,10 @@ public abstract class BaseFormProcessorImpl implements FormProcessor {
 
     private boolean enabled;
 
-    protected void sendMail(String body, String from, String subject, String to, String contentType) throws Exception {
+    protected void sendMail(String body, String from, String subject, String to, String contentType, Map<String, String> parameters) throws Exception {
 
         MgnlMailFactory mgnlMailFactory = MailModule.getInstance().getFactory();
 
-        Map parameters = getParameters();
         List attachments = MailUtil.createAttachmentList();
 
         MgnlEmail email = mgnlMailFactory.getEmailFromType(parameters, "freemarker", contentType, attachments);
@@ -68,10 +66,6 @@ public abstract class BaseFormProcessorImpl implements FormProcessor {
         email.setBody(body);
 
         MailModule.getInstance().getHandler().sendMail(email);
-    }
-
-    protected Map getParameters() {
-        return MgnlContext.getParameters();
     }
 
     public String getName() {

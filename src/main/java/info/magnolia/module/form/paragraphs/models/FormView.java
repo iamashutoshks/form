@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,37 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
+package info.magnolia.module.form.paragraphs.models;
 
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.engine.View;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * View for rendering the form. Contains validation errors and the error title to use.
  */
-public class DefaultProcessing implements FormProcessing {
+public class FormView implements View {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
+    private String errorTitle;
+    private Map<String, String> validationErrors;
+
+    public void setErrorTitle(String errorTitle) {
+        this.errorTitle = errorTitle;
+    }
+
+    public void setValidationErrors(Map<String, String> validationErrors) {
+        this.validationErrors = validationErrors;
+    }
+
+    public String getErrorTitle() {
+        return errorTitle;
+    }
+
+    public Map<String, String> getValidationErrors() {
+        return validationErrors;
+    }
+
+    public String execute() {
         return "";
     }
 }

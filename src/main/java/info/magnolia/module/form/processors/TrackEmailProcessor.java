@@ -33,14 +33,14 @@
  */
 package info.magnolia.module.form.processors;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.paragraphs.models.FormModel;
-import info.magnolia.module.form.util.FormUtil;
-import info.magnolia.module.mail.util.MailUtil;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Map;
+import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.util.FormUtil;
+import info.magnolia.module.mail.util.MailUtil;
 
 /**
  * Uses the mail module to log that a form was submitted.
@@ -53,13 +53,12 @@ public class TrackEmailProcessor extends BaseFormProcessorImpl {
 
     private String loggerName;
 
-    public String process(FormModel model) {
+    public String process(Content content, Map<String, String> parameters) {
         try {
-            Content content = model.getContent();
+
             if (content.getNodeData("trackMail").getBoolean()) {
 
-                Map params = getParameters();
-                MailUtil.logMail(params, loggerName);
+                MailUtil.logMail(parameters, loggerName);
             }
         } catch (Exception e) {
             log.error("Trak email", e);

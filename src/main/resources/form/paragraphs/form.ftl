@@ -1,23 +1,37 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
-[#if actionResult == "success"]
+[#if actionResult == "go-to-first-page"]
+	<div class="text">
+		${i18n.get("form.user.errorMessage.go-to-first-page", [mgnl.createLink("website", model.view.firstPage)])}
+	</div>
+[#elseif actionResult == "success"]
     <div class="text success">
-        <h1>${content.successTitle!i18n['form.default.successTitle']}</h1>
-        <p>${content.successMessage!}</p>
-    </div><!-- end text -->
+        <h1>${model.view.successTitle!i18n['form.default.successTitle']}</h1>
+        <p>${model.view.successMessage!}</p>
+    </div>
+[#elseif actionResult == "session-expired"]
+	<div class="text error">
+		${i18n.get("form.user.errorMessage.session-expired", [mgnl.createLink("website", model.view.firstPage)])}
+	</div>
+[#elseif actionResult == "failure"]
+	<div class="text error">
+		<ul>
+			<li>${model.view.errorMessage}</li>
+		</ul>
+	</div>
 [#else]
-    [#if model.errorMessages?size > 0]
+    [#if model.view.validationErrors?size > 0]
         <div class="text error">
-            <h1>${content.errorTitle!i18n['form.default.errorTitle']}</h1>
+            <h1>${model.view.errorTitle!i18n['form.default.errorTitle']}</h1>
             <ul>
-                [#assign keys = model.errorMessages?keys]
+                [#assign keys = model.view.validationErrors?keys]
                 [#list keys as key]
                     <li>
-                        <a href="#${key}_label">${model.errorMessages[key]}</a>
+                        <a href="#${key}_label">${model.view.validationErrors[key]}</a>
                     </li>
                 [/#list]
             </ul>
-        </div> <!-- end error message -->
+        </div>
     [/#if]
     [#if mgnl.editMode]
     <div style="clear: both" >
@@ -27,12 +41,12 @@
     <div class="text">
         <h1>${content.formTitle!?html}</h1>
         <p>${content.formText!?html}</p>
-    </div><!-- end text -->
+    </div>
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
             <div class="form-item-hidden">
-                <input type="hidden" name="field" value="" />
-                <input type="hidden" name="paragraphUUID" value="${content.@uuid}" />
+				<input type="hidden" name="mgnlModelExecutionUUID" value="${content.@uuid}" />
+				<input type="hidden" name="mgnlFormToken" value="${model.formState.token}" />
             </div>
             [#if content.fieldsets?exists]
                 [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]
@@ -43,6 +57,5 @@
                 <div>[@cms.newBar contentNodeCollectionName="fieldsets"  newLabel="${i18n['form.fieldset.newLabel']}" paragraph="formGroupFields" /]</div>
             [/#if]
         </form>
-    </div> <!-- end form -->
-[/#if] <!-- end else -->
-
+    </div>
+[/#if]

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,34 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
+package info.magnolia.module.form.paragraphs.models.multistep;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.engine.View;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * Used when a sub page is accessed without a form state token. Displays a message saying that the form starts on
+ * another page and a link to the first page.
  */
-public class DefaultProcessing implements FormProcessing {
+public class GoToFirstPageView implements View {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
+    /**
+     * UUID of the first page.
+     */
+    private String firstPage;
+
+    public GoToFirstPageView(String firstPage) {
+        this.firstPage = firstPage;
+    }
+
+    public String getFirstPage() {
+        return firstPage;
+    }
+
+    public void setFirstPage(String firstPage) {
+        this.firstPage = firstPage;
+    }
+
+    public String execute() {
+        return "go-to-first-page";
     }
 }

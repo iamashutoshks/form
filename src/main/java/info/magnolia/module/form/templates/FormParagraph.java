@@ -33,12 +33,13 @@
  */
 package info.magnolia.module.form.templates;
 
-import info.magnolia.module.form.processing.FormProcessor;
-import info.magnolia.module.templating.Paragraph;
-import org.apache.commons.lang.ArrayUtils;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.lang.ArrayUtils;
+
+import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.templating.Paragraph;
 
 /**
  * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,20 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
-
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
+package info.magnolia.module.form.engine;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * Thrown when an attempt is made to get form state from session that does not exist.
  */
-public class DefaultProcessing implements FormProcessing {
+public class NoSuchFormStateException extends Exception {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
+    private String token;
+
+    public NoSuchFormStateException(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

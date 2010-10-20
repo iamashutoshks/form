@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,31 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
+package info.magnolia.module.form.engine;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
+import java.io.IOException;
+import javax.jcr.RepositoryException;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.module.templating.RenderingModel;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * Simple redirect view.
  */
-public class DefaultProcessing implements FormProcessing {
+public class RedirectView implements View {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
+    private String uuid;
+
+    public RedirectView(Content content) {
+        this.uuid = content.getUUID();
+    }
+
+    public RedirectView(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String execute() throws RepositoryException, IOException {
+        FormStateUtil.sendRedirect(uuid);
+        return RenderingModel.SKIP_RENDERING;
     }
 }

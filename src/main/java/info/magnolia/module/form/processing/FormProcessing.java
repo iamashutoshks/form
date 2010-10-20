@@ -33,8 +33,10 @@
  */
 package info.magnolia.module.form.processing;
 
+import java.util.Map;
+
+import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.FactoryUtil;
-import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
  * Executes a set of processors on form submission.
@@ -44,7 +46,7 @@ import info.magnolia.module.form.paragraphs.models.FormModel;
  */
 public interface FormProcessing {
 
-    String process(FormProcessor[] processors, FormModel model);
+    String process(FormProcessor processors[], Content content, Map<String, String> parameters);
 
     /**
      * Factory for looking up the default FormProcessing implementation.

@@ -44,7 +44,6 @@ import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.nodebuilder.task.ErrorHandling;
 import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
-
 import static info.magnolia.nodebuilder.Ops.*;
 
 /**
@@ -110,6 +109,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "label", "dialog.form.edit.tabMain.mandatory.label"),
                 new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "selected", "false"),
                 new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "type", "Boolean")))
+                .addTask(new ArrayDelegateTask("Add paragraphs and dialogs for multi step forms", "",
+                new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStart.xml"),
+                new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStep.xml"),
+                new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formStep.xml")))
         );
     }
 }

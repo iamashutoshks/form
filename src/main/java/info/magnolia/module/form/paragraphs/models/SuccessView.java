@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,35 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
+package info.magnolia.module.form.paragraphs.models;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.engine.View;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * Used when form processing completes and all processors have executed successfully.
  */
-public class DefaultProcessing implements FormProcessing {
+public class SuccessView implements View {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
+    private String successTitle;
+    private String successMessage;
+
+    public String getSuccessTitle() {
+        return successTitle;
+    }
+
+    public void setSuccessTitle(String successTitle) {
+        this.successTitle = successTitle;
+    }
+
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
+    }
+
+    public String execute() {
+        return "success";
     }
 }

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,16 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
+package info.magnolia.module.form.engine;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
+import java.io.IOException;
+import javax.jcr.RepositoryException;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * A view as returned from FormExecutionSkeleton. Implementing classes typically contain details to be displayed in
+ * the view. The template form.ftl renders differently depending on the view.
  */
-public class DefaultProcessing implements FormProcessing {
+public interface View {
 
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
-    }
+    String execute() throws RepositoryException, IOException;
 }

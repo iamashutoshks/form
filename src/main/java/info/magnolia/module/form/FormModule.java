@@ -33,13 +33,14 @@
  */
 package info.magnolia.module.form;
 
-import info.magnolia.module.form.validators.Validator;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import info.magnolia.module.form.validators.Validator;
 
 /**
  * Module class for the form module. Maintains a registry of validators.

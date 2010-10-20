@@ -33,17 +33,18 @@
  */
 package info.magnolia.module.form.paragraphs.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.jcr.RepositoryException;
+
 import info.magnolia.module.form.paragraphs.models.FormModel;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.ParagraphConfig;
 import junit.framework.TestCase;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FormModelTest extends TestCase {
 
-    public void testParagraphsAsString() {
+    public void testParagraphsAsString() throws RepositoryException {
 
         List<ParagraphConfig> ps = new ArrayList<ParagraphConfig>();
         ParagraphConfig p1 = new ParagraphConfig();

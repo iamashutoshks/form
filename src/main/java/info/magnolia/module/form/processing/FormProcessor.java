@@ -33,7 +33,9 @@
  */
 package info.magnolia.module.form.processing;
 
-import info.magnolia.module.form.paragraphs.models.FormModel;
+import java.util.Map;
+
+import info.magnolia.cms.core.Content;
 
 /**
  * Processes a submitted form.
@@ -45,7 +47,7 @@ public interface FormProcessor {
     /**
      * @return an error message or either null or the empty string on success
      */
-    String process(FormModel model);
+    String process(Content content, Map<String, String> parameters);
 
     boolean isEnabled();
 }

@@ -33,11 +33,13 @@
  */
 package info.magnolia.module.form.processors;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.paragraphs.models.FormModel;
-import info.magnolia.module.form.util.FormUtil;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.util.FormUtil;
 
 /**
  * Sends a confirmation mail, any files submitted are sent as attachments.
@@ -48,9 +50,8 @@ public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {
 
     private static final Logger log = LoggerFactory.getLogger(SendConfirmationEMailProcessor.class);
 
-    public String process(FormModel model) {
+    public String process(Content content, Map<String, String> parameters) {
         try {
-            Content content = model.getContent();
             if (content.getNodeData("sendConfirmation").getBoolean()) {
                 String body = content.getNodeData("confirmMailBody").getString();
                 String from = content.getNodeData("confirmMailFrom").getString();
@@ -58,7 +59,7 @@ public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {
                 String to = content.getNodeData("confirmMailTo").getString();
                 String contentType = content.getNodeData("confirmContentType").getString();
 
-                sendMail(body, from, subject, to, contentType);
+                sendMail(body, from, subject, to, contentType, parameters);
             }
         } catch (Exception e) {
             log.error("Confirmation email", e);

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,13 @@
  * intact.
  *
  */
-package info.magnolia.module.form.processing;
+package info.magnolia.module.form.templates;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
+import info.magnolia.module.templating.Paragraph;
 
 /**
- * Default implementation of FormProcessing that runs the supplied processors sequentially and breaks on the first
- * processor that returns an error.
- *
- * @author tmiyar
+ * Paragraph for additional steps in a form. If you want to use a custom Paragraph for your subsequent steps you must
+ * extend this class.
  */
-public class DefaultProcessing implements FormProcessing {
-
-    public String process(FormProcessor processors[], Content content, Map<String, String> parameters) {
-        for (FormProcessor processor : processors) {
-            if (processor.isEnabled()) {
-                String result = processor.process(content, parameters);
-                if (StringUtils.isNotEmpty(result)) {
-                    //stops processing if there is an error
-                    return result;
-                }
-            }
-        }
-        return "";
-    }
+public class FormStepParagraph extends Paragraph {
 }
