@@ -33,14 +33,14 @@
  */
 package info.magnolia.module.form.engine;
 
+import java.util.Map;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.form.processing.FormProcessing;
-import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 import info.magnolia.module.templating.RenderingModelImpl;
@@ -101,7 +101,7 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
                 return handleNoSuchFormStateOnSubmit(e.getToken());
             }
 
-            View view = processSubmission(formState);
+            View view = processSubmission();
 
             formState.setView(null);
 
@@ -123,7 +123,7 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
      * Performs the processing of submitted values. If this method returns a RedirectView this is treated like an exit
      * and the formState is removed from session.
      */
-    private View processSubmission(FormState formState) throws RepositoryException {
+    private View processSubmission() throws RepositoryException {
 
         // Validate the input parameters and collect FormField instances
         FormStepState step = getFormDataBinder().bindAndValidate(getContent());
@@ -143,9 +143,7 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
             return validationSuccessfulView;
 
         // Execute processors
-        FormProcessing processing = FormProcessing.Factory.getDefaultProcessing();
-        FormProcessor[] processors = getProcessors();
-        String result = processing.process(processors, getConfigurationNode(), formState.getValues());
+        String result = executeProcessors();
 
         formState.setEnded(true);
 
@@ -227,6 +225,19 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
     }
 
     protected abstract FormDataBinder getFormDataBinder();
+
+    protected String executeProcessors() throws RepositoryException {
+
+        Map<String, String> parameters = formState.getValues();
+
+        FormProcessor[] processors = getProcessors();
+        for (FormProcessor processor : processors) {
+            String result = processor.process(getConfigurationNode(), parameters);
+            if (StringUtils.isNotEmpty(result))
+                return result;
+        }
+        return null;
+    }
 
     protected abstract FormProcessor[] getProcessors() throws RepositoryException;
 

@@ -35,44 +35,21 @@ package info.magnolia.module.form.processors;
 
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.util.FormUtil;
-import info.magnolia.module.mail.util.MailUtil;
 
 /**
- * Uses the mail module to log that a form was submitted.
+ * Processes a submitted form.
  *
  * @author tmiyar
  */
-public class TrackEmailProcessor extends AbstractEMailFormProcessor {
+public interface FormProcessor {
 
-    private static final Logger log = LoggerFactory.getLogger(TrackEmailProcessor.class);
+    public static final String SUCCESS = "";
 
-    private String loggerName;
-
-    public String internalProcess(Content content, Map<String, String> parameters) {
-        try {
-
-            if (content.getNodeData("trackMail").getBoolean()) {
-                MailUtil.logMail(parameters, loggerName);
-            }
-
-        } catch (Exception e) {
-            log.error("Track email", e);
-            FormUtil.getMessage("TrackEmailProcessor.errorMessage", "");
-        }
-
-        return SUCCESS;
-    }
-
-    public String getLoggerName() {
-        return loggerName;
-    }
-
-    public void setLoggerName(String loggerName) {
-        this.loggerName = loggerName;
-    }
+    /**
+     * @param content    the node used to configure the processor, this is where it can find its settings
+     * @param parameters a map of the parameters collected from the form
+     * @return an error message or either null or the empty string on success. Should not throw exceptions when processing fails.
+     */
+    String process(Content content, Map<String, String> parameters);
 }

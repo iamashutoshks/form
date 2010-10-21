@@ -43,7 +43,7 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
-import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
 import info.magnolia.module.templating.ParagraphManager;

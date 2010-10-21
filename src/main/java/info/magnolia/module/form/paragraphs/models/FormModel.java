@@ -36,7 +36,7 @@ package info.magnolia.module.form.paragraphs.models;
 import javax.jcr.RepositoryException;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.templating.Paragraph;
 import info.magnolia.module.templating.RenderingModel;

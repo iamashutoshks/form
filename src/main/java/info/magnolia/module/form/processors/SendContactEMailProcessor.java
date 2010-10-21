@@ -46,11 +46,11 @@ import info.magnolia.module.form.util.FormUtil;
  *
  * @author tmiyar
  */
-public class SendContactEMailProcessor extends BaseFormProcessorImpl {
+public class SendContactEMailProcessor extends AbstractEMailFormProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(SendContactEMailProcessor.class);
 
-    public String process(Content content, Map<String, String> parameters) {
+    public String internalProcess(Content content, Map<String, String> parameters) {
         try {
             String body = content.getNodeData("contactMailBody").getString();
             String from = content.getNodeData("contactMailFrom").getString();
@@ -64,6 +64,6 @@ public class SendContactEMailProcessor extends BaseFormProcessorImpl {
             log.error("Contact email", e);
             return FormUtil.getMessage("SendContactEMailProcessor.errorMessage", "");
         }
-        return "";
+        return SUCCESS;
     }
 }

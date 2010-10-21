@@ -46,11 +46,11 @@ import info.magnolia.module.form.util.FormUtil;
  *
  * @author tmiyar
  */
-public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {
+public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(SendConfirmationEMailProcessor.class);
 
-    public String process(Content content, Map<String, String> parameters) {
+    public String internalProcess(Content content, Map<String, String> parameters) {
         try {
             if (content.getNodeData("sendConfirmation").getBoolean()) {
                 String body = content.getNodeData("confirmMailBody").getString();
@@ -66,6 +66,6 @@ public class SendConfirmationEMailProcessor extends BaseFormProcessorImpl {
             return FormUtil.getMessage("SendConfirmationEMailProcessor.errorMessage", "");
         }
 
-        return "";
+        return SUCCESS;
     }
 }

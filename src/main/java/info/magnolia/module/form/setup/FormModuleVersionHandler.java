@@ -103,12 +103,12 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
 
         register(DeltaBuilder.update("1.1.4", "")
                 .addTask(new ArrayDelegateTask("Add mandatory field to formSelection", "",
-                new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain", "mandatory", ItemType.CONTENTNODE.getSystemName()),
-                new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "buttonLabel", "dialog.form.edit.tabMain.mandatory.buttonLabel"),
-                new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "controlType", "checkboxSwitch"),
-                new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "label", "dialog.form.edit.tabMain.mandatory.label"),
-                new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "selected", "false"),
-                new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "type", "Boolean")))
+                        new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain", "mandatory", ItemType.CONTENTNODE.getSystemName()),
+                        new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "buttonLabel", "dialog.form.edit.tabMain.mandatory.buttonLabel"),
+                        new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "controlType", "checkboxSwitch"),
+                        new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "label", "dialog.form.edit.tabMain.mandatory.label"),
+                        new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "selected", "false"),
+                        new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "type", "Boolean")))
                 .addTask(new ArrayDelegateTask("Add paragraphs and dialogs for multi step forms", "",
                 new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStart.xml"),
                 new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStep.xml"),

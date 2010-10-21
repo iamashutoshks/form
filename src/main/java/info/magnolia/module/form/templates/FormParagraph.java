@@ -38,14 +38,14 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.templating.Paragraph;
 
 /**
  * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
  *
  * @author tmiyar
- * @see info.magnolia.module.form.processing.FormProcessor
+ * @see info.magnolia.module.form.processors.FormProcessor
  */
 public class FormParagraph extends Paragraph {
 

@@ -36,9 +36,9 @@ package info.magnolia.module.form.processors;
 import java.util.List;
 import java.util.Map;
 
-import info.magnolia.module.form.processing.FormProcessor;
 import info.magnolia.module.mail.MailModule;
 import info.magnolia.module.mail.MgnlMailFactory;
+import info.magnolia.module.mail.templates.MailAttachment;
 import info.magnolia.module.mail.templates.MgnlEmail;
 import info.magnolia.module.mail.util.MailUtil;
 
@@ -47,17 +47,13 @@ import info.magnolia.module.mail.util.MailUtil;
  *
  * @author tmiyar
  */
-public abstract class BaseFormProcessorImpl implements FormProcessor {
-
-    private String name;
-
-    private boolean enabled = true;
+public abstract class AbstractEMailFormProcessor extends AbstractFormProcessor {
 
     protected void sendMail(String body, String from, String subject, String to, String contentType, Map<String, String> parameters) throws Exception {
 
         MgnlMailFactory mgnlMailFactory = MailModule.getInstance().getFactory();
 
-        List attachments = MailUtil.createAttachmentList();
+        List<MailAttachment> attachments = MailUtil.createAttachmentList();
 
         MgnlEmail email = mgnlMailFactory.getEmailFromType(parameters, "freemarker", contentType, attachments);
         email.setFrom(from);
@@ -66,21 +62,5 @@ public abstract class BaseFormProcessorImpl implements FormProcessor {
         email.setBody(body);
 
         MailModule.getInstance().getHandler().sendMail(email);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 }
