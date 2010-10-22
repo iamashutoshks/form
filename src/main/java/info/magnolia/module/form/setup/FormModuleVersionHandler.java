@@ -110,7 +110,6 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "selected", "false"),
                         new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/mandatory", "type", "Boolean")))
                 .addTask(new ArrayDelegateTask("Add paragraphs and dialogs for multi step forms", "",
-                new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStart.xml"),
                 new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStep.xml"),
                 new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formStep.xml")))
         );

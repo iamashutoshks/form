@@ -31,16 +31,29 @@
  * intact.
  *
  */
-package info.magnolia.module.form.engine;
+package info.magnolia.module.form.templates;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.jcr.RepositoryException;
 
-/**
- * A view as returned from FormEngine. Implementing classes typically contain details to be displayed in
- * the view. The template form.ftl renders differently depending on the view.
- */
-public interface View {
+import junit.framework.TestCase;
 
-    String execute() throws RepositoryException, IOException;
+public class FormParagraphTest extends TestCase {
+
+    public void testParagraphsAsString() throws RepositoryException {
+
+        List<ParagraphConfig> ps = new ArrayList<ParagraphConfig>();
+        ParagraphConfig p1 = new ParagraphConfig();
+        p1.setName("para1");
+        ps.add(p1);
+        ParagraphConfig p2 = new ParagraphConfig();
+        p2.setName("para2");
+        ps.add(p2);
+
+        FormParagraph paragraph = new FormParagraph();
+        paragraph.setParagraphs(ps);
+
+        assertEquals("para1, para2", paragraph.getParagraphsAsStringList());
+    }
 }

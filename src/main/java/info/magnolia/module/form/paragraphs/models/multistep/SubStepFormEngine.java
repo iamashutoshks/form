@@ -36,28 +36,27 @@ package info.magnolia.module.form.paragraphs.models.multistep;
 import java.util.Iterator;
 import javax.jcr.RepositoryException;
 
-import org.apache.commons.lang.StringUtils;
-
 import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
-import info.magnolia.module.form.processors.FormProcessor;
+import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
+import info.magnolia.module.form.paragraphs.models.SessionExpiredView;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
-import info.magnolia.module.templating.ParagraphManager;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
 
 /**
- * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
- * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.FormStepParagraph}.
+ * FormEngine implementation for step 2+ of multi step forms. Finds the next step by looking for the first subsequent
+ * sibling that contains a paragraph of type FormStepParagraph.
  */
-public class MultiStepSubPageFormModel extends AbstractMultiStepForm {
+public class SubStepFormEngine extends AbstractFormEngine {
 
-    public MultiStepSubPageFormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
-        super(content, definition, parent);
+    private Content startPage;
+
+    public SubStepFormEngine(Content configurationNode, FormParagraph configurationParagraph, Content startPage) {
+        super(configurationNode, configurationParagraph);
+        this.startPage = startPage;
     }
 
     @Override
@@ -69,62 +68,25 @@ public class MultiStepSubPageFormModel extends AbstractMultiStepForm {
             return super.handleTokenMissing();
 
         // But in a public instance we'll render a messages saying that the form starts elsewhere.
-        return new GoToFirstPageView(getFirstPage());
+        return new GoToFirstPageView(startPage.getUUID());
     }
 
     @Override
     protected View handleNoSuchFormState(String formStateToken) throws RepositoryException {
-        return new SessionExpiredView(getFirstPage());
+        return new SessionExpiredView(startPage.getUUID());
     }
 
     @Override
     protected View handleNoSuchFormStateOnSubmit(String formStateToken) throws RepositoryException {
         // Send the user to the first step where he'll see an error message
-        return new RedirectWithTokenView(getFirstPage(), formStateToken);
+        return new RedirectWithTokenView(startPage.getUUID(), formStateToken);
     }
 
     @Override
-    public Content getConfigurationNode() throws RepositoryException {
-        return getStartParagraphNode();
-    }
-
-    @Override
-    public String getFirstPage() throws RepositoryException {
-        return getStartPage().getUUID();
-    }
-
-    @Override
-    public String getNextPage() throws RepositoryException {
+    protected String getNextPage() throws RepositoryException {
         // Find first sibling with step paragraph
-        Iterator<Content> contentIterator = getStartPage().getChildren().iterator();
+        Iterator<Content> contentIterator = startPage.getChildren().iterator();
         NavigationUtils.advanceIteratorTilAfter(contentIterator, MgnlContext.getAggregationState().getMainContent());
         return NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
-    }
-
-    @Override
-    public FormProcessor[] getProcessors() throws RepositoryException {
-        return getStartParagraph().getFormProcessors();
-    }
-
-    // Called from templates and models of inner paragraphs
-
-    @Override
-    public String getParagraphsAsStringList() throws RepositoryException {
-        return StringUtils.join((getStartParagraph()).getParagraphs(), ", ");
-    }
-
-    // Private utility methods
-
-    private Content getStartPage() throws RepositoryException {
-        return MgnlContext.getAggregationState().getMainContent().getParent();
-    }
-
-    private FormParagraph getStartParagraph() throws RepositoryException {
-        String templateName = getStartParagraphNode().getMetaData().getTemplate();
-        return (FormParagraph) ParagraphManager.getInstance().getParagraphDefinition(templateName);
-    }
-
-    private Content getStartParagraphNode() throws RepositoryException {
-        return NavigationUtils.findParagraphOfType(getStartPage(), FormParagraph.class);
     }
 }

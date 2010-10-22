@@ -43,7 +43,6 @@ import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.link.LinkUtil;
-import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
  * Utility class for storing FormState in session and getting the form state token from a request.
@@ -51,7 +50,7 @@ import info.magnolia.module.form.paragraphs.models.FormModel;
 public class FormStateUtil {
 
     public static final String FORM_TOKEN_PARAMETER_NAME = "mgnlFormToken";
-    private static final String FORM_STATE_ATTRIBUTE_PREFIX = FormModel.class.getName() + "-formState-";
+    private static final String FORM_STATE_ATTRIBUTE_PREFIX = FormEngine.class.getName() + "-formState-";
 
     public static FormState createAndSetFormState() {
 

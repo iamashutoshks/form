@@ -31,40 +31,11 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models.multistep;
-
-import javax.jcr.RepositoryException;
-
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.engine.FormState;
-import info.magnolia.module.form.engine.RedirectWithTokenView;
-import info.magnolia.module.form.engine.View;
-import info.magnolia.module.form.paragraphs.models.AbstractFormModel;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
+package info.magnolia.module.form.engine;
 
 /**
- * Provides multi step support.
+ * View interface implemented by views returned on submission that leaves the form. This causes the FormEngine to
+ * remove the form state from session.
  */
-public abstract class AbstractMultiStepForm extends AbstractFormModel {
-
-    protected AbstractMultiStepForm(Content content, RenderableDefinition definition, RenderingModel parent) {
-        super(content, definition, parent);
-    }
-
-    @Override
-    protected View getValidationSuccessfulView(FormState formState) throws RepositoryException {
-        // Redirect to the next step if there is one
-        String nextStep = getNextPage();
-        if (StringUtils.isNotEmpty(nextStep)) {
-            return new RedirectWithTokenView(nextStep, formState.getToken());
-        }
-        return null;
-    }
-
-    protected abstract String getFirstPage() throws RepositoryException;
-
-    protected abstract String getNextPage() throws RepositoryException;
+public interface EndView extends View {
 }

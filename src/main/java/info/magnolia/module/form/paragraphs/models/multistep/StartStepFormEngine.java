@@ -31,34 +31,31 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.model;
+package info.magnolia.module.form.paragraphs.models.multistep;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import javax.jcr.RepositoryException;
 
-import info.magnolia.module.form.paragraphs.models.FormModel;
+import info.magnolia.cms.core.Content;
+import info.magnolia.context.MgnlContext;
+import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.templates.ParagraphConfig;
-import junit.framework.TestCase;
+import info.magnolia.module.form.templates.FormStepParagraph;
 
-public class FormModelTest extends TestCase {
+/**
+ * FormEngine implementation for the first step of a multi step form, or a single step form.
+ */
+public class StartStepFormEngine extends AbstractFormEngine {
 
-    public void testParagraphsAsString() throws RepositoryException {
+    public StartStepFormEngine(Content configurationNode, FormParagraph configurationParagraph) {
+        super(configurationNode, configurationParagraph);
+    }
 
-        List<ParagraphConfig> ps = new ArrayList<ParagraphConfig>();
-        ParagraphConfig p1 = new ParagraphConfig();
-        p1.setName("para1");
-        ps.add(p1);
-        ParagraphConfig p2 = new ParagraphConfig();
-        p2.setName("para2");
-        ps.add(p2);
-
-        FormParagraph paragraph = new FormParagraph();
-        paragraph.setParagraphs(ps);
-
-        FormModel formModel = new FormModel(null, paragraph, null);
-
-        assertEquals("para1, para2", formModel.getParagraphsAsStringList());
+    @Override
+    protected String getNextPage() throws RepositoryException {
+        // Find first child with step paragraph
+        Content currentPage = MgnlContext.getAggregationState().getMainContent();
+        Iterator<Content> contentIterator = currentPage.getChildren().iterator();
+        return NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
     }
 }

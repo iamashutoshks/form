@@ -42,7 +42,7 @@ import info.magnolia.module.templating.RenderingModel;
 /**
  * Simple redirect view.
  */
-public class RedirectView implements View {
+public class RedirectView implements EndView {
 
     private String uuid;
 

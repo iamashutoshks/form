@@ -33,10 +33,8 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import javax.jcr.RepositoryException;
-
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.processors.FormProcessor;
+import info.magnolia.module.form.paragraphs.models.multistep.StartStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.templating.Paragraph;
 import info.magnolia.module.templating.RenderingModel;
@@ -53,12 +51,7 @@ public class FormModel extends AbstractFormModel {
     }
 
     @Override
-    protected FormProcessor[] getProcessors() throws RepositoryException {
-        return ((FormParagraph) definition).getFormProcessors();
-    }
-
-    @Override
-    protected Content getConfigurationNode() throws RepositoryException {
-        return content;
+    protected StartStepFormEngine createFormEngine() {
+        return new StartStepFormEngine(content, (FormParagraph) definition);
     }
 }

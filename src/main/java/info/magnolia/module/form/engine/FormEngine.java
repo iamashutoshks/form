@@ -40,25 +40,16 @@ import org.apache.commons.lang.StringUtils;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.form.processors.FormProcessor;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.RenderingModelImpl;
 
 /**
- * Base class for RenderingModels that do form processing. Implements a rendering and form submission algorithm that
- * keeps state in session for multiple pages. The behaviour and outcome of the algorithm can be customized by
- * implementing extension hooks.
+ * Implements a rendering and form submission algorithm that keeps state in session for multiple pages. Subclasses
+ * implement extension hooks to provide the actual views used.
  */
-public abstract class FormExecutionSkeleton extends RenderingModelImpl {
+public abstract class FormEngine {
 
     private FormState formState;
 
-    protected FormExecutionSkeleton(Content content, RenderableDefinition definition, RenderingModel parent) {
-        super(content, definition, parent);
-    }
-
-    public View handleRequest() throws RepositoryException {
+    public View handleRequest(Content content) throws RepositoryException {
 
         if (!isFormSubmission()) {
 
@@ -78,7 +69,7 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
             View view = formState.getView();
             formState.setView(null);
             if (view == null) {
-                return getFormView(formState.getStep(getContent().getUUID()));
+                return getFormView(formState.getStep(content.getUUID()));
             }
             if (formState.isEnded())
                 FormStateUtil.destroyFormState(formState);
@@ -101,11 +92,11 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
                 return handleNoSuchFormStateOnSubmit(e.getToken());
             }
 
-            View view = processSubmission();
+            View view = processSubmission(content);
 
             formState.setView(null);
 
-            if (view instanceof RedirectView) {
+            if (view instanceof EndView) {
                 FormStateUtil.destroyFormState(formState);
                 return view;
             }
@@ -122,11 +113,13 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
     /**
      * Performs the processing of submitted values. If this method returns a RedirectView this is treated like an exit
      * and the formState is removed from session.
+     *
+     * @param content
      */
-    private View processSubmission() throws RepositoryException {
+    private View processSubmission(Content content) throws RepositoryException {
 
         // Validate the input parameters and collect FormField instances
-        FormStepState step = getFormDataBinder().bindAndValidate(getContent());
+        FormStepState step = getFormDataBinder().bindAndValidate(content);
 
         // Add the submitted fields to formState
         formState.addStep(step);
@@ -143,7 +136,7 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
             return validationSuccessfulView;
 
         // Execute processors
-        String result = executeProcessors();
+        String result = executeProcessors(getFormState().getValues());
 
         formState.setEnded(true);
 
@@ -188,6 +181,18 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
      * step support.
      */
     protected View getValidationSuccessfulView(FormState formState) throws RepositoryException {
+        // Redirect to the next step if there is one
+        String nextStep = getNextPage();
+        if (StringUtils.isNotEmpty(nextStep)) {
+            return new RedirectWithTokenView(nextStep, formState.getToken());
+        }
+        return null;
+    }
+
+    /**
+     * Returns the UUID of the page to redirect to when validation succeeds or null to proceed to executing processors.
+     */
+    protected String getNextPage() throws RepositoryException {
         return null;
     }
 
@@ -226,24 +231,5 @@ public abstract class FormExecutionSkeleton extends RenderingModelImpl {
 
     protected abstract FormDataBinder getFormDataBinder();
 
-    protected String executeProcessors() throws RepositoryException {
-
-        Map<String, String> parameters = formState.getValues();
-
-        FormProcessor[] processors = getProcessors();
-        for (FormProcessor processor : processors) {
-            String result = processor.process(getConfigurationNode(), parameters);
-            if (StringUtils.isNotEmpty(result))
-                return result;
-        }
-        return null;
-    }
-
-    protected abstract FormProcessor[] getProcessors() throws RepositoryException;
-
-    /**
-     * Returns the configuration node for the processors. It's passed to them when they are executed so that they
-     * can read their settings.
-     */
-    protected abstract Content getConfigurationNode() throws RepositoryException;
+    protected abstract String executeProcessors(Map<String, String> parameters) throws RepositoryException;
 }

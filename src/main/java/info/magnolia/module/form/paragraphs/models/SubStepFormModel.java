@@ -31,49 +31,39 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models.multistep;
+package info.magnolia.module.form.paragraphs.models;
 
-import java.util.Iterator;
 import javax.jcr.RepositoryException;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.form.processors.FormProcessor;
+import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
+import info.magnolia.module.form.paragraphs.models.multistep.SubStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.module.templating.ParagraphManager;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 
 /**
- * RenderingModel for the first page in a multi step form. Searches its sub pages to find the second step by looking for
- * the first paragraph that is of type or extends {@link info.magnolia.module.form.templates.FormStepParagraph}.
+ * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
+ * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.FormStepParagraph}.
  */
-public class MultiStepStartFormModel extends AbstractMultiStepForm {
+public class SubStepFormModel extends AbstractFormModel {
 
-    public MultiStepStartFormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+    public SubStepFormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
     }
 
     @Override
-    public Content getConfigurationNode() throws RepositoryException {
-        return getContent();
-    }
+    protected SubStepFormEngine createFormEngine() throws RepositoryException {
 
-    @Override
-    public String getFirstPage() throws RepositoryException {
-        return MgnlContext.getAggregationState().getMainContent().getUUID();
-    }
+        Content startPage = MgnlContext.getAggregationState().getMainContent().getParent();
 
-    @Override
-    public String getNextPage() throws RepositoryException {
-        // Find first child with step paragraph
-        Content currentPage = MgnlContext.getAggregationState().getMainContent();
-        Iterator<Content> contentIterator = currentPage.getChildren().iterator();
-        return NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
-    }
+        Content startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
 
-    @Override
-    public FormProcessor[] getProcessors() throws RepositoryException {
-        return ((FormParagraph) definition).getFormProcessors();
+        String templateName = startParagraphNode.getMetaData().getTemplate();
+        FormParagraph startParagraph = (FormParagraph) ParagraphManager.getInstance().getParagraphDefinition(templateName);
+
+        return new SubStepFormEngine(startParagraphNode, startParagraph, startPage);
     }
 }

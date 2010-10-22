@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models.multistep;
+package info.magnolia.module.form.paragraphs.models;
 
 import java.io.IOException;
 import javax.jcr.RepositoryException;

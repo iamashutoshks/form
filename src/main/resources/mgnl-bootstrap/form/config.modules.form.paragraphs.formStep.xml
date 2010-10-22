@@ -22,7 +22,7 @@
     <sv:value>info.magnolia.module.form.messages</sv:value>
   </sv:property>
   <sv:property sv:name="modelClass" sv:type="String">
-    <sv:value>info.magnolia.module.form.paragraphs.models.multistep.MultiStepSubPageFormModel</sv:value>
+    <sv:value>info.magnolia.module.form.paragraphs.models.SubStepFormModel</sv:value>
   </sv:property>
   <sv:property sv:name="templatePath" sv:type="String">
     <sv:value>/form/paragraphs/form.ftl</sv:value>
