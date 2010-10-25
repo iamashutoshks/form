@@ -21,7 +21,7 @@
     [/#if]
     [#if mgnl.editMode]
     <div style="clear: both" >
-        [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" deleteLabel="" /]
+        [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" /]
     </div>
     [/#if]
     <div class="text">
