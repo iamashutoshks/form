@@ -13,7 +13,7 @@
   <description />
 
   <properties>
-    <magnoliaVersion>4.4-SNAPSHOT</magnoliaVersion>
+    <magnoliaVersion>4.2.1</magnoliaVersion>
     <javaVersion>1.5</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -58,7 +58,7 @@
       <version>${magnoliaVersion}</version>
       <scope>provided</scope>
     </dependency>
-    <dependency>
+     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <scope>provided</scope>

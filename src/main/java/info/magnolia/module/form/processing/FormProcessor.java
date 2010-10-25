@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010 Magnolia International
+ * This file Copyright (c) 2008-2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,35 +31,21 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.processing;
 
-import info.magnolia.module.form.engine.View;
+import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
- * Used when form processing completes and all processors have executed successfully.
+ * Processes a submitted form.
+ *
+ * @author tmiyar
  */
-public class SuccessView implements View {
+public interface FormProcessor {
 
-    private String successTitle;
-    private String successMessage;
+    /**
+     * @return an error message or either null or the empty string on success
+     */
+    String process(FormModel model);
 
-    public String getSuccessTitle() {
-        return successTitle;
-    }
-
-    public void setSuccessTitle(String successTitle) {
-        this.successTitle = successTitle;
-    }
-
-    public String getSuccessMessage() {
-        return successMessage;
-    }
-
-    public void setSuccessMessage(String successMessage) {
-        this.successMessage = successMessage;
-    }
-
-    public String execute() {
-        return "success";
-    }
+    boolean isEnabled();
 }

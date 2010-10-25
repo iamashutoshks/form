@@ -33,37 +33,36 @@
  */
 package info.magnolia.module.form.processors;
 
-import java.util.Map;
-
+import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.paragraphs.models.FormModel;
+import info.magnolia.module.form.util.FormUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.util.FormUtil;
 
 /**
  * Sends a contact mail, any files submitted are sent as attachments.
  *
  * @author tmiyar
  */
-public class SendContactEMailProcessor extends AbstractEMailFormProcessor {
+public class SendContactEMailProcessor extends BaseFormProcessorImpl {
 
     private static final Logger log = LoggerFactory.getLogger(SendContactEMailProcessor.class);
 
-    public String internalProcess(Content content, Map<String, String> parameters) {
+    public String process(FormModel model) {
         try {
+            Content content = model.getContent();
             String body = content.getNodeData("contactMailBody").getString();
             String from = content.getNodeData("contactMailFrom").getString();
             String subject = content.getNodeData("contactMailSubject").getString();
             String to = content.getNodeData("contactMailTo").getString();
             String contentType = content.getNodeData("contentType").getString();
 
-            sendMail(body, from, subject, to, contentType, parameters);
+            sendMail(body, from, subject, to, contentType);
 
         } catch (Exception e) {
             log.error("Contact email", e);
             return FormUtil.getMessage("SendContactEMailProcessor.errorMessage", "");
         }
-        return SUCCESS;
+        return "";
     }
 }

@@ -33,18 +33,17 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import javax.jcr.RepositoryException;
-
+import info.magnolia.cms.core.Content;
+import info.magnolia.context.MgnlContext;
+import info.magnolia.module.templating.RenderableDefinition;
+import info.magnolia.module.templating.RenderingModel;
+import info.magnolia.module.templating.RenderingModelImpl;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.module.form.engine.FormField;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.RenderingModelImpl;
+import javax.jcr.RepositoryException;
+import java.util.Map;
 
 /**
  * RenderingModel for form items. Looks up the parent model to find out if the item passed validation.
@@ -74,9 +73,16 @@ public class FormFieldModel extends RenderingModelImpl {
         return "";
     }
 
+    // TODO this method doesnt validate, it checks the parent for error messages for this field
+
     private void validate() {
-        FormField field = getFormModel().getFormField(getControlName());
-        valid = field == null || field.isValid();
+        valid = true;
+        Map errorMessages = getFormErrorMessages();
+        if (errorMessages != null) {
+            if (errorMessages.containsKey(getControlName())) {
+                valid = false;
+            }
+        }
     }
 
     protected void handleStyle() {
@@ -110,39 +116,61 @@ public class FormFieldModel extends RenderingModelImpl {
         return valid;
     }
 
+    // Map<String, String>
+
     public String getValue() {
         return value;
     }
 
     protected void handleValue() {
-        FormField field = getFormModel().getFormField(getControlName());
-        String val = field != null ? field.getValue() : null;
-        if (val == null)
-            val = NodeDataUtil.getString(content, "default");
-        this.value = StringUtils.defaultString(val);
+        String[] val = null;
+        try {
+            val = MgnlContext.getParameterValues(getControlName());
+            if (val == null) {
+                //has default value?
+                if (content.hasNodeData("default")) {
+                    val = new String[]{content.getNodeData("default").getString()};
+                }
+            }
+        } catch (RepositoryException e) {
+        }
+
+        this.value = (val != null) ? StringUtils.join(val, "*") : "";
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getStyle() {
         return style;
     }
 
-    public String getRightText() throws RepositoryException {
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getRightText() {
         return getFormModel().getRightText();
     }
 
-    public String getRequiredSymbol() throws RepositoryException {
+    public String getRequiredSymbol() {
         return getFormModel().getRequiredSymbol();
+    }
+
+    protected Map getFormErrorMessages() {
+        return getFormModel().getErrorMessages();
     }
 
     private String getControlName() {
         return content.getNodeData("controlName").getString();
     }
 
-    private AbstractFormModel getFormModel() {
+    private FormModel getFormModel() {
         RenderingModel model = this.parentModel;
         while (model != null) {
-            if (model instanceof AbstractFormModel)
-                return (AbstractFormModel) model;
+            if (model instanceof FormModel)
+                return (FormModel) model;
             model = model.getParent();
         }
         return null;

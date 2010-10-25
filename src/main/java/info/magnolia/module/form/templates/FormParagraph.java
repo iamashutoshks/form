@@ -33,21 +33,18 @@
  */
 package info.magnolia.module.form.templates;
 
+import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.templating.Paragraph;
+import org.apache.commons.lang.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-import javax.jcr.RepositoryException;
-
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.module.form.processors.FormProcessor;
-import info.magnolia.module.templating.Paragraph;
 
 /**
  * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
  *
  * @author tmiyar
- * @see info.magnolia.module.form.processors.FormProcessor
+ * @see info.magnolia.module.form.processing.FormProcessor
  */
 public class FormParagraph extends Paragraph {
 
@@ -68,6 +65,8 @@ public class FormParagraph extends Paragraph {
         this.formProcessors = formProcessors;
     }
 
+    // List<ParagraphConfig>
+
     public List getParagraphs() {
         return paragraphs;
     }
@@ -78,9 +77,5 @@ public class FormParagraph extends Paragraph {
 
     public void addParagraph(ParagraphConfig paragraph) {
         this.paragraphs.add(paragraph);
-    }
-
-    public String getParagraphsAsStringList() throws RepositoryException {
-        return StringUtils.join(paragraphs, ", ");
     }
 }

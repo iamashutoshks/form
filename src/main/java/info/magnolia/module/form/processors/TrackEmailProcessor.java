@@ -33,39 +33,40 @@
  */
 package info.magnolia.module.form.processors;
 
-import java.util.Map;
-
+import info.magnolia.cms.core.Content;
+import info.magnolia.module.form.paragraphs.models.FormModel;
+import info.magnolia.module.form.util.FormUtil;
+import info.magnolia.module.mail.util.MailUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.util.FormUtil;
-import info.magnolia.module.mail.util.MailUtil;
+import java.util.Map;
 
 /**
  * Uses the mail module to log that a form was submitted.
  *
  * @author tmiyar
  */
-public class TrackEmailProcessor extends AbstractEMailFormProcessor {
+public class TrackEmailProcessor extends BaseFormProcessorImpl {
 
     private static final Logger log = LoggerFactory.getLogger(TrackEmailProcessor.class);
 
     private String loggerName;
 
-    public String internalProcess(Content content, Map<String, String> parameters) {
+    public String process(FormModel model) {
         try {
-
+            Content content = model.getContent();
             if (content.getNodeData("trackMail").getBoolean()) {
-                MailUtil.logMail(parameters, loggerName);
-            }
 
+                Map params = getParameters();
+                MailUtil.logMail(params, loggerName);
+            }
         } catch (Exception e) {
-            log.error("Track email", e);
+            log.error("Trak email", e);
             FormUtil.getMessage("TrackEmailProcessor.errorMessage", "");
         }
 
-        return SUCCESS;
+        return "";
     }
 
     public String getLoggerName() {

@@ -31,31 +31,33 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models.multistep;
+package info.magnolia.module.form.paragraphs.model;
 
-import java.util.Iterator;
-import javax.jcr.RepositoryException;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.context.MgnlContext;
-import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
+import info.magnolia.module.form.paragraphs.models.FormModel;
 import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.module.form.templates.ParagraphConfig;
+import junit.framework.TestCase;
 
-/**
- * FormEngine implementation for the first step of a multi step form, or a single step form.
- */
-public class StartStepFormEngine extends AbstractFormEngine {
+import java.util.ArrayList;
+import java.util.List;
 
-    public StartStepFormEngine(Content configurationNode, FormParagraph configurationParagraph) {
-        super(configurationNode, configurationParagraph);
-    }
+public class FormModelTest extends TestCase {
 
-    @Override
-    protected String getNextPage() throws RepositoryException {
-        // Find first child with step paragraph
-        Content currentPage = MgnlContext.getAggregationState().getMainContent();
-        Iterator<Content> contentIterator = currentPage.getChildren().iterator();
-        return NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
+    public void testParagraphsAsString() {
+
+        List<ParagraphConfig> ps = new ArrayList<ParagraphConfig>();
+        ParagraphConfig p1 = new ParagraphConfig();
+        p1.setName("para1");
+        ps.add(p1);
+        ParagraphConfig p2 = new ParagraphConfig();
+        p2.setName("para2");
+        ps.add(p2);
+
+        FormParagraph paragraph = new FormParagraph();
+        paragraph.setParagraphs(ps);
+
+        FormModel formModel = new FormModel(null, paragraph, null);
+
+        assertEquals("para1, para2", formModel.getParagraphsAsStringList());
     }
 }

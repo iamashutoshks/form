@@ -15,9 +15,9 @@
             </span>
     [/#if]
     [#if content.rows == 1]
-        <input type="password" name="${content.controlName}" id="${content.controlName}" value=""/>
+        <input type="password" name="${content.controlName}" id="${content.controlName}" value="${content.value!?html}"/>
     [#else]
-        <textarea id="${content.controlName}" name="${content.controlName}" rows="${content.rows}"></textarea>
+        <textarea id="${content.controlName}" name="${content.controlName}" rows="${content.rows}">${content.value!?html}</textarea>
     [/#if]
     [#if content.title?has_content]
       </label>

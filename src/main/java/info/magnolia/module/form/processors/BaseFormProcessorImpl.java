@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010 Magnolia International
+ * This file Copyright (c) 2008-2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,18 +33,52 @@
  */
 package info.magnolia.module.form.processors;
 
+import info.magnolia.context.MgnlContext;
+import info.magnolia.module.form.processing.FormProcessor;
+import info.magnolia.module.mail.MailModule;
+import info.magnolia.module.mail.MgnlMailFactory;
+import info.magnolia.module.mail.templates.MgnlEmail;
+import info.magnolia.module.mail.util.MailUtil;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import info.magnolia.cms.core.Content;
-
 /**
- * Abstract base class for FormProcessors that want support for enabling/disabling.
+ * Base implementation for FormProcessors that send mail.
+ *
+ * @author tmiyar
  */
-public abstract class AbstractFormProcessor implements FormProcessor {
+public abstract class BaseFormProcessorImpl implements FormProcessor {
 
     private String name;
 
     private boolean enabled;
+
+    protected void sendMail(String body, String from, String subject, String to, String contentType) throws Exception {
+
+        MgnlMailFactory mgnlMailFactory = MailModule.getInstance().getFactory();
+
+        Map parameters = getParameters();
+        List attachments = MailUtil.createAttachmentList();
+
+        MgnlEmail email = mgnlMailFactory.getEmailFromType(parameters, "freemarker", contentType, attachments);
+        email.setFrom(from);
+        email.setSubject(subject);
+        email.setToList(to);
+        email.setBody(body);
+
+        MailModule.getInstance().getHandler().sendMail(email);
+    }
+
+    protected Map getParameters() {
+        Map result = new HashMap();
+        for (String key : MgnlContext.getParameters().keySet()) {
+            result.put(key, StringUtils.join(MgnlContext.getParameterValues(key), "__"));
+        }
+        return result;
+    }
 
     public String getName() {
         return name;
@@ -61,12 +95,4 @@ public abstract class AbstractFormProcessor implements FormProcessor {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-
-    public final String process(Content content, Map<String, String> parameters) {
-        if (enabled)
-            return internalProcess(content, parameters);
-        return SUCCESS;
-    }
-
-    protected abstract String internalProcess(Content content, Map<String, String> parameters);
 }

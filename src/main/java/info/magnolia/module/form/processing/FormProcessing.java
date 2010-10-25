@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010 Magnolia International
+ * This file Copyright (c) 2008-2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,12 +31,30 @@
  * intact.
  *
  */
-package info.magnolia.module.form.engine;
+package info.magnolia.module.form.processing;
+
+import info.magnolia.cms.util.FactoryUtil;
+import info.magnolia.module.form.paragraphs.models.FormModel;
 
 /**
- * Thrown when there's no form state token available in the request.
+ * Executes a set of processors on form submission.
  *
- * @see FormStateUtil
+ * @author tmiyar
+ * @see info.magnolia.module.form.paragraphs.models.FormModel
  */
-public class FormStateTokenMissingException extends Exception {
+public interface FormProcessing {
+
+    String process(FormProcessor[] processors, FormModel model);
+
+    /**
+     * Factory for looking up the default FormProcessing implementation.
+     */
+    public static class Factory {
+        public static FormProcessing getDefaultProcessing() {
+
+            // TODO the system property that sets the default impl for FormProcessing is defined in magnolia-core
+
+            return (FormProcessing) FactoryUtil.getSingleton(FormProcessing.class);
+        }
+    }
 }
