@@ -36,7 +36,7 @@ package info.magnolia.module.form.paragraphs.models;
 import info.magnolia.cms.core.Content;
 import info.magnolia.module.form.paragraphs.models.multistep.StartStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.templating.Paragraph;
+import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 
 /**
@@ -46,7 +46,7 @@ import info.magnolia.module.templating.RenderingModel;
  */
 public class FormModel extends AbstractFormModel {
 
-    public FormModel(Content content, Paragraph definition, RenderingModel parent) {
+    public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
     }
 
