@@ -80,8 +80,8 @@ public class FormState implements Serializable {
         return token;
     }
 
-    public Map<String, String> getValues() {
-        HashMap<String, String> map = new HashMap<String, String>();
+    public Map<String, Object> getValues() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
         for (FormStepState step : steps.values()) {
             map.putAll(step.getValues());
         }

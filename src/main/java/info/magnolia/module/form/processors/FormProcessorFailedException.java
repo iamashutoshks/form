@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2010 Magnolia International
+ * This file Copyright (c) 2010 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,36 +33,13 @@
  */
 package info.magnolia.module.form.processors;
 
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.util.FormUtil;
-
 /**
- * Sends a contact mail, any files submitted are sent as attachments.
- *
- * @author tmiyar
+ * Exception thrown by FormProcessors when they encounter an error. The message of this exception is presented to the
+ * user. A FormProcessor should throw a RuntimeException to have a generic error message presented to the user.
  */
-public class SendContactEMailProcessor extends AbstractEMailFormProcessor {
+public class FormProcessorFailedException extends Exception {
 
-    private static final Logger log = LoggerFactory.getLogger(SendContactEMailProcessor.class);
-
-    public void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
-        try {
-            String body = content.getNodeData("contactMailBody").getString();
-            String from = content.getNodeData("contactMailFrom").getString();
-            String subject = content.getNodeData("contactMailSubject").getString();
-            String to = content.getNodeData("contactMailTo").getString();
-            String contentType = content.getNodeData("contentType").getString();
-
-            sendMail(body, from, subject, to, contentType, parameters);
-
-        } catch (Exception e) {
-            log.error("Contact email", e);
-            throw new FormProcessorFailedException(FormUtil.getMessage("SendContactEMailProcessor.errorMessage", ""));
-        }
+    public FormProcessorFailedException(String message) {
+        super(message);
     }
 }

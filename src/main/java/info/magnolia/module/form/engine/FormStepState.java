@@ -74,8 +74,8 @@ public class FormStepState implements Serializable {
         return true;
     }
 
-    public Map<String, String> getValues() {
-        HashMap<String, String> map = new HashMap<String, String>();
+    public Map<String, Object> getValues() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
         for (FormField field : fields.values()) {
             map.put(field.getName(), field.getValue());
         }

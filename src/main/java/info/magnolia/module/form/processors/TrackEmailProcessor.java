@@ -53,7 +53,7 @@ public class TrackEmailProcessor extends AbstractEMailFormProcessor {
 
     private String loggerName;
 
-    public String internalProcess(Content content, Map<String, String> parameters) {
+    public void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
 
             if (content.getNodeData("trackMail").getBoolean()) {
@@ -62,10 +62,8 @@ public class TrackEmailProcessor extends AbstractEMailFormProcessor {
 
         } catch (Exception e) {
             log.error("Track email", e);
-            FormUtil.getMessage("TrackEmailProcessor.errorMessage", "");
+            throw new FormProcessorFailedException(FormUtil.getMessage("TrackEmailProcessor.errorMessage", ""));
         }
-
-        return SUCCESS;
     }
 
     public String getLoggerName() {

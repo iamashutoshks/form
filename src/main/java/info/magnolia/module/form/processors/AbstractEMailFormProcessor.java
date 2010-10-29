@@ -49,7 +49,7 @@ import info.magnolia.module.mail.util.MailUtil;
  */
 public abstract class AbstractEMailFormProcessor extends AbstractFormProcessor {
 
-    protected void sendMail(String body, String from, String subject, String to, String contentType, Map<String, String> parameters) throws Exception {
+    protected void sendMail(String body, String from, String subject, String to, String contentType, Map<String, Object> parameters) throws Exception {
 
         MgnlMailFactory mgnlMailFactory = MailModule.getInstance().getFactory();
 

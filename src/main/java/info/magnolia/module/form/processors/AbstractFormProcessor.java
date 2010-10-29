@@ -62,11 +62,10 @@ public abstract class AbstractFormProcessor implements FormProcessor {
         this.enabled = enabled;
     }
 
-    public final String process(Content content, Map<String, String> parameters) {
+    public final void process(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
         if (enabled)
-            return internalProcess(content, parameters);
-        return SUCCESS;
+            internalProcess(content, parameters);
     }
 
-    protected abstract String internalProcess(Content content, Map<String, String> parameters);
+    protected abstract void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException;
 }

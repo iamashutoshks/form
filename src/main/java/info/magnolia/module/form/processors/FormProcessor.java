@@ -44,12 +44,10 @@ import info.magnolia.cms.core.Content;
  */
 public interface FormProcessor {
 
-    public static final String SUCCESS = "";
-
     /**
      * @param content    the node used to configure the processor, this is where it can find its settings
      * @param parameters a map of the parameters collected from the form
      * @return an error message or either null or the empty string on success. Should not throw exceptions when processing fails.
      */
-    String process(Content content, Map<String, String> parameters);
+    void process(Content content, Map<String, Object> parameters) throws FormProcessorFailedException;
 }

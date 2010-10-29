@@ -37,15 +37,20 @@ import java.util.Map;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.form.processors.FormProcessorFailedException;
 
 /**
  * Implements a rendering and form submission algorithm that keeps state in session for multiple pages. Subclasses
  * implement extension hooks to provide the actual views used.
  */
 public abstract class FormEngine {
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private FormState formState;
 
@@ -135,14 +140,16 @@ public abstract class FormEngine {
         if (validationSuccessfulView != null)
             return validationSuccessfulView;
 
-        // Execute processors
-        String result = executeProcessors(getFormState().getValues());
-
         formState.setEnded(true);
 
-        // If processing failed then render page with an error message
-        if (StringUtils.isNotEmpty(result)) {
-            return getProcessorFailedView(result);
+        // Execute processors
+        try {
+            executeProcessors(getFormState().getValues());
+        } catch (FormProcessorFailedException e) {
+            return getProcessorFailedView(e.getMessage());
+        } catch (Exception e) {
+            log.error("FormProcessor threw unexpected exception", e);
+            return getProcessorFailedView(null);
         }
 
         // Render page with success message
@@ -205,8 +212,10 @@ public abstract class FormEngine {
 
     /**
      * Called when a processor failed.
+     *
+     * @param errorMessage can be null in case another exception than FormProcessorFailedException is thrown by processor.
      */
-    protected abstract View getProcessorFailedView(String result) throws RepositoryException;
+    protected abstract View getProcessorFailedView(String errorMessage) throws RepositoryException;
 
     /**
      * Called when validation was successful and all processors executed successfully.
@@ -231,5 +240,5 @@ public abstract class FormEngine {
 
     protected abstract FormDataBinder getFormDataBinder();
 
-    protected abstract String executeProcessors(Map<String, String> parameters) throws RepositoryException;
+    protected abstract void executeProcessors(Map<String, Object> parameters) throws RepositoryException, FormProcessorFailedException;
 }

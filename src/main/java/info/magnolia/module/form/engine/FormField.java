@@ -41,7 +41,7 @@ import org.apache.commons.lang.StringUtils;
 public class FormField {
 
     private String name;
-    private String value;
+    private Object value;
     private String errorMessage;
 
     public boolean isValid() {
@@ -56,11 +56,11 @@ public class FormField {
         this.name = name;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Object value) {
         this.value = value;
     }
 

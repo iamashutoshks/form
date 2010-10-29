@@ -50,7 +50,7 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(SendConfirmationEMailProcessor.class);
 
-    public String internalProcess(Content content, Map<String, String> parameters) {
+    public void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
             if (content.getNodeData("sendConfirmation").getBoolean()) {
                 String body = content.getNodeData("confirmMailBody").getString();
@@ -63,9 +63,7 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
             }
         } catch (Exception e) {
             log.error("Confirmation email", e);
-            return FormUtil.getMessage("SendConfirmationEMailProcessor.errorMessage", "");
+            throw new FormProcessorFailedException(FormUtil.getMessage("SendConfirmationEMailProcessor.errorMessage", ""));
         }
-
-        return SUCCESS;
     }
 }

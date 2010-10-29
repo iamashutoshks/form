@@ -48,7 +48,9 @@ import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.engine.RedirectView;
 import info.magnolia.module.form.engine.View;
 import info.magnolia.module.form.processors.FormProcessor;
+import info.magnolia.module.form.processors.FormProcessorFailedException;
 import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.module.form.util.FormUtil;
 
 /**
  * Implements common functionality used by both the first step and subsequent steps.
@@ -77,8 +79,10 @@ public abstract class AbstractFormEngine extends FormEngine {
     }
 
     @Override
-    protected View getProcessorFailedView(String result) {
-        return new ErrorView(result);
+    protected View getProcessorFailedView(String errorMessage) {
+        if (errorMessage == null)
+            errorMessage = FormUtil.getMessage("form.user.errorMessage.generic");
+        return new ErrorView(errorMessage);
     }
 
     @Override
@@ -110,14 +114,11 @@ public abstract class AbstractFormEngine extends FormEngine {
     }
 
     @Override
-    protected String executeProcessors(Map<String, String> parameters) throws RepositoryException {
+    protected void executeProcessors(Map<String, Object> parameters) throws RepositoryException, FormProcessorFailedException {
 
         FormProcessor[] processors = configurationParagraph.getFormProcessors();
         for (FormProcessor processor : processors) {
-            String result = processor.process(configurationNode, parameters);
-            if (StringUtils.isNotEmpty(result))
-                return result;
+            processor.process(configurationNode, parameters);
         }
-        return null;
     }
 }

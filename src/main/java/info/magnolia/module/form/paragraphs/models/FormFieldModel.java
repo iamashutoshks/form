@@ -55,7 +55,7 @@ public class FormFieldModel extends RenderingModelImpl {
 
     private static final Logger log = LoggerFactory.getLogger(FormFieldModel.class);
 
-    private String value;
+    private Object value;
     private String style = "";
     private boolean valid;
 
@@ -110,16 +110,18 @@ public class FormFieldModel extends RenderingModelImpl {
         return valid;
     }
 
-    public String getValue() {
+    public Object getValue() {
         return value;
     }
 
     protected void handleValue() {
         FormField field = getFormModel().getFormField(getControlName());
-        String val = field != null ? field.getValue() : null;
+        Object val = field != null ? field.getValue() : null;
         if (val == null)
             val = NodeDataUtil.getString(content, "default");
-        this.value = StringUtils.defaultString(val);
+        if (val == null)
+            val = "";
+        this.value = val;
     }
 
     public String getStyle() {
