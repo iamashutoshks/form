@@ -45,9 +45,13 @@ import info.magnolia.cms.core.Content;
 public interface FormProcessor {
 
     /**
+     * Performs an action when a form is submitted and validates successfully. When encountering errors the
+     * FormProcessor can throw FormProcessorFailedException with a messages suitable to be displayed to the user. If it
+     * throws a runtime exception it is logged and a generic error message is displayed to the user.
+     *
      * @param content    the node used to configure the processor, this is where it can find its settings
      * @param parameters a map of the parameters collected from the form
-     * @return an error message or either null or the empty string on success. Should not throw exceptions when processing fails.
+     * @throws FormProcessorFailedException when an error occurs and the FormProcessor has a message that is suitable error message for the user
      */
     void process(Content content, Map<String, Object> parameters) throws FormProcessorFailedException;
 }
