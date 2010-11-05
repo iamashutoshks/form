@@ -43,15 +43,23 @@ import info.magnolia.cms.i18n.MessagesManager;
  */
 public class FormUtil {
 
-    private static final String MSG_BASENAME = "info.magnolia.module.form.messages";
-
+    private static String i18nBasename;
+    
     public static String getMessage(String key) {
-        Messages messages = MessagesManager.getMessages(MSG_BASENAME);
+        Messages messages = MessagesManager.getMessages(getI18nBasename());
         return messages.get(key);
     }
 
     public static String getMessage(String key, String defaultMsg) {
-        Messages messages = MessagesManager.getMessages(MSG_BASENAME);
+        Messages messages = MessagesManager.getMessages(getI18nBasename());
         return messages.getWithDefault(key, defaultMsg);
+    }
+
+    public static void setI18nBasename(String i18nBasename) {
+        FormUtil.i18nBasename = i18nBasename;
+    }
+
+    public static String getI18nBasename() {
+        return i18nBasename;
     }
 }
