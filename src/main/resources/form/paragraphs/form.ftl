@@ -39,8 +39,8 @@
     </div>
     [/#if]
     <div class="text">
-        <h1>${content.formTitle!?html}</h1>
-        <p>${content.formText!?html}</p>
+        <h1>${mgnl.encode(content).formTitle!}</h1>
+        <p>${mgnl.encode(content).formText!}</p>
     </div>
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >

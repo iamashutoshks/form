@@ -8,7 +8,7 @@
 <fieldset>
 
     [#if content.title?has_content]
-        <h2>${content.title}</h2>
+        <h2>${mgnl.encode(content).title!}</h2>
     [/#if]
     [#if content.fields?exists]
         [@cms.contentNodeIterator contentNodeCollectionName="fields"]

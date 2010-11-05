@@ -7,7 +7,7 @@
     [/#if]
     [#if content.title?has_content]
         <label for="${content.controlName}">
-            ${content.title}
+            ${mgnl.encode(content).title!}
         </label>
     [/#if]
     [#if !mgnl.editMode]

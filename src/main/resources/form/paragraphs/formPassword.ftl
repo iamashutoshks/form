@@ -8,7 +8,7 @@
             [#if !model.isValid()]
                 <em>${i18n['form.error.field']}</em>
             [/#if]
-            ${content.title!}
+            ${mgnl.encode(content).title!}
             [#if content.mandatory]
                 <dfn title="required">${model.requiredSymbol!}</dfn>
             [/#if]
