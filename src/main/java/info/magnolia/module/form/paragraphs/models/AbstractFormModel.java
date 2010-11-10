@@ -40,12 +40,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.i18n.Messages;
+import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.engine.View;
-import info.magnolia.module.form.util.FormUtil;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
 import info.magnolia.module.templating.RenderingModelImpl;
@@ -86,7 +87,8 @@ public abstract class AbstractFormModel extends RenderingModelImpl {
 
     private String handleException(Exception e) {
         logger.error("Exception caught executing form model", e);
-        view = new ErrorView(FormUtil.getMessage("generic"));
+        Messages messages = MessagesManager.getMessages(getDefinition().getI18nBasename());
+        view = new ErrorView(messages.get("generic"));
         return "failure";
     }
 

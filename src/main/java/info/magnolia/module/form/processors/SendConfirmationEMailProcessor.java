@@ -39,7 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.util.FormUtil;
 
 /**
  * Sends a confirmation mail, any files submitted are sent as attachments.
@@ -63,7 +62,7 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
             }
         } catch (Exception e) {
             log.error("Confirmation email", e);
-            throw new FormProcessorFailedException(FormUtil.getMessage("SendConfirmationEMailProcessor.errorMessage", ""));
+            throw new FormProcessorFailedException("SendConfirmationEMailProcessor.errorMessage");
         }
     }
 }

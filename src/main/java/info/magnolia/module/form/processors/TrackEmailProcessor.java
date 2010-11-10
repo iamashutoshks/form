@@ -39,7 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.util.FormUtil;
 import info.magnolia.module.mail.util.MailUtil;
 
 /**
@@ -62,7 +61,7 @@ public class TrackEmailProcessor extends AbstractEMailFormProcessor {
 
         } catch (Exception e) {
             log.error("Track email", e);
-            throw new FormProcessorFailedException(FormUtil.getMessage("TrackEmailProcessor.errorMessage", ""));
+            throw new FormProcessorFailedException("TrackEmailProcessor.errorMessage");
         }
     }
 

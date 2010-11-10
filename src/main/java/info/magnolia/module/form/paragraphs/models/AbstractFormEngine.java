@@ -40,6 +40,8 @@ import javax.jcr.RepositoryException;
 import org.apache.commons.lang.StringUtils;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.i18n.Messages;
+import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.engine.FormDataBinder;
@@ -50,7 +52,6 @@ import info.magnolia.module.form.engine.View;
 import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
 import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.util.FormUtil;
 
 /**
  * Implements common functionality used by both the first step and subsequent steps.
@@ -80,8 +81,12 @@ public abstract class AbstractFormEngine extends FormEngine {
 
     @Override
     protected View getProcessorFailedView(String errorMessage) {
-        if (errorMessage == null)
-            errorMessage = FormUtil.getMessage("form.user.errorMessage.generic");
+        if (errorMessage == null) {
+            errorMessage = "form.user.errorMessage.generic";
+        }
+        Messages messages = MessagesManager.getMessages(getConfigurationParagraph().getI18nBasename());
+        Messages defaultMessages = MessagesManager.getMessages(DefaultFormDataBinder.getDefaultPath());
+        errorMessage = messages.getWithDefault(errorMessage, defaultMessages.getWithDefault(errorMessage, errorMessage));
         return new ErrorView(errorMessage);
     }
 
@@ -110,7 +115,9 @@ public abstract class AbstractFormEngine extends FormEngine {
 
     @Override
     protected FormDataBinder getFormDataBinder() {
-        return new DefaultFormDataBinder();
+        DefaultFormDataBinder formDataBinder = new DefaultFormDataBinder();
+        formDataBinder.setI18nBasename(getConfigurationParagraph().getI18nBasename());
+        return formDataBinder;
     }
 
     @Override

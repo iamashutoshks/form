@@ -39,7 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import info.magnolia.cms.core.Content;
-import info.magnolia.module.form.util.FormUtil;
 
 /**
  * Sends a contact mail, any files submitted are sent as attachments.
@@ -62,7 +61,7 @@ public class SendContactEMailProcessor extends AbstractEMailFormProcessor {
 
         } catch (Exception e) {
             log.error("Contact email", e);
-            throw new FormProcessorFailedException(FormUtil.getMessage("SendContactEMailProcessor.errorMessage", ""));
+            throw new FormProcessorFailedException("SendContactEMailProcessor.errorMessage");
         }
     }
 }
