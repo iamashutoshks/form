@@ -85,6 +85,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.formGroupFields.tabMain.title.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.formGroupFields.tabMain.title.label</sv:value>
       </sv:property>
@@ -118,6 +121,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.formGroupFields.tabMain.displayRequiredSymbol.label</sv:value>

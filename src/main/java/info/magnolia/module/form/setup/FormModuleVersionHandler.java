@@ -42,6 +42,7 @@ import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.CreateNodeTask;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
+import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
 import info.magnolia.nodebuilder.task.ErrorHandling;
 import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
 import static info.magnolia.nodebuilder.Ops.*;
@@ -112,6 +113,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new ArrayDelegateTask("Add paragraphs and dialogs for multi step forms", "",
                 new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStep.xml"),
                 new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formStep.xml")))
+        );
+        
+        register(DeltaBuilder.update("1.2", "")
+                .addTask(new UpdateDialogDefinitionFor1_2())
         );
     }
 }

@@ -97,6 +97,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabMain.formTitle.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabMain.formTitle.label</sv:value>
       </sv:property>
@@ -140,6 +143,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabMain.formName.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabMain.formName.label</sv:value>
       </sv:property>
@@ -182,6 +188,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabMain.formText.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabMain.formText.label</sv:value>
@@ -232,6 +241,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabMain.requiredSymbol.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabMain.requiredSymbol.label</sv:value>
       </sv:property>
@@ -274,6 +286,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabMain.rightText.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabMain.rightText.label</sv:value>
@@ -358,6 +373,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabSubmit.errorTitle.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabSubmit.errorTitle.label</sv:value>
       </sv:property>
@@ -400,6 +418,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabSubmit.successTitle.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabSubmit.successTitle.label</sv:value>
@@ -444,6 +465,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabSubmit.successMessage.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabSubmit.successMessage.label</sv:value>
       </sv:property>
@@ -486,6 +510,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabSubmit.redirect.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabSubmit.redirect.label</sv:value>
@@ -535,6 +562,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.tabSubmit.trackMail.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.tabSubmit.trackMail.label</sv:value>
@@ -628,6 +658,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailFrom.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailFrom.label</sv:value>
       </sv:property>
@@ -676,6 +709,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailTo.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailTo.label</sv:value>
@@ -726,6 +762,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailSubject.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailSubject.label</sv:value>
       </sv:property>
@@ -771,6 +810,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>select</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactMail.contentType.label</sv:value>
@@ -938,6 +980,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailSubject.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailBody.label</sv:value>
       </sv:property>
@@ -1030,6 +1075,9 @@
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.sendConfirmation.label</sv:value>
       </sv:property>
@@ -1078,6 +1126,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailFrom.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailFrom.label</sv:value>
@@ -1128,6 +1179,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailTo.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailTo.label</sv:value>
       </sv:property>
@@ -1177,6 +1231,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailSubject.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailSubject.label</sv:value>
       </sv:property>
@@ -1222,6 +1279,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>select</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactMail.contentType.label</sv:value>
@@ -1388,6 +1448,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailBody.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailBody.label</sv:value>

@@ -100,6 +100,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.title.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.title.label</sv:value>
       </sv:property>
@@ -149,6 +152,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.controlName.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.controlName.label</sv:value>
       </sv:property>
@@ -194,6 +200,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>select</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.length.label</sv:value>
@@ -404,6 +413,9 @@
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.mandatory.label</sv:value>
       </sv:property>
@@ -452,6 +464,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>select</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.validation.label</sv:value>
@@ -505,6 +520,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.maxLength.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.maxLength.label</sv:value>
       </sv:property>
@@ -550,6 +568,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>hidden</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.rows.label</sv:value>

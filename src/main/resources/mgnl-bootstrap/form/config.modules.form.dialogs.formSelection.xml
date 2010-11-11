@@ -100,6 +100,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.title.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.title.label</sv:value>
       </sv:property>
@@ -148,6 +151,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.controlName.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.controlName.label</sv:value>
@@ -198,6 +204,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.legend.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.legend.label</sv:value>
       </sv:property>
@@ -243,6 +252,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>radio</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.type.label</sv:value>
@@ -453,6 +465,9 @@
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.edit.tabMain.mandatory.label</sv:value>
       </sv:property>
@@ -492,6 +507,9 @@
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.horizontal.label</sv:value>
@@ -542,6 +560,9 @@
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.multiple.label</sv:value>
       </sv:property>
@@ -591,6 +612,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.labels.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.labels.label</sv:value>
       </sv:property>
@@ -639,6 +663,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.default.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.default.label</sv:value>

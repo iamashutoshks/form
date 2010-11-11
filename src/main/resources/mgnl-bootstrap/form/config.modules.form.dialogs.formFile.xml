@@ -100,6 +100,9 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.file.tabMain.title.description</sv:value>
       </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.file.tabMain.title.label</sv:value>
       </sv:property>
@@ -148,6 +151,9 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.file.tabMain.controlName.description</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.file.tabMain.controlName.label</sv:value>
@@ -200,6 +206,9 @@
       </sv:property>
       <sv:property sv:name="defaultValue" sv:type="String">
         <sv:value>attachment</sv:value>
+      </sv:property>
+      <sv:property sv:name="i18n" sv:type="Boolean">
+        <sv:value>true</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
