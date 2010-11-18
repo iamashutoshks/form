@@ -42,6 +42,8 @@ import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.CreateNodeTask;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
+import info.magnolia.module.delta.NodeExistsDelegateTask;
+import info.magnolia.module.delta.WarnTask;
 import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
 import info.magnolia.nodebuilder.task.ErrorHandling;
 import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
@@ -116,7 +118,14 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         );
         
         register(DeltaBuilder.update("1.2", "")
-                .addTask(new UpdateDialogDefinitionFor1_2())
+                .addTask(new NodeExistsDelegateTask("Description", "Checks if description node is present in formFile dialog config otherwise creates one with properties.", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", new WarnTask("Description", "Node description already present in formFile dialog config."), (new ArrayDelegateTask("Description", "Adds description field to formFile.",
+                    new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain", "description", ItemType.CONTENTNODE.getSystemName()),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "controlType", "edit"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "description", "dialog.form.file.tabMain.description.description"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "label", "dialog.form.file.tabMain.description.label"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "rows", "1"),
+                    new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "type", "String")))))
+                .addTask(new UpdateDialogDefinitionFor1_2())          
         );
     }
 }
