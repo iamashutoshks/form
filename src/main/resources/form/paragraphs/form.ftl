@@ -34,9 +34,15 @@
         </div>
     [/#if]
     [#if mgnl.editMode]
+        [#if content.@name == "singleton"]
     <div style="clear: both" >
-        [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" /]
+        [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" deleteLabel="" /]
     </div>
+        [#else]
+            <div style="clear: both" >
+            [@cms.editBar editLabel="${i18n['form.editLabel']}" moveLabel="" /]
+            </div>
+        [/#if]
     [/#if]
     <div class="text">
         <h1>${mgnl.encode(content).formTitle!}</h1>
