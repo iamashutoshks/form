@@ -43,6 +43,7 @@ import info.magnolia.module.delta.CreateNodeTask;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
+import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.module.delta.WarnTask;
 import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
 import info.magnolia.nodebuilder.task.ErrorHandling;
@@ -125,7 +126,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "label", "dialog.form.file.tabMain.description.label"),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "rows", "1"),
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "type", "String")))))
-                .addTask(new UpdateDialogDefinitionFor1_2())          
+                .addTask(new UpdateDialogDefinitionFor1_2())
+                .addTask(new PropertyExistsDelegateTask("Required", "Checks if required property is present in controlName config of form selection dialog otherwise creates one with true value.", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/controlName", "required", new WarnTask("Required", "Required property already present in controlName config of form selection dialog."), new NewPropertyTask("Required", "Adds required property to controlName config of form selection dialog.", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/controlName", "required", "true")))
         );
     }
 }

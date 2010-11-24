@@ -158,6 +158,9 @@
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.selection.tabMain.controlName.label</sv:value>
       </sv:property>
+      <sv:property sv:name="required" sv:type="Boolean">
+        <sv:value>true</sv:value>
+      </sv:property>
       <sv:property sv:name="rows" sv:type="String">
         <sv:value>1</sv:value>
       </sv:property>
