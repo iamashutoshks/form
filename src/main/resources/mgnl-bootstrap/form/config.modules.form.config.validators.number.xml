@@ -13,7 +13,7 @@
       <sv:value>info.magnolia.module.form.validators.ValidateExpression</sv:value>
     </sv:property>
     <sv:property sv:name="expression" sv:type="String">
-      <sv:value>[0-9]*</sv:value>
+      <sv:value>^[0-9]*$</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
