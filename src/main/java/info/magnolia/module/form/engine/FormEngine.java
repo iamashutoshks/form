@@ -60,13 +60,13 @@ public abstract class FormEngine {
 
             String formStateToken;
             try {
-                formStateToken = FormStateUtil.getFormStateToken();
+                formStateToken = getFormStateToken();
             } catch (FormStateTokenMissingException e) {
                 return handleTokenMissing();
             }
 
             try {
-                formState = FormStateUtil.getFormState(formStateToken);
+                formState = getFormState(formStateToken);
             } catch (NoSuchFormStateException e) {
                 return handleNoSuchFormState(e.getToken());
             }
@@ -77,14 +77,14 @@ public abstract class FormEngine {
                 return getFormView(formState.getStep(content.getUUID()));
             }
             if (formState.isEnded())
-                FormStateUtil.destroyFormState(formState);
+                destroyFormState();
             return view;
 
         } else {
 
             String formStateToken;
             try {
-                formStateToken = FormStateUtil.getFormStateToken();
+                formStateToken = getFormStateToken();
             } catch (FormStateTokenMissingException e) {
                 // Cant post without a token... should never happen
                 // Redirect the user to this page
@@ -92,7 +92,7 @@ public abstract class FormEngine {
             }
 
             try {
-                formState = FormStateUtil.getFormState(formStateToken);
+                formState = getFormState(formStateToken);
             } catch (NoSuchFormStateException e) {
                 return handleNoSuchFormStateOnSubmit(e.getToken());
             }
@@ -102,7 +102,7 @@ public abstract class FormEngine {
             formState.setView(null);
 
             if (view instanceof EndView) {
-                FormStateUtil.destroyFormState(formState);
+                destroyFormState();
                 return view;
             }
 
@@ -113,6 +113,22 @@ public abstract class FormEngine {
             formState.setView(view);
             return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent(), formState.getToken());
         }
+    }
+
+    protected FormState createAndSetFormState() {
+        return FormStateUtil.createAndSetFormState();
+    }
+
+    protected String getFormStateToken() throws FormStateTokenMissingException {
+        return FormStateUtil.getFormStateToken();
+    }
+
+    protected FormState getFormState(String formStateToken) throws NoSuchFormStateException {
+        return FormStateUtil.getFormState(formStateToken);
+    }
+
+    protected void destroyFormState() {
+        FormStateUtil.destroyFormState(formState);
     }
 
     /**
@@ -171,7 +187,7 @@ public abstract class FormEngine {
     protected View handleTokenMissing() throws RepositoryException {
 
         // Create an empty formState and generate a token
-        formState = FormStateUtil.createAndSetFormState();
+        formState = createAndSetFormState();
 
         return getFormView(null);
     }

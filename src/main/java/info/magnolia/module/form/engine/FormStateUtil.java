@@ -57,9 +57,14 @@ public class FormStateUtil {
         // This can fail if the response is already committed
         HttpSession session = MgnlContext.getWebContext().getRequest().getSession();
 
+        FormState formState = newFormState();
+        session.setAttribute(FORM_STATE_ATTRIBUTE_PREFIX + formState.getToken(), formState);
+        return formState;
+    }
+
+    public static FormState newFormState() {
         FormState formState = new FormState();
         formState.setToken(RandomStringUtils.randomAlphanumeric(32));
-        session.setAttribute(FORM_STATE_ATTRIBUTE_PREFIX + formState.getToken(), formState);
         return formState;
     }
 
