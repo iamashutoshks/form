@@ -39,6 +39,7 @@ import javax.jcr.RepositoryException;
 import org.apache.commons.lang.StringUtils;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.util.NodeDataUtil;
@@ -56,15 +57,15 @@ import info.magnolia.module.form.validators.Validator;
 public class DefaultFormDataBinder implements FormDataBinder {
 
     private static final String CONTENT_NAME_TEXT_FIELD_GROUP = "edits";
-    
+
     private static final String DEFAULT_PATH = "info.magnolia.module.form.messages";
-    
+
     private String i18nBasename;
 
     public void setI18nBasename(String i18nBasename) {
         this.i18nBasename = i18nBasename;
     }
-    
+
     public static String getDefaultPath(){
         return DEFAULT_PATH;
     }
@@ -126,7 +127,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
     }
 
     protected String getErrorMessage(String message, Content node) {
-        Messages messages = MessagesManager.getMessages(i18nBasename);
+        Messages messages = MessagesManager.getMessages(i18nBasename, I18nContentSupportFactory.getI18nSupport().getLocale());
         Messages defaultMessages = MessagesManager.getMessages(getDefaultPath());
         String errorMessage = messages.getWithDefault("form.user.errorMessage." + message, defaultMessages.getWithDefault("form.user.errorMessage." + message, "invalid input"));
         String title = node.getNodeData("title").getString();
