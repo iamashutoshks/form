@@ -7,7 +7,12 @@
   <class>info.magnolia.module.form.FormModule</class>
   <versionHandler>info.magnolia.module.form.setup.FormModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
-
+  <properties>
+     <property>
+       <name>info.magnolia.module.form.processing.FormProcessing</name>
+       <value>info.magnolia.module.form.processing.DefaultProcessing</value>
+     </property>
+  </properties>
   <dependencies>
     <dependency>
       <name>core</name>
