@@ -44,6 +44,7 @@ import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
+import info.magnolia.module.delta.RemoveNodeTask;
 import info.magnolia.module.delta.WarnTask;
 import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
 import info.magnolia.nodebuilder.task.ErrorHandling;
@@ -117,7 +118,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formStep.xml"),
                 new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formStep.xml")))
         );
-        
+
         register(DeltaBuilder.update("1.2", "")
                 .addTask(new NodeExistsDelegateTask("Description", "Checks if description node is present in formFile dialog config otherwise creates one with properties.", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", new WarnTask("Description", "Node description already present in formFile dialog config."), (new ArrayDelegateTask("Description", "Adds description field to formFile.",
                     new CreateNodeTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain", "description", ItemType.CONTENTNODE.getSystemName()),
@@ -128,6 +129,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                     new NewPropertyTask("", "", ContentRepository.CONFIG, "/modules/form/dialogs/formFile/tabMain/description", "type", "String")))))
                 .addTask(new UpdateDialogDefinitionFor1_2())
                 .addTask(new PropertyExistsDelegateTask("Required", "Checks if required property is present in controlName config of form selection dialog otherwise creates one with true value.", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/controlName", "required", new WarnTask("Required", "Required property already present in controlName config of form selection dialog."), new NewPropertyTask("Required", "Adds required property to controlName config of form selection dialog.", ContentRepository.CONFIG, "/modules/form/dialogs/formSelection/tabMain/controlName", "required", "true")))
+        );
+
+        register(DeltaBuilder.update("1.2.1", "")
+                .addTask(new RemoveNodeTask("Remove node", "Removes unused 'Display Required Symbol' option", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupFields/tabMain/displayRequiredSymbol"))
         );
     }
 }

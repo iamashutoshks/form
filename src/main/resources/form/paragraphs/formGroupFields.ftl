@@ -1,7 +1,7 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
-[#if content.displayRequiredSymbol!false]
-<p class="required"><span>${model.requiredSymbol!""}</span> ${model.rightText!""}</p>
+[#if model.requiredSymbol?has_content]
+<p class="required"><span>${model.requiredSymbol}</span> ${model.rightText!""}</p>
 [/#if]
 
 [@cms.editBar editLabel="${i18n['form.fieldset.editLabel']}" /]
