@@ -139,9 +139,6 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabMain.formName.description</sv:value>
       </sv:property>
-      <sv:property sv:name="i18n" sv:type="Boolean">
-        <sv:value>true</sv:value>
-      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabMain.formName.label</sv:value>
       </sv:property>

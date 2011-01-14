@@ -44,7 +44,7 @@ import java.util.Collection;
 
 /**
  * Visits all dialog definitions in form module.
- * 
+ *
  * @author ochytil
  * @version $Revision: $ ($Author: $)
  */
@@ -57,13 +57,12 @@ public abstract class UpdateAllDialogDefinitions extends AbstractRepositoryTask 
     @Override
     protected void doExecute(InstallContext ctx) throws RepositoryException, TaskExecutionException {
         Content modulesNode = ctx.getModulesNode();
+        Content dialogsNode = modulesNode.getContent("form").getContent("dialogs");
+        Collection<Content> dialogDefinitions = dialogsNode.getChildren(ItemType.CONTENTNODE);
 
-            Content dialogsNode = modulesNode.getContent("form").getContent("dialogs");
-            Collection<Content> dialogDefinitions = dialogsNode.getChildren(ItemType.CONTENTNODE);
-
-            for (Content dialogDefinition : dialogDefinitions) {
-                updateDialogDefinition(ctx, dialogDefinition);
-            }
+        for (Content dialogDefinition : dialogDefinitions) {
+            updateDialogDefinition(ctx, dialogDefinition);
+        }
     }
 
     protected abstract void updateDialogDefinition(InstallContext ctx, Content siteDefinition) throws RepositoryException, TaskExecutionException;

@@ -47,6 +47,7 @@ import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.module.delta.RemoveNodeTask;
 import info.magnolia.module.delta.WarnTask;
 import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
+import info.magnolia.module.form.setup.for1_2_1.UpdateDialogDefinitionsFor1_2_1;
 import info.magnolia.nodebuilder.task.ErrorHandling;
 import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
 import static info.magnolia.nodebuilder.Ops.*;
@@ -132,6 +133,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         );
 
         register(DeltaBuilder.update("1.2.1", "")
+                .addTask(new UpdateDialogDefinitionsFor1_2_1())
                 .addTask(new RemoveNodeTask("Remove node", "Removes unused 'Display Required Symbol' option", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupFields/tabMain/displayRequiredSymbol"))
         );
     }
