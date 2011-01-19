@@ -135,6 +135,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("1.2.1", "")
                 .addTask(new UpdateDialogDefinitionsFor1_2_1())
                 .addTask(new RemoveNodeTask("Remove node", "Removes unused 'Display Required Symbol' option", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupFields/tabMain/displayRequiredSymbol"))
+                .addTask(new CheckAndModifyPropertyValueTask("Fix validator regex", "Fixes number validator regex", ContentRepository.CONFIG, "/modules/form/config/validators/number", "expression", "[0-9]*", "^[0-9]*$"))
         );
     }
 }
