@@ -74,7 +74,7 @@ public class UpdateDialogDefinitionsFor1_2_1 extends UpdateAllDialogDefinitions{
                String subNodeName = subiterator.next().getName();
                Content subNode = node.getContent(subNodeName);
                if(removeI18nFlag(subNode)){
-                   ctx.info("removing i18n flag for : " + subNode.getHandle());
+                   ctx.info("Removing i18n flag for : " + subNode.getHandle());
                    subNode.getNodeData("i18n").delete();
                }
            }
@@ -85,7 +85,8 @@ public class UpdateDialogDefinitionsFor1_2_1 extends UpdateAllDialogDefinitions{
         if(!node.hasNodeData("i18n")){
             return false;
         }
-        boolean toDelete = "controlName".equals(node.getName()) || "formName".equals(node.getName()) || "maxLength".equals(node.getName()) || "requiredSymbol".equals(node.getName());
+        final String name = node.getName();
+        boolean toDelete = "controlName".equals(name) || "formName".equals(name) || "maxLength".equals(name) || "requiredSymbol".equals(name) || name.contains("MailFrom") || name.contains("MailTo");
 
         if(toDelete){
             return true;

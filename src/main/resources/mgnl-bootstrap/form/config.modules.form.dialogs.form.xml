@@ -642,9 +642,6 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailFrom.description</sv:value>
       </sv:property>
-      <sv:property sv:name="i18n" sv:type="Boolean">
-        <sv:value>true</sv:value>
-      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailFrom.label</sv:value>
       </sv:property>
@@ -693,9 +690,6 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailTo.description</sv:value>
-      </sv:property>
-      <sv:property sv:name="i18n" sv:type="Boolean">
-        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabContactEmail.contactMailTo.label</sv:value>
@@ -1056,9 +1050,6 @@
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>checkboxSwitch</sv:value>
       </sv:property>
-      <sv:property sv:name="i18n" sv:type="Boolean">
-        <sv:value>true</sv:value>
-      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.sendConfirmation.label</sv:value>
       </sv:property>
@@ -1108,9 +1099,6 @@
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailFrom.description</sv:value>
       </sv:property>
-      <sv:property sv:name="i18n" sv:type="Boolean">
-        <sv:value>true</sv:value>
-      </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailFrom.label</sv:value>
       </sv:property>
@@ -1159,9 +1147,6 @@
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailTo.description</sv:value>
-      </sv:property>
-      <sv:property sv:name="i18n" sv:type="Boolean">
-        <sv:value>true</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
         <sv:value>dialog.form.tabConfirmEmail.confirmMailTo.label</sv:value>
