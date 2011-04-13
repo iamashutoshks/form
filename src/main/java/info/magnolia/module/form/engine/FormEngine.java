@@ -181,14 +181,10 @@ public abstract class FormEngine {
     }
 
     /**
-     * Called when the form is to be rendered and there's no token provided. By default it creates a new formState and
-     * renders the page.
+     * Called when the form is to be rendered and there's no token provided. The default behaviour is to return a view
+     * that renders the form without creating a new form state.
      */
     protected View handleTokenMissing() throws RepositoryException {
-
-        // Create an empty formState and generate a token
-        formState = createAndSetFormState();
-
         return getFormView(null);
     }
 

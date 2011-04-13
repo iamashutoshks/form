@@ -94,7 +94,6 @@ public abstract class AbstractFormModel extends RenderingModelImpl {
 
     // These are called from templates and models of inner paragraphs
 
-
     public FormState getFormState() {
         return formEngine.getFormState();
     }
@@ -119,7 +118,10 @@ public abstract class AbstractFormModel extends RenderingModelImpl {
     }
 
     public FormField getFormField(String name) {
-        FormStepState step = formEngine.getFormState().getStep(content.getUUID());
+        FormState formState = formEngine.getFormState();
+        if (formState == null)
+            return null;
+        FormStepState step = formState.getStep(content.getUUID());
         if (step == null)
             return null;
         return step.get(name);
