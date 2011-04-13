@@ -1,6 +1,6 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
-[#if model.requiredSymbol?has_content]
+[#if model.requiredSymbol?has_content && model.rightText?has_content]
 <p class="required"><span>${model.requiredSymbol}</span> ${model.rightText!""}</p>
 [/#if]
 
