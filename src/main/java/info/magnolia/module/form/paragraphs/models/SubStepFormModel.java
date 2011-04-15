@@ -61,6 +61,11 @@ public class SubStepFormModel extends AbstractFormModel {
 
         Content startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
 
+        if (startParagraphNode == null) {
+            // Ideally we would return a view that describes the problem and how to resolve it
+            throw new IllegalStateException("FormStepParagraph on page [" + content.getHandle() + "] could not find a FormParagraph in its parent");
+        }
+
         String templateName = startParagraphNode.getMetaData().getTemplate();
         FormParagraph startParagraph = (FormParagraph) ParagraphManager.getInstance().getParagraphDefinition(templateName);
 
