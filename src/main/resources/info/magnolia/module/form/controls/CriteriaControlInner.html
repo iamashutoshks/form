@@ -1,0 +1,16 @@
+<#assign name= this.name />
+
+<select onchange="${this.name}DynamicTable.persist();" id='${r"${prefix}"}_condition' name="${name}_condition" class="mgnlDialogControlSelect">
+<#list this.conditions as x>
+    <option value="${x.value}" {if obj.condition == "${x.value}"}selected="selected"{/if}>${x.i18nLabel}</option>
+</#list>
+</select>
+<script>document.getElementById('${r"${obj.condition}"}_cond').selected=true;alert("done-cond");</script>
+
+
+Field Name: <input onchange="${this.name}DynamicTable.persist();" type="text" id='${r"${prefix}"}_fieldName' name="${name}_fieldName" value='${r"${obj.fieldName}"}' class="mgnlDialogControlEdit"/>
+
+Field Value: <input onchange="${this.name}DynamicTable.persist();" type="text" id='${r"${prefix}"}_fieldValue' name="${name}_fieldValue" value='${r"${obj.fieldValue}"}' class="mgnlDialogControlEdit"/>
+
+${this.deleteButton}
+

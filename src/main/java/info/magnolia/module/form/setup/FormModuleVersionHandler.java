@@ -50,6 +50,7 @@ import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
 import info.magnolia.module.form.setup.for1_2_1.UpdateDialogDefinitionsFor1_2_1;
 import info.magnolia.nodebuilder.task.ErrorHandling;
 import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
+import info.magnolia.nodebuilder.task.NodeBuilderTask;
 import static info.magnolia.nodebuilder.Ops.*;
 
 /**
@@ -136,6 +137,17 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new UpdateDialogDefinitionsFor1_2_1())
                 .addTask(new RemoveNodeTask("Remove node", "Removes unused 'Display Required Symbol' option", ContentRepository.CONFIG, "/modules/form/dialogs/formGroupFields/tabMain/displayRequiredSymbol"))
                 .addTask(new CheckAndModifyPropertyValueTask("Fix validator regex", "Fixes number validator regex", ContentRepository.CONFIG, "/modules/form/config/validators/number", "expression", "[0-9]*", "^[0-9]*$"))
+        );
+        
+        register(DeltaBuilder.update("1.2.3", "")
+                .addTask(new ArrayDelegateTask("Add new formCriteria Paragraph", "Paragraph used to select next step for multistep forms.",
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formCriteria.xml"),
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml"),
+                        new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
+                                getNode("modules/form/paragraphs/form/paragraphs").then(
+                                        addNode("formCriteria", ItemType.CONTENTNODE).then(
+                                                addProperty("name", "formCriteria")
+                                                )))))
         );
     }
 }

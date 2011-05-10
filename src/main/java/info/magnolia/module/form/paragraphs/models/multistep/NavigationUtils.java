@@ -33,12 +33,18 @@
  */
 package info.magnolia.module.form.paragraphs.models.multistep;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MetaData;
+import info.magnolia.cms.core.Content.ContentFilter;
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.templating.Paragraph;
 import info.magnolia.module.templating.ParagraphManager;
 
@@ -85,5 +91,68 @@ public class NavigationUtils {
         Paragraph definition = ParagraphManager.getInstance().getParagraphDefinition(template);
         if (definition == null) return false;
         return paragraphType.isAssignableFrom(definition.getClass());
+    }
+    
+    public static List<Content> getPageParagraphsOfType(Content page, final String paragraphName) {
+        Content mainAreaContent = ContentUtil.getContent(page, "main");
+        List<Content> paragraphList = new ArrayList<Content>();
+        if(mainAreaContent != null) {
+            paragraphList = ContentUtil.collectAllChildren(mainAreaContent, new ContentFilter() {
+                public boolean accept(Content content) {
+                    MetaData metaData = content.getMetaData();
+                    if (metaData == null) return false;
+                    String template = metaData.getTemplate();
+                    if (template == null) return false;
+                    return paragraphName.equals(template);
+                }
+            });
+        }
+        return paragraphList;
+    }
+    
+    public static String findNextPageBasedOnCriteria(Iterator<Content> criteriaParagraphIterator, Map<String, Object> parameters) {
+        while (criteriaParagraphIterator.hasNext()) {
+            Content criteriaParagraphContent = criteriaParagraphIterator.next();
+            String linkUUID = NodeDataUtil.getString(criteriaParagraphContent, "link", "");
+            Content criteriaNode = ContentUtil.getContent(criteriaParagraphContent, "criteria");
+            if(criteriaNode != null) {
+            
+                Collection<Content> criteriaCollection = ContentUtil.getAllChildren(criteriaNode);
+                boolean passed = true;
+                for (Iterator<Content> iterator = criteriaCollection.iterator(); iterator.hasNext();) {
+                    Content content = iterator.next();
+                    passed = evaluateCriteria(content, parameters, passed);
+                }
+                if(passed) {
+                    return linkUUID;
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    public static boolean evaluateCriteria(Content criteriaNode, Map<String, Object> parameters, boolean passed) {
+        
+        String condition = NodeDataUtil.getString(criteriaNode, "condition");
+        String fieldName = NodeDataUtil.getString(criteriaNode, "fieldName");
+        String fieldValue = NodeDataUtil.getString(criteriaNode, "fieldValue");
+        String value = "";
+        if(parameters.containsKey(fieldName)) {
+            value = (String) parameters.get(fieldName);
+        } 
+        return evaluateCondition(fieldValue, value, condition, passed);
+    }
+    
+    public static boolean evaluateCondition(String fieldValue, String value, String condition, boolean passed) {
+        if (condition.equals("and")) {
+            passed &= fieldValue.equals(value);
+        } else if (condition.equals("or")) {
+            passed |= fieldValue.equals(value);
+        } else if (condition.equals("not")) {
+            passed &= !fieldValue.equals(value);
+        } 
+        return passed;
+
     }
 }

@@ -34,6 +34,7 @@
 package info.magnolia.module.form.paragraphs.models.multistep;
 
 import java.util.Iterator;
+
 import javax.jcr.RepositoryException;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
@@ -84,9 +85,16 @@ public class SubStepFormEngine extends AbstractFormEngine {
 
     @Override
     protected String getNextPage() throws RepositoryException {
-        // Find first sibling with step paragraph
-        Iterator<Content> contentIterator = startPage.getChildren().iterator();
-        NavigationUtils.advanceIteratorTilAfter(contentIterator, MgnlContext.getAggregationState().getMainContent());
-        return NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
+        // Find next paragraph based on criteria
+        Content currentPage = MgnlContext.getAggregationState().getMainContent();
+        Iterator<Content> criteriaParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "formCriteria").iterator();
+        String nextPageUUID = NavigationUtils.findNextPageBasedOnCriteria(criteriaParagraphIterator, this.getFormState().getValues());
+        if(nextPageUUID == null) {
+            // Find first sibling with step paragraph
+            Iterator<Content> contentIterator = startPage.getChildren().iterator();
+            NavigationUtils.advanceIteratorTilAfter(contentIterator, MgnlContext.getAggregationState().getMainContent());
+            nextPageUUID = NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
+        }
+        return nextPageUUID;
     }
 }

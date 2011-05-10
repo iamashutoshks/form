@@ -76,7 +76,12 @@ public class StartStepFormEngine extends AbstractFormEngine {
     protected String getNextPage() throws RepositoryException {
         // Find first child with step paragraph
         Content currentPage = MgnlContext.getAggregationState().getMainContent();
-        Iterator<Content> contentIterator = currentPage.getChildren().iterator();
-        return NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
+        Iterator<Content> criteriaParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "formCriteria").iterator();
+        String nextPageUUID = NavigationUtils.findNextPageBasedOnCriteria(criteriaParagraphIterator, this.getFormState().getValues());
+        if(nextPageUUID == null) {
+            Iterator<Content> contentIterator = currentPage.getChildren().iterator();
+            nextPageUUID = NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
+        }
+        return nextPageUUID;
     }
 }
