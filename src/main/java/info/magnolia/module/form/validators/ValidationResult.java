@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2011 Magnolia International
+ * This file Copyright (c) 2011 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -34,34 +34,42 @@
 package info.magnolia.module.form.validators;
 
 /**
- * Base class for validators. Kept in a registry in the module class. The actual validation is performed by FormModel.
+ * Represents the result of a validation operation.
  *
- * @author tmiyar
- * @see info.magnolia.module.form.FormModule
- * @see info.magnolia.module.form.paragraphs.models.FormModel
+ * @version $Id$
+ * @see Validator
  */
-public class Validator {
+public class ValidationResult {
 
-    private String name;
-    private String i18nBasename;
+    private boolean success;
+    private String errorMessage;
 
-    public ValidationResult validate(String value) {
-        return new ValidationResult(true);
+    public ValidationResult(boolean success) {
+        this.success = success;
     }
 
-    public String getName() {
-        return name;
+    public ValidationResult(boolean success, String errorMessage) {
+        this.success = success;
+        this.errorMessage = errorMessage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public String getI18nBasename() {
-        return i18nBasename;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public void setI18nBasename(String i18nBasename) {
-        this.i18nBasename = i18nBasename;
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public static ValidationResult valueOf(boolean successful) {
+        return new ValidationResult(successful);
     }
 }

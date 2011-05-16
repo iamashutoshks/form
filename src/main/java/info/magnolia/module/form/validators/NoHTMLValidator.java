@@ -42,7 +42,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class NoHTMLValidator extends Validator {
 
-    public boolean validate(String value) {
-        return !StringUtils.containsAny(value, "<>&");
+    public ValidationResult validate(String value) {
+        return ValidationResult.valueOf(!StringUtils.containsAny(value, "<>&"));
     }
 }
