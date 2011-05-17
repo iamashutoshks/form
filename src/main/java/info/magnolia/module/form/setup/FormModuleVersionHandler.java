@@ -148,6 +148,14 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                         addNode("formCriteria", ItemType.CONTENTNODE).then(
                                                 addProperty("name", "formCriteria")
                                                 )))))
+                .addTask(new ArrayDelegateTask("Add new Back button Paragraph", "Paragraph used in multistep forms to navigate backwards.",
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formBackButton.xml"),
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formBackButton.xml"),
+                        new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
+                                getNode("modules/form/paragraphs/form/paragraphs").then(
+                                        addNode("formBackButton", ItemType.CONTENTNODE).then(
+                                                addProperty("name", "formBackButton")
+                                                )))))
         );
     }
 }
