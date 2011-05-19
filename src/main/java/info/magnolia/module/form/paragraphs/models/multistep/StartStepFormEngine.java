@@ -38,7 +38,6 @@ import javax.jcr.RepositoryException;
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
-import info.magnolia.module.form.engine.FormStateTokenMissingException;
 import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
@@ -50,23 +49,6 @@ public class StartStepFormEngine extends AbstractFormEngine {
 
     public StartStepFormEngine(Content configurationNode, FormParagraph configurationParagraph) {
         super(configurationNode, configurationParagraph);
-    }
-
-    /**
-     * Finds the token from a requests parameter, or since this is the first step creates a new form state if the form
-     * is being submitted.
-     */
-    @Override
-    protected String getFormStateToken() throws FormStateTokenMissingException {
-        try {
-            return super.getFormStateToken();
-        } catch (FormStateTokenMissingException e) {
-            // The token is allowed to be missing when the first step is submitted.
-            if (isFormSubmission()) {
-                return createAndSetFormState().getToken();
-            }
-            throw e;
-        }
     }
 
     /**

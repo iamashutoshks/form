@@ -52,9 +52,7 @@
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
             <div class="form-item-hidden">
 				<input type="hidden" name="mgnlModelExecutionUUID" value="${content.@uuid}" />
-				[#if model.formState?has_content]
-					<input type="hidden" name="mgnlFormToken" value="${model.formState.token}" />
-				[/#if]
+    			<input type="hidden" name="mgnlFormToken" value="${model.formState.token}" />
             </div>
             [#if content.fieldsets?exists]
                 [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]

@@ -118,10 +118,7 @@ public abstract class AbstractFormModel extends RenderingModelImpl {
     }
 
     public FormField getFormField(String name) {
-        FormState formState = formEngine.getFormState();
-        if (formState == null)
-            return null;
-        FormStepState step = formState.getStep(content.getUUID());
+        FormStepState step = formEngine.getFormState().getStep(content.getUUID());
         if (step == null)
             return null;
         return step.get(name);
