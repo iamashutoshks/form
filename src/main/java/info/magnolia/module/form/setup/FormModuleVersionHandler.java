@@ -139,7 +139,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new CheckAndModifyPropertyValueTask("Fix validator regex", "Fixes number validator regex", ContentRepository.CONFIG, "/modules/form/config/validators/number", "expression", "[0-9]*", "^[0-9]*$"))
         );
         
-        register(DeltaBuilder.update("1.2.3", "")
+        register(DeltaBuilder.update("1.3", "")
                 .addTask(new ArrayDelegateTask("Add new formCriteria Paragraph", "Paragraph used to select next step for multistep forms.",
                         new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formCriteria.xml"),
                         new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml"),
