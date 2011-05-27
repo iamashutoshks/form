@@ -148,7 +148,20 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                         addNode("formCriteria", ItemType.CONTENTNODE).then(
                                                 addProperty("name", "formCriteria")
                                                 )))))
+               .addTask(new NodeExistsDelegateTask("Add back button", "Paragraph form submit has the option to display a back button.",
+                        "config", "modules/form/dialogs/formSubmit/tabMain/backButtonText", null,
+                        new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
+                                getNode("modules/form/dialogs/formSubmit/tabMain").then(
+                                        addNode("backButtonText", ItemType.CONTENTNODE).then(
+                                                addProperty("controlType", "edit"),
+                                                addProperty("description", "dialog.form.submit.tabMain.backButtonText.description"),
+                                                addProperty("i18n", "true"),
+                                                addProperty("label", "dialog.form.submit.tabMain.backButtonText.label"),
+                                                addProperty("rows", "1"),
+                                                addProperty("type", "String")
+                                                )))))
                 
         );
+        
     }
 }
