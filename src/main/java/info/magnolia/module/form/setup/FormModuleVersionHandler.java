@@ -148,7 +148,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                         addNode("formCriteria", ItemType.CONTENTNODE).then(
                                                 addProperty("name", "formCriteria")
                                                 )))))
-               .addTask(new NodeExistsDelegateTask("Add back button", "Paragraph form submit has the option to display a back button.",
+                .addTask(new NodeExistsDelegateTask("Add back button", "Paragraph form submit has the option to display a back button.",
                         "config", "modules/form/dialogs/formSubmit/tabMain/backButtonText", null,
                         new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
                                 getNode("modules/form/dialogs/formSubmit/tabMain").then(
@@ -160,8 +160,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                                 addProperty("rows", "1"),
                                                 addProperty("type", "String")
                                                 )))))
-                
-        );
+                .addTask(new BootstrapSingleModuleResource("Add summary paragraph", "", "config.modules.form.paragraphs.formStepSummary.xml")
+                                                ));
         
     }
 }
