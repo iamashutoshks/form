@@ -45,8 +45,12 @@ public class Validator {
     private String name;
     private String i18nBasename;
 
-    public ValidationResult validate(String value) {
-        return new ValidationResult(true);
+    public boolean validate(String value) {
+        return true;
+    }
+
+    public ValidationResult validateWithResult(String value) {
+        return new ValidationResult(validate(value));
     }
 
     public String getName() {

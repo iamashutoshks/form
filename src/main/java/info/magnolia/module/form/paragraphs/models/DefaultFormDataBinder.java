@@ -115,7 +115,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
                     String validatorName = node.getNodeData("validation").getString();
                     Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
                     if (validator != null) {
-                        ValidationResult validationResult = validator.validate(value);
+                        ValidationResult validationResult = validator.validateWithResult(value);
                         if (!validationResult.isSuccess()) {
                             field.setErrorMessage(getValidatorErrorMessage(validator, validationResult, node));
                         }

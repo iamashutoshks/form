@@ -44,8 +44,8 @@ import info.magnolia.context.MgnlContext;
  */
 public class PasswordValidator extends Validator {
 
-    public ValidationResult validate(String password) {
+    public boolean validate(String password) {
         String confirmation = MgnlContext.getParameter("passwordConfirmation");
-        return ValidationResult.valueOf(StringUtils.equals(password, confirmation));
+        return StringUtils.equals(password, confirmation);
     }
 }

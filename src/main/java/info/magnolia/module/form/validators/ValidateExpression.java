@@ -45,13 +45,12 @@ public class ValidateExpression extends NoHTMLValidator {
 
     public String expression;
 
-    public ValidationResult validate(String value) {
-        ValidationResult superResult = super.validate(value);
-        if (!superResult.isSuccess())
-            return superResult;
+    public boolean validate(String value) {
+        if (!super.validate(value))
+            return false;
         Pattern pattern = Pattern.compile(getExpression());
         Matcher matcher = pattern.matcher(value);
-        return ValidationResult.valueOf(matcher.matches());
+        return matcher.matches();
     }
 
     public String getExpression() {
