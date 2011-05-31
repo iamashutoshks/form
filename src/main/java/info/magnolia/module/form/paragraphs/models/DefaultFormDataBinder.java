@@ -34,6 +34,7 @@
 package info.magnolia.module.form.paragraphs.models;
 
 import java.util.Iterator;
+import java.util.Locale;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
@@ -42,12 +43,14 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
+import info.magnolia.cms.i18n.MessagesUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormStepState;
+import info.magnolia.module.form.validators.ValidationResult;
 import info.magnolia.module.form.validators.Validator;
 
 /**
@@ -111,8 +114,11 @@ public class DefaultFormDataBinder implements FormDataBinder {
 
                     String validatorName = node.getNodeData("validation").getString();
                     Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
-                    if (validator != null && !validator.validate(value)) {
-                        field.setErrorMessage(getErrorMessage(validator.getName(), node));
+                    if (validator != null) {
+                        ValidationResult validationResult = validator.validateWithResult(value);
+                        if (!validationResult.isSuccess()) {
+                            field.setErrorMessage(getValidatorErrorMessage(validator, validationResult, node));
+                        }
                     }
                 } else if (node.hasContent(CONTENT_NAME_TEXT_FIELD_GROUP)) {
                     Iterator textFieldGroup = node.getContent(CONTENT_NAME_TEXT_FIELD_GROUP).getChildren().iterator();
@@ -126,10 +132,34 @@ public class DefaultFormDataBinder implements FormDataBinder {
         return NodeDataUtil.getBoolean(node, "mandatory", false);
     }
 
+    private String getValidatorErrorMessage(Validator validator, ValidationResult validationResult, Content node) {
+
+        // If the validator returned an error message will use it, possible with a resource bundle configured on the validator itself
+        if (StringUtils.isNotEmpty(validationResult.getErrorMessage())) {
+            return getErrorMessage(validationResult.getErrorMessage(), "invalid input", node, validator.getI18nBasename());
+        }
+
+        // Otherwise we'll default to a key of format: form.user.errorMessage.<validator name>
+        return getErrorMessage(validator.getName(), node);
+    }
+
     protected String getErrorMessage(String message, Content node) {
-        Messages messages = MessagesManager.getMessages(i18nBasename, I18nContentSupportFactory.getI18nSupport().getLocale());
-        Messages defaultMessages = MessagesManager.getMessages(getDefaultPath());
-        String errorMessage = messages.getWithDefault("form.user.errorMessage." + message, defaultMessages.getWithDefault("form.user.errorMessage." + message, "invalid input"));
+        return getErrorMessage("form.user.errorMessage." + message, "invalid input", node, null);
+    }
+
+    private String getErrorMessage(String key, String defaultMsg, Content node, String overridingResourceBundle) {
+
+        Locale locale = I18nContentSupportFactory.getI18nSupport().getLocale();
+
+        Messages messages = MessagesManager.getMessages(getDefaultPath());
+
+        messages = MessagesUtil.chain(MessagesManager.getMessages(i18nBasename, locale), messages);
+
+        if (overridingResourceBundle != null) {
+            messages = MessagesUtil.chain(MessagesManager.getMessages(overridingResourceBundle, locale), messages);
+        }
+
+        String errorMessage = messages.getWithDefault(key, defaultMsg);
         String title = node.getNodeData("title").getString();
         return title + ": " + errorMessage;
     }
