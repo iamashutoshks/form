@@ -91,14 +91,12 @@ public class SummarySubStepFormModel extends SubStepFormModel {
     protected SummaryFormStepBean createSummaryFormStepBean(FormStepState step) {
         Map<String, Object> stepParameters = step.getValues();
         Map<String, Object> templateParams = new LinkedHashMap<String, Object>();
+        SummaryFormStepBean summaryFormStepBean = null;
         try {
             if(!stepParameters.isEmpty()) {
-                SummaryFormStepBean summaryFormStepBean = new SummaryFormStepBean();
                 String paragraphUUID = step.getParagraphUuid();
                 Content contentParagraph = ContentUtil.getContentByUUID(ContentRepository.WEBSITE, paragraphUUID);
                 Content page = getFormStepPage(contentParagraph);
-                summaryFormStepBean.setName(page.getName());
-                summaryFormStepBean.setTitle(page.getTitle());
                 
                 Collection<Content> contentParagraphFieldList = findContentParagraphFields(contentParagraph);
                 
@@ -108,7 +106,12 @@ public class SummarySubStepFormModel extends SubStepFormModel {
                         findAndSetTemplateParameters(fieldNode, stepParameters, controlName, templateParams);
                     }
                 }
-                summaryFormStepBean.setParameters(templateParams);
+                if(!templateParams.isEmpty()) {
+                    summaryFormStepBean = new SummaryFormStepBean();
+                    summaryFormStepBean.setParameters(templateParams);
+                    summaryFormStepBean.setName(page.getName());
+                    summaryFormStepBean.setTitle(page.getTitle());
+                }
                 return summaryFormStepBean;
             }
         } catch (Exception e) {
@@ -123,7 +126,10 @@ public class SummarySubStepFormModel extends SubStepFormModel {
         if(!NodeDataUtil.getString(fieldNode, "labels").isEmpty()) {
             findAndSetComplexControlLabels(fieldNode, stepParameters, templateParams, controlName);
         } else if(!title.isEmpty()){
-            templateParams.put(title, stepParameters.get(controlName));
+            String value = (String) stepParameters.get(controlName);
+            if(StringUtils.isNotEmpty(value)) {
+                templateParams.put(title, value);
+            }
         }
     }
 
