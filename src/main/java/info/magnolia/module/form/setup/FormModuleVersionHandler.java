@@ -149,7 +149,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                                 addProperty("name", "formCriteria")
                                                 )))))
                 .addTask(new NodeExistsDelegateTask("Add back button", "Paragraph form submit has the option to display a back button.",
-                        "config", "modules/form/dialogs/formSubmit/tabMain/backButtonText", null,
+                        "config", "/modules/form/dialogs/formSubmit/tabMain/backButtonText", null,
                         new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
                                 getNode("modules/form/dialogs/formSubmit/tabMain").then(
                                         addNode("backButtonText", ItemType.CONTENTNODE).then(
