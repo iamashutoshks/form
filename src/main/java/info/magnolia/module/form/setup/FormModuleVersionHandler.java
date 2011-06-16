@@ -142,12 +142,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("1.3", "")
                 .addTask(new ArrayDelegateTask("Add new formCriteria Paragraph", "Paragraph used to select next step for multistep forms.",
                         new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formCriteria.xml"),
-                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml"),
-                        new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
-                                getNode("modules/form/paragraphs/form/paragraphs").then(
-                                        addNode("formCriteria", ItemType.CONTENTNODE).then(
-                                                addProperty("name", "formCriteria")
-                                                )))))
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml")))
+                        
                 .addTask(new NodeExistsDelegateTask("Add back button", "Paragraph form submit has the option to display a back button.",
                         "config", "/modules/form/dialogs/formSubmit/tabMain/backButtonText", null,
                         new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
