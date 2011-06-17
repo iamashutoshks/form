@@ -135,7 +135,7 @@ public class FormSummaryModel extends RenderingModelImpl {
             if(!stepParameters.isEmpty()) {
                 String paragraphUUID = step.getParagraphUuid();
                 Content contentParagraph = ContentUtil.getContentByUUID(ContentRepository.WEBSITE, paragraphUUID);
-                Content page = getFormStepPage(contentParagraph);
+                Content page = NavigationUtils.findParagraphParentPage(contentParagraph);
                 
                 Collection<Content> contentParagraphFieldList = findContentParagraphFields(contentParagraph);
                 
@@ -205,17 +205,6 @@ public class FormSummaryModel extends RenderingModelImpl {
             }
         }//end for
         return controlValueLabelMap;
-    }
-
-    protected Content getFormStepPage(Content paragraph) throws AccessDeniedException, PathNotFoundException, RepositoryException {
-        
-        Content page = paragraph;
-        
-        while(!page.getItemType().getSystemName().equals(ItemType.CONTENT.getSystemName()) ) {
-            page = page.getParent();
-        }
-        
-        return page;
     }
 
     protected Collection<Content> findContentParagraphFields(Content contentParagraph) {

@@ -39,10 +39,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.jcr.PathNotFoundException;
+import javax.jcr.RepositoryException;
+
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.core.MetaData;
 import info.magnolia.cms.core.Content.ContentFilter;
+import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.templating.Paragraph;
@@ -154,5 +158,16 @@ public class NavigationUtils {
         } 
         return passed;
 
+    }
+    
+    public static Content findParagraphParentPage(Content paragraph) throws AccessDeniedException, PathNotFoundException, RepositoryException {
+        
+        Content page = paragraph;
+        
+        while(page != null && !page.getItemType().getSystemName().equals(ItemType.CONTENT.getSystemName()) ) {
+            page = page.getParent();
+        }
+        
+        return page;
     }
 }
