@@ -167,7 +167,18 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                 getNode("modules/form/paragraphs/form/paragraphs").then(
                                         addNode("formSummary", ItemType.CONTENTNODE).then(
                                                 addProperty("name", "formSummary")
-                                                ))))));
+                                                )))))
+                .addTask(new NodeBuilderTask("Control to display form parameters", "New control that will display the parameters to use in freemarker syntax.", ErrorHandling.strict, "config", 
+                        getNode("modules/form/dialogs/form").then(
+                                getNode("tabContactEmail").then(
+                                    addNode("freemarkerParams", ItemType.CONTENTNODE).then(
+                                            addProperty("controlType", "info.magnolia.module.form.controls.DialogStaticWithFormParams"),
+                                            addProperty("label", "dialog.form.freemarkerParams.label"))),
+                                getNode("tabConfirmEmail").then(
+                                        addNode("freemarkerParams", ItemType.CONTENTNODE).then(
+                                                addProperty("controlType", "info.magnolia.module.form.controls.DialogStaticWithFormParams"),
+                                                addProperty("label", "dialog.form.freemarkerParams.label")
+                                            ))))));
         
     }
 }
