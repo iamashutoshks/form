@@ -172,11 +172,11 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         getNode("modules/form/dialogs/form").then(
                                 getNode("tabContactEmail").then(
                                     addNode("freemarkerParams", ItemType.CONTENTNODE).then(
-                                            addProperty("controlType", "info.magnolia.module.form.controls.DialogStaticWithFormParams"),
+                                            addProperty("controlType", "info.magnolia.module.form.dialogs.DialogStaticWithFormParams"),
                                             addProperty("label", "dialog.form.freemarkerParams.label"))),
                                 getNode("tabConfirmEmail").then(
                                         addNode("freemarkerParams", ItemType.CONTENTNODE).then(
-                                                addProperty("controlType", "info.magnolia.module.form.controls.DialogStaticWithFormParams"),
+                                                addProperty("controlType", "info.magnolia.module.form.dialogs.DialogStaticWithFormParams"),
                                                 addProperty("label", "dialog.form.freemarkerParams.label")
                                             ))))));
         
