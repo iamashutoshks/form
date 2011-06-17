@@ -142,7 +142,12 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("1.3", "")
                 .addTask(new ArrayDelegateTask("Add new formCriteria Paragraph", "Paragraph used to select next step for multistep forms.",
                         new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formCriteria.xml"),
-                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml")))
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml"),
+                        new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
+                                getNode("modules/form/paragraphs/form/paragraphs").then(
+                                        addNode("formCriteria", ItemType.CONTENTNODE).then(
+                                                addProperty("name", "formCriteria")
+                                                )))))
                         
                 .addTask(new NodeExistsDelegateTask("Add back button", "Paragraph form submit has the option to display a back button.",
                         "config", "/modules/form/dialogs/formSubmit/tabMain/backButtonText", null,
@@ -156,8 +161,13 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                                 addProperty("rows", "1"),
                                                 addProperty("type", "String")
                                                 )))))
-                .addTask(new BootstrapSingleModuleResource("Add summary paragraph", "", "config.modules.form.paragraphs.formStepSummary.xml")
-                                                ));
+                .addTask(new ArrayDelegateTask("Add summary paragraph", "", new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formSummary.xml"),
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formSummary.xml"),
+                        new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
+                                getNode("modules/form/paragraphs/form/paragraphs").then(
+                                        addNode("formSummary", ItemType.CONTENTNODE).then(
+                                                addProperty("name", "formSummary")
+                                                ))))));
         
     }
 }

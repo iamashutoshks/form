@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Bean used to display the parameters sent by the form.
  */
-public class SummaryFormStepBean {
+public class FormSummaryBean {
     
     private String name;
     private String title;

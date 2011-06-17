@@ -36,6 +36,7 @@ package info.magnolia.module.form.paragraphs.models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,42 +57,80 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
-import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.templates.ParagraphConfig;
-import info.magnolia.module.templating.ParagraphManager;
+import info.magnolia.module.form.templates.FormStepParagraph;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
+import info.magnolia.module.templating.RenderingModelImpl;
 
 /**
  * Model for summary paragraph, displays a list of parameters submitted by the form.
+ * I the option onlyLast is selected, only the parameters of the previous step will be displayed.
  */
-public class SummarySubStepFormModel extends SubStepFormModel {
-
-    public SummarySubStepFormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+public class FormSummaryModel extends RenderingModelImpl {
+    
+    protected FormState formState;
+    
+    public FormSummaryModel(Content content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
+        formState = findFormState();
     }
 
-    public List<SummaryFormStepBean> getSummaryFormStepBeanList() throws AccessDeniedException, PathNotFoundException, RepositoryException {
-        List<SummaryFormStepBean> summaryFormStepBeanList = new ArrayList<SummaryFormStepBean>();
+    public List<FormSummaryBean> getFormSummaryBeanList() throws AccessDeniedException, PathNotFoundException, RepositoryException {
         
-        FormState formState = this.getFormState();
-        if(formState != null) {
-            Map<String, FormStepState> steps = this.getFormState().getSteps();
-            
-            for (FormStepState step : steps.values()) {
-                SummaryFormStepBean summaryFormStepBean = createSummaryFormStepBean(step);
-                if(summaryFormStepBean != null) {
-                    summaryFormStepBeanList.add(summaryFormStepBean);
+        List<FormSummaryBean> summaryFormStepBeanList = new ArrayList<FormSummaryBean>();
+        boolean onlyLast = isDisplayOnlyLastStep();
+        ArrayList<FormStepState> steps = getSteps();
+        
+        for (int index = 0; index < steps.size() ; index++) {
+            FormStepState step = steps.get(index);
+            if(!onlyLast || (onlyLast && index == steps.size() -1)) {
+                FormSummaryBean formSummaryBean = createFormSummaryBean(step);
+                if(formSummaryBean != null) {
+                    summaryFormStepBeanList.add(formSummaryBean);
                 }
             }
         }
+        
         return summaryFormStepBeanList;
     }
+    
+    protected ArrayList<FormStepState> getSteps() {
+        Content currentPage = MgnlContext.getAggregationState().getMainContent();
+        Content currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
+        ArrayList<FormStepState> steps = new ArrayList<FormStepState>();
+        if(formState != null) {
+            Iterator<FormStepState> stepsIt = formState.getSteps().values().iterator();
+            while (stepsIt.hasNext()) {
+                FormStepState step = (FormStepState) stepsIt.next();
+                if(step.getParagraphUuid().equals(currentStepContent.getUUID())) {
+                    break;
+                }
+                steps.add(step);
+            } 
+        }
+        return steps;
+    }
+    
+    protected FormState findFormState() {
+        RenderingModel oparent = getParent();
+        while(oparent != null && !(oparent instanceof SubStepFormModel)) {
+            oparent = oparent.getParent();
+        }
+        if(oparent != null) {
+            return ((SubStepFormModel) oparent).getFormState();
+        }
+        return null;
+    }
 
-    protected SummaryFormStepBean createSummaryFormStepBean(FormStepState step) {
+    protected boolean isDisplayOnlyLastStep() {
+        
+        return NodeDataUtil.getBoolean(content, "onlyLast", false);
+    }
+
+    protected FormSummaryBean createFormSummaryBean(FormStepState step) {
         Map<String, Object> stepParameters = step.getValues();
         Map<String, Object> templateParams = new LinkedHashMap<String, Object>();
-        SummaryFormStepBean summaryFormStepBean = null;
+        FormSummaryBean summaryFormStepBean = null;
         try {
             if(!stepParameters.isEmpty()) {
                 String paragraphUUID = step.getParagraphUuid();
@@ -107,7 +146,7 @@ public class SummarySubStepFormModel extends SubStepFormModel {
                     }
                 }
                 if(!templateParams.isEmpty()) {
-                    summaryFormStepBean = new SummaryFormStepBean();
+                    summaryFormStepBean = new FormSummaryBean();
                     summaryFormStepBean.setParameters(templateParams);
                     summaryFormStepBean.setName(page.getName());
                     summaryFormStepBean.setTitle(page.getTitle());
@@ -179,20 +218,6 @@ public class SummarySubStepFormModel extends SubStepFormModel {
         return page;
     }
 
-    protected Content getFormStartPage() throws PathNotFoundException, RepositoryException, AccessDeniedException {
-        Content startPage;
-        
-        startPage = MgnlContext.getAggregationState().getMainContent().getParent();
-
-        Content startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
-
-        if (startParagraphNode == null) {
-            // Ideally we would return a view that describes the problem and how to resolve it
-            throw new IllegalStateException("FormStepParagraph on page [" + content.getHandle() + "] could not find a FormParagraph in its parent");
-        }
-        return startParagraphNode;
-    }
-
     protected Collection<Content> findContentParagraphFields(Content contentParagraph) {
         
         String query = "select * from " + ItemType.CONTENTNODE + " where jcr:path like '"
@@ -200,16 +225,4 @@ public class SummarySubStepFormModel extends SubStepFormModel {
         return QueryUtil.query(ContentRepository.WEBSITE, query);
     }
     
-    protected List<ParagraphConfig> findFormDefinitionParagraphs() {
-        List<ParagraphConfig> paragraphsList = new ArrayList<ParagraphConfig>();
-        try {
-            Content formPage = getFormStartPage();
-            FormParagraph formDefinition = (FormParagraph)ParagraphManager.getInstance().getParagraphDefinition(formPage.getTemplate());
-            paragraphsList = formDefinition.getParagraphs();
-            
-        } catch (Exception e) {
-            throw new IllegalStateException("FormStepParagraph on page [" + content.getHandle() + "] could not find a FormParagraph in its parent");
-        }
-        return paragraphsList;
-    }
 }
