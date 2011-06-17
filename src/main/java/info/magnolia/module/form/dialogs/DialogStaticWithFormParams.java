@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.controls;
+package info.magnolia.module.form.dialogs;
 
 import java.io.IOException;
 import java.io.Writer;
