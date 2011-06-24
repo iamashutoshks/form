@@ -43,6 +43,7 @@ import info.magnolia.module.delta.CreateNodeTask;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
+import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.module.delta.RemoveNodeTask;
 import info.magnolia.module.delta.WarnTask;
@@ -142,12 +143,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("1.3", "")
                 .addTask(new ArrayDelegateTask("Add new formCriteria Paragraph", "Paragraph used to select next step for multistep forms.",
                         new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formCriteria.xml"),
-                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml"),
-                        new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
-                                getNode("modules/form/paragraphs/form/paragraphs").then(
-                                        addNode("formCriteria", ItemType.CONTENTNODE).then(
-                                                addProperty("name", "formCriteria")
-                                                )))))
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formCriteria.xml")
+                        ))
                         
                 .addTask(new NodeExistsDelegateTask("Add back button", "Paragraph form submit has the option to display a back button.",
                         "config", "/modules/form/dialogs/formSubmit/tabMain/backButtonText", null,
@@ -161,7 +158,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                                 addProperty("rows", "1"),
                                                 addProperty("type", "String")
                                                 )))))
-                .addTask(new ArrayDelegateTask("Add summary paragraph", "", new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formSummary.xml"),
+                .addTask(new ArrayDelegateTask("Add summary paragraph", "", 
+                        new BootstrapSingleModuleResource("", "", "config.modules.form.paragraphs.formSummary.xml"),
                         new BootstrapSingleModuleResource("", "", "config.modules.form.dialogs.formSummary.xml"),
                         new NodeBuilderTask("", "", ErrorHandling.strict, "config", 
                                 getNode("modules/form/paragraphs/form/paragraphs").then(
@@ -178,7 +176,15 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                         addNode("freemarkerParams", ItemType.CONTENTNODE).then(
                                                 addProperty("controlType", "info.magnolia.module.form.dialogs.DialogStaticWithFormParams"),
                                                 addProperty("label", "dialog.form.freemarkerParams.label")
-                                            ))))));
+                                            )))))
+                .addTask(new ArrayDelegateTask("Update form dialog", "Email contentType control is now DialogRadioSwitch", 
+                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabContactEmail/contactEmailBody"),
+                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabContactEmail/contentType"),
+                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmEmailBody"),
+                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmContentType"),
+                    new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmContentType"),
+                    new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabContactEmail/contentType")
+                    )));
         
     }
 }

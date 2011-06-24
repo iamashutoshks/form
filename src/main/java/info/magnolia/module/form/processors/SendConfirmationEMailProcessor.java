@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.NodeDataUtil;
 
 /**
  * Sends a confirmation mail, any files submitted are sent as attachments.
@@ -52,11 +53,12 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
     public void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
             if (content.getNodeData("sendConfirmation").getBoolean()) {
-                String body = content.getNodeData("confirmMailBody").getString();
                 String from = content.getNodeData("confirmMailFrom").getString();
                 String subject = content.getNodeData("confirmMailSubject").getString();
                 String to = content.getNodeData("confirmMailTo").getString();
                 String contentType = content.getNodeData("confirmContentType").getString();
+                //For control edit and new control DialogRadioSwitch, keep old param for compatibility
+                String body = NodeDataUtil.getString(content, "confirmMailBody", NodeDataUtil.getString(content, "confirmContentType"+contentType));
 
                 sendMail(body, from, subject, to, contentType, parameters);
             }
