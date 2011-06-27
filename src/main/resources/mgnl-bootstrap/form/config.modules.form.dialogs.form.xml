@@ -307,6 +307,55 @@
         </sv:property>
       </sv:node>
     </sv:node>
+    <sv:node sv:name="displayBreadcrumb">
+      <sv:property sv:name="jcr:primaryType" sv:type="Name">
+        <sv:value>mgnl:contentNode</sv:value>
+      </sv:property>
+      <sv:property sv:name="jcr:uuid" sv:type="String">
+        <sv:value>0c85e920-0b34-4be9-97c4-4507571a472d</sv:value>
+      </sv:property>
+      <sv:property sv:name="buttonLabel" sv:type="String">
+        <sv:value>dialog.form.tabMain.displayBreadcrumb.buttonLabel</sv:value>
+      </sv:property>
+      <sv:property sv:name="controlType" sv:type="String">
+        <sv:value>checkboxSwitch</sv:value>
+      </sv:property>
+      <sv:property sv:name="label" sv:type="String">
+        <sv:value>dialog.form.tabMain.displayBreadcrumb.label</sv:value>
+      </sv:property>
+      <sv:property sv:name="selected" sv:type="String">
+        <sv:value>false</sv:value>
+      </sv:property>
+      <sv:property sv:name="type" sv:type="String">
+        <sv:value>Boolean</sv:value>
+      </sv:property>
+      <sv:node sv:name="MetaData">
+        <sv:property sv:name="jcr:primaryType" sv:type="Name">
+          <sv:value>mgnl:metaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:Data" sv:type="String">
+          <sv:value>MetaData</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:activated" sv:type="Boolean">
+          <sv:value>false</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:activatorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:authorid" sv:type="String">
+          <sv:value>superuser</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:creationdate" sv:type="String">
+          <sv:value>2004-11-03T08:48:09.632+01:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastaction" sv:type="Date">
+          <sv:value>2009-10-20T10:52:21.725+02:00</sv:value>
+        </sv:property>
+        <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
+          <sv:value>2011-06-27T11:05:57.226+02:00</sv:value>
+        </sv:property>
+      </sv:node>
+    </sv:node>
   </sv:node>
   <sv:node sv:name="tabSubmit">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -787,7 +836,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>150e8344-eadc-43e4-8096-e489590079be</sv:value>
+        <sv:value>eb0d1b82-2035-4097-afee-d77a48b7b4c5</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>info.magnolia.module.form.dialogs.DialogStaticWithFormParams</sv:value>
@@ -800,7 +849,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2011-06-24T12:06:36.822+02:00</sv:value>
+          <sv:value>2011-06-27T13:28:07.147+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>
@@ -1135,9 +1184,6 @@
     <sv:property sv:name="label" sv:type="String">
       <sv:value>dialog.form.tabConfirmEmail.label</sv:value>
     </sv:property>
-    <sv:property sv:name="untitled" sv:type="String">
-      <sv:value/>
-    </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:metaData</sv:value>
@@ -1371,7 +1417,7 @@
         <sv:value>mix:lockable</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:uuid" sv:type="String">
-        <sv:value>63aef7e4-efd0-436c-92c6-c726a84aa799</sv:value>
+        <sv:value>5003fb56-73bc-4fe9-859b-e0b56f0cce45</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
         <sv:value>info.magnolia.module.form.dialogs.DialogStaticWithFormParams</sv:value>
@@ -1384,7 +1430,7 @@
           <sv:value>mgnl:metaData</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2011-06-24T12:06:36.825+02:00</sv:value>
+          <sv:value>2011-06-27T13:28:07.150+02:00</sv:value>
         </sv:property>
       </sv:node>
     </sv:node>

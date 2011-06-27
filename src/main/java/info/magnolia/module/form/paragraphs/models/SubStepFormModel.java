@@ -33,13 +33,25 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.jcr.RepositoryException;
 
+import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.module.form.breadcrumb.Link;
+import info.magnolia.module.form.breadcrumb.LinkImpl;
+import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 import info.magnolia.module.form.paragraphs.models.multistep.SubStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.module.form.templates.FormStepParagraph;
 import info.magnolia.module.templating.ParagraphManager;
 import info.magnolia.module.templating.RenderableDefinition;
 import info.magnolia.module.templating.RenderingModel;
@@ -71,4 +83,29 @@ public class SubStepFormModel extends AbstractFormModel {
 
         return new SubStepFormEngine(startParagraphNode, startParagraph, startPage);
     }
+    
+    public Collection<Link> getBreadcrumb() throws RepositoryException {
+        List<Link> items = new ArrayList<Link>();
+        Content currentPage = MgnlContext.getAggregationState().getMainContent();
+        Content currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
+        boolean displayBreadcrumb = false;
+        if(this.getFormState() != null) {
+            Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
+            while (stepsIt.hasNext()) {
+                FormStepState step = (FormStepState) stepsIt.next();
+                Content stepNode = ContentUtil.getContentByUUID(ContentRepository.WEBSITE, step.getParagraphUuid());
+                if(NavigationUtils.isParagraphOfType(stepNode, FormParagraph.class)) {
+                    displayBreadcrumb = NodeDataUtil.getBoolean(stepNode, "displayBreadcrumb", false);
+                }
+                if(step.getParagraphUuid().equals(currentStepContent.getUUID())) {
+                    break;
+                }
+                if(displayBreadcrumb) {
+                    items.add((new LinkImpl(stepNode)));
+                }
+            } 
+        }
+        return items;
+    }
+
 }

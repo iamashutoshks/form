@@ -184,7 +184,9 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                     new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmContentType"),
                     new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmContentType"),
                     new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabContactEmail/contentType")
-                    )));
+                    ))
+                .addTask(new PartialBootstrapTask("Add multistep forms breadcrumb", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabMain/displayBreadcrumb")
+                        ));
         
     }
 }

@@ -1,5 +1,7 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
+[#assign breadcrumb = model.breadcrumb!]
+
 [#if actionResult == "go-to-first-page"]
 	<div class="text">
 		${i18n.get("form.user.errorMessage.go-to-first-page", [mgnl.createLink("website", model.view.firstPage)])}
@@ -47,6 +49,15 @@
     <div class="text">
         <h1>${mgnl.encode(content).formTitle!}</h1>
         <p>${mgnl.encode(content).formText!}</p>
+        [#if breadcrumb?has_content ]
+		    <div id="breadcrumb" style="position:relative;">   
+			    <ol>
+			      [#list model.breadcrumb as item]
+			              <li><a href="${item.href}">${item.navigationTitle}</a></li>
+			      [/#list]
+	    		</ol>
+			</div>
+		[/#if]
     </div>
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
