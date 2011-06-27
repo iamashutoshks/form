@@ -178,9 +178,9 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                                 addProperty("label", "dialog.form.freemarkerParams.label")
                                             )))))
                 .addTask(new ArrayDelegateTask("Update form dialog", "Email contentType control is now DialogRadioSwitch", 
-                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabContactEmail/contactEmailBody"),
+                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabContactEmail/contactMailBody"),
                     new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabContactEmail/contentType"),
-                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmEmailBody"),
+                    new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmMailBody"),
                     new RemoveNodeTask("", "", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmContentType"),
                     new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmContentType"),
                     new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabContactEmail/contentType")
