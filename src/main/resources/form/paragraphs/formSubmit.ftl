@@ -2,15 +2,23 @@
 
 [#assign backButtonText=content.backButtonText!]
 
-<div class="button-wrapper" >
+<div class="navigation-button-wrapper" >
 [@cms.editBar /]
 	[#if backButtonText?has_content]
+		<div class="navigation-previous">
         <input id="back-button" type="button" onclick="history.go(-1);return false;" value="${backButtonText?html}" />
+        </div>
+        <div class="navigation-next">
     [/#if]
+    
     <input type="submit" value="${content.buttonText!"Submit"?html}" />
+    
+    [#if backButtonText?has_content]
+    	</div>
+    [/#if]
     [#if mgnl.editMode]
     	<br />
-	    <div class="criteria">
+	    <div class="criteria" style="clear:both;">
 	    	[@cms.contentNodeIterator contentNodeCollectionName="criteriaList"]
                 [@cms.includeTemplate /]
             [/@cms.contentNodeIterator]        
