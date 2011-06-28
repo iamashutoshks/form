@@ -8,14 +8,11 @@
 		<div class="navigation-previous">
         <input id="back-button" type="button" onclick="history.go(-1);return false;" value="${backButtonText?html}" />
         </div>
+    [/#if]
         <div class="navigation-next">
-    [/#if]
-    
-    <input type="submit" value="${content.buttonText!"Submit"?html}" />
-    
-    [#if backButtonText?has_content]
+    		<input type="submit" value="${content.buttonText!"Submit"?html}" />
     	</div>
-    [/#if]
+    
     [#if mgnl.editMode]
     	<br />
 	    <div class="criteria" style="clear:both;">
