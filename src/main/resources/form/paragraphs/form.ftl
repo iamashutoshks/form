@@ -1,3 +1,35 @@
+<style type="text/css">
+/* Breadcrumb */
+#form-breadcrumb {
+	margin: 0 0 20px 0;
+	float: left;
+	width: 100%;
+}
+
+#form-breadcrumb ol {
+	list-style: none;
+	margin: 0;
+}
+
+#form-breadcrumb li {
+	float: left;
+	background: url(${ctx.contextPath}/demo-features/resources/templating-kit/themes/pop/img/icons/sprites.png) 0 -1010px no-repeat;
+	border: none;
+	margin: 0 6px 0 0;
+	padding: 0 0 0 7px;
+	font-size: 120%;
+	font-weight: normal;
+}
+
+#form-breadcrumb {
+	position: relative;
+	left: 0;
+	top: 0;
+}
+
+
+</style>
+
 [#assign cms=JspTaglibs["cms-taglib"]]
 
 [#assign breadcrumb = model.breadcrumb!]
@@ -50,7 +82,7 @@
         <h1>${mgnl.encode(content).formTitle!}</h1>
         <p>${mgnl.encode(content).formText!}</p>
         [#if breadcrumb?has_content ]
-		    <div id="breadcrumb" style="position:relative;">   
+		    <div id="form-breadcrumb">   
 			    <ol>
 			      [#list model.breadcrumb as item]
 			              <li><a href="${item.href}">${item.navigationTitle}</a></li>
