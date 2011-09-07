@@ -162,9 +162,9 @@ public class FormSummaryModel extends RenderingModelImpl {
     protected void findAndSetTemplateParameters(Content fieldNode, Map<String, Object> stepParameters, String controlName, Map<String, Object> templateParams) {
         
         String title = NodeDataUtil.getString(fieldNode, "title");
-        if(!NodeDataUtil.getString(fieldNode, "labels").isEmpty()) {
+        if (StringUtils.isNotEmpty(NodeDataUtil.getString(fieldNode, "labels"))) {
             findAndSetComplexControlLabels(fieldNode, stepParameters, templateParams, controlName);
-        } else if(!title.isEmpty()){
+        } else if (StringUtils.isNotEmpty(title)) {
             String value = (String) stepParameters.get(controlName);
             if(StringUtils.isNotEmpty(value)) {
                 templateParams.put(title, value);
