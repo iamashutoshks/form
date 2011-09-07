@@ -156,6 +156,10 @@ public abstract class FormEngine {
         if (validationSuccessfulView != null)
             return validationSuccessfulView;
 
+        if (StringUtils.isNotEmpty(MgnlContext.getParameter("field"))) {
+            return getValidationFailedView(step);
+        }
+
         formState.setEnded(true);
 
         // Execute processors
