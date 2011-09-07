@@ -72,8 +72,8 @@ public class DialogStaticWithFormParams extends DialogStatic {
             for (Content control : formControls) {
                 value += NodeDataUtil.getString(control, "controlName") + ", ";
             }
-            
-            if(!value.isEmpty()) {
+
+            if (StringUtils.isNotEmpty(value)) {
                 value = StringUtils.removeEnd(value, ", ");
                 value += ".";
             }
