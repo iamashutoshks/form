@@ -53,6 +53,7 @@
             <div class="form-item-hidden">
 				<input type="hidden" name="mgnlModelExecutionUUID" value="${content.@uuid}" />
     			<input type="hidden" name="mgnlFormToken" value="${model.formState.token}" />
+				<input type="hidden" name="field" value="" />
             </div>
             [#if content.fieldsets?exists]
                 [@cms.contentNodeIterator contentNodeCollectionName="fieldsets"]
