@@ -11,11 +11,7 @@
         [#assign parametersKeys = parametersMap?keys]
         [#if parametersKeys?has_content]
 	        <table cellspacing="1" cellpadding="1" border="0" width="100%" >
-	        	<caption>${formSummaryBean.title!formSummaryBean.name!}</caption>
-	        	<thead>
-		        	<th>${i18n['formSummary.header.name']}</th>
-		        	<th>${i18n['formSummary.header.value']}</th>
-	        	</thead>
+	        	<caption style="text-align:left;">${formSummaryBean.title!formSummaryBean.name!}</caption>
 	        	<tbody>
 		        [#list parametersKeys as parameterKey]
 		        	<tr>
