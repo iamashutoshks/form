@@ -49,6 +49,7 @@ import org.apache.commons.lang.StringUtils;
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.i18n.I18nContentWrapper;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
@@ -135,7 +136,7 @@ public class FormSummaryModel extends RenderingModelImpl {
             if(!stepParameters.isEmpty()) {
                 String paragraphUUID = step.getParagraphUuid();
                 Content contentParagraph = ContentUtil.getContentByUUID(ContentRepository.WEBSITE, paragraphUUID);
-                Content page = NavigationUtils.findParagraphParentPage(contentParagraph);
+                Content page = new I18nContentWrapper(NavigationUtils.findParagraphParentPage(contentParagraph));
                 
                 Collection<Content> contentParagraphFieldList = findContentParagraphFields(contentParagraph);
                 
@@ -149,7 +150,7 @@ public class FormSummaryModel extends RenderingModelImpl {
                     summaryFormStepBean = new FormSummaryBean();
                     summaryFormStepBean.setParameters(templateParams);
                     summaryFormStepBean.setName(page.getName());
-                    summaryFormStepBean.setTitle(page.getTitle());
+                    summaryFormStepBean.setTitle(NodeDataUtil.getString(page, "navigationTitle", page.getTitle()));
                 }
                 return summaryFormStepBean;
             }
@@ -160,10 +161,10 @@ public class FormSummaryModel extends RenderingModelImpl {
     }
 
     protected void findAndSetTemplateParameters(Content fieldNode, Map<String, Object> stepParameters, String controlName, Map<String, Object> templateParams) {
-        
-        String title = NodeDataUtil.getString(fieldNode, "title");
-        if (StringUtils.isNotEmpty(NodeDataUtil.getString(fieldNode, "labels"))) {
-            findAndSetComplexControlLabels(fieldNode, stepParameters, templateParams, controlName);
+        Content i18nFieldNode = new I18nContentWrapper(fieldNode);
+        String title = i18nFieldNode.getTitle();
+        if (StringUtils.isNotEmpty(NodeDataUtil.getString(i18nFieldNode, "labels"))) {
+            findAndSetComplexControlLabels(i18nFieldNode, stepParameters, templateParams, controlName);
         } else if (StringUtils.isNotEmpty(title)) {
             String value = (String) stepParameters.get(controlName);
             if(StringUtils.isNotEmpty(value)) {
@@ -177,10 +178,11 @@ public class FormSummaryModel extends RenderingModelImpl {
      */
     protected void findAndSetComplexControlLabels(Content fieldNode, Map<String, Object> stepParameters,
             Map<String, Object> templateParams, String controlName) {
+        Content i18nFieldNode = new I18nContentWrapper(fieldNode);
         String stepParamvalue = (String) stepParameters.get(controlName);
         if(StringUtils.isNotEmpty(stepParamvalue)) {
             String[] stepfieldValues = stepParamvalue.split("_");
-            Map<String, String> controlValueLabelMap = fillControlValueLabelMap(fieldNode);
+            Map<String, String> controlValueLabelMap = fillControlValueLabelMap(i18nFieldNode);
             for (String value : stepfieldValues) {
                 if(!value.equals("")) {
                     templateParams.put(controlValueLabelMap.get(value), "*");
