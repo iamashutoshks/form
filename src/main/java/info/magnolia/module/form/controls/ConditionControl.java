@@ -50,16 +50,16 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * Multi control for specifying feeds and optional titles. Can be used for anything where multi control with two text fields is needed.
- * @deprecated since 1.3.1 use ConditionControl instead.
+ *
  */
-public class CriteriaControl extends MultiControl {
+public class ConditionControl extends MultiControl {
 
     private List<OptionConfiguration> conditions;
     /**
      * Called by the template. It renders the dynamic inner row using trim paths templating mechanism.
      */
     public String getInnerHtml() {
-        String name = "/" + StringUtils.replace(CriteriaControl.class.getName(), ".", "/") + "Inner.html";
+        String name = "/" + StringUtils.replace(ConditionControl.class.getName(), ".", "/") + "Inner.html";
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("this", this);
         return FreemarkerUtil.process(name, map);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="formCriteria" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="formCondition" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
@@ -7,19 +7,19 @@
     <sv:value>18c46a5b-c33e-44ce-8757-125aefca9a08</sv:value>
   </sv:property>
   <sv:property sv:name="description" sv:type="String">
-    <sv:value>paragraph.formCriteria.description</sv:value>
+    <sv:value>paragraph.formCondition.description</sv:value>
   </sv:property>
   <sv:property sv:name="dialog" sv:type="String">
-    <sv:value>formCriteria</sv:value>
+    <sv:value>formCondition</sv:value>
   </sv:property>
   <sv:property sv:name="i18nBasename" sv:type="String">
     <sv:value>info.magnolia.module.form.messages</sv:value>
   </sv:property>
   <sv:property sv:name="templatePath" sv:type="String">
-    <sv:value>/form/paragraphs/formCriteria.ftl</sv:value>
+    <sv:value>/form/paragraphs/formCondition.ftl</sv:value>
   </sv:property>
   <sv:property sv:name="title" sv:type="String">
-    <sv:value>paragraph.formCriteria.title</sv:value>
+    <sv:value>paragraph.formCondition.title</sv:value>
   </sv:property>
   <sv:property sv:name="type" sv:type="String">
     <sv:value>freemarker</sv:value>

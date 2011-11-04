@@ -85,10 +85,10 @@ public class SubStepFormEngine extends AbstractFormEngine {
 
     @Override
     protected String getNextPage() throws RepositoryException {
-        // Find next paragraph based on criteria
+        // Find next paragraph based on condition
         Content currentPage = MgnlContext.getAggregationState().getMainContent();
-        Iterator<Content> criteriaParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "formCriteria").iterator();
-        String nextPageUUID = NavigationUtils.findNextPageBasedOnCriteria(criteriaParagraphIterator, this.getFormState().getValues());
+        Iterator<Content> conditionParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "formCondition").iterator();
+        String nextPageUUID = NavigationUtils.findNextPageBasedOnCondition(conditionParagraphIterator, this.getFormState().getValues());
         if(nextPageUUID == null) {
             // Find first sibling with step paragraph
             Iterator<Content> contentIterator = startPage.getChildren().iterator();

@@ -114,6 +114,9 @@ public class NavigationUtils {
         return paragraphList;
     }
     
+    /**
+     * @deprecated use findNextPageBasedOnCondition instead.
+     */
     public static String findNextPageBasedOnCriteria(Iterator<Content> criteriaParagraphIterator, Map<String, Object> parameters) {
         while (criteriaParagraphIterator.hasNext()) {
             Content criteriaParagraphContent = criteriaParagraphIterator.next();
@@ -136,11 +139,48 @@ public class NavigationUtils {
         return null;
     }
     
+    /**
+     * @deprecated use evaluateCondition instead.
+     */
     public static boolean evaluateCriteria(Content criteriaNode, Map<String, Object> parameters, boolean passed) {
         
         String condition = NodeDataUtil.getString(criteriaNode, "condition");
         String fieldName = NodeDataUtil.getString(criteriaNode, "fieldName");
         String fieldValue = NodeDataUtil.getString(criteriaNode, "fieldValue");
+        String value = "";
+        if(parameters.containsKey(fieldName)) {
+            value = (String) parameters.get(fieldName);
+        } 
+        return evaluateCondition(fieldValue, value, condition, passed);
+    }
+    
+    public static String findNextPageBasedOnCondition(Iterator<Content> conditionParagraphIterator, Map<String, Object> parameters) {
+        while (conditionParagraphIterator.hasNext()) {
+            Content conditionParagraphContent = conditionParagraphIterator.next();
+            String linkUUID = NodeDataUtil.getString(conditionParagraphContent, "link", "");
+            Content conditionNode = ContentUtil.getContent(conditionParagraphContent, "condition");
+            if(conditionNode != null) {
+            
+                Collection<Content> conditionCollection = ContentUtil.getAllChildren(conditionNode);
+                boolean passed = true;
+                for (Iterator<Content> iterator = conditionCollection.iterator(); iterator.hasNext();) {
+                    Content content = iterator.next();
+                    passed = evaluateCondition(content, parameters, passed);
+                }
+                if(passed) {
+                    return linkUUID;
+                }
+            }
+        }
+        
+        return null;
+    }
+    
+    public static boolean evaluateCondition(Content conditionNode, Map<String, Object> parameters, boolean passed) {
+        
+        String condition = NodeDataUtil.getString(conditionNode, "condition");
+        String fieldName = NodeDataUtil.getString(conditionNode, "fieldName");
+        String fieldValue = NodeDataUtil.getString(conditionNode, "fieldValue");
         String value = "";
         if(parameters.containsKey(fieldName)) {
             value = (String) parameters.get(fieldName);

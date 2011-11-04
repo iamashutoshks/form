@@ -34,7 +34,7 @@
 package info.magnolia.module.form.controls;
 
 /**
- * Marker interface for processing of multi value controls used by from criteria paragraph.
+ * Marker interface for processing of multi value controls used by from condition paragraph.
  *
  */
 public interface MultiValueControl {

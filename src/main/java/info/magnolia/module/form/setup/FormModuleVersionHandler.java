@@ -33,9 +33,16 @@
  */
 package info.magnolia.module.form.setup;
 
+import javax.jcr.RepositoryException;
+
 import info.magnolia.cms.beans.config.ContentRepository;
+import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.util.ContentUtil.Visitor;
 import info.magnolia.module.DefaultModuleVersionHandler;
+import info.magnolia.module.InstallContext;
+import info.magnolia.module.delta.AllChildrenNodesOperation;
 import info.magnolia.module.delta.ArrayDelegateTask;
 import info.magnolia.module.delta.BootstrapSingleModuleResource;
 import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
@@ -46,6 +53,8 @@ import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.module.delta.RemoveNodeTask;
+import info.magnolia.module.delta.ReplaceIfExistsTask;
+import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.module.delta.WarnTask;
 import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
 import info.magnolia.module.form.setup.for1_2_1.UpdateDialogDefinitionsFor1_2_1;
@@ -188,5 +197,33 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new PartialBootstrapTask("Add multistep forms breadcrumb", "", "/mgnl-bootstrap/form/config.modules.form.dialogs.form.xml", "/form/tabMain/displayBreadcrumb")
                         ));
         
+        register(DeltaBuilder.update("1.3.1", "Rename Criteria paragraph to Condition.")
+                .addTask(new ArrayDelegateTask("Rename paragraph dialog and content.", "",
+                        new ReplaceIfExistsTask("Rename dialog.", "", "No need to rename the paragraph.", ContentRepository.CONFIG,"/modules/form/dialogs/formCriteria", "/mgnl-bootstrap/form/config.modules.form.dialogs.formCondition.xml" ),
+                        new ReplaceIfExistsTask("Rename paragraph.", "", "No need to rename the dialog.", ContentRepository.CONFIG,"/modules/form/paragraphs/formCriteria", "/mgnl-bootstrap/form/config.modules.form.paragraphs.formCondition.xml" ),
+                        new AllChildrenNodesOperation("", "", ContentRepository.WEBSITE, "/"){
+                            @Override
+                            protected void operateOnChildNode(Content node, InstallContext ctx)
+                                    throws RepositoryException, TaskExecutionException {
+                                        try {
+                                            ContentUtil.visit(node, new Visitor() {
+                                                public void visit(Content node)
+                                                        throws Exception {
+                                                    if(node.getTemplate().equals("formCriteria")) {
+                                                        if(node.hasContent("criteria")) {
+                                                            ContentUtil.rename(node.getContent("criteria"), "condition");
+                                                        }
+                                                        node.getMetaData().setTemplate("formCondition");
+                                                        Content criteriaList = node.getParent();
+                                                        if(criteriaList.getName().equals("criteriaList")) {
+                                                            ContentUtil.rename(criteriaList, "conditionList");
+                                                        }
+                                                    } } });
+                                        } catch (Exception e) {
+                                            ctx.error("Error updating formCriteria content to formCondition", e);
+                                        }
+                                    }
+                            }
+                )));
     }
 }

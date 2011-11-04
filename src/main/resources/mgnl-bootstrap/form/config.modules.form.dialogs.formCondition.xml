@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sv:node sv:name="formCriteria" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sv:node sv:name="formCondition" xmlns:sv="http://www.jcp.org/jcr/sv/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
@@ -10,7 +10,7 @@
     <sv:value>info.magnolia.module.form.messages</sv:value>
   </sv:property>
   <sv:property sv:name="label" sv:type="String">
-    <sv:value>dialog.form.criteria.label</sv:value>
+    <sv:value>dialog.form.condition.label</sv:value>
   </sv:property>
   <sv:property sv:name="saveHandler" sv:type="String">
     <sv:value>info.magnolia.module.form.controls.MultiControlSaveHandler</sv:value>
@@ -58,7 +58,7 @@
       <sv:value>tab</sv:value>
     </sv:property>
     <sv:property sv:name="label" sv:type="String">
-      <sv:value>dialog.form.criteria.tabMain.label</sv:value>
+      <sv:value>dialog.form.condition.tabMain.label</sv:value>
     </sv:property>
     <sv:node sv:name="MetaData">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -132,7 +132,7 @@
         </sv:property>
       </sv:node>
     </sv:node>
-    <sv:node sv:name="criteria">
+    <sv:node sv:name="condition">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
       </sv:property>
@@ -143,10 +143,10 @@
         <sv:value>1Col</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
-        <sv:value>info.magnolia.module.form.controls.CriteriaControl</sv:value>
+        <sv:value>info.magnolia.module.form.controls.ConditionControl</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.criteria.tabMain.criteria.label</sv:value>
+        <sv:value>dialog.form.condition.tabMain.condition.label</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -209,7 +209,7 @@
             <sv:value>71700689-5f35-4c40-811f-9d1eb03ed71b</sv:value>
           </sv:property>
           <sv:property sv:name="label" sv:type="String">
-            <sv:value>dialog.form.criteria.tabMain.criteria.option.name.and</sv:value>
+            <sv:value>dialog.form.condition.tabMain.condition.option.name.and</sv:value>
           </sv:property>
           <sv:property sv:name="value" sv:type="String">
             <sv:value>and</sv:value>
@@ -243,7 +243,7 @@
             <sv:value>b2ffae88-33ef-41cb-9bed-66dbb3d26264</sv:value>
           </sv:property>
           <sv:property sv:name="label" sv:type="String">
-            <sv:value>dialog.form.criteria.tabMain.criteria.option.name.or</sv:value>
+            <sv:value>dialog.form.condition.tabMain.condition.option.name.or</sv:value>
           </sv:property>
           <sv:property sv:name="value" sv:type="String">
             <sv:value>or</sv:value>
@@ -277,7 +277,7 @@
             <sv:value>847429c4-2ef9-42b6-bf5c-3c7603970a88</sv:value>
           </sv:property>
           <sv:property sv:name="label" sv:type="String">
-            <sv:value>dialog.form.criteria.tabMain.criteria.option.name.not</sv:value>
+            <sv:value>dialog.form.condition.tabMain.condition.option.name.not</sv:value>
           </sv:property>
           <sv:property sv:name="value" sv:type="String">
             <sv:value>not</sv:value>
@@ -313,10 +313,10 @@
         <sv:value>uuidLink</sv:value>
       </sv:property>
       <sv:property sv:name="description" sv:type="String">
-        <sv:value>dialog.form.criteria.tabMain.link.description</sv:value>
+        <sv:value>dialog.form.condition.tabMain.link.description</sv:value>
       </sv:property>
       <sv:property sv:name="label" sv:type="String">
-        <sv:value>dialog.form.criteria.tabMain.link.label</sv:value>
+        <sv:value>dialog.form.condition.tabMain.link.label</sv:value>
       </sv:property>
       <sv:property sv:name="repository" sv:type="String">
         <sv:value>website</sv:value>

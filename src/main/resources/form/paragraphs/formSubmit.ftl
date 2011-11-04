@@ -56,11 +56,11 @@
     
     [#if mgnl.editMode]
     	<br />
-	    <div class="criteria" style="clear:both;">
-	    	[@cms.contentNodeIterator contentNodeCollectionName="criteriaList"]
+	    <div class="condition" style="clear:both;">
+	    	[@cms.contentNodeIterator contentNodeCollectionName="conditionList"]
                 [@cms.includeTemplate /]
             [/@cms.contentNodeIterator]        
-            <div style="width:103px">[@cms.newBar contentNodeCollectionName="criteriaList" newLabel="${i18n['criteria.newLabel']}" paragraph="formCriteria" /]</div>
+            <div style="width:103px">[@cms.newBar contentNodeCollectionName="conditionList" newLabel="${i18n['condition.newLabel']}" paragraph="formCondition" /]</div>
 	    </div>
     [/#if]
 </div>
