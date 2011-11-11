@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.module.form.paragraphs.models.multistep.StartStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
@@ -44,7 +43,6 @@ import javax.jcr.Node;
 
 /**
  * RenderingModel for a single page form.
- *
  * @author tmiyar
  */
 public class FormModel extends AbstractFormModel {

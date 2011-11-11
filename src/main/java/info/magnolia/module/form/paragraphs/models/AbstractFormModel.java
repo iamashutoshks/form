@@ -56,6 +56,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements typical behaviour in extensions points for classes that use FormEngine. Subclasses provides a FormEngine
  * instance and can override methods called by nested paragraphs to change default behavior.
+ *
+ * @param <RD> - an instance of {@link RenderableDefinition}
  */
 public abstract class AbstractFormModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
 

@@ -50,6 +50,7 @@ import org.slf4j.LoggerFactory;
 /**
  * RenderingModel for form items. Looks up the parent model to find out if the item passed validation.
  *
+ * @param <RD> - an instance of {@link RenderableDefinition}
  * @author tmiyar
  */
 public class FormFieldModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {

@@ -67,6 +67,8 @@ import org.apache.commons.lang.StringUtils;
 /**
  * Model for summary paragraph, displays a list of parameters submitted by the form.
  * I the option onlyLast is selected, only the parameters of the previous step will be displayed.
+ *
+ * @param <RD> - an instance of {@link RenderableDefinition}
  */
 public class FormSummaryModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
 
