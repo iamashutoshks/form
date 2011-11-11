@@ -1,13 +1,15 @@
-[#assign cms=JspTaglibs["cms-taglib"]]
+<!--
+FIXME I do not find the paragraphs using this script :S
 
+ -->
 <div>
-[@cms.editBar /]
-    [#if mgnl.editMode]
+[@cms.edit/]
+    [#if cmsfn.editMode]
     <p>${i18n['form.groupselect.note']}</p><br />
     [/#if]
     [#if content.title?has_content]
         <label for="${content.controlName}">
-            ${mgnl.encode(content).title!}
+            ${cmsfn.encode(cmsfn.asJCRNode(content)).title!}
         </label>
     [/#if]
     [#if !mgnl.editMode]

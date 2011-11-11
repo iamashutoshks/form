@@ -38,30 +38,19 @@
 }
 
 </style>
-
-[#assign cms=JspTaglibs["cms-taglib"]]
-
 [#assign backButtonText=content.backButtonText!]
 
 <div class="navigation-button-wrapper" >
-[@cms.editBar /]
-	[#if backButtonText?has_content]
-		<div class="navigation-previous">
+[@cms.edit/]
+  [#if backButtonText?has_content]
+    <div class="navigation-previous">
         <input id="back-button" type="button" onclick="history.go(-1);return false;" value="${backButtonText?html}" />
         </div>
-    [/#if]
+  [/#if]
         <div class="navigation-next">
-    		<input type="submit" value="${content.buttonText!"Submit"?html}" />
-    	</div>
-    
-    [#if mgnl.editMode]
-    	<br />
-	    <div class="condition" style="clear:both;">
-	    	[@cms.contentNodeIterator contentNodeCollectionName="conditionList"]
-                [@cms.includeTemplate /]
-            [/@cms.contentNodeIterator]        
-            <div style="width:103px">[@cms.newBar contentNodeCollectionName="conditionList" newLabel="${i18n['condition.newLabel']}" paragraph="formCondition" /]</div>
-	    </div>
-    [/#if]
+        <input type="submit" value="${content.buttonText!"Submit"?html}" />
+      </div>
+
+  [@cms.area name="conditionList"/]
 </div>
 

@@ -1,14 +1,12 @@
-[#assign cms=JspTaglibs["cms-taglib"]]
-
-<div ${model.style!} >
 [@cms.editBar /]
+<div ${model.style!} >
     [#if content.title?has_content]
         <label id="${content.controlName}_label" class="${content.editLength!}" for="${content.controlName}">
             <span>
             [#if !model.isValid()]
                 <em>${i18n['form.error.field']}</em>
             [/#if]
-            ${mgnl.encode(content).title!}
+            ${cmsfn.encode(cmsfn.asJCRNode(content)).title!}
             [#if content.mandatory]
                 <dfn title="required">${model.requiredSymbol!}</dfn>
             [/#if]

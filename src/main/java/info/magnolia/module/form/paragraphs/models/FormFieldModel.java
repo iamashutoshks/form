@@ -33,25 +33,26 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.module.form.engine.FormField;
+import info.magnolia.rendering.model.RenderingModel;
+import info.magnolia.rendering.model.RenderingModelImpl;
+import info.magnolia.rendering.template.RenderableDefinition;
+
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.module.form.engine.FormField;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.RenderingModelImpl;
-
 /**
  * RenderingModel for form items. Looks up the parent model to find out if the item passed validation.
  *
  * @author tmiyar
  */
-public class FormFieldModel extends RenderingModelImpl {
+public class FormFieldModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
 
     private static final Logger log = LoggerFactory.getLogger(FormFieldModel.class);
 
@@ -59,7 +60,7 @@ public class FormFieldModel extends RenderingModelImpl {
     private String style = "";
     private boolean valid;
 
-    public FormFieldModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+    public FormFieldModel(Node content, RD definition, RenderingModel<?> parent) {
         super(content, definition, parent);
     }
 
@@ -86,8 +87,8 @@ public class FormFieldModel extends RenderingModelImpl {
         }
         try {
             // TODO: move to specific edit control model class??
-            if (content.hasNodeData("editLength")) {
-                String style2 = content.getNodeData("editLength").getString();
+            if (ContentUtil.asContent(content).hasNodeData("editLength")) {
+                String style2 = ContentUtil.asContent(content).getNodeData("editLength").getString();
                 if (!StringUtils.isEmpty(style2)) {
                     if (!StringUtils.isEmpty(cssClass)) {
                         cssClass = cssClass + " " + style2;
@@ -118,7 +119,7 @@ public class FormFieldModel extends RenderingModelImpl {
         FormField field = getFormModel().getFormField(getControlName());
         Object val = field != null ? field.getValue() : null;
         if (val == null)
-            val = NodeDataUtil.getString(content, "default");
+            val = NodeDataUtil.getString(ContentUtil.asContent(content), "default");
         if (val == null)
             val = "";
         this.value = val;
@@ -137,7 +138,7 @@ public class FormFieldModel extends RenderingModelImpl {
     }
 
     private String getControlName() {
-        return content.getNodeData("controlName").getString();
+        return ContentUtil.asContent(content).getNodeData("controlName").getString();
     }
 
     private AbstractFormModel getFormModel() {

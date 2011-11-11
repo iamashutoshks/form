@@ -1,10 +1,8 @@
-[#assign cms=JspTaglibs["cms-taglib"]]
-[#if mgnl.editMode]
-    <div style="float:right;height:20px;width:100px">[@cms.editBar /]</div>
-[/#if]
+[@cms.editBar /]
+
 [#assign parent = content?parent]
 
-[#if !mgnl.editMode]
+[#if !cmsfn.editMode]
 <optgroup id="${parent?parent.controlName}_${content.controlName}" label="${content.title}"  >
 [#else]
 <p>${mgnl.encode(content).title!}</p>

@@ -33,19 +33,6 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.jcr.PathNotFoundException;
-import javax.jcr.RepositoryException;
-
-import org.apache.commons.lang.StringUtils;
-
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
@@ -59,29 +46,43 @@ import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 import info.magnolia.module.form.templates.FormStepParagraph;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.RenderingModelImpl;
+import info.magnolia.rendering.model.RenderingModel;
+import info.magnolia.rendering.model.RenderingModelImpl;
+import info.magnolia.rendering.template.RenderableDefinition;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
+import javax.jcr.RepositoryException;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Model for summary paragraph, displays a list of parameters submitted by the form.
  * I the option onlyLast is selected, only the parameters of the previous step will be displayed.
  */
-public class FormSummaryModel extends RenderingModelImpl {
-    
+public class FormSummaryModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
+
     protected FormState formState;
-    
-    public FormSummaryModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+
+    public FormSummaryModel(Node content, RD definition, RenderingModel<?> parent) {
         super(content, definition, parent);
         formState = findFormState();
     }
 
     public List<FormSummaryBean> getFormSummaryBeanList() throws AccessDeniedException, PathNotFoundException, RepositoryException {
-        
+
         List<FormSummaryBean> summaryFormStepBeanList = new ArrayList<FormSummaryBean>();
         boolean onlyLast = isDisplayOnlyLastStep();
         ArrayList<FormStepState> steps = getSteps();
-        
+
         for (int index = 0; index < steps.size() ; index++) {
             FormStepState step = steps.get(index);
             if(!onlyLast || (onlyLast && index == steps.size() -1)) {
@@ -91,10 +92,10 @@ public class FormSummaryModel extends RenderingModelImpl {
                 }
             }
         }
-        
+
         return summaryFormStepBeanList;
     }
-    
+
     protected ArrayList<FormStepState> getSteps() {
         Content currentPage = MgnlContext.getAggregationState().getMainContent();
         Content currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
@@ -107,11 +108,11 @@ public class FormSummaryModel extends RenderingModelImpl {
                     break;
                 }
                 steps.add(step);
-            } 
+            }
         }
         return steps;
     }
-    
+
     protected FormState findFormState() {
         RenderingModel oparent = getParent();
         while(oparent != null && !(oparent instanceof SubStepFormModel)) {
@@ -124,8 +125,8 @@ public class FormSummaryModel extends RenderingModelImpl {
     }
 
     protected boolean isDisplayOnlyLastStep() {
-        
-        return NodeDataUtil.getBoolean(content, "onlyLast", false);
+
+        return NodeDataUtil.getBoolean(ContentUtil.asContent(content), "onlyLast", false);
     }
 
     protected FormSummaryBean createFormSummaryBean(FormStepState step) {
@@ -137,9 +138,9 @@ public class FormSummaryModel extends RenderingModelImpl {
                 String paragraphUUID = step.getParagraphUuid();
                 Content contentParagraph = ContentUtil.getContentByUUID(ContentRepository.WEBSITE, paragraphUUID);
                 Content page = new I18nContentWrapper(NavigationUtils.findParagraphParentPage(contentParagraph));
-                
+
                 Collection<Content> contentParagraphFieldList = findContentParagraphFields(contentParagraph);
-                
+
                 for(Content fieldNode: contentParagraphFieldList) {
                     String controlName = NodeDataUtil.getString(fieldNode, "controlName");
                     if(stepParameters.containsKey(controlName)) {
@@ -210,10 +211,10 @@ public class FormSummaryModel extends RenderingModelImpl {
     }
 
     protected Collection<Content> findContentParagraphFields(Content contentParagraph) {
-        
+
         String query = "select * from " + ItemType.CONTENTNODE + " where jcr:path like '"
                 + contentParagraph.getHandle() +"/%' and controlName is not null";
         return QueryUtil.query(ContentRepository.WEBSITE, query);
     }
-    
+
 }

@@ -33,13 +33,6 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.jcr.RepositoryException;
-
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.ContentUtil;
@@ -53,8 +46,16 @@ import info.magnolia.module.form.paragraphs.models.multistep.SubStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
 import info.magnolia.module.templating.ParagraphManager;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
+import info.magnolia.rendering.model.RenderingModel;
+import info.magnolia.rendering.template.RenderableDefinition;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
 
 /**
  * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
@@ -62,7 +63,7 @@ import info.magnolia.module.templating.RenderingModel;
  */
 public class SubStepFormModel extends AbstractFormModel {
 
-    public SubStepFormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+    public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
     }
 
@@ -75,7 +76,7 @@ public class SubStepFormModel extends AbstractFormModel {
 
         if (startParagraphNode == null) {
             // Ideally we would return a view that describes the problem and how to resolve it
-            throw new IllegalStateException("FormStepParagraph on page [" + content.getHandle() + "] could not find a FormParagraph in its parent");
+            throw new IllegalStateException("FormStepParagraph on page [" + ContentUtil.asContent(content).getHandle() + "] could not find a FormParagraph in its parent");
         }
 
         String templateName = startParagraphNode.getMetaData().getTemplate();
@@ -83,7 +84,7 @@ public class SubStepFormModel extends AbstractFormModel {
 
         return new SubStepFormEngine(startParagraphNode, startParagraph, startPage);
     }
-    
+
     public Collection<Link> getBreadcrumb() throws RepositoryException {
         List<Link> items = new ArrayList<Link>();
         Content currentPage = MgnlContext.getAggregationState().getMainContent();
@@ -103,7 +104,7 @@ public class SubStepFormModel extends AbstractFormModel {
                 if(displayBreadcrumb) {
                     items.add((new LinkImpl(stepNode)));
                 }
-            } 
+            }
         }
         return items;
     }

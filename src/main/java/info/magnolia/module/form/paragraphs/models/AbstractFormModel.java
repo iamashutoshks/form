@@ -33,36 +33,38 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import java.io.IOException;
-import javax.jcr.RepositoryException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.engine.View;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
-import info.magnolia.module.templating.RenderingModelImpl;
+import info.magnolia.rendering.model.RenderingModel;
+import info.magnolia.rendering.model.RenderingModelImpl;
+import info.magnolia.rendering.template.RenderableDefinition;
+
+import java.io.IOException;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements typical behaviour in extensions points for classes that use FormEngine. Subclasses provides a FormEngine
  * instance and can override methods called by nested paragraphs to change default behavior.
  */
-public abstract class AbstractFormModel extends RenderingModelImpl {
+public abstract class AbstractFormModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
 
     private final static Logger logger = LoggerFactory.getLogger(AbstractFormModel.class);
 
     private AbstractFormEngine formEngine;
     private View view;
 
-    protected AbstractFormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+    protected AbstractFormModel(Node content, RD definition, RenderingModel<?> parent) {
         super(content, definition, parent);
     }
 
@@ -74,7 +76,7 @@ public abstract class AbstractFormModel extends RenderingModelImpl {
 
             formEngine = createFormEngine();
 
-            view = formEngine.handleRequest(getContent());
+            view = formEngine.handleRequest(ContentUtil.asContent(getContent()));
 
             return view.execute();
 
@@ -121,7 +123,7 @@ public abstract class AbstractFormModel extends RenderingModelImpl {
         FormState formState = formEngine.getFormState();
         if (formState == null)
             return null;
-        FormStepState step = formState.getStep(content.getUUID());
+        FormStepState step = formState.getStep(ContentUtil.asContent(content).getUUID());
         if (step == null)
             return null;
         return step.get(name);

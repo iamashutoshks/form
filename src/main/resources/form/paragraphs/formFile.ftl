@@ -1,11 +1,10 @@
-[#assign cms=JspTaglibs["cms-taglib"]]
 
 <div ${model.style!}>
-[@cms.editBar /]
+[@cms.edit /]
     [#if content.title?has_content]
         <label for="${content.controlName}">
-            ${mgnl.encode(content).title!}
-    	</label>
+            ${cmsfn.encode(cmsfn.asJCRNode(content)).title!}
+      </label>
     [/#if]
         <input type="file" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
 

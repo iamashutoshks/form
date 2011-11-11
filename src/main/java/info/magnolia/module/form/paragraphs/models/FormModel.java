@@ -34,10 +34,13 @@
 package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.module.form.paragraphs.models.multistep.StartStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.templating.RenderableDefinition;
-import info.magnolia.module.templating.RenderingModel;
+import info.magnolia.rendering.model.RenderingModel;
+import info.magnolia.rendering.template.RenderableDefinition;
+
+import javax.jcr.Node;
 
 /**
  * RenderingModel for a single page form.
@@ -46,12 +49,12 @@ import info.magnolia.module.templating.RenderingModel;
  */
 public class FormModel extends AbstractFormModel {
 
-    public FormModel(Content content, RenderableDefinition definition, RenderingModel parent) {
+    public FormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
     }
 
     @Override
     protected StartStepFormEngine createFormEngine() {
-        return new StartStepFormEngine(content, (FormParagraph) definition);
+        return new StartStepFormEngine(ContentUtil.asContent(content), (FormParagraph) definition);
     }
 }
