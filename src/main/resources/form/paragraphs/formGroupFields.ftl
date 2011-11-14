@@ -7,7 +7,7 @@
 <fieldset>
 
     [#if content.title?has_content]
-        <h2>${cmsfn.encode(cmsfn.asJCRNode(content)).title!}</h2>
+        <h2>${content.title!}</h2>
     [/#if]
     [@cms.area name="fields"/]
 </fieldset>

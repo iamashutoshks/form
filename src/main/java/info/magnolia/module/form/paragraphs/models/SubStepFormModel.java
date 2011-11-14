@@ -45,23 +45,34 @@ import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 import info.magnolia.module.form.paragraphs.models.multistep.SubStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
-import info.magnolia.module.templating.ParagraphManager;
+import info.magnolia.registry.RegistrationException;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
  * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.FormStepParagraph}.
  */
 public class SubStepFormModel extends AbstractFormModel {
+
+    @Inject
+    private TemplateDefinitionRegistry templateDefinitionRegistry;
+
+    private static Logger log = LoggerFactory.getLogger(SubStepFormModel.class);
+
 
     public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
@@ -79,8 +90,15 @@ public class SubStepFormModel extends AbstractFormModel {
             throw new IllegalStateException("FormStepParagraph on page [" + ContentUtil.asContent(content).getHandle() + "] could not find a FormParagraph in its parent");
         }
 
-        String templateName = startParagraphNode.getMetaData().getTemplate();
-        FormParagraph startParagraph = (FormParagraph) ParagraphManager.getInstance().getParagraphDefinition(templateName);
+        String templateId = startParagraphNode.getMetaData().getTemplate();
+        FormParagraph startParagraph = null;
+        try {
+            startParagraph = (FormParagraph) templateDefinitionRegistry.getTemplateDefinition(templateId);
+        } catch (RegistrationException e) {
+            // TODO Auto-generated catch block
+
+            log.error("",e);
+        }
 
         return new SubStepFormEngine(startParagraphNode, startParagraph, startPage);
     }

@@ -5,7 +5,7 @@
 [#if !cmsfn.editMode]
 <optgroup id="${parent?parent.controlName}_${content.controlName}" label="${content.title}"  >
 [#else]
-<p>${mgnl.encode(content).title!}</p>
+<p>${content.title!}</p>
 <select multiple="true" >
 [/#if]
     [#list content.labels?split("\r\n") as label]

@@ -106,10 +106,6 @@ public abstract class AbstractFormModel<RD extends RenderableDefinition> extends
         return view;
     }
 
-    public String getParagraphsAsStringList() throws RepositoryException {
-        return formEngine.getConfigurationParagraph().getParagraphsAsStringList();
-    }
-
     public String getRequiredSymbol() throws RepositoryException {
         return NodeDataUtil.getString(formEngine.getConfigurationNode(), "requiredSymbol", "");
     }

@@ -33,15 +33,10 @@
  */
 package info.magnolia.module.form.templates;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.jcr.RepositoryException;
+import info.magnolia.module.form.processors.FormProcessor;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.module.form.processors.FormProcessor;
-import info.magnolia.module.templating.Paragraph;
 
 /**
  * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
@@ -49,12 +44,9 @@ import info.magnolia.module.templating.Paragraph;
  * @author tmiyar
  * @see info.magnolia.module.form.processors.FormProcessor
  */
-public class FormParagraph extends Paragraph {
+public class FormParagraph extends ConfiguredTemplateDefinition {
 
     private FormProcessor[] formProcessors = new FormProcessor[0];
-
-    // List<ParagraphConfig>
-    private List paragraphs = new ArrayList();
 
     public FormProcessor[] getFormProcessors() {
         return formProcessors;
@@ -66,21 +58,5 @@ public class FormParagraph extends Paragraph {
 
     public void setFormProcessors(FormProcessor[] formProcessors) {
         this.formProcessors = formProcessors;
-    }
-
-    public List getParagraphs() {
-        return paragraphs;
-    }
-
-    public void setParagraphs(List paragraphs) {
-        this.paragraphs = paragraphs;
-    }
-
-    public void addParagraph(ParagraphConfig paragraph) {
-        this.paragraphs.add(paragraph);
-    }
-
-    public String getParagraphsAsStringList() throws RepositoryException {
-        return StringUtils.join(paragraphs, ", ");
     }
 }

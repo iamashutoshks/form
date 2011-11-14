@@ -77,8 +77,8 @@
         [/#if]
     [/#if]
     <div class="text">
-        <h1>${cmsfn.encode(cmsfn.asJCRNode(content)).formTitle!}</h1>
-        <p>${cmsfn.encode(cmsfn.asJCRNode(content)).formText!}</p>
+        <h1>${content.formTitle!}</h1>
+        <p>${content.formText!}</p>
         [#if breadcrumb?has_content ]
         <div id="form-breadcrumb">
           <ol>

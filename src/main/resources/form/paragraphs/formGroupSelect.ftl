@@ -9,7 +9,7 @@ FIXME I do not find the paragraphs using this script :S
     [/#if]
     [#if content.title?has_content]
         <label for="${content.controlName}">
-            ${cmsfn.encode(cmsfn.asJCRNode(content)).title!}
+            ${content.title!}
         </label>
     [/#if]
     [#if !mgnl.editMode]
