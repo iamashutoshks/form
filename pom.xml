@@ -8,7 +8,7 @@
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
-  <version>1.3.1</version>
+  <version>1.3.2-SNAPSHOT</version>
   <name>Magnolia Form Module</name>
   <description />
 
@@ -22,9 +22,9 @@
     <url>http://jira.magnolia-cms.com/browse/MGNLFORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/tags/magnolia-module-form-1.3.1</connection>
-    <developerConnection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/tags/magnolia-module-form-1.3.1</developerConnection>
-    <url>http://svn.magnolia-cms.com/view/community/modules/magnolia-module-form/tags/magnolia-module-form-1.3.1</url>
+    <connection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/branches/magnolia-module-form-1.3</connection>
+    <developerConnection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/branches/magnolia-module-form-1.3</developerConnection>
+    <url>http://svn.magnolia-cms.com/view/community/modules/magnolia-module-form/branches/magnolia-module-form-1.3</url>
   </scm>
 
   <dependencies>
