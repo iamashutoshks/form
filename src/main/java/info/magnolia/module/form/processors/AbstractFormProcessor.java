@@ -35,7 +35,7 @@ package info.magnolia.module.form.processors;
 
 import java.util.Map;
 
-import info.magnolia.cms.core.Content;
+import javax.jcr.Node;
 
 /**
  * Abstract base class for FormProcessors that want support for enabling/disabling.
@@ -62,10 +62,10 @@ public abstract class AbstractFormProcessor implements FormProcessor {
         this.enabled = enabled;
     }
 
-    public final void process(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
+    public final void process(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         if (enabled)
             internalProcess(content, parameters);
     }
 
-    protected abstract void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException;
+    protected abstract void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException;
 }

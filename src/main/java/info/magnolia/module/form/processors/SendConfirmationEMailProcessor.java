@@ -33,13 +33,14 @@
  */
 package info.magnolia.module.form.processors;
 
+import info.magnolia.jcr.util.PropertyUtil;
+
 import java.util.Map;
+
+import javax.jcr.Node;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.NodeDataUtil;
 
 /**
  * Sends a confirmation mail, any files submitted are sent as attachments.
@@ -50,15 +51,15 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(SendConfirmationEMailProcessor.class);
 
-    public void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
+    public void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
-            if (content.getNodeData("sendConfirmation").getBoolean()) {
-                String from = content.getNodeData("confirmMailFrom").getString();
-                String subject = content.getNodeData("confirmMailSubject").getString();
-                String to = content.getNodeData("confirmMailTo").getString();
-                String contentType = content.getNodeData("confirmContentType").getString();
+            if ( PropertyUtil.getBoolean(content, "sendConfirmation", false)) {
+                String from = PropertyUtil.getString(content, "confirmMailFrom");
+                String subject = PropertyUtil.getString(content,"confirmMailSubject");
+                String to = PropertyUtil.getString(content,"confirmMailTo");
+                String contentType = PropertyUtil.getString(content,"confirmContentType");
                 //For control edit and new control DialogRadioSwitch, keep old param for compatibility
-                String body = NodeDataUtil.getString(content, "confirmMailBody", NodeDataUtil.getString(content, "confirmContentType"+contentType));
+                String body = PropertyUtil.getString(content, "confirmMailBody", PropertyUtil.getString(content, "confirmContentType"+contentType));
 
                 sendMail(body, from, subject, to, contentType, parameters);
             }

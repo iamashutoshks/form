@@ -33,8 +33,7 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormField;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
@@ -88,8 +87,8 @@ public class FormFieldModel<RD extends RenderableDefinition> extends RenderingMo
         }
         try {
             // TODO: move to specific edit control model class??
-            if (ContentUtil.asContent(content).hasNodeData("editLength")) {
-                String style2 = ContentUtil.asContent(content).getNodeData("editLength").getString();
+            if ( content.hasProperty("editLength")) {
+                String style2 = PropertyUtil.getString(content, "editLength");
                 if (!StringUtils.isEmpty(style2)) {
                     if (!StringUtils.isEmpty(cssClass)) {
                         cssClass = cssClass + " " + style2;
@@ -120,7 +119,7 @@ public class FormFieldModel<RD extends RenderableDefinition> extends RenderingMo
         FormField field = getFormModel().getFormField(getControlName());
         Object val = field != null ? field.getValue() : null;
         if (val == null)
-            val = NodeDataUtil.getString(ContentUtil.asContent(content), "default");
+            val =  PropertyUtil.getString(content, "default");
         if (val == null)
             val = "";
         this.value = val;
@@ -139,7 +138,7 @@ public class FormFieldModel<RD extends RenderableDefinition> extends RenderingMo
     }
 
     private String getControlName() {
-        return ContentUtil.asContent(content).getNodeData("controlName").getString();
+        return PropertyUtil.getString(content,"controlName");
     }
 
     private AbstractFormModel getFormModel() {

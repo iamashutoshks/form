@@ -35,8 +35,8 @@ package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
@@ -107,21 +107,21 @@ public abstract class AbstractFormModel<RD extends RenderableDefinition> extends
     }
 
     public String getRequiredSymbol() throws RepositoryException {
-        return NodeDataUtil.getString(formEngine.getConfigurationNode(), "requiredSymbol", "");
+        return PropertyUtil.getString(formEngine.getConfigurationNode(), "requiredSymbol", "");
     }
 
     /**
      * Text for required symbol.
      */
     public String getRightText() throws RepositoryException {
-        return NodeDataUtil.getString(formEngine.getConfigurationNode(), "rightText", "");
+        return PropertyUtil.getString(formEngine.getConfigurationNode(), "rightText", "");
     }
 
     public FormField getFormField(String name) {
         FormState formState = formEngine.getFormState();
         if (formState == null)
             return null;
-        FormStepState step = formState.getStep(ContentUtil.asContent(content).getUUID());
+        FormStepState step = formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content));
         if (step == null)
             return null;
         return step.get(name);

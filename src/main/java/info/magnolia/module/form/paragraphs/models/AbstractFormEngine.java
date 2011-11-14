@@ -33,17 +33,10 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.jcr.RepositoryException;
-
-import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormEngine;
 import info.magnolia.module.form.engine.FormStepState;
@@ -53,20 +46,28 @@ import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
 import info.magnolia.module.form.templates.FormParagraph;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Implements common functionality used by both the first step and subsequent steps.
  */
 public abstract class AbstractFormEngine extends FormEngine {
 
-    private Content configurationNode;
+    private Node configurationNode;
     private FormParagraph configurationParagraph;
 
-    protected AbstractFormEngine(Content configurationNode, FormParagraph configurationParagraph) {
+    protected AbstractFormEngine(Node configurationNode, FormParagraph configurationParagraph) {
         this.configurationNode = configurationNode;
         this.configurationParagraph = configurationParagraph;
     }
 
-    public Content getConfigurationNode() {
+    public Node getConfigurationNode() {
         return configurationNode;
     }
 
@@ -105,14 +106,14 @@ public abstract class AbstractFormEngine extends FormEngine {
     protected View getSuccessView() throws RepositoryException {
 
         // Redirect to success page if there is one
-        String successPage = NodeDataUtil.getString(configurationNode, "redirect");
+        String successPage = PropertyUtil.getString(configurationNode, "redirect");
         if (StringUtils.isNotEmpty(successPage)) {
             return new RedirectView(successPage);
         }
 
         SuccessView successView = new SuccessView();
-        successView.setSuccessTitle(NodeDataUtil.getString(configurationNode, "successTitle"));
-        successView.setSuccessMessage(NodeDataUtil.getString(configurationNode, "successMessage"));
+        successView.setSuccessTitle(PropertyUtil.getString(configurationNode, "successTitle"));
+        successView.setSuccessMessage(PropertyUtil.getString(configurationNode, "successMessage"));
         return successView;
     }
 
@@ -120,7 +121,7 @@ public abstract class AbstractFormEngine extends FormEngine {
     protected View getFormView(FormStepState step) throws RepositoryException {
         FormView formView = new FormView();
         formView.setValidationErrors(step != null ? step.getValidationErrors() : new HashMap<String, String>());
-        formView.setErrorTitle(NodeDataUtil.getString(configurationNode, "errorTitle"));
+        formView.setErrorTitle(PropertyUtil.getString(configurationNode, "errorTitle"));
         return formView;
     }
 

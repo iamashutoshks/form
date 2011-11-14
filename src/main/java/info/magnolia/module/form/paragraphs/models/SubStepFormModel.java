@@ -100,7 +100,9 @@ public class SubStepFormModel extends AbstractFormModel {
             log.error("",e);
         }
 
-        return new SubStepFormEngine(startParagraphNode, startParagraph, startPage);
+
+
+        return new SubStepFormEngine(startParagraphNode.getJCRNode(), startParagraph, startPage.getJCRNode());
     }
 
     public Collection<Link> getBreadcrumb() throws RepositoryException {

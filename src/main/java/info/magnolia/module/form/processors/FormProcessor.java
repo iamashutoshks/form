@@ -35,7 +35,7 @@ package info.magnolia.module.form.processors;
 
 import java.util.Map;
 
-import info.magnolia.cms.core.Content;
+import javax.jcr.Node;
 
 /**
  * Processes a submitted form.
@@ -53,5 +53,5 @@ public interface FormProcessor {
      * @param parameters a map of the parameters collected from the form
      * @throws FormProcessorFailedException when an error occurs and the FormProcessor has a message that is suitable error message for the user
      */
-    void process(Content content, Map<String, Object> parameters) throws FormProcessorFailedException;
+    void process(Node content, Map<String, Object> parameters) throws FormProcessorFailedException;
 }

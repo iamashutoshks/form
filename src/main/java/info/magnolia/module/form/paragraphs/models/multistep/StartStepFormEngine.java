@@ -33,9 +33,6 @@
  */
 package info.magnolia.module.form.paragraphs.models.multistep;
 
-import java.util.Iterator;
-import javax.jcr.RepositoryException;
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
@@ -43,12 +40,17 @@ import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
 
+import java.util.Iterator;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
 /**
  * FormEngine implementation for the first step of a multi step form, or a single step form.
  */
 public class StartStepFormEngine extends AbstractFormEngine {
 
-    public StartStepFormEngine(Content configurationNode, FormParagraph configurationParagraph) {
+    public StartStepFormEngine(Node configurationNode, FormParagraph configurationParagraph) {
         super(configurationNode, configurationParagraph);
     }
 

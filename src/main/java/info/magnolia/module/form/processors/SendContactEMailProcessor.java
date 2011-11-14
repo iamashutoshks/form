@@ -33,13 +33,14 @@
  */
 package info.magnolia.module.form.processors;
 
+import info.magnolia.jcr.util.PropertyUtil;
+
 import java.util.Map;
+
+import javax.jcr.Node;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.NodeDataUtil;
 
 /**
  * Sends a contact mail, any files submitted are sent as attachments.
@@ -50,14 +51,14 @@ public class SendContactEMailProcessor extends AbstractEMailFormProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(SendContactEMailProcessor.class);
 
-    public void internalProcess(Content content, Map<String, Object> parameters) throws FormProcessorFailedException {
+    public void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
-            String from = content.getNodeData("contactMailFrom").getString();
-            String subject = content.getNodeData("contactMailSubject").getString();
-            String to = content.getNodeData("contactMailTo").getString();
-            String contentType = content.getNodeData("contentType").getString();
+            String from = PropertyUtil.getString(content,"contactMailFrom");
+            String subject = PropertyUtil.getString(content,"contactMailSubject");
+            String to = PropertyUtil.getString(content,"contactMailTo");
+            String contentType = PropertyUtil.getString(content,"contentType");
             //For control edit and new control DialogRadioSwitch, keep old param for compatibility
-            String body = NodeDataUtil.getString(content, "contactMailBody", NodeDataUtil.getString(content, "contentType"+contentType));
+            String body = PropertyUtil.getString(content, "contactMailBody", PropertyUtil.getString(content, "contentType"+contentType));
 
             sendMail(body, from, subject, to, contentType, parameters);
 

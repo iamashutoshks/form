@@ -33,13 +33,11 @@
  */
 package info.magnolia.module.form.paragraphs.models.multistep;
 
-import java.util.Iterator;
-
-import javax.jcr.RepositoryException;
-
 import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.cms.core.Content;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
 import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
@@ -47,15 +45,20 @@ import info.magnolia.module.form.paragraphs.models.SessionExpiredView;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
 
+import java.util.Iterator;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
 /**
  * FormEngine implementation for step 2+ of multi step forms. Finds the next step by looking for the first subsequent
  * sibling that contains a paragraph of type FormStepParagraph.
  */
 public class SubStepFormEngine extends AbstractFormEngine {
 
-    private Content startPage;
+    private Node startPage;
 
-    public SubStepFormEngine(Content configurationNode, FormParagraph configurationParagraph, Content startPage) {
+    public SubStepFormEngine(Node configurationNode, FormParagraph configurationParagraph, Node startPage) {
         super(configurationNode, configurationParagraph);
         this.startPage = startPage;
     }
@@ -69,18 +72,18 @@ public class SubStepFormEngine extends AbstractFormEngine {
             return super.handleTokenMissing();
 
         // But in a public instance we'll render a messages saying that the form starts elsewhere.
-        return new GoToFirstPageView(startPage.getUUID());
+        return new GoToFirstPageView(NodeUtil.getNodeIdentifierIfPossible(startPage));
     }
 
     @Override
     protected View handleNoSuchFormState(String formStateToken) throws RepositoryException {
-        return new SessionExpiredView(startPage.getUUID());
+        return new SessionExpiredView(NodeUtil.getNodeIdentifierIfPossible(startPage));
     }
 
     @Override
     protected View handleNoSuchFormStateOnSubmit(String formStateToken) throws RepositoryException {
         // Send the user to the first step where he'll see an error message
-        return new RedirectWithTokenView(startPage.getUUID(), formStateToken);
+        return new RedirectWithTokenView(NodeUtil.getNodeIdentifierIfPossible(startPage), formStateToken);
     }
 
     @Override
@@ -91,7 +94,7 @@ public class SubStepFormEngine extends AbstractFormEngine {
         String nextPageUUID = NavigationUtils.findNextPageBasedOnCondition(conditionParagraphIterator, this.getFormState().getValues());
         if(nextPageUUID == null) {
             // Find first sibling with step paragraph
-            Iterator<Content> contentIterator = startPage.getChildren().iterator();
+            Iterator<Content> contentIterator = ContentUtil.asContent(startPage).getChildren().iterator();
             NavigationUtils.advanceIteratorTilAfter(contentIterator, MgnlContext.getAggregationState().getMainContent());
             nextPageUUID = NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
         }
