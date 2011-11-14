@@ -78,7 +78,7 @@ public abstract class AbstractFormModel<RD extends RenderableDefinition> extends
 
             formEngine = createFormEngine();
 
-            view = formEngine.handleRequest(ContentUtil.asContent(getContent()));
+            view = formEngine.handleRequest(getContent());
 
             return view.execute();
 

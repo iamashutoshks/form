@@ -33,14 +33,13 @@
  */
 package info.magnolia.module.form.engine;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
-
-import info.magnolia.cms.core.Content;
 
 /**
  * Performs binding and validation of submitted values.
  */
 public interface FormDataBinder {
 
-    FormStepState bindAndValidate(Content paragraph) throws RepositoryException;
+    FormStepState bindAndValidate(Node paragraph) throws RepositoryException;
 }

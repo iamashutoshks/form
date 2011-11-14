@@ -33,16 +33,18 @@
  */
 package info.magnolia.module.form.engine;
 
+import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.module.form.processors.FormProcessorFailedException;
+
 import java.util.Map;
+
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.context.MgnlContext;
-import info.magnolia.module.form.processors.FormProcessorFailedException;
 
 /**
  * Implements a rendering and form submission algorithm that keeps state in session for multiple pages. Subclasses
@@ -54,7 +56,7 @@ public abstract class FormEngine {
 
     private FormState formState;
 
-    public View handleRequest(Content content) throws RepositoryException {
+    public View handleRequest(Node content) throws RepositoryException {
 
         if (!isFormSubmission()) {
 
@@ -74,7 +76,7 @@ public abstract class FormEngine {
             View view = formState.getView();
             formState.setView(null);
             if (view == null) {
-                return getFormView(formState.getStep(content.getUUID()));
+                return getFormView(formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content)));
             }
             if (formState.isEnded())
                 destroyFormState();
@@ -137,7 +139,7 @@ public abstract class FormEngine {
      *
      * @param content
      */
-    private View processSubmission(Content content) throws RepositoryException {
+    private View processSubmission(Node content) throws RepositoryException {
 
         // Validate the input parameters and collect FormField instances
         FormStepState step = getFormDataBinder().bindAndValidate(content);
