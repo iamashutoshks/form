@@ -81,13 +81,24 @@ public abstract class AbstractFormEngine extends FormEngine {
 
     @Override
     protected View getProcessorFailedView(String errorMessage) {
+        // If no message or key is supplied, use default error message
         if (errorMessage == null) {
-            errorMessage = "form.user.errorMessage.generic";
+            errorMessage = getErrorMessage("form.user.errorMessage.generic");
+        } else {
+            errorMessage = getErrorMessage(errorMessage);
+            // If the message is blank in the resource bundle, use default error message
+            if (StringUtils.isBlank(errorMessage)) {
+                errorMessage = getErrorMessage("form.user.errorMessage.generic");
+            }
         }
+        return new ErrorView(errorMessage);
+    }
+
+    private String getErrorMessage(String errorMessage) {
         Messages messages = MessagesManager.getMessages(getConfigurationParagraph().getI18nBasename());
         Messages defaultMessages = MessagesManager.getMessages(DefaultFormDataBinder.getDefaultPath());
         errorMessage = messages.getWithDefault(errorMessage, defaultMessages.getWithDefault(errorMessage, errorMessage));
-        return new ErrorView(errorMessage);
+        return errorMessage;
     }
 
     @Override
