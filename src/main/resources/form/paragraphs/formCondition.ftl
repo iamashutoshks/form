@@ -1,5 +1,5 @@
 
-[#assign link = cmsfn.createLink("website", content.link)]
+[#assign link = cmsfn.link("website", content.link)]
 [#assign condition = content.condition]
 
 [@cms.editBar /]
