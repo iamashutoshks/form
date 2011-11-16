@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
@@ -106,7 +105,6 @@ public class SubStepFormModel extends AbstractFormModel {
         List<Link> items = new ArrayList<Link>();
         //FIXME Aggregation state must provide a the main node
         Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
-        //TODO FormStepParagraph do not extend the correct class
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
         boolean displayBreadcrumb = false;
         if(this.getFormState() != null) {
@@ -117,11 +115,11 @@ public class SubStepFormModel extends AbstractFormModel {
                 if(NavigationUtils.isParagraphOfType(stepNode, FormParagraph.class)) {
                     displayBreadcrumb = PropertyUtil.getBoolean(stepNode, "displayBreadcrumb", false);
                 }
-                if(step.getParagraphUuid().equals(currentStepContent.getUUID())) {
+                if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
                 if(displayBreadcrumb) {
-                    items.add((new LinkImpl(ContentUtil.asContent(stepNode))));
+                    items.add((new LinkImpl(stepNode)));
                 }
             }
         }

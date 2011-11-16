@@ -33,28 +33,28 @@
  */
 package info.magnolia.module.form.dialogs;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.Content.ContentFilter;
 import info.magnolia.cms.gui.dialog.DialogStatic;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.jcr.predicate.AbstractPredicate;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
+import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 
 /**
- * static field that will display all form params that can be used as
- * freemarker params.
+ * static field that will display all form params that can be used as freemarker
+ * params.
+ *
  * @author tmiyar
  *
  */
@@ -63,14 +63,15 @@ public class DialogStaticWithFormParams extends DialogStatic {
     @Override
     public void drawHtml(Writer out) throws IOException {
         this.drawHtmlPre(out);
-        Content storageNode = getStorageNode();
+        Node storageNode = getStorageNode().getJCRNode();
         String value = "";
         try {
-            Content formStartPage = ContentUtil.asContent(NavigationUtils.findParagraphParentPage(storageNode.getJCRNode()));
-            Collection<Content> formControls = findAllFormControlNames(formStartPage);
+            Node formStartPage = NavigationUtils
+                    .findParagraphParentPage(storageNode);
+            Iterable<Node> formControls = findAllFormControlNames(formStartPage);
 
-            for (Content control : formControls) {
-                value += NodeDataUtil.getString(control, "controlName") + ", ";
+            for (Node control : formControls) {
+                value += PropertyUtil.getString(control, "controlName") + ", ";
             }
 
             if (StringUtils.isNotEmpty(value)) {
@@ -78,49 +79,50 @@ public class DialogStaticWithFormParams extends DialogStatic {
                 value += ".";
             }
         } catch (Exception e) {
-            //do nothing
+            // do nothing
         }
         out.write(value);
         this.drawHtmlPost(out);
 
     }
 
-    protected Collection<Content> findAllFormControlNames(Content contentParagraph) {
-        List<Content> nodes = ContentUtil.collectAllChildren(contentParagraph, new ContentFilter() {
+    protected Iterable<Node> findAllFormControlNames(Node contentParagraph)
+            throws RepositoryException {
+        Iterable<Node> nodes = NodeUtil.getNodes(contentParagraph,
+                new AbstractPredicate<Node>() {
+                    @Override
+                    public boolean evaluateTyped(Node content) {
+                        try {
+                            return content.hasProperty("controlName")
+                                    && !MetaDataUtil
+                                            .getTemplate(content)
+                                            .equals("form:components/formGroupEdit")
+                                    && !MetaDataUtil
+                                            .getTemplate(content)
+                                            .equals("form:components/formGroupFields")
+                                    && !MetaDataUtil
+                                            .getTemplate(content)
+                                            .equals("form:components/formSubmit");
+                        } catch (RepositoryException e) {
+                            return false;
+                        }
+                    }
+                });
 
-            public boolean accept(Content content) {
+        // order must be same as in the form
+        Collections.sort(NodeUtil.asList(nodes), new Comparator<Node>() {
+            public int compare(final Node content1, final Node content2) {
                 try {
-                    return content.hasNodeData("controlName")
-                        && !content.getTemplate().equals("formGroupEdit")
-                        && !content.getTemplate().equals("formGroupFields")
-                        && !content.getTemplate().equals("formSubmit");
-                } catch (RepositoryException e) {
-                    return false;
-                }
-            }
-
-        });
-
-        //order must be same as in the form
-        Collections.sort(nodes, new Comparator() {
-
-            public int compare(final Object arg0, final Object arg1) {
-                Content content1 = (Content) arg0;
-                Content content2 = (Content) arg1;
-
-                try {
-                    return ("" + content2.getLevel()).compareTo("" + content1.getLevel());
+                    return ("" + content2.getDepth()).compareTo(""
+                            + content1.getDepth());
                 } catch (PathNotFoundException e) {
                     return 0;
                 } catch (RepositoryException e) {
                     return 0;
                 }
             }
-
         });
         return nodes;
-
-
     }
 
 }

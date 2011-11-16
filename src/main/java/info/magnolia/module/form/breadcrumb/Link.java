@@ -33,6 +33,8 @@
  */
 package info.magnolia.module.form.breadcrumb;
 
+import javax.jcr.RepositoryException;
+
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
 
 /**
@@ -41,8 +43,8 @@ import info.magnolia.module.form.engine.FormStateTokenMissingException;
  *
  */
 public interface Link {
-    public String getTitle();
-    public String getNavigationTitle();
+    public String getTitle() throws RepositoryException;
+    public String getNavigationTitle() throws RepositoryException;
     public String getHref() throws FormStateTokenMissingException;
 
 }

@@ -33,14 +33,15 @@
  */
 package info.magnolia.module.form.breadcrumb;
 
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.security.AccessDeniedException;
-import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
 import info.magnolia.module.form.engine.FormStateUtil;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
-import info.magnolia.module.templating.MagnoliaTemplatingUtilities;
+import info.magnolia.templating.functions.TemplatingFunctions;
 
+import javax.inject.Inject;
+import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
@@ -52,23 +53,27 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public class LinkImpl implements Link {
-    private Content node;
+    private Node node;
 
-    public LinkImpl(Content stepNode) throws AccessDeniedException, PathNotFoundException, RepositoryException {
-        this.node = ContentUtil.asContent(NavigationUtils.findParagraphParentPage(stepNode.getJCRNode()));
+    @Inject
+    private TemplatingFunctions templatingFunctions;
+
+    public LinkImpl(Node stepNode) throws AccessDeniedException, PathNotFoundException, RepositoryException {
+        this.node = NavigationUtils.findParagraphParentPage(stepNode);
     }
 
-    public String getTitle(){
-        return StringUtils.defaultIfEmpty(node.getTitle(), node.getName());
+    public String getTitle() throws RepositoryException{
+        return StringUtils.defaultIfEmpty(PropertyUtil.getString(node, "title"), node.getName());
     }
 
-    public String getNavigationTitle(){
-        String navigationTitle = node.getNodeData("navigationTitle").getString();
-        return StringUtils.defaultIfEmpty(StringUtils.defaultIfEmpty(navigationTitle, node.getTitle()), node.getName());
+    public String getNavigationTitle() throws RepositoryException{
+        String navigationTitle = PropertyUtil.getString(node, "navigationTitle");
+        String title = PropertyUtil.getString(node, "title");
+        return StringUtils.defaultIfEmpty(StringUtils.defaultIfEmpty(navigationTitle, title), node.getName());
     }
 
     public String getHref() throws FormStateTokenMissingException{
-        String link = MagnoliaTemplatingUtilities.getInstance().createLink(node);
+        String link = templatingFunctions.link(node);
         link += "?" + FormStateUtil.FORM_TOKEN_PARAMETER_NAME + "=" + FormStateUtil.getFormStateToken();
         return  link;
     }
