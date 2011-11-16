@@ -68,10 +68,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SubStepFormModel extends AbstractFormModel {
 
-    private TemplateDefinitionRegistry templateDefinitionRegistry;
-
     private static Logger log = LoggerFactory.getLogger(SubStepFormModel.class);
-
 
     public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
@@ -93,7 +90,7 @@ public class SubStepFormModel extends AbstractFormModel {
         String templateId = MetaDataUtil.getTemplate(startParagraphNode);
         FormParagraph startParagraph = null;
         try {
-            startParagraph = (FormParagraph) templateDefinitionRegistry.getTemplateDefinition(templateId);
+            startParagraph = (FormParagraph) Components.getComponent(TemplateDefinitionRegistry.class).getTemplateDefinition(templateId);
         } catch (RegistrationException e) {
              throw new RuntimeException(e.getMessage(), e);
         }

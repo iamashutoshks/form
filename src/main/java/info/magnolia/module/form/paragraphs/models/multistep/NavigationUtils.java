@@ -61,9 +61,6 @@ import org.slf4j.LoggerFactory;
  */
 public class NavigationUtils {
 
-//    @Inject
-//    private static TemplateDefinitionRegistry templateDefinitionRegistry;
-
     private static Logger log = LoggerFactory.getLogger(NavigationUtils.class);
 
     public static String findFirstPageWithParagraphOfType(Iterator<Node> contentIterator, Class<?> paragraphType) throws RepositoryException {
