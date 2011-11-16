@@ -17,6 +17,10 @@
       <type>info.magnolia.templating.functions.TemplatingFunctions</type>
       <implementation>info.magnolia.templating.functions.TemplatingFunctions</implementation>
     </component>
+    <component>
+      <type>info.magnolia.rendering.context.RenderingContext</type>
+      <implementation>info.magnolia.rendering.context.AggregationStateBasedRenderingContext</implementation>
+    </component>
   </components>
   <dependencies>
     <dependency>

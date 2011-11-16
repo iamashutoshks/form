@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -44,7 +43,9 @@ import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 import info.magnolia.module.form.paragraphs.models.multistep.SubStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.registry.RegistrationException;
+import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
@@ -55,7 +56,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
@@ -68,7 +68,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SubStepFormModel extends AbstractFormModel {
 
-    @Inject
     private TemplateDefinitionRegistry templateDefinitionRegistry;
 
     private static Logger log = LoggerFactory.getLogger(SubStepFormModel.class);
@@ -76,13 +75,13 @@ public class SubStepFormModel extends AbstractFormModel {
 
     public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
+
     }
 
     @Override
     protected SubStepFormEngine createFormEngine() throws RepositoryException {
 
-        //FIXME Aggregation state must provide a the main node
-        Node startPage = MgnlContext.getAggregationState().getMainContent().getParent().getJCRNode();
+        Node startPage = Components.getComponent(RenderingContext.class).getMainContent();//MgnlContext.getAggregationState().getMainContent().getParent().getJCRNode();
 
         Node startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
 
@@ -98,13 +97,12 @@ public class SubStepFormModel extends AbstractFormModel {
         } catch (RegistrationException e) {
              throw new RuntimeException(e.getMessage(), e);
         }
-        return new SubStepFormEngine(startParagraphNode, startParagraph, startPage);
+        return Components.newInstance(SubStepFormEngine.class, startParagraphNode, startParagraph, startPage);
     }
 
     public Collection<Link> getBreadcrumb() throws RepositoryException {
         List<Link> items = new ArrayList<Link>();
-        //FIXME Aggregation state must provide a the main node
-        Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();//MgnlContext.getAggregationState().getMainContent().getJCRNode();
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
         boolean displayBreadcrumb = false;
         if(this.getFormState() != null) {

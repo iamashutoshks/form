@@ -34,7 +34,6 @@
 package info.magnolia.module.form.paragraphs.models.multistep;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
@@ -42,6 +41,7 @@ import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
 import info.magnolia.module.form.paragraphs.models.SessionExpiredView;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.Iterator;
 
@@ -56,8 +56,8 @@ public class SubStepFormEngine extends AbstractFormEngine {
 
     private Node startPage;
 
-    public SubStepFormEngine(Node configurationNode, FormParagraph configurationParagraph, Node startPage) {
-        super(configurationNode, configurationParagraph);
+    public SubStepFormEngine(Node configurationNode, FormParagraph configurationParagraph, Node startPage, RenderingContext context) {
+        super(configurationNode, configurationParagraph, context);
         this.startPage = startPage;
     }
 
@@ -87,13 +87,13 @@ public class SubStepFormEngine extends AbstractFormEngine {
     @Override
     protected String getNextPage() throws RepositoryException {
         // Find next paragraph based on condition
-        Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        Node currentPage = context.getMainContent();
         Iterator<Node> conditionParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "form:formCondition").iterator();
         String nextPageUUID = NavigationUtils.findNextPageBasedOnCondition(conditionParagraphIterator, this.getFormState().getValues());
         if(nextPageUUID == null) {
             // Find first sibling with step paragraph
             Iterator<Node> contentIterator = NodeUtil.getNodes(startPage).iterator();
-            NavigationUtils.advanceIteratorTilAfter(contentIterator, MgnlContext.getAggregationState().getMainContent().getJCRNode());
+            NavigationUtils.advanceIteratorTilAfter(contentIterator, context.getMainContent());
             nextPageUUID = NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
         }
         return nextPageUUID;

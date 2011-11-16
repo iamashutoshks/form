@@ -35,6 +35,7 @@ package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.module.form.paragraphs.models.multistep.StartStepFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 
@@ -52,6 +53,6 @@ public class FormModel extends AbstractFormModel {
 
     @Override
     protected StartStepFormEngine createFormEngine() {
-        return new StartStepFormEngine(content, (FormParagraph) definition);
+        return Components.newInstance(StartStepFormEngine.class, content, (FormParagraph) definition);
     }
 }

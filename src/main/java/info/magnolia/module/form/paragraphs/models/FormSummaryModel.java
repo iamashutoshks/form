@@ -41,12 +41,12 @@ import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.cms.util.QueryUtil;
-import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 import info.magnolia.rendering.template.RenderableDefinition;
@@ -60,6 +60,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
@@ -75,6 +76,9 @@ import org.apache.commons.lang.StringUtils;
 public class FormSummaryModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
 
     protected FormState formState;
+
+    @Inject
+    private RenderingContext context;
 
     public FormSummaryModel(Node content, RD definition, RenderingModel<?> parent) {
         super(content, definition, parent);
@@ -101,8 +105,7 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
     }
 
     protected ArrayList<FormStepState> getSteps() throws RepositoryException {
-        //FIXME Aggregation state must provide a the main node
-        Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        Node currentPage = context.getMainContent();
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
         ArrayList<FormStepState> steps = new ArrayList<FormStepState>();
         if(formState != null) {

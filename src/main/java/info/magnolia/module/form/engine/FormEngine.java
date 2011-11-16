@@ -36,9 +36,11 @@ package info.magnolia.module.form.engine;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
+import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
@@ -55,6 +57,13 @@ public abstract class FormEngine {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private FormState formState;
+
+    public RenderingContext context;
+
+    @Inject
+    public FormEngine(RenderingContext context){
+        this.context = context;
+    }
 
     public View handleRequest(Node content) throws RepositoryException {
 
@@ -90,7 +99,7 @@ public abstract class FormEngine {
             } catch (FormStateTokenMissingException e) {
                 // Cant post without a token... should never happen
                 // Redirect the user to this page
-                return new RedirectView(MgnlContext.getAggregationState().getMainContent().getJCRNode());
+                return new RedirectView(context.getMainContent());
             }
 
             try {
@@ -113,7 +122,7 @@ public abstract class FormEngine {
             }
 
             formState.setView(view);
-            return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent().getJCRNode(), formState.getToken());
+            return new RedirectWithTokenView(context.getMainContent(), formState.getToken());
         }
     }
 
@@ -253,7 +262,7 @@ public abstract class FormEngine {
      */
     protected View handleNoSuchFormStateOnSubmit(String formStateToken) throws RepositoryException {
         // Redirect to the current page _with_ the invalid token, this will render an error message.
-        return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent().getJCRNode(), formStateToken);
+        return new RedirectWithTokenView(context.getMainContent(), formStateToken);
     }
 
     protected abstract FormDataBinder getFormDataBinder();

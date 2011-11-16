@@ -35,7 +35,7 @@ package info.magnolia.module.form.paragraphs.models;
 
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
-import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormEngine;
@@ -45,6 +45,7 @@ import info.magnolia.module.form.engine.View;
 import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
 import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,8 @@ public abstract class AbstractFormEngine extends FormEngine {
     private Node configurationNode;
     private FormParagraph configurationParagraph;
 
-    protected AbstractFormEngine(Node configurationNode, FormParagraph configurationParagraph) {
+    protected AbstractFormEngine(Node configurationNode, FormParagraph configurationParagraph, RenderingContext context) {
+        super(context);
         this.configurationNode = configurationNode;
         this.configurationParagraph = configurationParagraph;
     }
@@ -77,7 +79,7 @@ public abstract class AbstractFormEngine extends FormEngine {
 
     @Override
     protected View handleNoSuchFormState(String formStateToken) throws RepositoryException {
-        return new SessionExpiredView(MgnlContext.getAggregationState().getMainContent().getUUID());
+        return new SessionExpiredView(NodeUtil.getNodeIdentifierIfPossible(context.getMainContent()));
     }
 
     @Override

@@ -33,12 +33,12 @@
  */
 package info.magnolia.module.form.paragraphs.models.multistep;
 
-import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
 import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
 import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.Iterator;
 
@@ -50,8 +50,8 @@ import javax.jcr.RepositoryException;
  */
 public class StartStepFormEngine extends AbstractFormEngine {
 
-    public StartStepFormEngine(Node configurationNode, FormParagraph configurationParagraph) {
-        super(configurationNode, configurationParagraph);
+    public StartStepFormEngine(Node configurationNode, FormParagraph configurationParagraph,RenderingContext context) {
+        super(configurationNode, configurationParagraph, context);
     }
 
     /**
@@ -77,7 +77,7 @@ public class StartStepFormEngine extends AbstractFormEngine {
     @Override
     protected String getNextPage() throws RepositoryException {
         // Find first child with step paragraph
-        Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        Node currentPage = context.getMainContent();
         Iterator<Node> conditionParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "form:formCondition").iterator();
         String nextPageUUID = NavigationUtils.findNextPageBasedOnCondition(conditionParagraphIterator, this.getFormState().getValues());
         if(nextPageUUID == null) {
