@@ -33,11 +33,13 @@
  */
 package info.magnolia.module.form.engine;
 
-import java.io.IOException;
-import javax.jcr.RepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.rendering.model.RenderingModel;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.templating.RenderingModel;
+import java.io.IOException;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
 
 /**
  * Simple redirect view.
@@ -46,8 +48,8 @@ public class RedirectView implements EndView {
 
     private String uuid;
 
-    public RedirectView(Content content) {
-        this.uuid = content.getUUID();
+    public RedirectView(Node content) {
+        this.uuid = NodeUtil.getNodeIdentifierIfPossible(content);
     }
 
     public RedirectView(String uuid) {

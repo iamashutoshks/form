@@ -33,11 +33,13 @@
  */
 package info.magnolia.module.form.engine;
 
-import java.io.IOException;
-import javax.jcr.RepositoryException;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.rendering.model.RenderingModel;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.module.templating.RenderingModel;
+import java.io.IOException;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
 
 /**
  * Used to redirect to a page with the form state token, effectively continuing the form on another page.
@@ -47,8 +49,8 @@ public class RedirectWithTokenView implements View {
     private String uuid;
     private String token;
 
-    public RedirectWithTokenView(Content content, String token) {
-        this.uuid = content.getUUID();
+    public RedirectWithTokenView(Node content, String token) {
+        this.uuid = NodeUtil.getNodeIdentifierIfPossible(content);
         this.token = token;
     }
 

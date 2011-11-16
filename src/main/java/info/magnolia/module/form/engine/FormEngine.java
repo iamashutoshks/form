@@ -90,7 +90,7 @@ public abstract class FormEngine {
             } catch (FormStateTokenMissingException e) {
                 // Cant post without a token... should never happen
                 // Redirect the user to this page
-                return new RedirectView(MgnlContext.getAggregationState().getMainContent());
+                return new RedirectView(MgnlContext.getAggregationState().getMainContent().getJCRNode());
             }
 
             try {
@@ -113,7 +113,7 @@ public abstract class FormEngine {
             }
 
             formState.setView(view);
-            return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent(), formState.getToken());
+            return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent().getJCRNode(), formState.getToken());
         }
     }
 
@@ -253,7 +253,7 @@ public abstract class FormEngine {
      */
     protected View handleNoSuchFormStateOnSubmit(String formStateToken) throws RepositoryException {
         // Redirect to the current page _with_ the invalid token, this will render an error message.
-        return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent(), formStateToken);
+        return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent().getJCRNode(), formStateToken);
     }
 
     protected abstract FormDataBinder getFormDataBinder();

@@ -33,161 +33,186 @@
  */
 package info.magnolia.module.form.paragraphs.models.multistep;
 
+import info.magnolia.cms.core.MetaData;
+import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.cms.security.AccessDeniedException;
+import info.magnolia.jcr.predicate.AbstractPredicate;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.registry.RegistrationException;
+import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
+import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.ItemType;
-import info.magnolia.cms.core.MetaData;
-import info.magnolia.cms.core.Content.ContentFilter;
-import info.magnolia.cms.security.AccessDeniedException;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.module.templating.Paragraph;
-import info.magnolia.module.templating.ParagraphManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for finding pages with certain paragraphs.
  */
 public class NavigationUtils {
 
-    public static String findFirstPageWithParagraphOfType(Iterator<Content> contentIterator, Class<?> paragraphType) {
+//    @Inject
+//    private static TemplateDefinitionRegistry templateDefinitionRegistry;
+
+    private static Logger log = LoggerFactory.getLogger(NavigationUtils.class);
+
+    public static String findFirstPageWithParagraphOfType(Iterator<Node> contentIterator, Class<?> paragraphType) throws RepositoryException {
         while (contentIterator.hasNext()) {
-            Content childPage = contentIterator.next();
+            Node childPage = contentIterator.next();
             if (findParagraphOfType(childPage, paragraphType) != null)
-                return childPage.getUUID();
+                return NodeUtil.getNodeIdentifierIfPossible(childPage);
         }
         return null;
     }
 
-    public static void advanceIteratorTilAfter(Iterator<Content> iterator, Content content) {
+    public static void advanceIteratorTilAfter(Iterator<Node> iterator, Node content) {
         while (iterator.hasNext()) {
-            Content content1 = iterator.next();
-            if (content1.getUUID().equals(content.getUUID()))
+            Node content1 = iterator.next();
+            if ( NodeUtil.getNodeIdentifierIfPossible(content1).equals(NodeUtil.getNodeIdentifierIfPossible(content)))
                 return;
         }
     }
 
-    public static Content findParagraphOfType(Content content, Class<?> paragraphType) {
-        Collection<Content> children = content.getChildren(ItemType.CONTENTNODE);
-        for (Content child : children) {
-            if (isParagraphOfType(child, paragraphType)) {
-                return child;
-            }
-            Content x = findParagraphOfType(child, paragraphType);
+    public static Node findParagraphOfType(Node content, Class<?> paragraphType) throws RepositoryException {
+            Iterable<Node> children = NodeUtil.getNodes(content, MgnlNodeType.NT_COMPONENT);
+            for (Node child : children) {
+                if (isParagraphOfType(child, paragraphType)) {
+                    return child;
+                }
+            Node x = findParagraphOfType(child, paragraphType);
             if (x != null)
                 return x;
+            }
+        return null;
+    }
+
+    public static boolean isParagraphOfType(Node child, Class<?> paragraphType) {
+        MetaData metaData = MetaDataUtil.getMetaData(child);
+        if (metaData == null) return false;
+        String template = metaData.getTemplate();
+        if (template == null) return false;
+        TemplateDefinition definition;
+        try {
+            definition = Components.getComponent(TemplateDefinitionRegistry.class).getTemplateDefinition(template);
+        } catch (RegistrationException e) {
+             throw new RuntimeException(e.getMessage(), e);
+        }
+        if (definition == null) return false;
+        return paragraphType.isAssignableFrom(definition.getClass());
+    }
+
+    public static Iterable<Node> getPageParagraphsOfType(Node page, final String componentId) {
+        Iterable<Node> paragraphList = new ArrayList<Node>();
+            try {
+                if(page.hasNode("main")){
+                    Node mainAreaContent = page.getNode("main");
+                    paragraphList = NodeUtil.getNodes(mainAreaContent, new AbstractPredicate<Node>() {
+                        @Override
+                        public boolean evaluateTyped(Node content) {
+                            MetaData metaData = MetaDataUtil.getMetaData(content);
+                            if (metaData == null) return false;
+                            String template = metaData.getTemplate();
+                            if (template == null) return false;
+                            return componentId.equals(template);
+                        }
+                    });
+                }
+            } catch (PathNotFoundException e) {
+                log.error(e.getMessage(),e);
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        return paragraphList;
+    }
+
+    /**
+     * @deprecated use findNextPageBasedOnCondition instead.
+     */
+    public static String findNextPageBasedOnCriteria(Iterator<Node> criteriaParagraphIterator, Map<String, Object> parameters) {
+        while (criteriaParagraphIterator.hasNext()) {
+            Node criteriaParagraphContent = criteriaParagraphIterator.next();
+            String linkUUID = PropertyUtil.getString(criteriaParagraphContent, "link", "");
+            try {
+                if(criteriaParagraphContent.hasNode("criteria")){
+                    Node criteriaNode = criteriaParagraphContent.getNode("criteria");
+                    Iterable<Node> criteriaCollection = NodeUtil.getNodes(criteriaNode);
+                    boolean passed = true;
+                    for (Iterator<Node> iterator = criteriaCollection.iterator(); iterator.hasNext();) {
+                        Node content = iterator.next();
+                        passed = evaluateCondition(content, parameters, passed);
+                    }
+                    if(passed) {
+                        return linkUUID;
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
         }
         return null;
     }
 
-    public static boolean isParagraphOfType(Content child, Class<?> paragraphType) {
-        MetaData metaData = child.getMetaData();
-        if (metaData == null) return false;
-        String template = metaData.getTemplate();
-        if (template == null) return false;
-        Paragraph definition = ParagraphManager.getInstance().getParagraphDefinition(template);
-        if (definition == null) return false;
-        return paragraphType.isAssignableFrom(definition.getClass());
-    }
-    
-    public static List<Content> getPageParagraphsOfType(Content page, final String paragraphName) {
-        Content mainAreaContent = ContentUtil.getContent(page, "main");
-        List<Content> paragraphList = new ArrayList<Content>();
-        if(mainAreaContent != null) {
-            paragraphList = ContentUtil.collectAllChildren(mainAreaContent, new ContentFilter() {
-                public boolean accept(Content content) {
-                    MetaData metaData = content.getMetaData();
-                    if (metaData == null) return false;
-                    String template = metaData.getTemplate();
-                    if (template == null) return false;
-                    return paragraphName.equals(template);
-                }
-            });
-        }
-        return paragraphList;
-    }
-    
-    /**
-     * @deprecated use findNextPageBasedOnCondition instead.
-     */
-    public static String findNextPageBasedOnCriteria(Iterator<Content> criteriaParagraphIterator, Map<String, Object> parameters) {
-        while (criteriaParagraphIterator.hasNext()) {
-            Content criteriaParagraphContent = criteriaParagraphIterator.next();
-            String linkUUID = NodeDataUtil.getString(criteriaParagraphContent, "link", "");
-            Content criteriaNode = ContentUtil.getContent(criteriaParagraphContent, "criteria");
-            if(criteriaNode != null) {
-            
-                Collection<Content> criteriaCollection = ContentUtil.getAllChildren(criteriaNode);
-                boolean passed = true;
-                for (Iterator<Content> iterator = criteriaCollection.iterator(); iterator.hasNext();) {
-                    Content content = iterator.next();
-                    passed = evaluateCriteria(content, parameters, passed);
-                }
-                if(passed) {
-                    return linkUUID;
-                }
-            }
-        }
-        
-        return null;
-    }
-    
     /**
      * @deprecated use evaluateCondition instead.
      */
-    public static boolean evaluateCriteria(Content criteriaNode, Map<String, Object> parameters, boolean passed) {
-        
-        String condition = NodeDataUtil.getString(criteriaNode, "condition");
-        String fieldName = NodeDataUtil.getString(criteriaNode, "fieldName");
-        String fieldValue = NodeDataUtil.getString(criteriaNode, "fieldValue");
+    public static boolean evaluateCriteria(Node criteriaNode, Map<String, Object> parameters, boolean passed) {
+
+        String condition = PropertyUtil.getString(criteriaNode, "condition");
+        String fieldName = PropertyUtil.getString(criteriaNode, "fieldName");
+        String fieldValue = PropertyUtil.getString(criteriaNode, "fieldValue");
         String value = "";
         if(parameters.containsKey(fieldName)) {
             value = (String) parameters.get(fieldName);
-        } 
+        }
         return evaluateCondition(fieldValue, value, condition, passed);
     }
-    
-    public static String findNextPageBasedOnCondition(Iterator<Content> conditionParagraphIterator, Map<String, Object> parameters) {
+
+    public static String findNextPageBasedOnCondition(Iterator<Node> conditionParagraphIterator, Map<String, Object> parameters) {
         while (conditionParagraphIterator.hasNext()) {
-            Content conditionParagraphContent = conditionParagraphIterator.next();
-            String linkUUID = NodeDataUtil.getString(conditionParagraphContent, "link", "");
-            Content conditionNode = ContentUtil.getContent(conditionParagraphContent, "condition");
-            if(conditionNode != null) {
-            
-                Collection<Content> conditionCollection = ContentUtil.getAllChildren(conditionNode);
-                boolean passed = true;
-                for (Iterator<Content> iterator = conditionCollection.iterator(); iterator.hasNext();) {
-                    Content content = iterator.next();
-                    passed = evaluateCondition(content, parameters, passed);
+            Node conditionParagraphContent = conditionParagraphIterator.next();
+            String linkUUID = PropertyUtil.getString(conditionParagraphContent, "link", "");
+            try {
+                if(conditionParagraphContent.hasNode("condition")){
+                    Node conditionNode = conditionParagraphContent.getNode("condition");
+                    Iterable<Node> conditionCollection =  NodeUtil.getNodes(conditionNode);
+                    boolean passed = true;
+                    for (Iterator<Node> iterator = conditionCollection.iterator(); iterator.hasNext();) {
+                        Node content = iterator.next();
+                        passed = evaluateCondition(content, parameters, passed);
+                    }
+                    if(passed) {
+                        return linkUUID;
+                    }
                 }
-                if(passed) {
-                    return linkUUID;
-                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage(), e);
             }
         }
-        
         return null;
     }
-    
-    public static boolean evaluateCondition(Content conditionNode, Map<String, Object> parameters, boolean passed) {
-        
-        String condition = NodeDataUtil.getString(conditionNode, "condition");
-        String fieldName = NodeDataUtil.getString(conditionNode, "fieldName");
-        String fieldValue = NodeDataUtil.getString(conditionNode, "fieldValue");
+
+    public static boolean evaluateCondition(Node conditionNode, Map<String, Object> parameters, boolean passed) {
+
+        String condition = PropertyUtil.getString(conditionNode, "condition");
+        String fieldName = PropertyUtil.getString(conditionNode, "fieldName");
+        String fieldValue = PropertyUtil.getString(conditionNode, "fieldValue");
         String value = "";
         if(parameters.containsKey(fieldName)) {
             value = (String) parameters.get(fieldName);
-        } 
+        }
         return evaluateCondition(fieldValue, value, condition, passed);
     }
-    
+
     public static boolean evaluateCondition(String fieldValue, String value, String condition, boolean passed) {
         if (condition.equals("and")) {
             passed &= fieldValue.equals(value);
@@ -195,19 +220,19 @@ public class NavigationUtils {
             passed |= fieldValue.equals(value);
         } else if (condition.equals("not")) {
             passed &= !fieldValue.equals(value);
-        } 
+        }
         return passed;
 
     }
-    
-    public static Content findParagraphParentPage(Content paragraph) throws AccessDeniedException, PathNotFoundException, RepositoryException {
-        
-        Content page = paragraph;
-        
-        while(page != null && !page.getItemType().getSystemName().equals(ItemType.CONTENT.getSystemName()) ) {
+
+    public static Node findParagraphParentPage(Node paragraph) throws AccessDeniedException, PathNotFoundException, RepositoryException {
+
+        Node page = paragraph;
+
+        while(page != null && !NodeUtil.isNodeType(page, MgnlNodeType.NT_PAGE)) {
             page = page.getParent();
         }
-        
+
         return page;
     }
 }

@@ -33,11 +33,11 @@
  */
 package info.magnolia.module.form.templates;
 
-import info.magnolia.module.templating.Paragraph;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
 /**
  * Paragraph for additional steps in a form. If you want to use a custom Paragraph for your subsequent steps you must
  * extend this class.
  */
-public class FormStepParagraph extends Paragraph {
+public class FormStepParagraph extends ConfiguredTemplateDefinition {
 }

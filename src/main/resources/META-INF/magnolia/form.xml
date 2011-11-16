@@ -7,6 +7,13 @@
   <class>info.magnolia.module.form.FormModule</class>
   <versionHandler>info.magnolia.module.form.setup.FormModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+  <components>
+    <id>main</id>
+    <component>
+      <type>info.magnolia.rendering.template.registry.TemplateDefinitionRegistry</type>
+      <implementation>info.magnolia.rendering.template.registry.TemplateDefinitionRegistry</implementation>
+    </component>
+  </components>
   <dependencies>
     <dependency>
       <name>core</name>

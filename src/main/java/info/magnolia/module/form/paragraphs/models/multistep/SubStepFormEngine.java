@@ -34,8 +34,6 @@
 package info.magnolia.module.form.paragraphs.models.multistep;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
@@ -89,13 +87,13 @@ public class SubStepFormEngine extends AbstractFormEngine {
     @Override
     protected String getNextPage() throws RepositoryException {
         // Find next paragraph based on condition
-        Content currentPage = MgnlContext.getAggregationState().getMainContent();
-        Iterator<Content> conditionParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "formCondition").iterator();
+        Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        Iterator<Node> conditionParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "form:formCondition").iterator();
         String nextPageUUID = NavigationUtils.findNextPageBasedOnCondition(conditionParagraphIterator, this.getFormState().getValues());
         if(nextPageUUID == null) {
             // Find first sibling with step paragraph
-            Iterator<Content> contentIterator = ContentUtil.asContent(startPage).getChildren().iterator();
-            NavigationUtils.advanceIteratorTilAfter(contentIterator, MgnlContext.getAggregationState().getMainContent());
+            Iterator<Node> contentIterator = NodeUtil.getNodes(startPage).iterator();
+            NavigationUtils.advanceIteratorTilAfter(contentIterator, MgnlContext.getAggregationState().getMainContent().getJCRNode());
             nextPageUUID = NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
         }
         return nextPageUUID;

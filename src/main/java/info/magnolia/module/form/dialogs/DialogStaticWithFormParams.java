@@ -33,6 +33,13 @@
  */
 package info.magnolia.module.form.dialogs;
 
+import info.magnolia.cms.core.Content;
+import info.magnolia.cms.core.Content.ContentFilter;
+import info.magnolia.cms.gui.dialog.DialogStatic;
+import info.magnolia.cms.util.ContentUtil;
+import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
@@ -44,13 +51,6 @@ import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
-
-import info.magnolia.cms.core.Content;
-import info.magnolia.cms.core.Content.ContentFilter;
-import info.magnolia.cms.gui.dialog.DialogStatic;
-import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
-import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 
 /**
  * static field that will display all form params that can be used as
@@ -66,9 +66,9 @@ public class DialogStaticWithFormParams extends DialogStatic {
         Content storageNode = getStorageNode();
         String value = "";
         try {
-            Content formStartPage = NavigationUtils.findParagraphParentPage(storageNode);
+            Content formStartPage = ContentUtil.asContent(NavigationUtils.findParagraphParentPage(storageNode.getJCRNode()));
             Collection<Content> formControls = findAllFormControlNames(formStartPage);
-            
+
             for (Content control : formControls) {
                 value += NodeDataUtil.getString(control, "controlName") + ", ";
             }
@@ -82,32 +82,32 @@ public class DialogStaticWithFormParams extends DialogStatic {
         }
         out.write(value);
         this.drawHtmlPost(out);
-       
+
     }
-    
+
     protected Collection<Content> findAllFormControlNames(Content contentParagraph) {
         List<Content> nodes = ContentUtil.collectAllChildren(contentParagraph, new ContentFilter() {
 
             public boolean accept(Content content) {
                 try {
-                    return content.hasNodeData("controlName") 
-                        && !content.getTemplate().equals("formGroupEdit") 
-                        && !content.getTemplate().equals("formGroupFields") 
+                    return content.hasNodeData("controlName")
+                        && !content.getTemplate().equals("formGroupEdit")
+                        && !content.getTemplate().equals("formGroupFields")
                         && !content.getTemplate().equals("formSubmit");
                 } catch (RepositoryException e) {
                     return false;
                 }
             }
-            
+
         });
-        
+
         //order must be same as in the form
         Collections.sort(nodes, new Comparator() {
 
             public int compare(final Object arg0, final Object arg1) {
                 Content content1 = (Content) arg0;
                 Content content2 = (Content) arg1;
-                
+
                 try {
                     return ("" + content2.getLevel()).compareTo("" + content1.getLevel());
                 } catch (PathNotFoundException e) {
@@ -116,11 +116,11 @@ public class DialogStaticWithFormParams extends DialogStatic {
                     return 0;
                 }
             }
-            
+
         });
         return nodes;
-        
-        
+
+
     }
-    
+
 }

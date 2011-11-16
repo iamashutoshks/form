@@ -33,11 +33,11 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import info.magnolia.cms.beans.config.ContentRepository;
-import info.magnolia.cms.core.Content;
 import info.magnolia.cms.util.ContentUtil;
-import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.breadcrumb.Link;
 import info.magnolia.module.form.breadcrumb.LinkImpl;
 import info.magnolia.module.form.engine.FormStepState;
@@ -49,6 +49,7 @@ import info.magnolia.registry.RegistrationException;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,48 +82,46 @@ public class SubStepFormModel extends AbstractFormModel {
     @Override
     protected SubStepFormEngine createFormEngine() throws RepositoryException {
 
-        Content startPage = MgnlContext.getAggregationState().getMainContent().getParent();
+        //FIXME Aggregation state must provide a the main node
+        Node startPage = MgnlContext.getAggregationState().getMainContent().getParent().getJCRNode();
 
-        Content startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
+        Node startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
 
         if (startParagraphNode == null) {
             // Ideally we would return a view that describes the problem and how to resolve it
-            throw new IllegalStateException("FormStepParagraph on page [" + ContentUtil.asContent(content).getHandle() + "] could not find a FormParagraph in its parent");
+            throw new IllegalStateException("FormStepParagraph on page [" + NodeUtil.getPathIfPossible(content) + "] could not find a FormParagraph in its parent");
         }
 
-        String templateId = startParagraphNode.getMetaData().getTemplate();
+        String templateId = MetaDataUtil.getTemplate(startParagraphNode);
         FormParagraph startParagraph = null;
         try {
             startParagraph = (FormParagraph) templateDefinitionRegistry.getTemplateDefinition(templateId);
         } catch (RegistrationException e) {
-            // TODO Auto-generated catch block
-
-            log.error("",e);
+             throw new RuntimeException(e.getMessage(), e);
         }
-
-
-
-        return new SubStepFormEngine(startParagraphNode.getJCRNode(), startParagraph, startPage.getJCRNode());
+        return new SubStepFormEngine(startParagraphNode, startParagraph, startPage);
     }
 
     public Collection<Link> getBreadcrumb() throws RepositoryException {
         List<Link> items = new ArrayList<Link>();
-        Content currentPage = MgnlContext.getAggregationState().getMainContent();
-        Content currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
+        //FIXME Aggregation state must provide a the main node
+        Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        //TODO FormStepParagraph do not extend the correct class
+        Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
         boolean displayBreadcrumb = false;
         if(this.getFormState() != null) {
             Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
             while (stepsIt.hasNext()) {
                 FormStepState step = (FormStepState) stepsIt.next();
-                Content stepNode = ContentUtil.getContentByUUID(ContentRepository.WEBSITE, step.getParagraphUuid());
+                Node stepNode = NodeUtil.getNodeByIdentifier(RepositoryConstants.WEBSITE, step.getParagraphUuid());
                 if(NavigationUtils.isParagraphOfType(stepNode, FormParagraph.class)) {
-                    displayBreadcrumb = NodeDataUtil.getBoolean(stepNode, "displayBreadcrumb", false);
+                    displayBreadcrumb = PropertyUtil.getBoolean(stepNode, "displayBreadcrumb", false);
                 }
                 if(step.getParagraphUuid().equals(currentStepContent.getUUID())) {
                     break;
                 }
                 if(displayBreadcrumb) {
-                    items.add((new LinkImpl(stepNode)));
+                    items.add((new LinkImpl(ContentUtil.asContent(stepNode))));
                 }
             }
         }

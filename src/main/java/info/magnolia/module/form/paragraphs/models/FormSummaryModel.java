@@ -42,6 +42,7 @@ import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.cms.util.NodeDataUtil;
 import info.magnolia.cms.util.QueryUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
@@ -49,6 +50,7 @@ import info.magnolia.module.form.templates.FormStepParagraph;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 import info.magnolia.rendering.template.RenderableDefinition;
+import info.magnolia.repository.RepositoryConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -98,15 +100,16 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
         return summaryFormStepBeanList;
     }
 
-    protected ArrayList<FormStepState> getSteps() {
-        Content currentPage = MgnlContext.getAggregationState().getMainContent();
-        Content currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
+    protected ArrayList<FormStepState> getSteps() throws RepositoryException {
+        //FIXME Aggregation state must provide a the main node
+        Node currentPage = MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
         ArrayList<FormStepState> steps = new ArrayList<FormStepState>();
         if(formState != null) {
             Iterator<FormStepState> stepsIt = formState.getSteps().values().iterator();
             while (stepsIt.hasNext()) {
                 FormStepState step = (FormStepState) stepsIt.next();
-                if(step.getParagraphUuid().equals(currentStepContent.getUUID())) {
+                if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
                 steps.add(step);
@@ -138,10 +141,12 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
         try {
             if(!stepParameters.isEmpty()) {
                 String paragraphUUID = step.getParagraphUuid();
-                Content contentParagraph = ContentUtil.getContentByUUID(ContentRepository.WEBSITE, paragraphUUID);
-                Content page = new I18nContentWrapper(NavigationUtils.findParagraphParentPage(contentParagraph));
+                Node contentParagraph = NodeUtil.getNodeByIdentifier(RepositoryConstants.WEBSITE, paragraphUUID);
 
-                Collection<Content> contentParagraphFieldList = findContentParagraphFields(contentParagraph);
+                //FIXME I18nContentWrapper has to be migrated
+                Content page = new I18nContentWrapper(ContentUtil.asContent(NavigationUtils.findParagraphParentPage(contentParagraph)));
+
+                Collection<Content> contentParagraphFieldList = findContentParagraphFields(ContentUtil.asContent(contentParagraph));
 
                 for(Content fieldNode: contentParagraphFieldList) {
                     String controlName = NodeDataUtil.getString(fieldNode, "controlName");

@@ -33,15 +33,16 @@
  */
 package info.magnolia.module.form.breadcrumb;
 
-import javax.jcr.PathNotFoundException;
-import javax.jcr.RepositoryException;
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.security.AccessDeniedException;
+import info.magnolia.cms.util.ContentUtil;
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
 import info.magnolia.module.form.engine.FormStateUtil;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
 import info.magnolia.module.templating.MagnoliaTemplatingUtilities;
+
+import javax.jcr.PathNotFoundException;
+import javax.jcr.RepositoryException;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -54,7 +55,7 @@ public class LinkImpl implements Link {
     private Content node;
 
     public LinkImpl(Content stepNode) throws AccessDeniedException, PathNotFoundException, RepositoryException {
-        this.node = NavigationUtils.findParagraphParentPage(stepNode);
+        this.node = ContentUtil.asContent(NavigationUtils.findParagraphParentPage(stepNode.getJCRNode()));
     }
 
     public String getTitle(){
