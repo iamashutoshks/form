@@ -1,16 +1,15 @@
 
 [#assign link = cmsfn.link("website", content.link)]
 [#assign condition = content.condition]
-
-[@cms.editBar /]
+[@cms.edit /]
 <div>
   [#if condition?has_content]
-    [#assign conditionList = condition?children]
+    [#assign conditionList = cmsfn.asContentMapList(condition?children)]
     [#list conditionList as conditionItem]
       <p>
-            ${conditionItem.condition!}, ${conditionItem.fieldName!}: ${conditionItem.fieldValue!}
-        </p>
-        [/#list]
+           ${conditionItem.condition!}, ${conditionItem.fieldName!}: ${conditionItem.fieldValue!}
+      </p>
+    [/#list]
     [/#if]
     [#if link?has_content]
       <p>
@@ -18,3 +17,4 @@
       </p>
     [/#if]
 </div>
+

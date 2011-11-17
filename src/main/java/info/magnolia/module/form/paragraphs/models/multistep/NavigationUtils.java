@@ -132,8 +132,7 @@ public class NavigationUtils {
             try {
                 if(page.hasNode("main")){
                     Node mainAreaContent = page.getNode("main");
-                    //TODO change that: need all chidren ContentUtil.collectAllChildren
-                    paragraphList = NodeUtil.getNodes(mainAreaContent, new AbstractPredicate<Node>() {
+                    paragraphList = NodeUtil.collectAllChildren(mainAreaContent, new AbstractPredicate<Node>() {
                         @Override
                         public boolean evaluateTyped(Node content) {
                             MetaData metaData = MetaDataUtil.getMetaData(content);
