@@ -39,9 +39,8 @@
 
 </style>
 [#assign backButtonText=content.backButtonText!]
-
-<div class="navigation-button-wrapper" >
 [@cms.edit/]
+<div class="navigation-button-wrapper" >
   [#if backButtonText?has_content]
     <div class="navigation-previous">
         <input id="back-button" type="button" onclick="history.go(-1);return false;" value="${backButtonText?html}" />

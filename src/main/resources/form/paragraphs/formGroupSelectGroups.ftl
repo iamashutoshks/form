@@ -1,4 +1,4 @@
-[@cms.editBar /]
+[@cms.edit /]
 
 [#assign parent = content?parent]
 

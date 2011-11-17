@@ -2,8 +2,9 @@
 FIXME I do not find the paragraphs using this script :S
 
  -->
+ [@cms.edit/]
 <div>
-[@cms.edit/]
+
     [#if cmsfn.editMode]
     <p>${i18n['form.groupselect.note']}</p><br />
     [/#if]
