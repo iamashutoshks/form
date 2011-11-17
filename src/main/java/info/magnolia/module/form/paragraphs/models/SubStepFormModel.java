@@ -72,7 +72,6 @@ public class SubStepFormModel extends AbstractFormModel {
 
     public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
         super(content, definition, parent);
-
     }
 
     @Override
@@ -94,7 +93,10 @@ public class SubStepFormModel extends AbstractFormModel {
         } catch (RegistrationException e) {
              throw new RuntimeException(e.getMessage(), e);
         }
-        return Components.newInstance(SubStepFormEngine.class, startParagraphNode, startParagraph, startPage);
+        SubStepFormEngine subStepFormEngine = Components.newInstance(SubStepFormEngine.class, startParagraphNode, startParagraph, startPage);
+        //FIXME SCRUM-628: once IoC will support constructor containing several paramater with the same type we could remove the next line.
+        subStepFormEngine.setStartPage(startPage);
+        return subStepFormEngine;
     }
 
     public Collection<Link> getBreadcrumb() throws RepositoryException {

@@ -56,6 +56,10 @@ public class SubStepFormEngine extends AbstractFormEngine {
 
     private Node startPage;
 
+    public void setStartPage(Node startPage) {
+        this.startPage = startPage;
+    }
+
     public SubStepFormEngine(Node configurationNode, FormParagraph configurationParagraph, Node startPage, RenderingContext context) {
         super(configurationNode, configurationParagraph, context);
         this.startPage = startPage;
@@ -93,7 +97,7 @@ public class SubStepFormEngine extends AbstractFormEngine {
         if(nextPageUUID == null) {
             // Find first sibling with step paragraph
             Iterator<Node> contentIterator = NodeUtil.getNodes(startPage).iterator();
-            NavigationUtils.advanceIteratorTilAfter(contentIterator, context.getMainContent());
+            NavigationUtils.advanceIteratorTilAfter(contentIterator, currentPage);
             nextPageUUID = NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
         }
         return nextPageUUID;
