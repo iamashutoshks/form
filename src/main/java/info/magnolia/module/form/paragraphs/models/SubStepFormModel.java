@@ -78,7 +78,7 @@ public class SubStepFormModel extends AbstractFormModel {
     @Override
     protected SubStepFormEngine createFormEngine() throws RepositoryException {
 
-        Node startPage = Components.getComponent(RenderingContext.class).getMainContent();//MgnlContext.getAggregationState().getMainContent().getParent().getJCRNode();
+        Node startPage = Components.getComponent(RenderingContext.class).getMainContent().getParent();//MgnlContext.getAggregationState().getMainContent().getParent().getJCRNode();
 
         Node startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
 
@@ -99,7 +99,7 @@ public class SubStepFormModel extends AbstractFormModel {
 
     public Collection<Link> getBreadcrumb() throws RepositoryException {
         List<Link> items = new ArrayList<Link>();
-        Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();//MgnlContext.getAggregationState().getMainContent().getJCRNode();
+        Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
         boolean displayBreadcrumb = false;
         if(this.getFormState() != null) {

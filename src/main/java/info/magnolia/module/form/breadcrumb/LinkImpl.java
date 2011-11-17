@@ -38,9 +38,9 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
 import info.magnolia.module.form.engine.FormStateUtil;
 import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.templating.functions.TemplatingFunctions;
 
-import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
@@ -54,9 +54,6 @@ import org.apache.commons.lang.StringUtils;
  */
 public class LinkImpl implements Link {
     private Node node;
-
-    @Inject
-    private TemplatingFunctions templatingFunctions;
 
     public LinkImpl(Node stepNode) throws AccessDeniedException, PathNotFoundException, RepositoryException {
         this.node = NavigationUtils.findParagraphParentPage(stepNode);
@@ -73,7 +70,7 @@ public class LinkImpl implements Link {
     }
 
     public String getHref() throws FormStateTokenMissingException{
-        String link = templatingFunctions.link(node);
+        String link = Components.getComponent(TemplatingFunctions.class).link(node);
         link += "?" + FormStateUtil.FORM_TOKEN_PARAMETER_NAME + "=" + FormStateUtil.getFormStateToken();
         return  link;
     }

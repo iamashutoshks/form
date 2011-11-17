@@ -53,6 +53,7 @@ import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +63,24 @@ import org.slf4j.LoggerFactory;
 public class NavigationUtils {
 
     private static Logger log = LoggerFactory.getLogger(NavigationUtils.class);
+
+    /**
+     * Node filter accepting only components and areas.
+     *
+     * FIXME could be handy to add this predicate in NodeUtil
+     */
+    private static AbstractPredicate<Node> ONLY_AREAS_AND_COMPONENTS = new AbstractPredicate<Node>() {
+
+        @Override
+        public boolean evaluateTyped(Node node) {
+            try {
+                return NodeUtil.isNodeType(node,MgnlNodeType.NT_AREA)
+                        || NodeUtil.isNodeType(node, MgnlNodeType.NT_COMPONENT);
+            } catch (RepositoryException e) {
+                return false;
+            }
+        }
+    };
 
     public static String findFirstPageWithParagraphOfType(Iterator<Node> contentIterator, Class<?> paragraphType) throws RepositoryException {
         while (contentIterator.hasNext()) {
@@ -81,7 +100,7 @@ public class NavigationUtils {
     }
 
     public static Node findParagraphOfType(Node content, Class<?> paragraphType) throws RepositoryException {
-            Iterable<Node> children = NodeUtil.getNodes(content, MgnlNodeType.NT_COMPONENT);
+            Iterable<Node> children = NodeUtil.getNodes(content, ONLY_AREAS_AND_COMPONENTS);
             for (Node child : children) {
                 if (isParagraphOfType(child, paragraphType)) {
                     return child;
@@ -97,7 +116,7 @@ public class NavigationUtils {
         MetaData metaData = MetaDataUtil.getMetaData(child);
         if (metaData == null) return false;
         String template = metaData.getTemplate();
-        if (template == null) return false;
+        if (StringUtils.isEmpty(template)) return false;
         TemplateDefinition definition;
         try {
             definition = Components.getComponent(TemplateDefinitionRegistry.class).getTemplateDefinition(template);
@@ -113,13 +132,14 @@ public class NavigationUtils {
             try {
                 if(page.hasNode("main")){
                     Node mainAreaContent = page.getNode("main");
+                    //TODO change that: need all chidren ContentUtil.collectAllChildren
                     paragraphList = NodeUtil.getNodes(mainAreaContent, new AbstractPredicate<Node>() {
                         @Override
                         public boolean evaluateTyped(Node content) {
                             MetaData metaData = MetaDataUtil.getMetaData(content);
                             if (metaData == null) return false;
                             String template = metaData.getTemplate();
-                            if (template == null) return false;
+                            if (StringUtils.isEmpty(template)) return false;
                             return componentId.equals(template);
                         }
                     });
