@@ -13,7 +13,7 @@
 
 #form-breadcrumb li {
   float: left;
-  background: url(${ctx.contextPath}/demo-features/resources/templating-kit/themes/pop/img/icons/sprites.png) 0 -1010px no-repeat;
+  background: url(${ctx.contextPath}/resources/templating-kit/themes/pop/img/icons/sprites.png) 0 -1010px no-repeat;
   border: none;
   margin: 0 6px 0 0;
   padding: 0 0 0 7px;
