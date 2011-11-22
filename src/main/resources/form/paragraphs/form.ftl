@@ -29,7 +29,6 @@
 
 
 </style>
-
 [#assign breadcrumb = model.breadcrumb!]
 
 [#if actionResult == "go-to-first-page"]
