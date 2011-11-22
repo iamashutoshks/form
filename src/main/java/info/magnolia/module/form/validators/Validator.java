@@ -38,7 +38,7 @@ package info.magnolia.module.form.validators;
  *
  * @author tmiyar
  * @see info.magnolia.module.form.FormModule
- * @see info.magnolia.module.form.paragraphs.models.FormModel
+ * @see info.magnolia.module.form.templates.components.FormModel
  */
 public class Validator {
 

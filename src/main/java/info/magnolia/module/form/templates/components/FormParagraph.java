@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2011 Magnolia International
+ * This file Copyright (c) 2008-2011 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,13 +31,32 @@
  * intact.
  *
  */
-package info.magnolia.module.form.templates;
+package info.magnolia.module.form.templates.components;
 
+import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
+import org.apache.commons.lang.ArrayUtils;
+
 /**
- * Paragraph for additional steps in a form. If you want to use a custom Paragraph for your subsequent steps you must
- * extend this class.
+ * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
+ *
+ * @author tmiyar
+ * @see info.magnolia.module.form.processors.FormProcessor
  */
-public class FormStepParagraph extends ConfiguredTemplateDefinition {
+public class FormParagraph extends ConfiguredTemplateDefinition {
+
+    private FormProcessor[] formProcessors = new FormProcessor[0];
+
+    public FormProcessor[] getFormProcessors() {
+        return formProcessors;
+    }
+
+    public void addFormProcessor(FormProcessor formProcessor) {
+        formProcessors = (FormProcessor[]) ArrayUtils.add(formProcessors, formProcessor);
+    }
+
+    public void setFormProcessors(FormProcessor[] formProcessors) {
+        this.formProcessors = formProcessors;
+    }
 }

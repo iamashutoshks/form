@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
 import java.util.Map;
 

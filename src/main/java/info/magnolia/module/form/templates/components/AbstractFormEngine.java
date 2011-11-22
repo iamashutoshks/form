@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
@@ -44,7 +44,6 @@ import info.magnolia.module.form.engine.RedirectView;
 import info.magnolia.module.form.engine.View;
 import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
-import info.magnolia.module.form.templates.FormParagraph;
 import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.HashMap;

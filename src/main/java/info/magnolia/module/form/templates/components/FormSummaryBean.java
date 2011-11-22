@@ -31,30 +31,43 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
-import info.magnolia.module.form.engine.View;
+import java.util.Map;
 
 /**
- * Common error view used when something unexpected happens.
+ * Bean used to display the parameters sent by the form.
  */
-public class ErrorView implements View {
+public class FormSummaryBean {
+    
+    private String name;
+    private String title;
+    
+    private Map<String, Object> parameters;
 
-    private String errorMessage;
-
-    public ErrorView(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public String getName() {
+        return name;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public String getTitle() {
+        return title;
     }
 
-    public String execute() {
-        return "failure";
+    public void setTitle(String title) {
+        this.title = title;
     }
+
+    public Map<String, Object> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Map<String, Object> parameters) {
+        this.parameters = parameters;
+    }
+    
+    
 }

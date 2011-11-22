@@ -31,16 +31,16 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models.multistep;
+package info.magnolia.module.form.templates.components.multistep;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
-import info.magnolia.module.form.paragraphs.models.AbstractFormEngine;
-import info.magnolia.module.form.paragraphs.models.SessionExpiredView;
-import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.module.form.templates.components.AbstractFormEngine;
+import info.magnolia.module.form.templates.components.FormParagraph;
+import info.magnolia.module.form.templates.components.FormStepParagraph;
+import info.magnolia.module.form.templates.components.SessionExpiredView;
 import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.Iterator;

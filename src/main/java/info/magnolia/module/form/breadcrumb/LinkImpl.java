@@ -37,7 +37,7 @@ import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
 import info.magnolia.module.form.engine.FormStateUtil;
-import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
+import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.templating.functions.TemplatingFunctions;
 

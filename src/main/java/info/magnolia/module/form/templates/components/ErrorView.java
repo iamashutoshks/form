@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2011 Magnolia International
+ * This file Copyright (c) 2010-2011 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,26 +31,30 @@
  * intact.
  *
  */
-package info.magnolia.module.form.templates;
+package info.magnolia.module.form.templates.components;
+
+import info.magnolia.module.form.engine.View;
 
 /**
- * Configuration bean used to configure what sub paragraphs are available for a form paragraph.
- *
- * @see info.magnolia.module.form.templates.FormParagraph
+ * Common error view used when something unexpected happens.
  */
-public class ParagraphConfig {
+public class ErrorView implements View {
 
-    private String name;
+    private String errorMessage;
 
-    public String getName() {
-        return name;
+    public ErrorView(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 
-    public String toString() {
-        return this.getName();
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String execute() {
+        return "failure";
     }
 }

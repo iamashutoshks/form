@@ -31,10 +31,9 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
-import info.magnolia.module.form.paragraphs.models.multistep.StartStepFormEngine;
-import info.magnolia.module.form.templates.FormParagraph;
+import info.magnolia.module.form.templates.components.multistep.StartStepFormEngine;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;

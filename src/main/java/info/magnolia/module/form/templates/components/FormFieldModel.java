@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormField;

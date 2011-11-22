@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2011 Magnolia International
+ * This file Copyright (c) 2008-2011 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,34 +31,26 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models.multistep;
-
-import info.magnolia.module.form.engine.View;
+package info.magnolia.module.form.templates.components;
 
 /**
- * Used when a sub page is accessed without a form state token. Displays a message saying that the form starts on
- * another page and a link to the first page.
+ * Configuration bean used to configure what sub paragraphs are available for a form paragraph.
+ *
+ * @see info.magnolia.module.form.templates.components.FormParagraph
  */
-public class GoToFirstPageView implements View {
+public class ParagraphConfig {
 
-    /**
-     * UUID of the first page.
-     */
-    private String firstPage;
+    private String name;
 
-    public GoToFirstPageView(String firstPage) {
-        this.firstPage = firstPage;
+    public String getName() {
+        return name;
     }
 
-    public String getFirstPage() {
-        return firstPage;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setFirstPage(String firstPage) {
-        this.firstPage = firstPage;
-    }
-
-    public String execute() {
-        return "go-to-first-page";
+    public String toString() {
+        return this.getName();
     }
 }

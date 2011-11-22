@@ -38,7 +38,7 @@ import info.magnolia.jcr.predicate.AbstractPredicate;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
-import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
+import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 
 import java.io.IOException;
 import java.io.Writer;

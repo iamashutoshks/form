@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models.multistep;
+package info.magnolia.module.form.templates.components.multistep;
 
 import info.magnolia.cms.core.MetaData;
 import info.magnolia.cms.core.MgnlNodeType;

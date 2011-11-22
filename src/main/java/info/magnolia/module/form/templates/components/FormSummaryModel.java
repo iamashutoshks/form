@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
@@ -44,8 +44,7 @@ import info.magnolia.cms.util.QueryUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
-import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
-import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;

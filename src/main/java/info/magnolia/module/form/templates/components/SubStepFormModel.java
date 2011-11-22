@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
@@ -39,10 +39,8 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.breadcrumb.Link;
 import info.magnolia.module.form.breadcrumb.LinkImpl;
 import info.magnolia.module.form.engine.FormStepState;
-import info.magnolia.module.form.paragraphs.models.multistep.NavigationUtils;
-import info.magnolia.module.form.paragraphs.models.multistep.SubStepFormEngine;
-import info.magnolia.module.form.templates.FormParagraph;
-import info.magnolia.module.form.templates.FormStepParagraph;
+import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
+import info.magnolia.module.form.templates.components.multistep.SubStepFormEngine;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.registry.RegistrationException;
 import info.magnolia.rendering.context.RenderingContext;
@@ -64,7 +62,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
- * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.FormStepParagraph}.
+ * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.components.FormStepParagraph}.
  */
 public class SubStepFormModel extends AbstractFormModel {
 

@@ -31,37 +31,13 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components;
 
-import java.io.IOException;
-import javax.jcr.RepositoryException;
-
-import info.magnolia.module.form.engine.View;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
 /**
- * Used when a sub page is requested with a form execution token that there is no formState in session for. The view
- * displays an error message and a link to the first page.
+ * Paragraph for additional steps in a form. If you want to use a custom Paragraph for your subsequent steps you must
+ * extend this class.
  */
-public class SessionExpiredView implements View {
-
-    /**
-     * UUID of the first page.
-     */
-    private String firstPage;
-
-    public SessionExpiredView(String firstPage) {
-        this.firstPage = firstPage;
-    }
-
-    public String getFirstPage() {
-        return firstPage;
-    }
-
-    public void setFirstPage(String firstPage) {
-        this.firstPage = firstPage;
-    }
-
-    public String execute() throws RepositoryException, IOException {
-        return "session-expired";
-    }
+public class FormStepParagraph extends ConfiguredTemplateDefinition {
 }

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2011 Magnolia International
+ * This file Copyright (c) 2010-2011 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,32 +31,37 @@
  * intact.
  *
  */
-package info.magnolia.module.form.templates;
+package info.magnolia.module.form.templates.components;
 
-import info.magnolia.module.form.processors.FormProcessor;
-import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
+import java.io.IOException;
+import javax.jcr.RepositoryException;
 
-import org.apache.commons.lang.ArrayUtils;
+import info.magnolia.module.form.engine.View;
 
 /**
- * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
- *
- * @author tmiyar
- * @see info.magnolia.module.form.processors.FormProcessor
+ * Used when a sub page is requested with a form execution token that there is no formState in session for. The view
+ * displays an error message and a link to the first page.
  */
-public class FormParagraph extends ConfiguredTemplateDefinition {
+public class SessionExpiredView implements View {
 
-    private FormProcessor[] formProcessors = new FormProcessor[0];
+    /**
+     * UUID of the first page.
+     */
+    private String firstPage;
 
-    public FormProcessor[] getFormProcessors() {
-        return formProcessors;
+    public SessionExpiredView(String firstPage) {
+        this.firstPage = firstPage;
     }
 
-    public void addFormProcessor(FormProcessor formProcessor) {
-        formProcessors = (FormProcessor[]) ArrayUtils.add(formProcessors, formProcessor);
+    public String getFirstPage() {
+        return firstPage;
     }
 
-    public void setFormProcessors(FormProcessor[] formProcessors) {
-        this.formProcessors = formProcessors;
+    public void setFirstPage(String firstPage) {
+        this.firstPage = firstPage;
+    }
+
+    public String execute() throws RepositoryException, IOException {
+        return "session-expired";
     }
 }

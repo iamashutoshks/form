@@ -31,43 +31,34 @@
  * intact.
  *
  */
-package info.magnolia.module.form.paragraphs.models;
+package info.magnolia.module.form.templates.components.multistep;
 
-import java.util.Map;
+import info.magnolia.module.form.engine.View;
 
 /**
- * Bean used to display the parameters sent by the form.
+ * Used when a sub page is accessed without a form state token. Displays a message saying that the form starts on
+ * another page and a link to the first page.
  */
-public class FormSummaryBean {
-    
-    private String name;
-    private String title;
-    
-    private Map<String, Object> parameters;
+public class GoToFirstPageView implements View {
 
-    public String getName() {
-        return name;
+    /**
+     * UUID of the first page.
+     */
+    private String firstPage;
+
+    public GoToFirstPageView(String firstPage) {
+        this.firstPage = firstPage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getFirstPage() {
+        return firstPage;
     }
 
-    public String getTitle() {
-        return title;
+    public void setFirstPage(String firstPage) {
+        this.firstPage = firstPage;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String execute() {
+        return "go-to-first-page";
     }
-
-    public Map<String, Object> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Map<String, Object> parameters) {
-        this.parameters = parameters;
-    }
-    
-    
 }
