@@ -63,7 +63,11 @@ public class DialogStaticWithFormParams extends DialogStatic {
     @Override
     public void drawHtml(Writer out) throws IOException {
         this.drawHtmlPre(out);
-        Node storageNode = getStorageNode().getJCRNode();
+        Node storageNode = null;
+        if(getStorageNode()!=null){
+            storageNode = getStorageNode().getJCRNode();
+        }
+
         String value = "";
         try {
             Node formStartPage = NavigationUtils
