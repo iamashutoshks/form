@@ -207,6 +207,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                     throws RepositoryException, TaskExecutionException {
                                         try {
                                             ContentUtil.visit(node, new Visitor() {
+                                                @Override
                                                 public void visit(Content node)
                                                         throws Exception {
                                                     if(node.getTemplate().equals("formCriteria")) {

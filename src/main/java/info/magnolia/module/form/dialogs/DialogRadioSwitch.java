@@ -81,6 +81,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
     private List<Button> selectOptions = new ArrayList<Button>();
     private Map<String, List<DialogControlImpl>> optionsSubs = new HashMap<String, List<DialogControlImpl>>();
 
+    @Override
     public void init(HttpServletRequest request, HttpServletResponse response,
             Content storageNode, Content configNode) throws RepositoryException {
 
@@ -135,10 +136,12 @@ public class DialogRadioSwitch extends DialogControlImpl {
         
     }
 
+    @Override
     public void drawHtmlPreSubs(Writer out) throws IOException {
             drawRadio(out);
     }
 
+    @Override
     protected void drawSubs(Writer out) throws IOException {
         String aName = this.getName();
         //TODO: would it not be more systematic to set (and keep) locale in separate variable and to be able to still retrieve unlocalized name? Maybe for 5.0 ...
@@ -174,6 +177,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
         }
     }
 
+    @Override
     public void drawHtmlPostSubs(Writer out) throws IOException {
         if(box != null) {
             out.append("<script type=\"text/javascript\"> ");

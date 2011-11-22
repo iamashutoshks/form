@@ -75,6 +75,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
         return DEFAULT_PATH;
     }
 
+    @Override
     public FormStepState bindAndValidate(Node component) throws RepositoryException {
         FormStepState step = new FormStepState();
         step.setParagraphUuid(NodeUtil.getNodeIdentifierIfPossible(component));

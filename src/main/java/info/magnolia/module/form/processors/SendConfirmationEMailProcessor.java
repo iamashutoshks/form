@@ -51,6 +51,7 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(SendConfirmationEMailProcessor.class);
 
+    @Override
     public void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
             if ( PropertyUtil.getBoolean(content, "sendConfirmation", false)) {

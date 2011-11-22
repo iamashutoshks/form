@@ -68,6 +68,7 @@ public class ConditionControl extends MultiControl {
     /**
      * JS function used to create an object out of the input fields.
      */
+    @Override
     public String getGetObjectFunction() {
         return "function(prefix, index){" +
         " var obj = new Object();" +
@@ -81,6 +82,7 @@ public class ConditionControl extends MultiControl {
     /**
      * JS function used to create a new empty object.
      */
+    @Override
     public String getNewObjectFunction() {
         return "function(){" +
         " var obj = new Object();" +
@@ -91,6 +93,7 @@ public class ConditionControl extends MultiControl {
         "}";
     }
 
+    @Override
     protected String getEmpty() {
         return "[{fieldValue:'', fieldName:'', condition:''}]";
     }
@@ -103,6 +106,7 @@ public class ConditionControl extends MultiControl {
         this.conditions = conditions;
     }
     
+    @Override
     public void init(HttpServletRequest request, HttpServletResponse response,
             Content storageNode, Content configNode) throws RepositoryException {
         super.init(request, response, storageNode, configNode);

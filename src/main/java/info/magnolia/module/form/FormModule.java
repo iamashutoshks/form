@@ -68,6 +68,7 @@ public class FormModule {
     public Validator getValidatorByName(final String name) {
 
         return (Validator) CollectionUtils.find(this.validators, new Predicate() {
+            @Override
             public boolean evaluate(Object object) {
                 return StringUtils.equals(((Validator) object).getName(), name);
             }

@@ -54,6 +54,7 @@ public class TrackEmailProcessor extends AbstractEMailFormProcessor {
 
     private String loggerName;
 
+    @Override
     public void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
 

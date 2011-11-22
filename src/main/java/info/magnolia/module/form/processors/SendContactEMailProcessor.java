@@ -51,6 +51,7 @@ public class SendContactEMailProcessor extends AbstractEMailFormProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(SendContactEMailProcessor.class);
 
+    @Override
     public void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
             String from = PropertyUtil.getString(content,"contactMailFrom");

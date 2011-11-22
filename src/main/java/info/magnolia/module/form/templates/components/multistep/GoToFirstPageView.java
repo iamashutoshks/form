@@ -58,6 +58,7 @@ public class GoToFirstPageView implements View {
         this.firstPage = firstPage;
     }
 
+    @Override
     public String execute() {
         return "go-to-first-page";
     }

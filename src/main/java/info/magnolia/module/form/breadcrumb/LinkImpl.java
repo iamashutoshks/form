@@ -59,16 +59,19 @@ public class LinkImpl implements Link {
         this.node = NavigationUtils.findParagraphParentPage(stepNode);
     }
 
+    @Override
     public String getTitle() throws RepositoryException{
         return StringUtils.defaultIfEmpty(PropertyUtil.getString(node, "title"), node.getName());
     }
 
+    @Override
     public String getNavigationTitle() throws RepositoryException{
         String navigationTitle = PropertyUtil.getString(node, "navigationTitle");
         String title = PropertyUtil.getString(node, "title");
         return StringUtils.defaultIfEmpty(StringUtils.defaultIfEmpty(navigationTitle, title), node.getName());
     }
 
+    @Override
     public String getHref() throws FormStateTokenMissingException{
         String link = Components.getComponent(TemplatingFunctions.class).link(node);
         link += "?" + FormStateUtil.FORM_TOKEN_PARAMETER_NAME + "=" + FormStateUtil.getFormStateToken();

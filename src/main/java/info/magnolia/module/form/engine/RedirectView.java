@@ -56,6 +56,7 @@ public class RedirectView implements EndView {
         this.uuid = uuid;
     }
 
+    @Override
     public String execute() throws RepositoryException, IOException {
         FormStateUtil.sendRedirect(uuid);
         return RenderingModel.SKIP_RENDERING;

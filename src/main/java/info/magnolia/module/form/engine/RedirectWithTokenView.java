@@ -59,6 +59,7 @@ public class RedirectWithTokenView implements View {
         this.token = token;
     }
 
+    @Override
     public String execute() throws RepositoryException, IOException {
         FormStateUtil.sendRedirectWithToken(uuid, token);
         return RenderingModel.SKIP_RENDERING;

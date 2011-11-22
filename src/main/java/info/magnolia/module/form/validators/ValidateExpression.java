@@ -45,6 +45,7 @@ public class ValidateExpression extends NoHTMLValidator {
 
     public String expression;
 
+    @Override
     public boolean validate(String value) {
         if (!super.validate(value))
             return false;

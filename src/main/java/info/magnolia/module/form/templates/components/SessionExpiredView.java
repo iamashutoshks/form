@@ -61,6 +61,7 @@ public class SessionExpiredView implements View {
         this.firstPage = firstPage;
     }
 
+    @Override
     public String execute() throws RepositoryException, IOException {
         return "session-expired";
     }

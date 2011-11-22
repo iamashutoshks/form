@@ -62,6 +62,7 @@ public abstract class AbstractFormProcessor implements FormProcessor {
         this.enabled = enabled;
     }
 
+    @Override
     public final void process(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         if (enabled)
             internalProcess(content, parameters);

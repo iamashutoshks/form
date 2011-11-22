@@ -115,6 +115,7 @@ public class DialogStaticWithFormParams extends DialogStatic {
 
         // order must be same as in the form
         Collections.sort(NodeUtil.asList(nodes), new Comparator<Node>() {
+            @Override
             public int compare(final Node content1, final Node content2) {
                 try {
                     return ("" + content2.getDepth()).compareTo(""

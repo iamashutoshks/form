@@ -54,6 +54,7 @@ import info.magnolia.module.admininterface.UUIDSaveHandler;
  */
 public class MultiControlSaveHandler extends UUIDSaveHandler {
 
+    @Override
     protected void processString(Content node, String name, int type,
             int encoding, String[] values, String valueStr)
             throws PathNotFoundException, RepositoryException,
