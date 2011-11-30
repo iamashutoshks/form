@@ -1,3 +1,13 @@
+
+
+[#-------------- INCLUDE AND ASSIGN PART --------------]
+
+[#-- Include: Global --]
+[#include "/form/components/init.required.ftl"]
+
+
+[#-------------- RENDERING PART --------------]
+
 [@cms.edit /]
 <div ${model.style!}>
     [#if content.title?has_content]
@@ -28,12 +38,12 @@
                 [#assign checked="checked=\"checked\""]
             [/#if]
             <div class="form-item">
-          <input type="${content.type}" id="${content.controlName!''}_${label_index}" name="${content.controlName!''}" value="${data[1]!data[0]!?html}" ${checked} />
+          <input ${requiredAttribute!} type="${content.type}" id="${content.controlName!''}_${label_index}" name="${content.controlName!''}" value="${data[1]!data[0]!?html}" ${checked} />
               <label for="${content.controlName!''}_${label_index}">${data[0]}</label>
             </div>
         [/#list]
     [#else]
-        <select id="${content.controlName!''}" name="${content.controlName!''}" ${content.multiple?string("multiple=\"multiple\"", "")}>
+        <select ${requiredAttribute!} id="${content.controlName!''}" name="${content.controlName!''}" ${content.multiple?string("multiple=\"multiple\"", "")}>
             [#if content.labels?has_content]
                 [#list content.labels?split("\r\n") as label]
                             [#assign selected=""]
