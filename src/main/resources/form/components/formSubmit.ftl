@@ -38,18 +38,23 @@
 }
 
 </style>
-[#assign backButtonText=content.backButtonText!]
-[@cms.edit/]
-<div class="navigation-button-wrapper" >
-  [#if backButtonText?has_content]
-    <div class="navigation-previous">
-        <input id="back-button" type="button" onclick="history.go(-1);return false;" value="${backButtonText?html}" />
-        </div>
-  [/#if]
-        <div class="navigation-next">
-        <input type="submit" value="${content.buttonText!"Submit"?html}" />
-      </div>
 
-  [@cms.area name="conditionList"/]
-</div>
+
+
+[#assign backButtonText=content.backButtonText!]
+
+[@cms.edit/]
+
+<div class="navigation-button-wrapper" >
+    [#if backButtonText?has_content]
+        <div class="navigation-previous">
+            <input id="back-button" type="button" onclick="history.go(-1);return false;" value="${backButtonText?html}" />
+        </div><!-- end navigation-previous -->
+    [/#if]
+    <div class="navigation-next">
+        <input type="submit" value="${content.buttonText!"Submit"?html}" />
+    </div><!-- end navigation-next -->
+
+    [@cms.area name="conditionList"/]
+</div><!-- end navigation-button-wrapper -->
 
