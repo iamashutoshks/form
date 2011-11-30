@@ -1,10 +1,10 @@
 
-[#assign link = cmsfn.link("website", content.link)]
-[#assign condition = content.condition]
+[#assign link = cmsfn.link("website", content.link!)]
+[#assign condition = content.condition!]
 
 [@cms.edit /]
 
-<div>
+<div class="condition">
     [#if condition?has_content]
         [#assign conditionList = cmsfn.asContentMapList(condition?children)]
         [#list conditionList as conditionItem]
@@ -13,7 +13,7 @@
     [/#if]
 
     [#if link?has_content]
-      <p>${i18n['dialog.form.condition.tabMain.link.description']}: ${link}</p>
+        <p>${i18n['dialog.form.condition.tabMain.link.description']}: ${link}</p>
     [/#if]
-</div>
+</div><!-- end condition -->
 

@@ -1,9 +1,15 @@
 
 
-[@cms.edit /]
+[#if cmsfn.editMode]
+    <div class="condition-list">
 
-<div class="condition" style="clear:both;">
-    [#list components as component ]
-        [@cms.render content=component /]
-    [/#list]
-</div><!-- end condition -->
+        <div style="clear: both" >
+            [@cms.edit/]
+        </div>
+
+        [#list components as component ]
+            [@cms.render content=component /]
+        [/#list]
+
+    </div><!-- end condition-list -->
+[/#if]
