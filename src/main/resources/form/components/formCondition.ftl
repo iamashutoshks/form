@@ -8,7 +8,7 @@
     [#if condition?has_content]
         [#assign conditionList = cmsfn.asContentMapList(condition?children)]
         [#list conditionList as conditionItem]
-            <p>${conditionItem.condition!}, ${conditionItem.fieldName!}: ${conditionItem.fieldValue!}</p>
+            <p>${i18n['contidion.author.info']}: ${conditionItem.condition!}, ${conditionItem.fieldName!}: ${conditionItem.fieldValue!}</p>
         [/#list]
     [/#if]
 
