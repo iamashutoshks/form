@@ -66,11 +66,7 @@
         </div><!-- end text error -->
     [/#if]
 
-    [#if cmsfn.editMode]
-        <div style="clear: both" >
-            [@cms.edit/]
-        </div>
-    [/#if]
+    [@cms.edit/]
 
     <div class="text">
         <h1>${content.formTitle!}</h1>
