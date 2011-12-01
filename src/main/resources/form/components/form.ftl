@@ -78,7 +78,7 @@
                         <li><a href="${item.href!}">${item.navigationTitle!}</a></li>
                     [/#list]
                 </ol>
-            </div>
+            </div><!-- end form-breadcrumb -->
         [/#if]
     </div><!-- end text -->
 
