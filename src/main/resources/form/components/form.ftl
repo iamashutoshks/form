@@ -1,32 +1,4 @@
-<style type="text/css">
-/* Breadcrumb */
-#form-breadcrumb {
-  margin: 0 0 20px 0;
-  float: left;
-  width: 100%;
-}
 
-#form-breadcrumb ol {
-  list-style: none;
-  margin: 0;
-}
-
-#form-breadcrumb li {
-  float: left;
-  background: url(${ctx.contextPath}/resources/templating-kit/themes/pop/img/icons/sprites.png) 0 -1010px no-repeat;
-  border: none;
-  margin: 0 6px 0 0;
-  padding: 0 0 0 7px;
-  font-size: 120%;
-  font-weight: normal;
-}
-
-#form-breadcrumb {
-  position: relative;
-  left: 0;
-  top: 0;
-}
-</style>
 
 [#if actionResult == "go-to-first-page"]
     <div class="text">
@@ -68,27 +40,34 @@
 
     [@cms.edit/]
 
-    <div class="text">
-        <h1>${content.formTitle!}</h1>
-        <p>${content.formText!}</p>
-        [#if model.breadcrumb?has_content ]
-            <div id="form-breadcrumb">
-                <ol>
-                    [#list model.breadcrumb as item]
-                        <li><a href="${item.href!}">${item.navigationTitle!}</a></li>
-                    [/#list]
-                </ol>
-            </div><!-- end form-breadcrumb -->
-        [/#if]
-    </div><!-- end text -->
+    [#if content.formTitle?has_content || content.formText?has_content || model.stepNavigation?has_content]
+        <div class="text">
+            [#if content.formTitle?has_content]
+                <h1>${content.formTitle!}</h1>
+            [/#if]
+            [#if content.formText?has_content]
+                <p>${content.formText!}</p>
+            [/#if]
+            [#if model.stepNavigation?has_content]
+                <div id="step-by-step">
+                    <ol>
+                        [#list model.stepNavigation as item]
+                            <li class="done"><a href="${item.href!}">${item.navigationTitle!}</a></li>
+                        [/#list]
+                        <li><strong><em>${i18n['nav.selected']} </em>${content.navigationTitle!content.formTitle!content.@name}</strong></li>
+                    </ol>
+                </div><!-- end step-by-step -->
+            [/#if]
+        </div><!-- end text -->
+    [/#if]
 
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
             <div class="form-item-hidden">
-                <input type="hidden" name="mgnlModelExecutionUUID" value="${content.@uuid}" />
+                <input type="hidden" name="mgnlModelExecutionUUID" value="${content.@id}" />
                 <input type="hidden" name="field" value="" />
                 [#if model.formState?has_content]
-                    <input type="hidden" name="mgnlFormToken" value="${model.formState.token}" />
+                    <input type="hidden" name="mgnlFormToken" value="${model.formState.token!}" />
                 [/#if]
             </div><!-- end form-item-hidden -->
 

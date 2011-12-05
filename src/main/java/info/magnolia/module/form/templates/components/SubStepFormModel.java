@@ -97,23 +97,23 @@ public class SubStepFormModel extends AbstractFormModel {
         return subStepFormEngine;
     }
 
-    public Collection<Link> getBreadcrumb() throws RepositoryException {
+    public Collection<Link> getStepNavigation() throws RepositoryException {
         List<Link> items = new ArrayList<Link>();
         Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
-        boolean displayBreadcrumb = false;
+        boolean displayStepNavigation = false;
         if(this.getFormState() != null) {
             Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
             while (stepsIt.hasNext()) {
                 FormStepState step = (FormStepState) stepsIt.next();
                 Node stepNode = NodeUtil.getNodeByIdentifier(RepositoryConstants.WEBSITE, step.getParagraphUuid());
                 if(NavigationUtils.isParagraphOfType(stepNode, FormParagraph.class)) {
-                    displayBreadcrumb = PropertyUtil.getBoolean(stepNode, "displayBreadcrumb", false);
+                    displayStepNavigation = PropertyUtil.getBoolean(stepNode, "displayStepNavigation", false);
                 }
                 if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
-                if(displayBreadcrumb) {
+                if(displayStepNavigation) {
                     items.add((new LinkImpl(stepNode)));
                 }
             }
