@@ -38,7 +38,9 @@ import info.magnolia.module.form.engine.FormField;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 import info.magnolia.rendering.template.RenderableDefinition;
+import info.magnolia.templating.functions.TemplatingFunctions;
 
+import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
@@ -59,9 +61,12 @@ public class FormFieldModel<RD extends RenderableDefinition> extends RenderingMo
     private Object value;
     private String style = "";
     private boolean valid;
+    protected final TemplatingFunctions functions;
 
-    public FormFieldModel(Node content, RD definition, RenderingModel<?> parent) {
+    @Inject
+    public FormFieldModel(Node content, RD definition, RenderingModel<?> parent, TemplatingFunctions functions) {
         super(content, definition, parent);
+        this.functions = functions;
     }
 
     @Override

@@ -48,6 +48,7 @@ import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.templating.functions.TemplatingFunctions;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,12 +65,12 @@ import org.slf4j.LoggerFactory;
  * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
  * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.components.FormStepParagraph}.
  */
-public class SubStepFormModel extends AbstractFormModel {
+public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
 
     private static Logger log = LoggerFactory.getLogger(SubStepFormModel.class);
 
-    public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
-        super(content, definition, parent);
+    public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel<?> parent, TemplatingFunctions functions) {
+        super(content, definition, parent, functions);
     }
 
     @Override

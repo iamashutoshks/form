@@ -37,17 +37,20 @@ import info.magnolia.module.form.templates.components.multistep.StartStepFormEng
 import info.magnolia.objectfactory.Components;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
+import info.magnolia.templating.functions.TemplatingFunctions;
 
+import javax.inject.Inject;
 import javax.jcr.Node;
 
 /**
  * RenderingModel for a single page form.
  * @author tmiyar
  */
-public class FormModel extends AbstractFormModel {
+public class FormModel extends AbstractFormModel<RenderableDefinition> {
 
-    public FormModel(Node content, RenderableDefinition definition, RenderingModel parent) {
-        super(content, definition, parent);
+    @Inject
+    public FormModel(Node content, RenderableDefinition definition, RenderingModel<?> parent, TemplatingFunctions functions) {
+        super(content, definition, parent, functions);
     }
 
     @Override

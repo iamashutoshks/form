@@ -44,9 +44,11 @@ import info.magnolia.module.form.engine.View;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 import info.magnolia.rendering.template.RenderableDefinition;
+import info.magnolia.templating.functions.TemplatingFunctions;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
@@ -54,7 +56,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements typical behaviour in extensions points for classes that use FormEngine. Subclasses provides a FormEngine
+ * Implements typical behavior in extensions points for classes that use FormEngine. Subclasses provides a FormEngine
  * instance and can override methods called by nested paragraphs to change default behavior.
  *
  * @param <RD> - an instance of {@link RenderableDefinition}
@@ -65,9 +67,12 @@ public abstract class AbstractFormModel<RD extends RenderableDefinition> extends
 
     private AbstractFormEngine formEngine;
     private View view;
+    protected final TemplatingFunctions functions;
 
-    protected AbstractFormModel(Node content, RD definition, RenderingModel<?> parent) {
+    @Inject
+    protected AbstractFormModel(Node content, RD definition, RenderingModel<?> parent, TemplatingFunctions functions) {
         super(content, definition, parent);
+        this.functions = functions;
     }
 
     protected abstract AbstractFormEngine createFormEngine() throws RepositoryException;

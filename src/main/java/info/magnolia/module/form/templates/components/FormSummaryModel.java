@@ -50,6 +50,7 @@ import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.templating.functions.TemplatingFunctions;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -75,13 +76,15 @@ import org.apache.commons.lang.StringUtils;
 public class FormSummaryModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
 
     protected FormState formState;
-
-    @Inject
+    protected final TemplatingFunctions functions;
     private RenderingContext context;
 
-    public FormSummaryModel(Node content, RD definition, RenderingModel<?> parent) {
+    @Inject
+    public FormSummaryModel(Node content, RD definition, RenderingModel<?> parent, TemplatingFunctions functions, RenderingContext context) {
         super(content, definition, parent);
+        this.functions = functions;
         formState = findFormState();
+        this.context = context;
     }
 
     public List<FormSummaryBean> getFormSummaryBeanList() throws AccessDeniedException, PathNotFoundException, RepositoryException {
