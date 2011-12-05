@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.breadcrumb;
+package info.magnolia.module.form.stepnavigation;
 
 import javax.jcr.RepositoryException;
 

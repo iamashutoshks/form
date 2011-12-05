@@ -31,7 +31,7 @@
  * intact.
  *
  */
-package info.magnolia.module.form.breadcrumb;
+package info.magnolia.module.form.stepnavigation;
 
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.jcr.util.PropertyUtil;
