@@ -35,6 +35,7 @@ package info.magnolia.module.form.templates.components;
 
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
+import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormField;
@@ -80,6 +81,10 @@ public abstract class AbstractFormModel<RD extends RenderableDefinition> extends
     @Override
     public String execute() {
         try {
+
+            if (MgnlContext.isWebContext()) {
+                MgnlContext.getWebContext().getResponse().setHeader("Cache-Control", "no-cache");
+            }
 
             formEngine = createFormEngine();
 
