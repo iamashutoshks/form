@@ -43,6 +43,7 @@ import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.util.NodeDataUtil;
+import info.magnolia.context.MgnlContext;
 import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStepState;
@@ -71,7 +72,11 @@ public abstract class AbstractFormModel extends RenderingModelImpl {
     @Override
     public String execute() {
         try {
-
+            
+            if (MgnlContext.isWebContext()) {
+                MgnlContext.getWebContext().getResponse().setHeader("Cache-Control", "no-cache");
+            }
+            
             formEngine = createFormEngine();
 
             view = formEngine.handleRequest(getContent());
