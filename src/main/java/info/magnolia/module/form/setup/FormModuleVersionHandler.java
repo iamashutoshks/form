@@ -58,6 +58,7 @@ import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.module.delta.WarnTask;
 import info.magnolia.module.form.setup.for1_2.UpdateDialogDefinitionFor1_2;
 import info.magnolia.module.form.setup.for1_2_1.UpdateDialogDefinitionsFor1_2_1;
+import info.magnolia.module.form.setup.for1_3.UpdateFormProperties;
 import info.magnolia.nodebuilder.task.ErrorHandling;
 import info.magnolia.nodebuilder.task.ModuleNodeBuilderTask;
 import info.magnolia.nodebuilder.task.NodeBuilderTask;
@@ -225,5 +226,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                     }
                             }
                 )));
+        register(DeltaBuilder.update("1.3.2", "Update form properties.")
+                .addTask(new UpdateFormProperties("Update form properties.", "Update property name for 'contactMailBody' and 'confirmMailBody'"))
+                );
     }
 }
