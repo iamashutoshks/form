@@ -68,13 +68,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This dialog will switch between edit or fckEdit control depending on the 
+ * This dialog will switch between edit or fckEdit control depending on the
  * mail contenttype selected.
- * @author tmiyar
  *
+ * @version $Id$
  */
 public class DialogRadioSwitch extends DialogControlImpl {
-    
+
     private static final String ORIGINAL_NAME = "originalName";
     private static final Logger log = LoggerFactory.getLogger(DialogRadioSwitch.class);
     private DialogBox box;
@@ -88,7 +88,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
         super.init(request, response, storageNode, configNode);
         selectOptions = loadRadioOptions(configNode);
     }
-    
+
     private List<Button> loadRadioOptions(Content configNode) throws RepositoryException, PathNotFoundException,
             AccessDeniedException {
         List<Button> selectOptions = new ArrayList<Button>();
@@ -99,7 +99,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
                 optionButton.setLabel(this.getMessage(NodeDataUtil.getString(option, "label")));
                 optionButton.setOnclick("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + optionButton.getValue() + "');");
                 selectOptions.add(optionButton);
-                
+
                 loadSub(option);
             }
         }
@@ -120,7 +120,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
                         String name = ((DialogControlImpl) control).getName();
                         ((DialogControlImpl) control).setName(this.getName() + name);
 
-                        this.addSub((DialogControlImpl) control);
+                        this.addSub(control);
                         subs.add((DialogControlImpl)control);
 
                     } catch (RepositoryException e) {
@@ -133,7 +133,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
              // ignore
             log.debug(e.getMessage(), e);
         }
-        
+
     }
 
     @Override
@@ -164,16 +164,16 @@ public class DialogRadioSwitch extends DialogControlImpl {
             out.write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout:fixed\" >");
             out.write("<col width=\"200\" /><col />");
 
-           
+
             Iterator<DialogControlImpl> it = optionsSubs.get(option.getValue()).iterator();
 
             while (it.hasNext()) {
                 DialogControlImpl control = it.next();
                 control.drawHtml(out);
             }
-            
+
             out.write("</table></div>");
-            
+
         }
     }
 
@@ -213,7 +213,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
         control.setButtonHtmlPre("<tr><td class=\"" + CssConstants.CSSCLASS_BUTTONSETBUTTON + "\">");
         control.setButtonHtmlInter("</td><td class=\"" + CssConstants.CSSCLASS_BUTTONSETLABEL + "\">");
         control.setButtonHtmlPost("</td></tr>");
-        
+
         int cols = selectOptions.size();
         if (cols > 1) {
             control.setHtmlPre(control.getHtmlPre() + "<tr>");
@@ -239,7 +239,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
             int lastIndex = selectOptions.size() - 1;
             // avoid ArrayIndexOutOfBoundsException, but should not happen
             if (lastIndex > -1) {
-                ((Button) selectOptions.get(lastIndex)).setHtmlPost(control.getButtonHtmlPost() + "</table>");
+                selectOptions.get(lastIndex).setHtmlPost(control.getButtonHtmlPost() + "</table>");
             }
         }
 
@@ -254,6 +254,6 @@ public class DialogRadioSwitch extends DialogControlImpl {
         out.write(control.getHtml());
 
     }
-    
-    
+
+
 }

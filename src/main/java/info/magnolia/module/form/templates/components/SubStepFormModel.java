@@ -64,6 +64,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
  * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.components.FormStepParagraph}.
+ *
+ * @version $Id$
  */
 public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
 
@@ -106,7 +108,7 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
         if(this.getFormState() != null) {
             Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
             while (stepsIt.hasNext()) {
-                FormStepState step = (FormStepState) stepsIt.next();
+                FormStepState step = stepsIt.next();
                 Node stepNode = NodeUtil.getNodeByIdentifier(RepositoryConstants.WEBSITE, step.getParagraphUuid());
                 if(NavigationUtils.isParagraphOfType(stepNode, FormParagraph.class)) {
                     displayStepNavigation = PropertyUtil.getBoolean(stepNode, "displayStepNavigation", false);

@@ -44,7 +44,8 @@ import javax.jcr.Node;
 
 /**
  * RenderingModel for a single page form.
- * @author tmiyar
+ *
+ * @version $Id$
  */
 public class FormModel extends AbstractFormModel<RenderableDefinition> {
 
@@ -55,6 +56,6 @@ public class FormModel extends AbstractFormModel<RenderableDefinition> {
 
     @Override
     protected StartStepFormEngine createFormEngine() {
-        return Components.newInstance(StartStepFormEngine.class, content, (FormParagraph) definition);
+        return Components.newInstance(StartStepFormEngine.class, content, definition);
     }
 }

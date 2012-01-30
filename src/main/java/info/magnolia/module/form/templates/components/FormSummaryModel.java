@@ -72,6 +72,8 @@ import org.apache.commons.lang.StringUtils;
  * I the option onlyLast is selected, only the parameters of the previous step will be displayed.
  *
  * @param <RD> - an instance of {@link RenderableDefinition}
+ *
+ * @version $Id$
  */
 public class FormSummaryModel<RD extends RenderableDefinition> extends RenderingModelImpl<RD> {
 
@@ -113,7 +115,7 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
         if(formState != null) {
             Iterator<FormStepState> stepsIt = formState.getSteps().values().iterator();
             while (stepsIt.hasNext()) {
-                FormStepState step = (FormStepState) stepsIt.next();
+                FormStepState step = stepsIt.next();
                 if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
