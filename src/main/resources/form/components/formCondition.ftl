@@ -2,7 +2,6 @@
 [#assign link = cmsfn.link("website", content.link!)]
 [#assign condition = content.condition!]
 
-[@cms.edit /]
 
 <div class="condition">
     [#if condition?has_content]

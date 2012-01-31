@@ -4,8 +4,6 @@
     <p class="required"><span>${model.requiredSymbol}</span> ${model.rightText}</p>
 [/#if]
 
-[@cms.edit /]
-
 <fieldset>
     [#if content.title?has_content]
         <h2>${content.title}</h2>

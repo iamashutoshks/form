@@ -2,8 +2,6 @@
 
 [#assign backButtonText=content.backButtonText!]
 
-[@cms.edit/]
-
 <div class="button-wrapper" >
 
     [#if backButtonText?has_content]

@@ -8,8 +8,6 @@
 
 [#-------------- RENDERING PART --------------]
 
-[@cms.edit/]
-
 <div ${model.style!} >
     [#if content.title?has_content]
         <label id="${content.controlName!}_label" class="${content.editLength!}" for="${content.controlName!}">

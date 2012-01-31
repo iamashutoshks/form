@@ -38,7 +38,6 @@
         </div><!-- end text error -->
     [/#if]
 
-    [@cms.edit/]
 
     [#if content.formTitle?has_content || content.formText?has_content || model.stepNavigation?has_content]
         <div class="text">

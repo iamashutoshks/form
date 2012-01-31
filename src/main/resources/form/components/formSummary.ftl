@@ -1,4 +1,3 @@
-[@cms.edit/]
 
 <div class="text">
     [#if content.title?has_content]

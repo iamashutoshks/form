@@ -1,5 +1,3 @@
-[@cms.edit /]
-
 [#assign parent = content?parent]
 
 [#if !cmsfn.editMode]

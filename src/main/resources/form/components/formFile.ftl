@@ -1,7 +1,5 @@
 
 
-[@cms.edit /]
-
 <div ${model.style!}>
     [#if content.title?has_content]
         <label for="${content.controlName!}">
