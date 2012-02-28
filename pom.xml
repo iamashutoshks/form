@@ -3,7 +3,7 @@
   <parent>
     <groupId>info.magnolia</groupId>
     <artifactId>magnolia-parent-pom-community-module</artifactId>
-    <version>20</version>
+    <version>21</version>
   </parent>
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
@@ -13,7 +13,7 @@
   <description />
 
   <properties>
-    <magnoliaVersion>4.5-RC1</magnoliaVersion>
+    <magnoliaVersion>4.5-SNAPSHOT</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
