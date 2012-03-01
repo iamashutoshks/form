@@ -5,8 +5,9 @@
 [/#if]
 
 <fieldset>
-    [#if content.title?has_content]
-        <h2>${content.title}</h2>
+    [#assign title = content.title!cmsfn.editMode?string("Empty Field Set", "")]
+    [#if title?has_content]
+        <h2>${title}</h2>
     [/#if]
 
     [@cms.area name="fields"/]

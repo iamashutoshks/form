@@ -1,5 +1,3 @@
-
-
 [#if actionResult == "go-to-first-page"]
     <div class="text">
         ${i18n.get("form.user.errorMessage.go-to-first-page", [cmsfn.link("website", model.view.firstPage)])}
@@ -38,27 +36,25 @@
         </div><!-- end text error -->
     [/#if]
 
+    [#assign page = model.root.content]
+    [#assign title = content.formTitle!page.title!page.@name]
 
-    [#if content.formTitle?has_content || content.formText?has_content || model.stepNavigation?has_content]
-        <div class="text">
-            [#if content.formTitle?has_content]
-                <h1>${content.formTitle!}</h1>
-            [/#if]
-            [#if content.formText?has_content]
-                <p>${content.formText!}</p>
-            [/#if]
-            [#if model.stepNavigation?has_content]
-                <div id="step-by-step">
-                    <ol>
-                        [#list model.stepNavigation as item]
-                            <li class="done"><a href="${item.href!}">${item.navigationTitle!}</a></li>
-                        [/#list]
-                        <li><strong><em>${i18n['nav.selected']} </em>${content.navigationTitle!content.formTitle!content.@name}</strong></li>
-                    </ol>
-                </div><!-- end step-by-step -->
-            [/#if]
-        </div><!-- end text -->
-    [/#if]
+    <div class="text">
+        <h1>${title}</h1>
+        [#if content.formText?has_content]
+            <p>${content.formText!}</p>
+        [/#if]
+        [#if model.stepNavigation?has_content]
+            <div id="step-by-step">
+                <ol>
+                    [#list model.stepNavigation as item]
+                        <li class="done"><a href="${item.href!}">${item.navigationTitle!}</a></li>
+                    [/#list]
+                    <li><strong><em>${i18n['nav.selected']} </em>${content.navigationTitle!content.formTitle!content.@name}</strong></li>
+                </ol>
+            </div><!-- end step-by-step -->
+        [/#if]
+    </div><!-- end text -->
 
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
