@@ -13,7 +13,7 @@
   <description />
 
   <properties>
-    <magnoliaVersion>4.5-RC4</magnoliaVersion>
+    <magnoliaVersion>4.5</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -51,6 +51,11 @@
       <artifactId>magnolia-module-admininterface</artifactId>
       <version>${magnoliaVersion}</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia</groupId>
+      <artifactId>magnolia-templating</artifactId>
+      <version>${magnoliaVersion}</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
