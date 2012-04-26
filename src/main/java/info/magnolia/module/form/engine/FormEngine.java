@@ -191,6 +191,10 @@ public abstract class FormEngine {
         return formState;
     }
 
+    public void setFormState(FormState formState){
+        this.formState = formState;
+    }
+
     protected boolean isFormSubmission() {
         return MgnlContext.getWebContext().getRequest().getMethod().equals("POST");
     }
