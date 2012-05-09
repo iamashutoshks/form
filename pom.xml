@@ -22,9 +22,9 @@
     <url>http://jira.magnolia-cms.com/browse/MGNLFORM</url>
   </issueManagement>
   <scm>
-    <connection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/trunk</connection>
-    <developerConnection>scm:svn:http://svn.magnolia-cms.com/svn/community/modules/magnolia-module-form/trunk</developerConnection>
-    <url>http://svn.magnolia-cms.com/view/community/modules/magnolia-module-form/trunk</url>
+    <connection>scm:git:http://git.magnolia-cms.com/modules/form</connection>
+    <developerConnection>scm:git:https://git.magnolia-cms.com/modules/form</developerConnection>
+    <url>http://git.magnolia-cms.com/gitweb/?p=modules/form.git</url>
   </scm>
 
   <dependencies>
