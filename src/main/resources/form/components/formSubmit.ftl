@@ -11,7 +11,7 @@
           back.setAttribute('name', 'mgnlFormBackButtonPressed')
           //get the enclosing form. This is widely supported, even by IE4!
           el.form.appendChild(back)
-          //and disable html5 form validation if supported test
+          //and disable html5 form validation if supported
           el.form.setAttribute('novalidate', 'novalidate')
           el.form.submit()
         }
