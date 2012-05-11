@@ -12,7 +12,9 @@
           //get the enclosing form. This is widely supported, even by IE4!
           el.form.appendChild(back)
           //and disable html5 form validation if supported
-          el.form.setAttribute('novalidate', 'novalidate')
+          if (typeof Modernizr != 'undefined' && Modernizr.input.required) {
+            el.form.setAttribute('novalidate', 'novalidate')
+          }
           el.form.submit()
         }
       </script>
