@@ -219,8 +219,12 @@ public abstract class FormEngine {
         return MgnlContext.getWebContext().getRequest().getMethod().equals("POST");
     }
 
+    /**
+    * @return true if the user hit the back button in the form. This relies on the presence of a request param called
+    * <code>mgnlFormBackButtonPressed</code>. Check formSubmit.ftl script to see how it works on the client-side.
+    */
     protected boolean isBackButton() {
-        return MgnlContext.getWebContext().getRequest().getParameter("mgnlFormBack") != null;
+        return MgnlContext.getWebContext().getRequest().getParameter("mgnlFormBackButtonPressed") != null;
     }
 
     /**
