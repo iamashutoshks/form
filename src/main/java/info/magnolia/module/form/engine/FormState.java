@@ -44,8 +44,10 @@ import java.util.Map;
 public class FormState implements Serializable {
 
     private String token;
+    //In order to have back button working correctly it is important that steps are stored in a structure keeping their insertion order!
     private Map<String, FormStepState> steps = new LinkedHashMap<String, FormStepState>();
     private boolean ended;
+    private int currentlyExecutingStep = 0;
 
     /**
      * A view that has been prepared for the next time this form is rendered.
@@ -94,5 +96,20 @@ public class FormState implements Serializable {
 
     public void setView(View view) {
         this.view = view;
+    }
+    /**
+     * @return the currently executing step in this form. First step is 0. Please notice that it is the responsibility of the {@link FormEngine} implementations
+     * to correctly set this count, according to the actions performed on the UI (i.e. hitting the back button should decrease this count by one, unless we're on the first step)
+     * and the successful validation of data entered in the form should increase this count by one (unless we're on the last step).
+     */
+    public int getCurrentlyExecutingStep() {
+        return currentlyExecutingStep;
+    }
+
+    public void setCurrentlyExecutingStep(int newStep) {
+        if(newStep < 0 || newStep > (getSteps().size())) {
+            return;
+        }
+        this.currentlyExecutingStep = newStep;
     }
 }

@@ -36,6 +36,7 @@ package info.magnolia.module.form.engine;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
+import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.Map;
@@ -47,6 +48,8 @@ import javax.jcr.RepositoryException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.collect.Iterables;
 
 /**
  * Implements a rendering and form submission algorithm that keeps state in session for multiple pages. Subclasses
@@ -108,7 +111,21 @@ public abstract class FormEngine {
                 return handleNoSuchFormStateOnSubmit(e.getToken());
             }
 
-            View view = processSubmission(content);
+            View view = null;
+            if(isBackButton()) {
+                log.debug("User pressed back button. Currently executing step number is {}", formState.getCurrentlyExecutingStep());
+                String pageUuid = getPreviousPage();
+                if(pageUuid == null) {
+                    return getFormView(formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content)));
+                }
+                //update current step count
+                formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep()-1);
+                log.debug("Updated currently executing step. Now is {}", formState.getCurrentlyExecutingStep());
+                Node parent = NavigationUtils.findParagraphParentPage(NodeUtil.getNodeByIdentifier(content.getSession().getWorkspace().getName(), pageUuid));
+                return new RedirectWithTokenView(parent, formStateToken);
+            } else {
+              view = processSubmission(content);
+            }
 
             formState.setView(null);
 
@@ -164,8 +181,12 @@ public abstract class FormEngine {
         // Validation succeeded
 
         View validationSuccessfulView = getValidationSuccessfulView(formState);
-        if (validationSuccessfulView != null)
+        if (validationSuccessfulView != null) {
+            //on success  we move to the next step, increase count by one
+            formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep()+1);
+            log.debug("Updated currently executing step. Now is {}", formState.getCurrentlyExecutingStep());
             return validationSuccessfulView;
+        }
 
         if (StringUtils.isNotEmpty(MgnlContext.getParameter("field"))) {
             return getValidationFailedView(step);
@@ -182,7 +203,6 @@ public abstract class FormEngine {
             log.error("FormProcessor threw unexpected exception", e);
             return getProcessorFailedView(null);
         }
-
         // Render page with success message
         return getSuccessView();
     }
@@ -191,12 +211,12 @@ public abstract class FormEngine {
         return formState;
     }
 
-    public void setFormState(FormState formState){
-        this.formState = formState;
-    }
-
     protected boolean isFormSubmission() {
         return MgnlContext.getWebContext().getRequest().getMethod().equals("POST");
+    }
+
+    protected boolean isBackButton() {
+        return MgnlContext.getWebContext().getRequest().getParameter("mgnlFormBack") != null;
     }
 
     /**
@@ -215,7 +235,7 @@ public abstract class FormEngine {
     protected abstract View getFormView(FormStepState step) throws RepositoryException;
 
     /**
-     * Called when validation has been formed and there were no validation errors. Override this method to add multi
+     * Called when validation has been performed and there were no validation errors. Override this method to add multi
      * step support.
      */
     protected View getValidationSuccessfulView(FormState formState) throws RepositoryException {
@@ -272,4 +292,17 @@ public abstract class FormEngine {
     protected abstract FormDataBinder getFormDataBinder();
 
     protected abstract void executeProcessors(Map<String, Object> parameters) throws RepositoryException, FormProcessorFailedException;
+
+    /**
+     * Returns the UUID of the previous page or null if there is no such page (i.e. there's one or no steps in current form state).
+     */
+    protected String getPreviousPage() {
+        if(formState.getSteps().isEmpty() || formState.getCurrentlyExecutingStep() == 0) {
+            return null;
+        }
+        String uuid = Iterables.get(formState.getSteps().entrySet(), formState.getCurrentlyExecutingStep() -1).getKey();
+        log.debug("returning previous page uuid {}", uuid);
+
+        return uuid;
+    }
 }
