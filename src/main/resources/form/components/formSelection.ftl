@@ -29,7 +29,7 @@
         [/#if]
 
         [#if content.type?index_of("select") < 0 && content.labels?has_content]
-            [#list content.labels?split("\r\n") as label]
+            [#list cmsfn.decode(content).labels?split("\r\n") as label]
                 [#assign checked=""]
                 [#assign data=label?split(":")]
 
