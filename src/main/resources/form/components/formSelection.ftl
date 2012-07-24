@@ -29,7 +29,7 @@
         [/#if]
 
         [#if content.type?index_of("select") < 0 && content.labels?has_content]
-            [#list cmsfn.decode(content).labels?split("\r\n") as label]
+            [#list cmsfn.decode(content).labels?split("(\r\n|\r|\n|\x0085|\x2028|\x2029)", "rm") as label]
                 [#assign checked=""]
                 [#assign data=label?split(":")]
 
@@ -44,7 +44,7 @@
         [#else]
             <select ${requiredAttribute!} id="${content.controlName!''}" name="${content.controlName!''}" ${content.multiple?string("multiple=\"multiple\"", "")}>
                 [#if content.labels?has_content]
-                    [#list content.labels?split("\r\n") as label]
+                    [#list cmsfn.decode(content).labels?split("(\r\n|\r|\n|\x0085|\x2028|\x2029)", "rm") as label]
                                 [#assign selected=""]
                         [#assign data=label?split(":")]
                         [#if model.value == data[1]!data[0] ]
