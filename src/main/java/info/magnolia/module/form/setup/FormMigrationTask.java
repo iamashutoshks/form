@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2011 Magnolia International
+ * This file Copyright (c) 2011 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,19 +33,32 @@
  */
 package info.magnolia.module.form.setup;
 
-import java.util.Arrays;
+import info.magnolia.migration.task.AbstractSTKRelatedModuleMigrationTask;
+import info.magnolia.migration.task.module.form.FormExtraTask;
+import info.magnolia.module.InstallContext;
+import info.magnolia.module.delta.TaskExecutionException;
 
-import info.magnolia.module.DefaultModuleVersionHandler;
-import info.magnolia.module.delta.DeltaBuilder;
+import java.util.List;
 
 /**
- * VersionHandler for the form module.
+ * Custom Form Migration Task.
+ *  Define an Extra Form migration task.
  */
-public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
+public class FormMigrationTask extends AbstractSTKRelatedModuleMigrationTask{
 
-    public FormModuleVersionHandler() {
-        register(DeltaBuilder.update("1.4", "")
-            .addTask(new FormMigrationTask("Migration task: Migrate Form configuration repository", "Migrate configuration of templates, dialogs and site definitions", "form", false, Arrays.asList("")))
-            );
+    public FormMigrationTask(String taskName, String taskDescription, String moduleName, boolean disposeObservation, List<String> siteDefinition) {
+        super(taskName, taskDescription, moduleName, disposeObservation, siteDefinition);
     }
+
+    @Override
+    protected void executeExtraMigrationTask(InstallContext installContext) throws TaskExecutionException {
+        FormExtraTask extraTask = new FormExtraTask(getName(), getDescription(), getModuleName(), getRepository(), isDisposeObservation());
+        extraTask.execute(installContext);
+    }
+
+    @Override
+    protected void executeRenameAndChangeId(InstallContext installContext) throws TaskExecutionException {
+        //Do nothing.
+    }
+
 }
