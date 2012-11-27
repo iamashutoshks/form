@@ -59,7 +59,7 @@ public class FormFieldModel<RD extends RenderableDefinition> extends RenderingMo
     private static final Logger log = LoggerFactory.getLogger(FormFieldModel.class);
 
     private Object value;
-    private String style = "";
+    private String style = "class=\"form-row\"";
     private boolean valid;
     protected final TemplatingFunctions functions;
 
@@ -89,7 +89,7 @@ public class FormFieldModel<RD extends RenderableDefinition> extends RenderingMo
     protected void handleStyle() {
         String cssClass = "";
         if (!isValid()) {
-            cssClass = "error";
+            cssClass = "form-row error";
         }
         try {
             // TODO: move to specific edit control model class??
