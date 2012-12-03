@@ -48,6 +48,8 @@ public class FormParagraph extends ConfiguredTemplateDefinition {
 
     private FormProcessor[] formProcessors = new FormProcessor[0];
 
+    private boolean redirectWithParams = false;
+
     public FormProcessor[] getFormProcessors() {
         return formProcessors;
     }
@@ -58,5 +60,13 @@ public class FormParagraph extends ConfiguredTemplateDefinition {
 
     public void setFormProcessors(FormProcessor[] formProcessors) {
         this.formProcessors = formProcessors;
+    }
+
+    public boolean isRedirectWithParams() {
+        return redirectWithParams;
+    }
+
+    public void setRedirectWithParams(boolean redirectWithParams) {
+        this.redirectWithParams = redirectWithParams;
     }
 }

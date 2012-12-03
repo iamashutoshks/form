@@ -33,16 +33,20 @@
  */
 package info.magnolia.module.form.engine;
 
-import java.io.IOException;
-import javax.jcr.RepositoryException;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.lang.RandomStringUtils;
-
 import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.link.LinkUtil;
+import info.magnolia.repository.RepositoryConstants;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.jcr.RepositoryException;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.RandomStringUtils;
 
 /**
  * Utility class for storing FormState in session and getting the form state token from a request.
@@ -70,8 +74,9 @@ public class FormStateUtil {
 
     public static String getFormStateToken() throws FormStateTokenMissingException {
         String formStateToken = MgnlContext.getParameter(FORM_TOKEN_PARAMETER_NAME);
-        if (formStateToken == null)
+        if (formStateToken == null) {
             throw new FormStateTokenMissingException();
+        }
         return formStateToken;
     }
 
@@ -81,8 +86,9 @@ public class FormStateUtil {
         HttpSession session = MgnlContext.getWebContext().getRequest().getSession();
 
         FormState formState = (FormState) session.getAttribute(FORM_STATE_ATTRIBUTE_PREFIX + formStateToken);
-        if (formState == null)
+        if (formState == null) {
             throw new NoSuchFormStateException(formStateToken);
+        }
 
         return formState;
     }
@@ -101,8 +107,17 @@ public class FormStateUtil {
     }
 
     public static void sendRedirectWithToken(String uuid, String formExecutionToken) throws RepositoryException, IOException {
-        String link = LinkUtil.createAbsoluteLink(ContentRepository.WEBSITE, uuid);
+        sendRedirectWithTokenAndParameters(uuid, formExecutionToken, null);
+    }
+
+    public static void sendRedirectWithTokenAndParameters(String uuid, String formExecutionToken, Map<String, String> parameters) throws RepositoryException, IOException {
+        String link = LinkUtil.createAbsoluteLink(RepositoryConstants.WEBSITE, uuid);
         link += "?" + FORM_TOKEN_PARAMETER_NAME + "=" + formExecutionToken;
+        if (parameters != null) {
+            for (Entry<String, String> param : parameters.entrySet()) {
+                link = link + "&" + param.getKey() + "=" + param.getValue();
+            }
+        }
         ((WebContext) MgnlContext.getInstance()).getResponse().sendRedirect(link);
     }
 }

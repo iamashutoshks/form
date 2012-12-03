@@ -66,6 +66,7 @@ public abstract class AbstractFormEngine extends FormEngine {
         super(context);
         this.configurationNode = configurationNode;
         this.configurationParagraph = configurationParagraph;
+        this.redirectWithParams = this.configurationParagraph.isRedirectWithParams();
     }
 
     public Node getConfigurationNode() {

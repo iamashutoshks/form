@@ -61,6 +61,8 @@ public abstract class FormEngine {
 
     private FormState formState;
 
+    protected boolean redirectWithParams = false;
+
     public RenderingContext context;
 
     @Inject
@@ -71,7 +73,6 @@ public abstract class FormEngine {
     public View handleRequest(Node content) throws RepositoryException {
 
         if (!isFormSubmission()) {
-
             String formStateToken;
             try {
                 formStateToken = getFormStateToken();
@@ -90,57 +91,69 @@ public abstract class FormEngine {
             if (view == null) {
                 return getFormView(formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content)));
             }
-            if (formState.isEnded())
+            if (formState.isEnded()) {
                 destroyFormState();
+            }
             return view;
-
-        } else {
-
-            String formStateToken;
-            try {
-                formStateToken = getFormStateToken();
-            } catch (FormStateTokenMissingException e) {
-                // Cant post without a token... should never happen
-                // Redirect the user to this page
-                return new RedirectView(context.getMainContent());
-            }
-
-            try {
-                formState = getFormState(formStateToken);
-            } catch (NoSuchFormStateException e) {
-                return handleNoSuchFormStateOnSubmit(e.getToken());
-            }
-
-            View view = null;
-            if(isBackButton()) {
-                log.debug("User pressed back button. Currently executing step number is {}", formState.getCurrentlyExecutingStep());
-                String pageUuid = getPreviousPage();
-                if(pageUuid == null) {
-                    return getFormView(formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content)));
-                }
-                //update current step count
-                formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep()-1);
-                log.debug("Updated currently executing step. Now is {}", formState.getCurrentlyExecutingStep());
-                Node parent = NavigationUtils.findParagraphParentPage(NodeUtil.getNodeByIdentifier(content.getSession().getWorkspace().getName(), pageUuid));
-                return new RedirectWithTokenView(parent, formStateToken);
-            } else {
-              view = processSubmission(content);
-            }
-
-            formState.setView(null);
-
-            if (view instanceof EndView) {
-                destroyFormState();
-                return view;
-            }
-
-            if (view instanceof RedirectWithTokenView) {
-                return view;
-            }
-
-            formState.setView(view);
-            return new RedirectWithTokenView(context.getMainContent(), formState.getToken());
         }
+
+        String formStateToken;
+        try {
+            formStateToken = getFormStateToken();
+        } catch (FormStateTokenMissingException e) {
+            // Cant post without a token... should never happen
+            // Redirect the user to this page
+            return new RedirectView(context.getMainContent());
+        }
+
+        try {
+            formState = getFormState(formStateToken);
+        } catch (NoSuchFormStateException e) {
+            return handleNoSuchFormStateOnSubmit(e.getToken());
+        }
+
+        View view = null;
+        if(isBackButton()) {
+            log.debug("User pressed back button. Currently executing step number is {}", formState.getCurrentlyExecutingStep());
+            String pageUuid = getPreviousPage();
+            if(pageUuid == null) {
+                return getFormView(formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content)));
+            }
+            //update current step count
+            formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep()-1);
+            log.debug("Updated currently executing step. Now is {}", formState.getCurrentlyExecutingStep());
+            Node parent = NavigationUtils.findParagraphParentPage(NodeUtil.getNodeByIdentifier(content.getSession().getWorkspace().getName(), pageUuid));
+            if (isRedirectWithParams()) {
+                return new RedirectWithTokenAndParametersView(parent, formStateToken);
+            }
+            return new RedirectWithTokenView(parent, formStateToken);
+        }
+        view = processSubmission(content);
+
+        formState.setView(null);
+
+        if (view instanceof EndView) {
+            destroyFormState();
+            return view;
+        }
+
+        if (view instanceof RedirectWithTokenView) {
+            return view;
+        }
+
+        if (view instanceof RedirectWithTokenAndParametersView) {
+            return view;
+        }
+
+        formState.setView(view);
+        if (isRedirectWithParams()) {
+            return new RedirectWithTokenAndParametersView(context.getMainContent(), formState.getToken());
+        }
+        return new RedirectWithTokenView(context.getMainContent(), formState.getToken());
+    }
+
+    public boolean isRedirectWithParams() {
+        return redirectWithParams;
     }
 
     protected FormState createAndSetFormState() {
@@ -220,9 +233,9 @@ public abstract class FormEngine {
     }
 
     /**
-    * @return true if the user hit the back button in the form. This relies on the presence of a request param called
-    * <code>mgnlFormBackButtonPressed</code>. Check formSubmit.ftl script to see how it works on the client-side.
-    */
+     * @return true if the user hit the back button in the form. This relies on the presence of a request param called
+     * <code>mgnlFormBackButtonPressed</code>. Check formSubmit.ftl script to see how it works on the client-side.
+     */
     protected boolean isBackButton() {
         return MgnlContext.getWebContext().getRequest().getParameter("mgnlFormBackButtonPressed") != null;
     }
@@ -250,6 +263,9 @@ public abstract class FormEngine {
         // Redirect to the next step if there is one
         String nextStep = getNextPage();
         if (StringUtils.isNotEmpty(nextStep)) {
+            if (isRedirectWithParams()) {
+                return new RedirectWithTokenAndParametersView(nextStep, formState.getToken());
+            }
             return new RedirectWithTokenView(nextStep, formState.getToken());
         }
         return null;
