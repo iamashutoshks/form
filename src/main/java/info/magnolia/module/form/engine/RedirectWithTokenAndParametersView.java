@@ -39,7 +39,7 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.rendering.model.RenderingModel;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.jcr.Node;
@@ -68,7 +68,7 @@ public class RedirectWithTokenAndParametersView implements View {
 
     @Override
     public String execute() throws RepositoryException, IOException {
-        Map<String, String> parameters = new HashMap<String, String>();
+        Map<String, String> parameters = new LinkedHashMap<String, String>();
         String queryString = ((WebContext) MgnlContext.getInstance()).getRequest().getQueryString();
         String[] params = StringUtils.split(queryString, "&");
 
