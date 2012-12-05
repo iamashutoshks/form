@@ -34,6 +34,9 @@
 package info.magnolia.module.form.engine;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpSession;
 
@@ -101,8 +104,17 @@ public class FormStateUtil {
     }
 
     public static void sendRedirectWithToken(String uuid, String formExecutionToken) throws RepositoryException, IOException {
+        sendRedirectWithTokenAndParameters(uuid, formExecutionToken, null);
+    }
+
+    public static void sendRedirectWithTokenAndParameters(String uuid, String formExecutionToken, Map<String, String> parameters) throws RepositoryException, IOException {
         String link = LinkUtil.createAbsoluteLink(ContentRepository.WEBSITE, uuid);
         link += "?" + FORM_TOKEN_PARAMETER_NAME + "=" + formExecutionToken;
+        if (parameters != null) {
+            for (Entry<String, String> param : parameters.entrySet()) {
+                link = link + "&" + param.getKey() + "=" + param.getValue();
+            }
+        }
         ((WebContext) MgnlContext.getInstance()).getResponse().sendRedirect(link);
     }
 }

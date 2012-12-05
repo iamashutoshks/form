@@ -54,6 +54,8 @@ public abstract class FormEngine {
 
     private FormState formState;
 
+    protected boolean redirectWithParams = false;
+
     public View handleRequest(Content content) throws RepositoryException {
 
         if (!isFormSubmission()) {
@@ -80,39 +82,48 @@ public abstract class FormEngine {
                 destroyFormState();
             return view;
 
-        } else {
-
-            String formStateToken;
-            try {
-                formStateToken = getFormStateToken();
-            } catch (FormStateTokenMissingException e) {
-                // Cant post without a token... should never happen
-                // Redirect the user to this page
-                return new RedirectView(MgnlContext.getAggregationState().getMainContent());
-            }
-
-            try {
-                formState = getFormState(formStateToken);
-            } catch (NoSuchFormStateException e) {
-                return handleNoSuchFormStateOnSubmit(e.getToken());
-            }
-
-            View view = processSubmission(content);
-
-            formState.setView(null);
-
-            if (view instanceof EndView) {
-                destroyFormState();
-                return view;
-            }
-
-            if (view instanceof RedirectWithTokenView) {
-                return view;
-            }
-
-            formState.setView(view);
-            return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent(), formState.getToken());
         }
+        String formStateToken;
+        try {
+            formStateToken = getFormStateToken();
+        } catch (FormStateTokenMissingException e) {
+            // Cant post without a token... should never happen
+            // Redirect the user to this page
+            return new RedirectView(MgnlContext.getAggregationState().getMainContent());
+        }
+
+        try {
+            formState = getFormState(formStateToken);
+        } catch (NoSuchFormStateException e) {
+            return handleNoSuchFormStateOnSubmit(e.getToken());
+        }
+
+        View view = processSubmission(content);
+
+        formState.setView(null);
+
+        if (view instanceof EndView) {
+            destroyFormState();
+            return view;
+        }
+
+        if (view instanceof RedirectWithTokenView) {
+            return view;
+        }
+
+        if (view instanceof RedirectWithTokenAndParametersView) {
+            return view;
+        }
+
+        formState.setView(view);
+        if (isRedirectWithParams()) {
+            return new RedirectWithTokenAndParametersView(MgnlContext.getAggregationState().getMainContent(), formState.getToken());
+        }
+        return new RedirectWithTokenView(MgnlContext.getAggregationState().getMainContent(), formState.getToken());
+    }
+
+    public boolean isRedirectWithParams() {
+        return redirectWithParams;
     }
 
     protected FormState createAndSetFormState() {
@@ -211,6 +222,9 @@ public abstract class FormEngine {
         // Redirect to the next step if there is one
         String nextStep = getNextPage();
         if (StringUtils.isNotEmpty(nextStep)) {
+            if (isRedirectWithParams()) {
+                return new RedirectWithTokenAndParametersView(nextStep, formState.getToken());
+            }
             return new RedirectWithTokenView(nextStep, formState.getToken());
         }
         return null;

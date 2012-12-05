@@ -56,6 +56,8 @@ public class FormParagraph extends Paragraph {
     // List<ParagraphConfig>
     private List paragraphs = new ArrayList();
 
+    private boolean redirectWithParams = false;
+
     public FormProcessor[] getFormProcessors() {
         return formProcessors;
     }
@@ -82,5 +84,13 @@ public class FormParagraph extends Paragraph {
 
     public String getParagraphsAsStringList() throws RepositoryException {
         return StringUtils.join(paragraphs, ", ");
+    }
+
+    public boolean isRedirectWithParams() {
+        return redirectWithParams;
+    }
+
+    public void setRedirectWithParams(boolean redirectWithParams) {
+        this.redirectWithParams = redirectWithParams;
     }
 }

@@ -33,12 +33,6 @@
  */
 package info.magnolia.module.form.paragraphs.models;
 
-import java.util.HashMap;
-import java.util.Map;
-import javax.jcr.RepositoryException;
-
-import org.apache.commons.lang.StringUtils;
-
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
@@ -53,6 +47,13 @@ import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
 import info.magnolia.module.form.templates.FormParagraph;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.jcr.RepositoryException;
+
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Implements common functionality used by both the first step and subsequent steps.
  */
@@ -64,6 +65,7 @@ public abstract class AbstractFormEngine extends FormEngine {
     protected AbstractFormEngine(Content configurationNode, FormParagraph configurationParagraph) {
         this.configurationNode = configurationNode;
         this.configurationParagraph = configurationParagraph;
+        this.redirectWithParams = this.configurationParagraph.isRedirectWithParams();
     }
 
     public Content getConfigurationNode() {
