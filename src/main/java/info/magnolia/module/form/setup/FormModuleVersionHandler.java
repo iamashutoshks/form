@@ -37,6 +37,10 @@ import java.util.Arrays;
 
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.delta.DeltaBuilder;
+import info.magnolia.module.delta.NewPropertyTask;
+import info.magnolia.module.delta.NodeExistsDelegateTask;
+import info.magnolia.module.delta.PropertyExistsDelegateTask;
+import info.magnolia.repository.RepositoryConstants;
 
 /**
  * VersionHandler for the form module.
@@ -47,5 +51,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("1.4", "")
             .addTask(new FormMigrationTask("Migration task: Migrate Form configuration repository", "Migrate configuration of templates, dialogs and site definitions", "form", false, Arrays.asList("")))
             );
+
+        register(DeltaBuilder.update("1.4.4", "")
+            .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", "true"))))
+            .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", "true"))))
+        );
     }
 }
