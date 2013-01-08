@@ -82,17 +82,12 @@ public class DialogRadioSwitch extends DialogControlImpl {
     private Map<String, List<DialogControlImpl>> optionsSubs = new HashMap<String, List<DialogControlImpl>>();
 
     @Override
-    public void init(HttpServletRequest request, HttpServletResponse response,
-            Content storageNode, Content configNode) throws RepositoryException {
-
+    public void init(HttpServletRequest request, HttpServletResponse response, Content storageNode, Content configNode) throws RepositoryException {
         super.init(request, response, storageNode, configNode);
         selectOptions = loadRadioOptions(configNode);
     }
 
-
-
-    private List<Button> loadRadioOptions(Content configNode) throws RepositoryException, PathNotFoundException,
-    AccessDeniedException {
+    private List<Button> loadRadioOptions(Content configNode) throws RepositoryException, PathNotFoundException, AccessDeniedException {
         List<Button> selectOptions = new ArrayList<Button>();
         if(configNode.hasContent("options")){
             Collection<Content> options = configNode.getContent("options").getChildren(ItemType.CONTENTNODE);
@@ -116,8 +111,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
                 for (Object c : controls) {
                     Content controlNodeConfig = (Content) c;
                     try {
-                        DialogControl control = DialogFactory.loadDialog(this.getRequest(), this.getResponse(), this.getStorageNode(),
-                                controlNodeConfig);
+                        DialogControl control = DialogFactory.loadDialog(this.getRequest(), this.getResponse(), this.getStorageNode(), controlNodeConfig);
 
                         String name = ((DialogControlImpl) control).getName();
                         ((DialogControlImpl) control).setName(this.getName() + name);
@@ -161,10 +155,8 @@ public class DialogRadioSwitch extends DialogControlImpl {
         for(Button option: selectOptions) {
             String style = "style=\"display:none;\"";
             out.write("<div id=\"" + aName + option.getValue() + locale + "_radioswich_div\" " + style + " >");
-
             out.write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout:fixed\" >");
             out.write("<col width=\"200\" /><col />");
-
 
             Iterator<DialogControlImpl> it = optionsSubs.get(option.getValue()).iterator();
 
@@ -174,14 +166,6 @@ public class DialogRadioSwitch extends DialogControlImpl {
             }
             out.write("</table></div>");
         }
-    }
-
-    @Override
-    public void drawHtml(Writer out) throws IOException {
-        for (Button option : selectOptions) {
-            option.setName(this.getName());
-        }
-        super.drawHtml(out);
     }
 
     public void drawRadio(Writer out) throws IOException {
