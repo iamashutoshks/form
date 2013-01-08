@@ -89,15 +89,16 @@ public class DialogRadioSwitch extends DialogControlImpl {
         selectOptions = loadRadioOptions(configNode);
     }
 
+
+
     private List<Button> loadRadioOptions(Content configNode) throws RepositoryException, PathNotFoundException,
-            AccessDeniedException {
+    AccessDeniedException {
         List<Button> selectOptions = new ArrayList<Button>();
         if(configNode.hasContent("options")){
             Collection<Content> options = configNode.getContent("options").getChildren(ItemType.CONTENTNODE);
             for (Content option : options) {
                 Button optionButton = new Button(this.getName(), option.getName());
                 optionButton.setLabel(this.getMessage(NodeDataUtil.getString(option, "label")));
-                optionButton.setOnclick("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + optionButton.getValue() + "');");
                 selectOptions.add(optionButton);
 
                 loadSub(option);
@@ -117,6 +118,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
                     try {
                         DialogControl control = DialogFactory.loadDialog(this.getRequest(), this.getResponse(), this.getStorageNode(),
                                 controlNodeConfig);
+
                         String name = ((DialogControlImpl) control).getName();
                         ((DialogControlImpl) control).setName(this.getName() + name);
 
@@ -130,7 +132,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
                 }
             }
         } catch (RepositoryException e) {
-             // ignore
+            // ignore
             log.debug(e.getMessage(), e);
         }
 
@@ -138,7 +140,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
 
     @Override
     public void drawHtmlPreSubs(Writer out) throws IOException {
-            drawRadio(out);
+        drawRadio(out);
     }
 
     @Override
@@ -157,9 +159,8 @@ public class DialogRadioSwitch extends DialogControlImpl {
         }
 
         for(Button option: selectOptions) {
-
             String style = "style=\"display:none;\"";
-            out.write("<div id=\"" + aName + locale + "_" + option.getValue() + "_radioswich_div\" " + style + " >");
+            out.write("<div id=\"" + aName + option.getValue() + locale + "_radioswich_div\" " + style + " >");
 
             out.write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout:fixed\" >");
             out.write("<col width=\"200\" /><col />");
@@ -171,23 +172,24 @@ public class DialogRadioSwitch extends DialogControlImpl {
                 DialogControlImpl control = it.next();
                 control.drawHtml(out);
             }
-
             out.write("</table></div>");
-
         }
     }
 
     @Override
-    public void drawHtmlPostSubs(Writer out) throws IOException {
-        if(box != null) {
-            out.append("<script type=\"text/javascript\"> ");
-            out.append("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + this.getValue() + "');");
-            out.append("</script>");
-            box.drawHtmlPost(out);
+    public void drawHtml(Writer out) throws IOException {
+        for (Button option : selectOptions) {
+            option.setName(this.getName());
         }
+        super.drawHtml(out);
     }
 
     public void drawRadio(Writer out) throws IOException {
+
+        for (Button option : selectOptions) {
+            option.setOnclick("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "')");
+            option.setName(this.getName());
+        }
 
         box = new DialogButtonSet();
         try {
@@ -219,7 +221,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
             control.setHtmlPre(control.getHtmlPre() + "<tr>");
             control.setHtmlPost("</tr>" + control.getHtmlPost());
             int item = 1;
-            int itemsPerCol = (int) Math.ceil(selectOptions.size() / ((double) cols));
+            int itemsPerCol = (int) Math.ceil(selectOptions.size() / (double) cols);
             for (Object selectOption : selectOptions) {
                 Button b = (Button) selectOption;
                 if (item == 1) {
@@ -255,5 +257,23 @@ public class DialogRadioSwitch extends DialogControlImpl {
 
     }
 
+    @Override
+    public void setName(String s) {
+        // on name update made due to i18n, relay updated names also to all subs
+        if (!StringUtils.isBlank(s)) {
+            String originalName = super.getName();
+            String locale = StringUtils.substringAfter(s, originalName);
+            if (!StringUtils.isBlank(originalName) && locale.startsWith("_")) {
+                // keep the original name for later
+                this.setConfig(ORIGINAL_NAME, originalName);
+                // also update all subs since they have been set all by now
+                List<DialogControlImpl> subs = this.getSubs();
+                for (DialogControlImpl sub: subs) {
+                    sub.setName(sub.getName()+locale);
+                }
+            }
+        }
+        super.setName(s);
+    }
 
 }
