@@ -33,6 +33,7 @@
  */
 package info.magnolia.module.form.templates.components;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -100,28 +101,65 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
         return subStepFormEngine;
     }
 
-    public Collection<Link> getStepNavigation() throws RepositoryException {
+
+    public Collection<Link> getPreviousStepsNavigation() throws RepositoryException {
         List<Link> items = new ArrayList<Link>();
         Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
-        boolean displayStepNavigation = false;
         if(this.getFormState() != null) {
             Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
             while (stepsIt.hasNext()) {
                 FormStepState step = stepsIt.next();
                 Node stepNode = NodeUtil.getNodeByIdentifier(RepositoryConstants.WEBSITE, step.getParagraphUuid());
-                if(NavigationUtils.isParagraphOfType(stepNode, FormParagraph.class)) {
-                    displayStepNavigation = PropertyUtil.getBoolean(stepNode, "displayStepNavigation", false);
-                }
                 if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
-                if(displayStepNavigation) {
-                    items.add((new LinkImpl(stepNode)));
-                }
+                items.add((new LinkImpl(stepNode)));
             }
         }
         return items;
+    }
+
+    public Collection<Link> getNextStepsNavigation() throws RepositoryException {
+
+      List<Link> items = new ArrayList<Link>();
+      Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
+      List<Node> list = getSiblingsAfter(currentPage, MgnlNodeType.NT_PAGE);
+
+      for (Node stepNode: list) {
+                Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
+                if (currentStepContent != null) {
+                    items.add((new LinkImpl(stepNode)));
+                }
+      }
+      return items;
+    }
+
+    public boolean getDisplayNavigation() throws RepositoryException {
+
+        Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
+        boolean displayStepNavigation = false;
+        Node formParagraph = NavigationUtils.findParagraphOfType(currentPage, FormParagraph.class);
+        if (formParagraph == null) {
+            formParagraph = NavigationUtils.findParagraphOfType(currentPage.getParent(), FormParagraph.class);
+        }
+        if (formParagraph != null) {
+            displayStepNavigation = PropertyUtil.getBoolean(formParagraph, "displayStepNavigation", false);
+        }
+        return displayStepNavigation;
+    }
+
+    public static List<Node> getSiblingsAfter(Node node, String nodeTypeName) throws RepositoryException { //TODO move to NodeUtils
+        Node parent = node.getParent();
+        List<Node> siblings = NodeUtil.asList(NodeUtil.getNodes(parent, nodeTypeName));
+        int fromIndex = 0;
+        for(Node sibling: siblings) {
+            fromIndex++;
+            if (NodeUtil.isSame(node, sibling)) {
+                break;
+            }
+        }
+        return siblings.subList(fromIndex, siblings.size());
     }
 
 }
