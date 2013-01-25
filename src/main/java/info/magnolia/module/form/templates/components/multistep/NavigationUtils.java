@@ -47,6 +47,7 @@ import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;
@@ -250,5 +251,18 @@ public class NavigationUtils {
         }
 
         return page;
+    }
+
+    public static List<Node> getSameTypeSiblingsAfter(Node node) throws RepositoryException {
+        Node parent = node.getParent();
+        List<Node> siblings = NodeUtil.asList(NodeUtil.getNodes(parent, node.getPrimaryNodeType().getName()));
+        int fromIndex = 0;
+        for(Node sibling: siblings) {
+            fromIndex++;
+            if (NodeUtil.isSame(node, sibling)) {
+                break;
+            }
+        }
+        return siblings.subList(fromIndex, siblings.size());
     }
 }

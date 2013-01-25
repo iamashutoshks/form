@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
@@ -124,7 +123,7 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
 
       List<Link> items = new ArrayList<Link>();
       Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
-      List<Node> list = getSiblingsAfter(currentPage, MgnlNodeType.NT_PAGE);
+      List<Node> list = NavigationUtils.getSameTypeSiblingsAfter(currentPage);
 
       for (Node stepNode: list) {
                 Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
@@ -148,18 +147,4 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
         }
         return displayStepNavigation;
     }
-
-    public static List<Node> getSiblingsAfter(Node node, String nodeTypeName) throws RepositoryException { //TODO move to NodeUtils
-        Node parent = node.getParent();
-        List<Node> siblings = NodeUtil.asList(NodeUtil.getNodes(parent, nodeTypeName));
-        int fromIndex = 0;
-        for(Node sibling: siblings) {
-            fromIndex++;
-            if (NodeUtil.isSame(node, sibling)) {
-                break;
-            }
-        }
-        return siblings.subList(fromIndex, siblings.size());
-    }
-
 }
