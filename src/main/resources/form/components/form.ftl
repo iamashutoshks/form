@@ -44,13 +44,16 @@
         [#if content.formText?has_content]
             <p>${content.formText!}</p>
         [/#if]
-        [#if model.stepNavigation?has_content]
+        [#if model.displayNavigation?has_content && model.displayNavigation]
             <div id="step-by-step">
                 <ol>
-                    [#list model.stepNavigation as item]
+                    [#list model.previousStepsNavigation as item]
                         <li class="done"><a href="${item.href!}">${item.navigationTitle!}</a></li>
                     [/#list]
                     <li><strong><em>${i18n['nav.selected']} </em>${content.navigationTitle!content.formTitle!content.@name}</strong></li>
+                    [#list model.nextStepsNavigation as item]
+                        <li class="done">${item.navigationTitle!}</li>
+                    [/#list]
                 </ol>
             </div><!-- end step-by-step -->
         [/#if]
