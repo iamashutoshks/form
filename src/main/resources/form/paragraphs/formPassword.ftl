@@ -10,14 +10,14 @@
             [/#if]
             ${mgnl.encode(content).title!}
             [#if content.mandatory]
-                <dfn title="required">${model.requiredSymbol!}</dfn>
+                <dfn title="required">${model.requiredSymbol!?html}</dfn>
             [/#if]
             </span>
     [/#if]
     [#if content.rows == 1]
         <input type="password" name="${content.controlName}" id="${content.controlName}" value=""/>
     [#else]
-        <textarea id="${content.controlName}" name="${content.controlName}" rows="${content.rows}"></textarea>
+        <textarea id="${content.controlName?html}" name="${content.controlName?html}" rows="${content.rows}"></textarea>
     [/#if]
     [#if content.title?has_content]
       </label>

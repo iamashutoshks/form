@@ -13,7 +13,7 @@
             [/#if]
             ${mgnl.encode(content).title!}
             [#if content.mandatory]
-                 <dfn title="required">${model.requiredSymbol!}</dfn>
+                 <dfn title="required">${model.requiredSymbol!?html}</dfn>
             [/#if]
         </span>
    </label>
