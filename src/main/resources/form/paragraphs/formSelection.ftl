@@ -4,7 +4,7 @@
     [@cms.editBar /]
 
     [#if content.title?has_content]
-        <label for="${content.controlName!'')?html}">
+        <label for="${(content.controlName!'')?html}">
             <span>
             [#if !model.isValid()]
                 <em>${i18n['form.error.field']}</em>
@@ -31,12 +31,12 @@
 		            [#assign checked="checked=\"checked\""]
 		        [/#if]
 		        <div class="form-item">
-					<input type="${content.type}" id="${content.controlName!'')?html}_${label_index}" name="${content.controlName!'')?html}" value="${data[1]!data[0]!?html}" ${checked} />
-			        <label for="${content.controlName!'')?html}_${label_index}">${data[0]?html}</label>
+				<input type="${content.type}" id="${(content.controlName!'')?html}_${label_index}" name="${(content.controlName!'')?html}" value="${data[1]!data[0]!?html}" ${checked} />
+			        <label for="${(content.controlName!'')?html}_${label_index}">${data[0]}</label>
 		        </div>
 		    [/#list]
 		[#else]
-		    <select id="${content.controlName!'')?html}" name="${content.controlName!'')?html}" ${content.multiple?string("multiple=\"multiple\"", "")}>
+		    <select id="${(content.controlName!'')?html}" name="${(content.controlName!'')?html}" ${content.multiple?string("multiple=\"multiple\"", "")}>
 		        [#if content.labels?has_content]
 		            [#list content.labels?split("\r\n") as label]
                             [#assign selected=""]
@@ -53,3 +53,4 @@
     </fieldset>
 
 </div>
+
