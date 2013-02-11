@@ -5,7 +5,7 @@
 [#assign parent = content?parent]
 
 [#if !mgnl.editMode]
-<optgroup id="${parent?parent.controlName}_${content.controlName}" label="${content.title}"  >
+<optgroup id="${(parent?parent.controlName)?html}_${content.controlName?html}" label="${content.title?html}"  >
 [#else]
 <p>${mgnl.encode(content).title!}</p>
 <select multiple="true" >

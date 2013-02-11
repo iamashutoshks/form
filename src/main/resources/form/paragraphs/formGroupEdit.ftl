@@ -1,7 +1,7 @@
 [#assign cms=JspTaglibs["cms-taglib"]]
 
 [#if content.controlName?has_content]
-    <div id="${content.controlName}" >
+    <div id="${content.controlName?html}" >
 [#else]
     <div>
 [/#if]

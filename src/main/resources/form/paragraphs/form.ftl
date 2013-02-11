@@ -85,14 +85,14 @@
 		    <div id="form-breadcrumb">
 			    <ol>
 			      [#list model.breadcrumb as item]
-			              <li><a href="${item.href}">${item.navigationTitle}</a></li>
+			              <li><a href="${item.href}">${item.navigationTitle?html}</a></li>
 			      [/#list]
 	    		</ol>
 			</div>
 		[/#if]
     </div>
     <div class="form-wrapper" >
-        <form id="${(content.formName?html)?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
+        <form id="${(content.formName?default("form0"))?html}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
             <div class="form-item-hidden">
 				<input type="hidden" name="mgnlModelExecutionUUID" value="${content.@uuid}" />
 				<input type="hidden" name="field" value="" />

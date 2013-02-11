@@ -2,5 +2,5 @@
 
 <div ${model.style!} >
 [@cms.editBar /]
-    <input type="hidden" name="${content.controlName}" id="${content.controlName}" value="${content.value!""}"/>
+    <input type="hidden" name="${content.controlName?html}" id="${content.controlName?html}" value="${(content.value?html)!""}"/>
 </div>

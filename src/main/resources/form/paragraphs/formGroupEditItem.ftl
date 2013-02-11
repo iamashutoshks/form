@@ -6,7 +6,7 @@
 <div ${model.style!} >
 
 [#if content.title?has_content]
-    <label for="${content.controlName}">
+    <label for="${content.controlName?html}">
         <span>
             [#if !model.isValid()]
                 <em>${i18n['form.error.field']}</em>
@@ -20,6 +20,6 @@
 [/#if]
 
 
-<input type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}" maxlength="${content.maxLength!'50'}"/>
+<input type="text" name="${content.controlName?html}" id="${content.controlName?html}" value="${model.value!?html}" maxlength="${(content.maxLength!'50')?html}"/>
 
 </div>

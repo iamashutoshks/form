@@ -51,17 +51,16 @@
         </div>
     [/#if]
         <div class="navigation-next">
-    		<input type="submit" value="${content.buttonText!"Submit"?html}" />
+                <input type="submit" value="${(content.buttonText?html)!"Submit"}" />
     	</div>
-    
+
     [#if mgnl.editMode]
     	<br />
 	    <div class="condition" style="clear:both;">
 	    	[@cms.contentNodeIterator contentNodeCollectionName="conditionList"]
                 [@cms.includeTemplate /]
-            [/@cms.contentNodeIterator]        
+            [/@cms.contentNodeIterator]
             <div style="width:103px">[@cms.newBar contentNodeCollectionName="conditionList" newLabel="${i18n['condition.newLabel']}" paragraph="formCondition" /]</div>
 	    </div>
     [/#if]
 </div>
-

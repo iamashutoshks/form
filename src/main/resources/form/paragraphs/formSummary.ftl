@@ -18,7 +18,7 @@
 		        		<td>${parameterKey}</td>
 		        		<td>${parametersMap[parameterKey]!}</td>
 		        	</tr>
-		        
+
 		        [/#list]
 		        </tbody>
 	        </table>
@@ -27,4 +27,4 @@
         [/#if]
     [/#list]
 </div>
-   
+

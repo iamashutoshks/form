@@ -3,14 +3,14 @@
 <div ${model.style!}>
 [@cms.editBar /]
     [#if content.title?has_content]
-        <label for="${content.controlName}">
+        <label for="${content.controlName?html}">
             ${mgnl.encode(content).title!}
     	</label>
     [/#if]
-        <input type="file" name="${content.controlName}" id="${content.controlName}" value="${model.value!?html}"/>
+        <input type="file" name="${content.controlName?html}" id="${content.controlName?html}" value="${model.value!?html}"/>
 
     [#if content.description?has_content]
-      <span>${content.description}</span>
+      <span>${content.description?html}</span>
     [/#if]
 
 </div>
