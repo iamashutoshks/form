@@ -43,6 +43,7 @@ import java.util.List;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 
 import info.magnolia.cms.core.Content;
@@ -68,7 +69,7 @@ public class DialogStaticWithFormParams extends DialogStatic {
         try {
             Content formStartPage = NavigationUtils.findParagraphParentPage(storageNode);
             Collection<Content> formControls = findAllFormControlNames(formStartPage);
-            
+
             for (Content control : formControls) {
                 value += NodeDataUtil.getString(control, "controlName") + ", ";
             }
@@ -80,34 +81,34 @@ public class DialogStaticWithFormParams extends DialogStatic {
         } catch (Exception e) {
             //do nothing
         }
-        out.write(value);
+        out.write(StringEscapeUtils.escapeHtml(value)); //escape to prevent XSS attack into dialog
         this.drawHtmlPost(out);
-       
+
     }
-    
+
     protected Collection<Content> findAllFormControlNames(Content contentParagraph) {
         List<Content> nodes = ContentUtil.collectAllChildren(contentParagraph, new ContentFilter() {
 
             public boolean accept(Content content) {
                 try {
-                    return content.hasNodeData("controlName") 
-                        && !content.getTemplate().equals("formGroupEdit") 
-                        && !content.getTemplate().equals("formGroupFields") 
+                    return content.hasNodeData("controlName")
+                        && !content.getTemplate().equals("formGroupEdit")
+                        && !content.getTemplate().equals("formGroupFields")
                         && !content.getTemplate().equals("formSubmit");
                 } catch (RepositoryException e) {
                     return false;
                 }
             }
-            
+
         });
-        
+
         //order must be same as in the form
         Collections.sort(nodes, new Comparator() {
 
             public int compare(final Object arg0, final Object arg1) {
                 Content content1 = (Content) arg0;
                 Content content2 = (Content) arg1;
-                
+
                 try {
                     return ("" + content2.getLevel()).compareTo("" + content1.getLevel());
                 } catch (PathNotFoundException e) {
@@ -116,11 +117,11 @@ public class DialogStaticWithFormParams extends DialogStatic {
                     return 0;
                 }
             }
-            
+
         });
         return nodes;
-        
-        
+
+
     }
-    
+
 }
