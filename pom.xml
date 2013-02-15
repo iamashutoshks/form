@@ -3,7 +3,7 @@
   <parent>
     <groupId>info.magnolia</groupId>
     <artifactId>magnolia-parent-pom-community-module</artifactId>
-    <version>24</version>
+    <version>25</version>
   </parent>
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
@@ -93,7 +93,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-core</artifactId>
-      <version>4.4.10-SNAPSHOT</version>
+      <version>4.4.10-jr24</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
