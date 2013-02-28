@@ -50,7 +50,7 @@
                         [#if model.value == data[1]!data[0] ]
                             [#assign selected="selected=\"selected\""]
                         [/#if]
-                        <option value="${data[1]!data[0]!?html}" ${selected!} >${data[0]!?html}</option>
+                        <option value="${(data[1]!data[0])!?html}" ${selected!} >${data[0]!?html}</option>
                     [/#list]
                 [/#if]
             </select>

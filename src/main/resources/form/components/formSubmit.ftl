@@ -16,7 +16,7 @@
           el.form.submit()
         }
       </script>
-      <input type="submit" onclick="return mgnlFormHandleBackButton(this)" value="${backButtonText?html}" />
+      <input type="submit" onclick="return mgnlFormHandleBackButton(this)" value="${backButtonText}" />
     [/#if]
 
     <input type="submit" value="${content.buttonText!i18n['form.submit.default']?html}" />
