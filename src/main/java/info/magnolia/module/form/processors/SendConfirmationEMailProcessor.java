@@ -34,11 +34,16 @@
 package info.magnolia.module.form.processors;
 
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.module.mail.MailModule;
+import info.magnolia.module.mail.MgnlMailFactory;
+import info.magnolia.module.mail.templates.MgnlEmail;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.jcr.Node;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,14 +60,30 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
     public void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
             if ( PropertyUtil.getBoolean(content, "sendConfirmation", false)) {
-                String from = PropertyUtil.getString(content, "confirmMailFrom");
-                String subject = PropertyUtil.getString(content,"confirmMailSubject");
-                String to = PropertyUtil.getString(content,"confirmMailTo");
-                String contentType = PropertyUtil.getString(content,"confirmContentType");
-                //For control edit and new control DialogRadioSwitch, keep old param for compatibility
-                String body = PropertyUtil.getString(content, "confirmMailBody", PropertyUtil.getString(content, "confirmContentType"+contentType));
+                if(StringUtils.equals(PropertyUtil.getString(content,"confirmContentType"), "page")){
+                    Map<String,Object> params = new HashMap<String, Object>();
+                    params.put("from", PropertyUtil.getString(content, "confirmMailFrom"));
+                    params.put("subject", PropertyUtil.getString(content, "confirmMailSubject"));
+                    params.put("to", PropertyUtil.getString(content, "confirmMailTo"));
+                    params.put("contentType", "html");
+                    params.put("type", "magnolia");
+                    params.put("templateFile", PropertyUtil.getString(content, "confirmContentTypepage"));
 
-                sendMail(body, from, subject, to, contentType, parameters);
+                    MgnlEmail email;
+                    MgnlMailFactory factory = MailModule.getInstance().getFactory();
+                    email = factory.getEmail(params, null);
+                    email.setBodyFromResourceFile();
+                    factory.getEmailHandler().sendMail(email);
+                }else{
+                    String from = PropertyUtil.getString(content, "confirmMailFrom");
+                    String subject = PropertyUtil.getString(content,"confirmMailSubject");
+                    String to = PropertyUtil.getString(content,"confirmMailTo");
+                    String contentType = PropertyUtil.getString(content,"confirmContentType");
+                    //For control edit and new control DialogRadioSwitch, keep old param for compatibility
+                    String body = PropertyUtil.getString(content, "confirmMailBody", PropertyUtil.getString(content, "confirmContentType"+contentType));
+
+                    sendMail(body, from, subject, to, contentType, parameters);
+                }
             }
         } catch (Exception e) {
             log.error("Confirmation email", e);

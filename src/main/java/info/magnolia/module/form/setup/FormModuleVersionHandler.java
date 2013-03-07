@@ -39,6 +39,7 @@ import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
+import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.repository.RepositoryConstants;
 
@@ -55,6 +56,11 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("1.4.4", "")
             .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", "true"))))
             .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", "true"))))
+        );
+        
+        register(DeltaBuilder.update("1.4.5", "")
+            .addTask(new PartialBootstrapTask("Confirm mail type", "Bootstraps config for selecting page as type of confirm mail.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmContentType/options/page"))
+            .addTask(new UpdateConfirmHtmlTypeToCodeTask("", ""))
         );
     }
 }
