@@ -36,9 +36,11 @@ package info.magnolia.module.form.processors;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.mail.MailModule;
 import info.magnolia.module.mail.MgnlMailFactory;
+import info.magnolia.module.mail.templates.MailAttachment;
 import info.magnolia.module.mail.templates.MgnlEmail;
+import info.magnolia.module.mail.util.MailUtil;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.jcr.Node;
@@ -61,17 +63,15 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
         try {
             if ( PropertyUtil.getBoolean(content, "sendConfirmation", false)) {
                 if(StringUtils.equals(PropertyUtil.getString(content,"confirmContentType"), "page")){
-                    Map<String,Object> params = new HashMap<String, Object>();
-                    params.put("from", PropertyUtil.getString(content, "confirmMailFrom"));
-                    params.put("subject", PropertyUtil.getString(content, "confirmMailSubject"));
-                    params.put("to", PropertyUtil.getString(content, "confirmMailTo"));
-                    params.put("contentType", "html");
-                    params.put("type", "magnolia");
-                    params.put("templateFile", PropertyUtil.getString(content, "confirmContentTypepage"));
+                    parameters.put("templateFile", PropertyUtil.getString(content, "confirmContentTypepage"));
 
-                    MgnlEmail email;
                     MgnlMailFactory factory = MailModule.getInstance().getFactory();
-                    email = factory.getEmail(params, null);
+                    List<MailAttachment> attachments = MailUtil.createAttachmentList();
+                    MgnlEmail email = factory.getEmailFromType(parameters, "magnolia", "html", attachments);
+
+                    email.setFrom(PropertyUtil.getString(content, "confirmMailFrom"));
+                    email.setSubject(PropertyUtil.getString(content, "confirmMailSubject"));
+                    email.setToList(PropertyUtil.getString(content, "confirmMailTo"));
                     email.setBodyFromResourceFile();
                     factory.getEmailHandler().sendMail(email);
                 }else{
