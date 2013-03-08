@@ -62,6 +62,9 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
     public void internalProcess(Node content, Map<String, Object> parameters) throws FormProcessorFailedException {
         try {
             if ( PropertyUtil.getBoolean(content, "sendConfirmation", false)) {
+                String from = PropertyUtil.getString(content, "confirmMailFrom");
+                String subject = PropertyUtil.getString(content,"confirmMailSubject");
+                String to = PropertyUtil.getString(content,"confirmMailTo");
                 if(StringUtils.equals(PropertyUtil.getString(content,"confirmContentType"), "page")){
                     parameters.put("templateFile", PropertyUtil.getString(content, "confirmContentTypepage"));
 
@@ -69,15 +72,12 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
                     List<MailAttachment> attachments = MailUtil.createAttachmentList();
                     MgnlEmail email = factory.getEmailFromType(parameters, "magnolia", "html", attachments);
 
-                    email.setFrom(PropertyUtil.getString(content, "confirmMailFrom"));
-                    email.setSubject(PropertyUtil.getString(content, "confirmMailSubject"));
-                    email.setToList(PropertyUtil.getString(content, "confirmMailTo"));
+                    email.setFrom(from);
+                    email.setSubject(subject);
+                    email.setToList(to);
                     email.setBodyFromResourceFile();
                     factory.getEmailHandler().sendMail(email);
                 }else{
-                    String from = PropertyUtil.getString(content, "confirmMailFrom");
-                    String subject = PropertyUtil.getString(content,"confirmMailSubject");
-                    String to = PropertyUtil.getString(content,"confirmMailTo");
                     String contentType = PropertyUtil.getString(content,"confirmContentType");
                     //For control edit and new control DialogRadioSwitch, keep old param for compatibility
                     String body = PropertyUtil.getString(content, "confirmMailBody", PropertyUtil.getString(content, "confirmContentType"+contentType));
