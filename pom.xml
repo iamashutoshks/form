@@ -5,17 +5,16 @@
     <artifactId>magnolia-parent-pom-community-module</artifactId>
     <version>25</version>
   </parent>
-  <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
-  <version>1.4.6-SNAPSHOT</version>
+  <version>2.0-SNAPSHOT</version>
   <name>Magnolia Form Module</name>
   <description />
 
   <properties>
     <!-- Tests need version 4.5.7 but module should work correctly also with older magnolia-main
            When change the dependency doublecheck it. -->
-    <magnoliaVersion>4.5.1</magnoliaVersion>
+    <magnoliaVersion>5.0-SNAPSHOT</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -40,19 +39,13 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-mail</artifactId>
-      <version>${magnoliaVersion}</version>
+      <version>5.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-gui</artifactId>
-      <version>${magnoliaVersion}</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-module-admininterface</artifactId>
-      <version>${magnoliaVersion}</version>
+      <artifactId>magnolia-module-legacy-admininterface</artifactId>
+      <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -63,7 +56,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-4-5-migration</artifactId>
-      <version>1.2.1</version>
+      <version>2.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
