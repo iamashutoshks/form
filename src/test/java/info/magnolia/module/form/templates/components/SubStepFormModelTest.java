@@ -33,18 +33,15 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
 import info.magnolia.cms.beans.config.ServerConfiguration;
-import info.magnolia.cms.core.MetaData;
-import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
+import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.module.form.stepnavigation.Link;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.registry.RegistrationException;
@@ -113,9 +110,8 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         session = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
         content = session.getNode(formStepNode);
         Node parent = content.getParent();
-        Node child = parent.addNode("formParagraph", MgnlNodeType.NT_COMPONENT);
-        Node metaData = child.getNode(MetaData.DEFAULT_META_NODE);
-        metaData.setProperty("mgnl:template", templateName);
+        Node child = parent.addNode("formParagraph", NodeTypes.Component.NAME);
+        NodeTypes.Renderable.set(child, templateName);
 
         renderingContext = mock(RenderingContext.class);
         ComponentsTestUtil.setInstance(RenderingContext.class, renderingContext);
@@ -254,7 +250,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         public DummyTemplateDefinitionProvider(String id, TemplateDefinition templateDefinition) {
             this.id = id;
             this.templateDefinition = templateDefinition;
-//            templateDefinition.setId("someTemplate");
+            //            templateDefinition.setId("someTemplate");
         }
 
         @Override

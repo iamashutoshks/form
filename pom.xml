@@ -12,8 +12,6 @@
   <description />
 
   <properties>
-    <!-- Tests need version 4.5.7 but module should work correctly also with older magnolia-main
-           When change the dependency doublecheck it. -->
     <magnoliaVersion>5.0-SNAPSHOT</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
@@ -92,9 +90,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-core</artifactId>
-      <!-- Tests need version 4.5.7 but module should work correctly also with older magnolia-main
-           When change the dependency doublecheck it. -->
-      <version>4.5.7</version>
+      <version>${magnoliaVersion}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
