@@ -33,15 +33,20 @@
  */
 package info.magnolia.module.form.setup;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import info.magnolia.module.DefaultModuleVersionHandler;
+import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
+import info.magnolia.module.delta.Task;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.ui.admincentral.setup.DialogMigrationTask;
 
 /**
  * VersionHandler for the form module.
@@ -57,10 +62,20 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
             .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", "true"))))
             .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", "true"))))
         );
-        
+
         register(DeltaBuilder.update("1.4.5", "")
             .addTask(new PartialBootstrapTask("Confirm mail type", "Bootstraps config for selecting page as type of confirm mail.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmContentType/options/page"))
             .addTask(new UpdateConfirmHtmlTypeToCodeTask("", ""))
         );
+
+        register(DeltaBuilder.update("2.0", "")
+                .addTask(new DialogMigrationTask("form")));
+    }
+
+    @Override
+    protected List<Task> getExtraInstallTasks(InstallContext installContext) {
+        final List<Task> tasks = new ArrayList<Task>();
+        tasks.add(new DialogMigrationTask("form"));
+        return tasks;
     }
 }

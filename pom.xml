@@ -13,6 +13,7 @@
 
   <properties>
     <magnoliaVersion>5.0-SNAPSHOT</magnoliaVersion>
+    <magnoliaUiVersion>5.0-SNAPSHOT</magnoliaUiVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -32,6 +33,12 @@
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-core</artifactId>
       <version>${magnoliaVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia.ui</groupId>
+      <artifactId>magnolia-ui-admincentral</artifactId>
+      <version>${magnoliaUiVersion}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
