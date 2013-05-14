@@ -40,6 +40,7 @@ import info.magnolia.module.form.engine.View;
  */
 public class SuccessView implements View {
 
+    private static final long serialVersionUID = -8230099601242457893L;
     private String successTitle;
     private String successMessage;
 

@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -46,7 +46,8 @@ import javax.jcr.RepositoryException;
  */
 public class RedirectView implements EndView {
 
-    private String uuid;
+    private static final long serialVersionUID = 6863782037680561575L;
+    private final String uuid;
 
     public RedirectView(Node content) {
         this.uuid = NodeUtil.getNodeIdentifierIfPossible(content);

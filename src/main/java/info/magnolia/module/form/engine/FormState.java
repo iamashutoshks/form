@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -43,9 +43,10 @@ import java.util.Map;
  */
 public class FormState implements Serializable {
 
+    private static final long serialVersionUID = 6426588734247055285L;
     private String token;
     //In order to have back button working correctly it is important that steps are stored in a structure keeping their insertion order!
-    private Map<String, FormStepState> steps = new LinkedHashMap<String, FormStepState>();
+    private final Map<String, FormStepState> steps = new LinkedHashMap<String, FormStepState>();
     private boolean ended;
     private int currentlyExecutingStep = 0;
 

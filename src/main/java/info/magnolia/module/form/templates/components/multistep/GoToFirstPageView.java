@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -41,6 +41,7 @@ import info.magnolia.module.form.engine.View;
  */
 public class GoToFirstPageView implements View {
 
+    private static final long serialVersionUID = 7464863554840064768L;
     /**
      * UUID of the first page.
      */

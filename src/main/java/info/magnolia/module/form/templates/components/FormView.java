@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,15 +33,16 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import java.util.Map;
-
 import info.magnolia.module.form.engine.View;
+
+import java.util.Map;
 
 /**
  * View for rendering the form. Contains validation errors and the error title to use.
  */
 public class FormView implements View {
 
+    private static final long serialVersionUID = 7808170343560394514L;
     private String errorTitle;
     private Map<String, String> validationErrors;
 

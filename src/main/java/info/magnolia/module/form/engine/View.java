@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -34,13 +34,15 @@
 package info.magnolia.module.form.engine;
 
 import java.io.IOException;
+import java.io.Serializable;
+
 import javax.jcr.RepositoryException;
 
 /**
  * A view as returned from FormEngine. Implementing classes typically contain details to be displayed in
  * the view. The template form.ftl renders differently depending on the view.
  */
-public interface View {
+public interface View extends Serializable {
 
     String execute() throws RepositoryException, IOException;
 }
