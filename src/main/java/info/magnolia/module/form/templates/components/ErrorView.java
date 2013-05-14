@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -40,6 +40,7 @@ import info.magnolia.module.form.engine.View;
  */
 public class ErrorView implements View {
 
+    private static final long serialVersionUID = -4238515803596460279L;
     private String errorMessage;
 
     public ErrorView(String errorMessage) {

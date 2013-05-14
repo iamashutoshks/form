@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -46,8 +46,9 @@ import javax.jcr.RepositoryException;
  */
 public class RedirectWithTokenView implements View {
 
-    private String uuid;
-    private String token;
+    private static final long serialVersionUID = 1071927966275788202L;
+    private final String uuid;
+    private final String token;
 
     public RedirectWithTokenView(Node content, String token) {
         this.uuid = NodeUtil.getNodeIdentifierIfPossible(content);

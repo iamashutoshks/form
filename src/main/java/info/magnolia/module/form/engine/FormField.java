@@ -33,13 +33,16 @@
  */
 package info.magnolia.module.form.engine;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
  * Binding and validation result for a field.
  */
-public class FormField {
+public class FormField implements Serializable {
 
+    private static final long serialVersionUID = -5233412194463929009L;
     private String name;
     private Object value;
     private String errorMessage;

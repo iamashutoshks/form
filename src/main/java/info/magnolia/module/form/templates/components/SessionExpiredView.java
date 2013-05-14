@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,10 +33,11 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import java.io.IOException;
-import javax.jcr.RepositoryException;
-
 import info.magnolia.module.form.engine.View;
+
+import java.io.IOException;
+
+import javax.jcr.RepositoryException;
 
 /**
  * Used when a sub page is requested with a form execution token that there is no formState in session for. The view
@@ -44,6 +45,7 @@ import info.magnolia.module.form.engine.View;
  */
 public class SessionExpiredView implements View {
 
+    private static final long serialVersionUID = -8360759075179969703L;
     /**
      * UUID of the first page.
      */

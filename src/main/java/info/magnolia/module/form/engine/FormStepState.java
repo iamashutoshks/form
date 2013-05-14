@@ -43,8 +43,9 @@ import java.util.Map;
  */
 public class FormStepState implements Serializable {
 
+    private static final long serialVersionUID = -4621368155133183120L;
     private String paragraphUuid;
-    private Map<String, FormField> fields = new LinkedHashMap<String, FormField>();
+    private final Map<String, FormField> fields = new LinkedHashMap<String, FormField>();
 
     public String getParagraphUuid() {
         return paragraphUuid;

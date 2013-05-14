@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2012 Magnolia International
+ * This file Copyright (c) 2012-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -53,8 +53,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class RedirectWithTokenAndParametersView implements View {
 
-    private String uuid;
-    private String token;
+    private static final long serialVersionUID = -5473123248902107120L;
+    private final String uuid;
+    private final String token;
 
     public RedirectWithTokenAndParametersView(Node content, String token) {
         this.uuid = NodeUtil.getNodeIdentifierIfPossible(content);
