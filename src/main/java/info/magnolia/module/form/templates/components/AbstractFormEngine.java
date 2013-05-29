@@ -37,6 +37,7 @@ import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormEngine;
 import info.magnolia.module.form.engine.FormStepState;
@@ -59,12 +60,12 @@ import org.apache.commons.lang.StringUtils;
  */
 public abstract class AbstractFormEngine extends FormEngine {
 
-    private Node configurationNode;
-    private FormParagraph configurationParagraph;
+    private final Node configurationNode;
+    private final FormParagraph configurationParagraph;
 
     protected AbstractFormEngine(Node configurationNode, FormParagraph configurationParagraph, RenderingContext context) {
         super(context);
-        this.configurationNode = configurationNode;
+        this.configurationNode = NodeUtil.deepUnwrap(configurationNode, HTMLEscapingNodeWrapper.class);
         this.configurationParagraph = configurationParagraph;
         this.redirectWithParams = this.configurationParagraph.isRedirectWithParams();
     }
