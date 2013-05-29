@@ -46,7 +46,7 @@ import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.ui.admincentral.setup.DialogMigrationTask;
+import info.magnolia.ui.dialog.setup.DialogMigrationTask;
 
 /**
  * VersionHandler for the form module.
