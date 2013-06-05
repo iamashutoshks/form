@@ -38,6 +38,9 @@ import static org.junit.Assert.*;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.module.form.templates.components.multistep.StartStepFormEngine;
+import info.magnolia.rendering.template.TemplateAvailability;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
+import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.RepositoryTestCase;
 import info.magnolia.test.mock.jcr.MockNode;
 
@@ -49,6 +52,12 @@ import org.junit.Test;
  * Tests for AbstractFormEngine.
  */
 public class AbstractFormEngineTest extends RepositoryTestCase {
+
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        ComponentsTestUtil.setImplementation(TemplateAvailability.class, ConfiguredTemplateAvailability.class);
+    }
 
     @Test
     public void testUnwrapConfigurationNode() throws Exception {

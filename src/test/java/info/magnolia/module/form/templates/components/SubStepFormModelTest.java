@@ -46,7 +46,9 @@ import info.magnolia.module.form.stepnavigation.Link;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.registry.RegistrationException;
 import info.magnolia.rendering.context.RenderingContext;
+import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
 import info.magnolia.rendering.template.registry.TemplateDefinitionProvider;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.repository.RepositoryConstants;
@@ -115,6 +117,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
 
         renderingContext = mock(RenderingContext.class);
         ComponentsTestUtil.setInstance(RenderingContext.class, renderingContext);
+        ComponentsTestUtil.setImplementation(TemplateAvailability.class, ConfiguredTemplateAvailability.class);
 
         initWebContext();
         initComponents();

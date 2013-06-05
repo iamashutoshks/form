@@ -34,7 +34,6 @@
 package info.magnolia.module.form.templates.components.multistep;
 
 import static org.junit.Assert.*;
-
 import static org.mockito.Mockito.*;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
@@ -51,7 +50,9 @@ import info.magnolia.module.form.templates.components.FormParagraph;
 import info.magnolia.module.form.templates.components.FormStepParagraph;
 import info.magnolia.registry.RegistrationException;
 import info.magnolia.rendering.context.RenderingContext;
+import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
 import info.magnolia.rendering.template.registry.TemplateDefinitionProvider;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.repository.RepositoryConstants;
@@ -90,13 +91,15 @@ public class FormEngineTest extends RepositoryTestCase {
     private FormParagraph configurationParagraph;
     private HttpServletResponse response;
     private HttpServletRequest request;
-    private HttpSession httpSession = new DummyHttpSession();
+    private final HttpSession httpSession = new DummyHttpSession();
     private MockWebContext ctx;
 
     @Override
     @Before
     public void setUp() throws Exception {
         super.setUp();
+        ComponentsTestUtil.setImplementation(TemplateAvailability.class, ConfiguredTemplateAvailability.class);
+
         InputStream xmlStream = this.getClass().getClassLoader().getResourceAsStream("form.xml");
         DataTransporter.importXmlStream(
                 xmlStream,
@@ -280,8 +283,8 @@ public class FormEngineTest extends RepositoryTestCase {
 
     public static class DummyTemplateDefinitionProvider implements TemplateDefinitionProvider {
 
-        private String id;
-        private TemplateDefinition templateDefinition;
+        private final String id;
+        private final TemplateDefinition templateDefinition;
 
         public DummyTemplateDefinitionProvider(String id, TemplateDefinition templateDefinition) {
             this.id = id;
@@ -302,7 +305,7 @@ public class FormEngineTest extends RepositoryTestCase {
 
     public static class DummyHttpSession implements HttpSession {
 
-        private Map<String, Object> attributes = new HashMap<String, Object>();
+        private final Map<String, Object> attributes = new HashMap<String, Object>();
 
         @Override
         public long getCreationTime() {
