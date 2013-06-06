@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2012 Magnolia International
+ * This file Copyright (c) 2012-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -37,14 +37,18 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
+import info.magnolia.cms.i18n.AbstractI18nContentSupport;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
+import info.magnolia.cms.i18n.I18nContentSupportFactory;
+import info.magnolia.cms.i18n.LocaleDefinition;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormEngine;
 import info.magnolia.module.form.engine.FormStateUtil;
 import info.magnolia.module.form.engine.RedirectWithTokenAndParametersView;
+import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
 import info.magnolia.module.form.templates.components.FormParagraph;
 import info.magnolia.module.form.templates.components.FormStepParagraph;
@@ -279,6 +283,59 @@ public class FormEngineTest extends RepositoryTestCase {
                 "null/multi-step-form/enter-bio?mgnlFormToken=" + formEngine.getFormState().getToken() + "&param1=firstValue&param2=secondValue");
         verify(response, times(1)).sendRedirect(
                 "null/multi-step-form/upload-photo?mgnlFormToken=" + formEngine.getFormState().getToken() + "&param1=firstValue&param2=secondValue");
+    }
+
+    @Test
+    public void testI18nRedirectWithTokenAndParametersView() throws Exception {
+        // GIVEN
+        Locale locale = new Locale("de");
+        LocaleDefinition definition = new LocaleDefinition();
+        definition.setLocale(locale);
+        definition.setEnabled(true);
+        // locale
+        AbstractI18nContentSupport support = ((AbstractI18nContentSupport) I18nContentSupportFactory.getI18nSupport());
+        support.setEnabled(true);
+        support.addLocale(definition);
+        MgnlContext.setLocale(locale);
+        when(request.getMethod()).thenReturn("POST");
+
+        configurationParagraph = new FormParagraph();
+        configurationParagraph.setRedirectWithParams(true);
+        formEngine = new StartStepFormEngine(content, configurationParagraph, renderingContext);
+
+        // WHEN
+        View view = formEngine.handleRequest(session.getNode("/multi-step-form/content/singleton"));
+        view.execute();
+
+        // THEN
+        assertTrue(view instanceof RedirectWithTokenAndParametersView);
+        verify(response, times(1)).sendRedirect("null/de/multi-step-form?mgnlFormToken=" + formEngine.getFormState().getToken() + "&param1=firstValue&param2=secondValue");
+    }
+
+    @Test
+    public void testI18nRedirectWithTokenView() throws Exception {
+        // GIVEN
+        Locale locale = new Locale("de");
+        LocaleDefinition definition = new LocaleDefinition();
+        definition.setLocale(locale);
+        definition.setEnabled(true);
+        // locale
+        AbstractI18nContentSupport support = ((AbstractI18nContentSupport) I18nContentSupportFactory.getI18nSupport());
+        support.setEnabled(true);
+        support.addLocale(definition);
+        MgnlContext.setLocale(locale);
+        when(request.getMethod()).thenReturn("POST");
+
+        configurationParagraph = new FormParagraph();
+        formEngine = new StartStepFormEngine(content, configurationParagraph, renderingContext);
+
+        // WHEN
+        View view = formEngine.handleRequest(session.getNode("/multi-step-form/content/singleton"));
+        view.execute();
+
+        // THEN
+        assertTrue(view instanceof RedirectWithTokenView);
+        verify(response, times(1)).sendRedirect("null/de/multi-step-form?mgnlFormToken=" + formEngine.getFormState().getToken());
     }
 
     public static class DummyTemplateDefinitionProvider implements TemplateDefinitionProvider {
