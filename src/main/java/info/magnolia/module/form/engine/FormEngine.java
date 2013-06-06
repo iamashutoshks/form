@@ -35,6 +35,7 @@ package info.magnolia.module.form.engine;
 
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.jcr.wrapper.I18nNodeWrapper;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.rendering.context.RenderingContext;
@@ -98,12 +99,13 @@ public abstract class FormEngine {
         }
 
         String formStateToken;
+        final Node mainContent = new I18nNodeWrapper(context.getMainContent());
         try {
             formStateToken = getFormStateToken();
         } catch (FormStateTokenMissingException e) {
             // Cant post without a token... should never happen
             // Redirect the user to this page
-            return new RedirectView(context.getMainContent());
+            return new RedirectView(mainContent);
         }
 
         try {
@@ -122,7 +124,7 @@ public abstract class FormEngine {
             //update current step count
             formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep()-1);
             log.debug("Updated currently executing step. Now is {}", formState.getCurrentlyExecutingStep());
-            Node parent = NavigationUtils.findParagraphParentPage(NodeUtil.getNodeByIdentifier(content.getSession().getWorkspace().getName(), pageUuid));
+            Node parent = new I18nNodeWrapper(NavigationUtils.findParagraphParentPage(NodeUtil.getNodeByIdentifier(content.getSession().getWorkspace().getName(), pageUuid)));
             if (isRedirectWithParams()) {
                 return new RedirectWithTokenAndParametersView(parent, formStateToken);
             }
@@ -147,9 +149,9 @@ public abstract class FormEngine {
 
         formState.setView(view);
         if (isRedirectWithParams()) {
-            return new RedirectWithTokenAndParametersView(context.getMainContent(), formState.getToken());
+            return new RedirectWithTokenAndParametersView(mainContent, formState.getToken());
         }
-        return new RedirectWithTokenView(context.getMainContent(), formState.getToken());
+        return new RedirectWithTokenView(mainContent, formState.getToken());
     }
 
     public boolean isRedirectWithParams() {
