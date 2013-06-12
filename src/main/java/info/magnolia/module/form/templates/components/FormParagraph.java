@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2012 Magnolia International
+ * This file Copyright (c) 2008-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -34,9 +34,12 @@
 package info.magnolia.module.form.templates.components;
 
 import info.magnolia.module.form.processors.FormProcessor;
+import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
 import org.apache.commons.lang.ArrayUtils;
+
+import com.google.inject.Inject;
 
 /**
  * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
@@ -49,6 +52,17 @@ public class FormParagraph extends ConfiguredTemplateDefinition {
     private FormProcessor[] formProcessors = new FormProcessor[0];
 
     private boolean redirectWithParams = false;
+
+    /**
+     * @deprecated use {@link #FormParagraph(TemplateAvailability templateAvailability)}
+     */
+    public FormParagraph() {
+    }
+
+    @Inject
+    public FormParagraph(TemplateAvailability templateAvailability) {
+        super(templateAvailability);
+    }
 
     public FormProcessor[] getFormProcessors() {
         return formProcessors;

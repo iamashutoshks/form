@@ -10,7 +10,7 @@
   <dependencies>
     <dependency>
       <name>core</name>
-      <version>4.5.1/*</version>
+      <version>4.5.10/*</version>
     </dependency>
     <dependency>
       <name>magnolia-4-5-migration</name>
@@ -18,7 +18,7 @@
     </dependency>
     <dependency>
       <name>templating</name>
-      <version>4.5.1/*</version>
+      <version>4.5.10/*</version>
     </dependency>
     <dependency>
       <name>mail</name>

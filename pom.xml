@@ -15,7 +15,7 @@
   <properties>
     <!-- Tests need version 4.5.7 but module should work correctly also with older magnolia-main
            When change the dependency doublecheck it. -->
-    <magnoliaVersion>4.5.1</magnoliaVersion>
+    <magnoliaVersion>4.5.10-SNAPSHOT</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -37,6 +37,7 @@
       <version>${magnoliaVersion}</version>
       <scope>provided</scope>
     </dependency>
+
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-mail</artifactId>
