@@ -35,20 +35,55 @@ package info.magnolia.module.form.templates.components;
 
 import static org.junit.Assert.*;
 
+import info.magnolia.cms.i18n.DefaultI18nContentSupport;
+import info.magnolia.cms.i18n.I18nContentSupport;
+import info.magnolia.cms.i18n.LocaleDefinition;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.jcr.wrapper.HTMLEscapingNodeWrapper;
 import info.magnolia.module.form.templates.components.multistep.StartStepFormEngine;
+import info.magnolia.rendering.template.TemplateAvailability;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
+import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.RepositoryTestCase;
 import info.magnolia.test.mock.jcr.MockNode;
 
+import java.util.Locale;
+
 import javax.jcr.Node;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Tests for AbstractFormEngine.
  */
 public class AbstractFormEngineTest extends RepositoryTestCase {
+
+    private final DefaultI18nContentSupport i18n = new DefaultI18nContentSupport();
+    private final Locale anotherLocale = new Locale("de");
+    private final Locale defaultLocale = new Locale("en");
+
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        LocaleDefinition anotherLocaleDefinition = new LocaleDefinition();
+        anotherLocaleDefinition.setLanguage("de");
+        anotherLocaleDefinition.setLocale(anotherLocale);
+        anotherLocaleDefinition.setEnabled(true);
+
+        LocaleDefinition defaultLocaleDefinition = new LocaleDefinition();
+        defaultLocaleDefinition.setLanguage("en");
+        defaultLocaleDefinition.setLocale(anotherLocale);
+        defaultLocaleDefinition.setEnabled(true);
+
+        i18n.addLocale(defaultLocaleDefinition);
+        i18n.addLocale(defaultLocaleDefinition);
+        i18n.setEnabled(true);
+        i18n.setDefaultLocale(defaultLocale);
+        ComponentsTestUtil.setInstance(I18nContentSupport.class, i18n);
+        ComponentsTestUtil.setImplementation(TemplateAvailability.class, ConfiguredTemplateAvailability.class);
+    }
 
     @Test
     public void testUnwrapConfigurationNode() throws Exception {
@@ -61,5 +96,27 @@ public class AbstractFormEngineTest extends RepositoryTestCase {
         //THEN
         assertFalse(configurationNode instanceof HTMLEscapingNodeWrapper);
         assertEquals("<", PropertyUtil.getString(configurationNode, "property"));
+    }
+
+    @Test
+    public void testConfigPropertiesAreI18nAwareTest() throws Exception {
+        // GIVEN
+        Node configNode = new MockNode("configNode");
+        configNode.setProperty("subject", "subjectEn");
+        configNode.setProperty("subject_de", "subjectDe");
+        AbstractFormEngine engine = new StartStepFormEngine(configNode, new FormParagraph(), null);
+        // WHEN
+        Node configurationNode = engine.getConfigurationNode();
+        // THEN
+        assertFalse(configurationNode instanceof HTMLEscapingNodeWrapper);
+        assertEquals("subjectEn", PropertyUtil.getString(configurationNode, "subject"));
+
+        // GIVEN
+        i18n.setLocale(anotherLocale);
+        // WHEN
+        configurationNode = engine.getConfigurationNode();
+        // THEN
+        assertFalse(configurationNode instanceof HTMLEscapingNodeWrapper);
+        assertEquals("subjectDe", PropertyUtil.getString(configurationNode, "subject"));
     }
 }
