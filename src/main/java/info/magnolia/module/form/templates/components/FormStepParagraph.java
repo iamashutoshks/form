@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,11 +33,25 @@
  */
 package info.magnolia.module.form.templates.components;
 
+import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
+
+import com.google.inject.Inject;
 
 /**
  * Paragraph for additional steps in a form. If you want to use a custom Paragraph for your subsequent steps you must
  * extend this class.
  */
 public class FormStepParagraph extends ConfiguredTemplateDefinition {
+
+    /**
+     * @deprecated use {@link #FormStepParagraph(TemplateAvailability templateAvailability)}
+     */
+    public FormStepParagraph() {
+    }
+
+    @Inject
+    public FormStepParagraph(TemplateAvailability templateAvailability) {
+        super(templateAvailability);
+    }
 }
