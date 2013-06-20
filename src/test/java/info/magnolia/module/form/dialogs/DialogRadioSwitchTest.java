@@ -32,8 +32,8 @@
  *
  */
 package info.magnolia.module.form.dialogs;
-import static org.junit.Assert.assertTrue;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.cms.core.Content;
@@ -162,6 +162,36 @@ public class DialogRadioSwitchTest extends RepositoryTestCase {
 
         // THEN
         assertTrue(StringUtils.contains(out.toString(), "<input type=\"radio\" name=\"confirmContentType_de\""));
+    }
+
+    @Test
+    public void testJavascriptForEditSelectIsRendered() throws Exception {
+        // GIVEN
+        drs = new DialogRadioSwitch();
+
+        Class<? extends DialogControl> clazz = DummyDialogControl.class;
+        DialogFactory.registerDialog("fckEdit", (Class<DialogControl>) clazz);
+        DialogFactory.registerDialog("edit", (Class<DialogControl>) clazz);
+
+        drs.init(request, response, storageNode, configNode);
+
+        dialog.addSub(drs);
+
+        DialogControlImpl tab = mock(DialogControlImpl.class);
+        List<DialogControlImpl> tabs = new ArrayList<DialogControlImpl>();
+        tabs.add(tab);
+        List<DialogControlImpl> subs = new ArrayList<DialogControlImpl>();
+        subs.add(drs);
+
+        when(request.getMethod()).thenReturn("GET");
+
+        StringWriter out = new StringWriter();
+
+        // WHEN
+        drs.drawHtml(out);
+
+        // THEN
+        assertTrue(StringUtils.contains(out.toString(), "<script type=\"text/javascript\">var func = function() { mgnl.form.FormDialogs.onSelectionChanged('confirmContentType','text') };MgnlDHTMLUtil.addOnLoad(func);</script>"));
     }
 
     public static class DummyDialogControl extends DialogControlImpl {
