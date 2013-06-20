@@ -70,7 +70,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This dialog will switch between edit or fckEdit control depending on the
  * mail contenttype selected.
- *
+ * 
  * @version $Id$
  */
 public class DialogRadioSwitch extends DialogControlImpl {
@@ -89,7 +89,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
 
     private List<Button> loadRadioOptions(Content configNode) throws RepositoryException, PathNotFoundException, AccessDeniedException {
         List<Button> selectOptions = new ArrayList<Button>();
-        if(configNode.hasContent("options")){
+        if (configNode.hasContent("options")) {
             Collection<Content> options = configNode.getContent("options").getChildren(ItemType.CONTENTNODE);
             for (Content option : options) {
                 Button optionButton = new Button(this.getName(), option.getName());
@@ -106,7 +106,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
         List<DialogControlImpl> subs = new ArrayList<DialogControlImpl>();
         optionsSubs.put(option.getName(), subs);
         try {
-            if(option.hasContent("controls")) {
+            if (option.hasContent("controls")) {
                 Collection<Content> controls = ContentUtil.getContent(option, "controls").getChildren(ItemType.CONTENTNODE);
                 for (Object c : controls) {
                     Content controlNodeConfig = (Content) c;
@@ -117,7 +117,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
                         ((DialogControlImpl) control).setName(this.getName() + name);
 
                         this.addSub(control);
-                        subs.add((DialogControlImpl)control);
+                        subs.add((DialogControlImpl) control);
 
                     } catch (RepositoryException e) {
                         // ignore
@@ -138,9 +138,22 @@ public class DialogRadioSwitch extends DialogControlImpl {
     }
 
     @Override
+    protected void drawHtmlPostSubs(Writer out) throws IOException {
+        super.drawHtmlPostSubs(out);
+        for (Button option : selectOptions) {
+            if (option.getState() == ControlImpl.BUTTONSTATE_PUSHED) {
+                out.write("<script type=\"text/javascript\">");
+                out.write("var func = function() { mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "') };");
+                out.write("MgnlDHTMLUtil.addOnLoad(func);");
+                out.write("</script>");
+            }
+        }
+    }
+
+    @Override
     protected void drawSubs(Writer out) throws IOException {
         String aName = this.getName();
-        //TODO: would it not be more systematic to set (and keep) locale in separate variable and to be able to still retrieve unlocalized name? Maybe for 5.0 ...
+        // TODO: would it not be more systematic to set (and keep) locale in separate variable and to be able to still retrieve unlocalized name? Maybe for 5.0 ...
         String originalName = this.getConfigValue(ORIGINAL_NAME);
         String locale = "";
         if (!StringUtils.isBlank(originalName)) {
@@ -152,7 +165,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
             }
         }
 
-        for(Button option: selectOptions) {
+        for (Button option : selectOptions) {
             String style = "style=\"display:none;\"";
             out.write("<div id=\"" + aName + option.getValue() + locale + "_radioswich_div\" " + style + " >");
             out.write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout:fixed\" >");
@@ -169,7 +182,6 @@ public class DialogRadioSwitch extends DialogControlImpl {
     }
 
     public void drawRadio(Writer out) throws IOException {
-
         for (Button option : selectOptions) {
             option.setOnclick("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "')");
             option.setName(this.getName());
@@ -179,7 +191,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
         try {
             box.init(this.getRequest(), this.getResponse(), null, null);
         } catch (RepositoryException e) {
-            //ignore
+            // ignore
         }
         box.setLabel(this.getMessage(this.getLabel()));
         box.setSaveInfo(true);
@@ -230,7 +242,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
         }
 
         int width = 100;
-        if(cols < 5) {
+        if (cols < 5) {
             width = cols * 20;
         }
         control.setHtmlPre("<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"" + width + "%\">");
@@ -252,8 +264,8 @@ public class DialogRadioSwitch extends DialogControlImpl {
                 this.setConfig(ORIGINAL_NAME, originalName);
                 // also update all subs since they have been set all by now
                 List<DialogControlImpl> subs = this.getSubs();
-                for (DialogControlImpl sub: subs) {
-                    sub.setName(sub.getName()+locale);
+                for (DialogControlImpl sub : subs) {
+                    sub.setName(sub.getName() + locale);
                 }
             }
         }
