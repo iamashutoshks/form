@@ -9,11 +9,17 @@
   <sv:property sv:name="description" sv:type="String">
     <sv:value>paragraph.formHoneypot.description</sv:value>
   </sv:property>
+  <sv:property sv:name="dialog" sv:type="String">
+    <sv:value>form:formHoneypot</sv:value>
+  </sv:property>
   <sv:property sv:name="i18nBasename" sv:type="String">
     <sv:value>info.magnolia.module.form.messages</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
+  </sv:property>
+  <sv:property sv:name="modelClass" sv:type="String">
+    <sv:value>info.magnolia.module.form.templates.components.FormFieldModel</sv:value>
   </sv:property>
   <sv:property sv:name="renderType" sv:type="String">
     <sv:value>freemarker</sv:value>
@@ -50,7 +56,7 @@
       <sv:value>2006-05-01T21:40:21.994+02:00</sv:value>
     </sv:property>
     <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2013-06-26T11:10:17.091+02:00</sv:value>
+      <sv:value>2013-06-27T13:43:34.668+02:00</sv:value>
     </sv:property>
   </sv:node>
 </sv:node>
