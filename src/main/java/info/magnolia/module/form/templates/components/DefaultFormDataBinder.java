@@ -113,7 +113,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
                 if (StringUtils.isEmpty(value) && isMandatory(node)) {
                     field.setErrorMessage(getErrorMessage("mandatory", node));
 
-                } else if (!StringUtils.isEmpty(value) && node.hasProperty("validation")) {
+                } else if (value != null && node.hasProperty("validation")) {
 
                     String validatorName = PropertyUtil.getString(node,"validation");
                     Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
