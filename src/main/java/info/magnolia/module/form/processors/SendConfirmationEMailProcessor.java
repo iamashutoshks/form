@@ -81,8 +81,12 @@ public class SendConfirmationEMailProcessor extends AbstractEMailFormProcessor {
                     String contentType = PropertyUtil.getString(content,"confirmContentType");
                     //For control edit and new control DialogRadioSwitch, keep old param for compatibility
                     String body = PropertyUtil.getString(content, "confirmMailBody", PropertyUtil.getString(content, "confirmContentType"+contentType));
+                    String mailType = PropertyUtil.getString(content,"confirmMailType");
+                    if(StringUtils.isBlank(mailType)){
+                        mailType = contentType;
+                    }
 
-                    sendMail(body, from, subject, to, contentType, parameters);
+                    sendMail(body, from, subject, to, mailType, parameters);
                 }
             }
         } catch (Exception e) {
