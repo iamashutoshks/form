@@ -18,6 +18,24 @@
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
   </sv:property>
+  <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+    <sv:value>false</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:created" sv:type="String">
+    <sv:value>2004-11-03T09:03:29.016+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+    <sv:value>2006-05-01T21:40:11.258+02:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+    <sv:value>2008-11-11T17:28:40.225+01:00</sv:value>
+  </sv:property>
+  <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+    <sv:value>superuser</sv:value>
+  </sv:property>
   <sv:property sv:name="modelClass" sv:type="String">
     <sv:value>info.magnolia.module.form.templates.components.FormFieldModel</sv:value>
   </sv:property>
@@ -30,35 +48,6 @@
   <sv:property sv:name="title" sv:type="String">
     <sv:value>paragraph.formGroupFields.title</sv:value>
   </sv:property>
-  <sv:node sv:name="MetaData">
-    <sv:property sv:name="jcr:primaryType" sv:type="Name">
-      <sv:value>mgnl:metaData</sv:value>
-    </sv:property>
-    <sv:property sv:name="jcr:createdBy" sv:type="String">
-      <sv:value>admin</sv:value>
-    </sv:property>
-    <sv:property sv:name="mgnl:Data" sv:type="String">
-      <sv:value>MetaData</sv:value>
-    </sv:property>
-    <sv:property sv:name="mgnl:activated" sv:type="Boolean">
-      <sv:value>false</sv:value>
-    </sv:property>
-    <sv:property sv:name="mgnl:activatorid" sv:type="String">
-      <sv:value>superuser</sv:value>
-    </sv:property>
-    <sv:property sv:name="mgnl:authorid" sv:type="String">
-      <sv:value>superuser</sv:value>
-    </sv:property>
-    <sv:property sv:name="mgnl:creationdate" sv:type="String">
-      <sv:value>2004-11-03T09:03:29.016+01:00</sv:value>
-    </sv:property>
-    <sv:property sv:name="mgnl:lastaction" sv:type="Date">
-      <sv:value>2006-05-01T21:40:11.258+02:00</sv:value>
-    </sv:property>
-    <sv:property sv:name="mgnl:lastmodified" sv:type="Date">
-      <sv:value>2008-11-11T17:28:40.225+01:00</sv:value>
-    </sv:property>
-  </sv:node>
   <sv:node sv:name="areas">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
       <sv:value>mgnl:contentNode</sv:value>
@@ -72,17 +61,9 @@
     <sv:property sv:name="jcr:createdBy" sv:type="String">
       <sv:value>admin</sv:value>
     </sv:property>
-    <sv:node sv:name="MetaData">
-      <sv:property sv:name="jcr:primaryType" sv:type="Name">
-        <sv:value>mgnl:metaData</sv:value>
-      </sv:property>
-      <sv:property sv:name="jcr:createdBy" sv:type="String">
-        <sv:value>admin</sv:value>
-      </sv:property>
-      <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-        <sv:value>2012-02-07T10:20:12.090+01:00</sv:value>
-      </sv:property>
-    </sv:node>
+    <sv:property sv:name="mgnl:created" sv:type="Date">
+      <sv:value>2012-02-07T10:20:12.090+01:00</sv:value>
+    </sv:property>
     <sv:node sv:name="fields">
       <sv:property sv:name="jcr:primaryType" sv:type="Name">
         <sv:value>mgnl:contentNode</sv:value>
@@ -102,6 +83,9 @@
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
       </sv:property>
+      <sv:property sv:name="mgnl:created" sv:type="Date">
+        <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
+      </sv:property>
       <sv:property sv:name="templateScript" sv:type="String">
         <sv:value>/form/generic/listArea.ftl</sv:value>
       </sv:property>
@@ -111,17 +95,6 @@
       <sv:property sv:name="type" sv:type="String">
         <sv:value>list</sv:value>
       </sv:property>
-      <sv:node sv:name="MetaData">
-        <sv:property sv:name="jcr:primaryType" sv:type="Name">
-          <sv:value>mgnl:metaData</sv:value>
-        </sv:property>
-        <sv:property sv:name="jcr:createdBy" sv:type="String">
-          <sv:value>admin</sv:value>
-        </sv:property>
-        <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-          <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
-        </sv:property>
-      </sv:node>
       <sv:node sv:name="availableComponents">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
@@ -135,17 +108,9 @@
         <sv:property sv:name="jcr:createdBy" sv:type="String">
           <sv:value>admin</sv:value>
         </sv:property>
-        <sv:node sv:name="MetaData">
-          <sv:property sv:name="jcr:primaryType" sv:type="Name">
-            <sv:value>mgnl:metaData</sv:value>
-          </sv:property>
-          <sv:property sv:name="jcr:createdBy" sv:type="String">
-            <sv:value>admin</sv:value>
-          </sv:property>
-          <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-            <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
-          </sv:property>
-        </sv:node>
+        <sv:property sv:name="mgnl:created" sv:type="Date">
+          <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
+        </sv:property>
         <sv:node sv:name="formEdit">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
             <sv:value>mgnl:contentNode</sv:value>
@@ -162,17 +127,9 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
+          </sv:property>
         </sv:node>
         <sv:node sv:name="formPassword">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -190,17 +147,9 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
+          </sv:property>
         </sv:node>
         <sv:node sv:name="formHidden">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -218,17 +167,9 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
+          </sv:property>
         </sv:node>
         <sv:node sv:name="formGroupEdit">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -246,17 +187,9 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
+          </sv:property>
         </sv:node>
         <sv:node sv:name="formSelection">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -274,17 +207,9 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
+          </sv:property>
         </sv:node>
         <sv:node sv:name="formFile">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -302,17 +227,9 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
+          </sv:property>
         </sv:node>
         <sv:node sv:name="formSubmit">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -330,17 +247,9 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.092+01:00</sv:value>
+          </sv:property>
         </sv:node>
         <sv:node sv:name="formSummary">
           <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -358,17 +267,38 @@
           <sv:property sv:name="jcr:createdBy" sv:type="String">
             <sv:value>admin</sv:value>
           </sv:property>
-          <sv:node sv:name="MetaData">
-            <sv:property sv:name="jcr:primaryType" sv:type="Name">
-              <sv:value>mgnl:metaData</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:createdBy" sv:type="String">
-              <sv:value>admin</sv:value>
-            </sv:property>
-            <sv:property sv:name="mgnl:creationdate" sv:type="Date">
-              <sv:value>2012-02-07T10:20:12.093+01:00</sv:value>
-            </sv:property>
-          </sv:node>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.093+01:00</sv:value>
+          </sv:property>
+        </sv:node>
+        <sv:node sv:name="formHoneypot">
+          <sv:property sv:name="jcr:primaryType" sv:type="Name">
+            <sv:value>mgnl:contentNode</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
+            <sv:value>mix:lockable</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:uuid" sv:type="String">
+            <sv:value>9bcd95ac-e865-4d82-8ee9-48fd9f05bde6</sv:value>
+          </sv:property>
+          <sv:property sv:name="id" sv:type="String">
+            <sv:value>form:components/formHoneypot</sv:value>
+          </sv:property>
+          <sv:property sv:name="jcr:createdBy" sv:type="String">
+            <sv:value>admin</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+            <sv:value>false</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:created" sv:type="Date">
+            <sv:value>2012-02-07T10:20:12.091+01:00</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+            <sv:value>2013-06-26T10:48:55.098+02:00</sv:value>
+          </sv:property>
+          <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+            <sv:value>superuser</sv:value>
+          </sv:property>
         </sv:node>
       </sv:node>
     </sv:node>
