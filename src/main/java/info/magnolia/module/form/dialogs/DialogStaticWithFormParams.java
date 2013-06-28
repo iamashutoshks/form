@@ -35,7 +35,7 @@ package info.magnolia.module.form.dialogs;
 
 import info.magnolia.cms.gui.dialog.DialogStatic;
 import info.magnolia.jcr.predicate.AbstractPredicate;
-import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeTypes.Renderable;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
@@ -64,7 +64,7 @@ public class DialogStaticWithFormParams extends DialogStatic {
     public void drawHtml(Writer out) throws IOException {
         this.drawHtmlPre(out);
         Node storageNode = null;
-        if(getStorageNode()!=null){
+        if (getStorageNode() != null) {
             storageNode = getStorageNode().getJCRNode();
         }
 
@@ -92,21 +92,18 @@ public class DialogStaticWithFormParams extends DialogStatic {
 
     protected Iterable<Node> findAllFormControlNames(Node contentParagraph)
             throws RepositoryException {
-        Iterable<Node> nodes = NodeUtil.getNodes(contentParagraph,
+        Iterable<Node> nodes = NodeUtil.collectAllChildren(contentParagraph,
                 new AbstractPredicate<Node>() {
                     @Override
                     public boolean evaluateTyped(Node content) {
                         try {
+                            final String template = Renderable.getTemplate(content);
                             return content.hasProperty("controlName")
-                                    && !MetaDataUtil
-                                            .getTemplate(content)
-                                            .equals("form:components/formGroupEdit")
-                                    && !MetaDataUtil
-                                            .getTemplate(content)
-                                            .equals("form:components/formGroupFields")
-                                    && !MetaDataUtil
-                                            .getTemplate(content)
-                                            .equals("form:components/formSubmit");
+                                    && !"form:components/formGroupEdit".equals(template)
+                                    && !"form:components/formGroupFields".equals(template)
+                                    && !"form:components/formSubmit".equals(template)
+                                    && !"form:components/formHoneypot".equals(template)
+                            ;
                         } catch (RepositoryException e) {
                             return false;
                         }
