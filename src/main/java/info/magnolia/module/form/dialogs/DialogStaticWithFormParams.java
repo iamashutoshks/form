@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2012 Magnolia International
+ * This file Copyright (c) 2008-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,9 +33,9 @@
  */
 package info.magnolia.module.form.dialogs;
 
+import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.gui.dialog.DialogStatic;
 import info.magnolia.jcr.predicate.AbstractPredicate;
-import info.magnolia.jcr.util.MetaDataUtil;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
@@ -92,21 +92,20 @@ public class DialogStaticWithFormParams extends DialogStatic {
 
     protected Iterable<Node> findAllFormControlNames(Node contentParagraph)
             throws RepositoryException {
-        Iterable<Node> nodes = NodeUtil.getNodes(contentParagraph,
+        Iterable<Node> nodes = NodeUtil.collectAllChildren(contentParagraph,
                 new AbstractPredicate<Node>() {
                     @Override
                     public boolean evaluateTyped(Node content) {
                         try {
-                            return content.hasProperty("controlName")
-                                    && !MetaDataUtil
-                                            .getTemplate(content)
-                                            .equals("form:components/formGroupEdit")
-                                    && !MetaDataUtil
-                                            .getTemplate(content)
-                                            .equals("form:components/formGroupFields")
-                                    && !MetaDataUtil
-                                            .getTemplate(content)
-                                            .equals("form:components/formSubmit");
+                            if (!content.hasProperty("controlName")) {
+                                return false;
+                            }
+                            final String template = content.getNode("MetaData").getProperty(MgnlNodeType.MGNL_PREFIX + "template").getString();
+                            return !"form:components/formGroupEdit".equals(template)
+                                    && !"form:components/formGroupFields".equals(template)
+                                    && !"form:components/formSubmit".equals(template)
+                                    && !"form:components/formHoneypot".equals(template)
+                            ;
                         } catch (RepositoryException e) {
                             return false;
                         }
