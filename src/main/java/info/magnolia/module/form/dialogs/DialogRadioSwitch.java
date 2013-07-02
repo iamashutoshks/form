@@ -80,6 +80,7 @@ public class DialogRadioSwitch extends DialogControlImpl {
     private DialogBox box;
     private List<Button> selectOptions = new ArrayList<Button>();
     private Map<String, List<DialogControlImpl>> optionsSubs = new HashMap<String, List<DialogControlImpl>>();
+    private String locale;
 
     @Override
     public void init(HttpServletRequest request, HttpServletResponse response, Content storageNode, Content configNode) throws RepositoryException {
@@ -143,7 +144,11 @@ public class DialogRadioSwitch extends DialogControlImpl {
         for (Button option : selectOptions) {
             if (option.getState() == ControlImpl.BUTTONSTATE_PUSHED) {
                 out.write("<script type=\"text/javascript\">");
-                out.write("var func = function() { mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "') };");
+                if (StringUtils.isNotBlank(this.locale)) {
+                    out.write("var func = function() { mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "', '" + this.locale + "') };");
+                } else {
+                    out.write("var func = function() { mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "', null) };");
+                }
                 out.write("MgnlDHTMLUtil.addOnLoad(func);");
                 out.write("</script>");
             }
@@ -152,22 +157,9 @@ public class DialogRadioSwitch extends DialogControlImpl {
 
     @Override
     protected void drawSubs(Writer out) throws IOException {
-        String aName = this.getName();
-        // TODO: would it not be more systematic to set (and keep) locale in separate variable and to be able to still retrieve unlocalized name? Maybe for 5.0 ...
-        String originalName = this.getConfigValue(ORIGINAL_NAME);
-        String locale = "";
-        if (!StringUtils.isBlank(originalName)) {
-            locale = StringUtils.substringAfter(aName, originalName);
-            if (locale.startsWith("_")) {
-                aName = originalName;
-            } else {
-                locale = "";
-            }
-        }
-
         for (Button option : selectOptions) {
             String style = "style=\"display:none;\"";
-            out.write("<div id=\"" + aName + option.getValue() + locale + "_radioswich_div\" " + style + " >");
+            out.write("<div id=\"" + this.getName() + option.getValue() + (StringUtils.isNotBlank(this.locale) ? this.locale : "") + "_radioswich_div\" " + style + " >");
             out.write("<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"table-layout:fixed\" >");
             out.write("<col width=\"200\" /><col />");
 
@@ -182,8 +174,22 @@ public class DialogRadioSwitch extends DialogControlImpl {
     }
 
     public void drawRadio(Writer out) throws IOException {
+        String aName = this.getName();
+        // TODO: would it not be more systematic to set (and keep) locale in separate variable and to be able to still retrieve unlocalized name? Maybe for 5.0 ...
+        String originalName = this.getConfigValue(ORIGINAL_NAME);
+        if (!StringUtils.isBlank(originalName)) {
+            this.locale = StringUtils.substringAfter(aName, originalName);
+            if (!this.locale.startsWith("_")) {
+                this.locale = null;
+            }
+        }
+
         for (Button option : selectOptions) {
-            option.setOnclick("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "')");
+            if (StringUtils.isNotBlank(this.locale)) {
+                option.setOnclick("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "', '" + this.locale + "')");
+            } else {
+                option.setOnclick("mgnl.form.FormDialogs.onSelectionChanged('" + this.getName() + "','" + option.getValue() + "', null)");
+            }
             option.setName(this.getName());
         }
 
