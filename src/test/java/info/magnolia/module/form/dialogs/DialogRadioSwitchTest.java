@@ -191,7 +191,45 @@ public class DialogRadioSwitchTest extends RepositoryTestCase {
         drs.drawHtml(out);
 
         // THEN
-        assertTrue(StringUtils.contains(out.toString(), "<script type=\"text/javascript\">var func = function() { mgnl.form.FormDialogs.onSelectionChanged('confirmContentType','text') };MgnlDHTMLUtil.addOnLoad(func);</script>"));
+        assertTrue(StringUtils.contains(out.toString(), "<script type=\"text/javascript\">var func = function() { mgnl.form.FormDialogs.onSelectionChanged('confirmContentType','text', null) };MgnlDHTMLUtil.addOnLoad(func);</script>"));
+    }
+
+    @Test
+    public void testElementsHaveCorrectOnClickJavascriptFunctions() throws Exception {
+        // GIVEN
+        drs = new DialogRadioSwitch();
+
+        Class<? extends DialogControl> clazz = DummyDialogControl.class;
+        DialogFactory.registerDialog("fckEdit", (Class<DialogControl>) clazz);
+        DialogFactory.registerDialog("edit", (Class<DialogControl>) clazz);
+
+        drs.init(request, response, storageNode, configNode);
+
+        dialog.addSub(drs);
+
+        DialogControlImpl tab = mock(DialogControlImpl.class);
+        List<DialogControlImpl> tabs = new ArrayList<DialogControlImpl>();
+        tabs.add(tab);
+        List<DialogControlImpl> subs = new ArrayList<DialogControlImpl>();
+        subs.add(drs);
+
+        when(request.getMethod()).thenReturn("GET");
+        when(tab.getSubs()).thenReturn(subs);
+        when(dialog.getConfigValue("locale", null)).thenReturn("de");
+        when(dialog.getStorageNode()).thenReturn(new MockContent("test"));
+        when(dialog.getSubs()).thenReturn(tabs);
+
+        DefaultI18nAuthoringSupport i18n = new DefaultI18nAuthoringSupport();
+        i18n.setEnabled(true);
+        i18n.i18nIze(dialog);
+
+        StringWriter out = new StringWriter();
+
+        // WHEN
+        drs.drawHtml(out);
+
+        // THEN
+        assertTrue(StringUtils.contains(out.toString(), "onclick=\"mgnl.form.FormDialogs.onSelectionChanged('confirmContentType_de','text', '_de')\""));
     }
 
     public static class DummyDialogControl extends DialogControlImpl {

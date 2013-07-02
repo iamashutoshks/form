@@ -10,26 +10,22 @@ classDef("mgnl.form.FormDialogs", {
       }
   },
 
-  changeSelection: function(name, options, value) {
-    var newName = name;
-    var locale = "";
-    var idx = name.lastIndexOf("_");
-    if (idx && idx > 0) {
-      newName = name.substring(0, idx);
-      locale = "_" + name.substring(idx + 1);
+  changeSelection: function(name, options, value, locale) {
+    if (locale == null) {
+      locale = "";
     }
     for(var i=0; i < options.length; i++) {
       if(options[i].value == value) {
-        this.togleDisplay(newName + options[i].value + locale + "_radioswich_div", true);
+        this.togleDisplay(name + options[i].value + locale + "_radioswich_div", true);
       } else {
-        this.togleDisplay(newName + options[i].value + locale + "_radioswich_div", false);
+        this.togleDisplay(name + options[i].value + locale + "_radioswich_div", false);
       }
     }
   },
 
-  onSelectionChanged: function(name, value) {
+  onSelectionChanged: function(name, value, locale) {
     var radios = document.getElementsByName(name);
-    this.changeSelection(name, radios, value);
+    this.changeSelection(name, radios, value, locale);
   }
 
 });
