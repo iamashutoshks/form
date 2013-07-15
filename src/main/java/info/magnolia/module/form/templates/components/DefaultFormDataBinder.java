@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -46,6 +46,7 @@ import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.ValidationResult;
 import info.magnolia.module.form.validators.Validator;
+import info.magnolia.util.EscapeUtil;
 
 import java.util.Iterator;
 import java.util.Locale;
@@ -103,7 +104,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
             if (node.hasProperty("controlName")) {
 
                 final String controlName = node.getProperty("controlName").getString();
-                final String value = StringUtils.join(MgnlContext.getParameterValues(controlName), "__");
+                final String value = EscapeUtil.escapeXss(StringUtils.join(MgnlContext.getParameterValues(controlName), "__"));
 
                 FormField field = new FormField();
                 field.setName(controlName);
