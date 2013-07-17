@@ -46,6 +46,7 @@ import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.ValidationResult;
 import info.magnolia.module.form.validators.Validator;
+import info.magnolia.util.EscapeUtil;
 
 import java.util.Iterator;
 import java.util.Locale;
