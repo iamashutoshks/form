@@ -103,7 +103,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
             if (node.hasProperty("controlName")) {
 
                 final String controlName = node.getProperty("controlName").getString();
-                final String value = StringUtils.join(MgnlContext.getParameterValues(controlName), "__");
+                final String value = EscapeUtil.escapeXss(StringUtils.join(MgnlContext.getParameterValues(controlName), "__"));
 
                 FormField field = new FormField();
                 field.setName(controlName);
