@@ -56,8 +56,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
             );
 
         register(DeltaBuilder.update("1.4.4", "")
-            .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", "true"))))
-            .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", "true"))))
+            .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", Boolean.TRUE))))
+            .addTask(new NodeExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", new PropertyExistsDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", null, new NewPropertyTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", Boolean.TRUE))))
         );
 
         register(DeltaBuilder.update("1.4.5", "")
