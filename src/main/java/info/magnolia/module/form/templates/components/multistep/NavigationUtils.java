@@ -38,6 +38,7 @@ import info.magnolia.cms.core.MgnlNodeType;
 import info.magnolia.cms.security.AccessDeniedException;
 import info.magnolia.jcr.predicate.AbstractPredicate;
 import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.objectfactory.Components;
@@ -140,7 +141,7 @@ public class NavigationUtils {
                     public boolean evaluateTyped(Node content) {
                         String template;
                         try {
-                            template = Renderable.getTemplate(content);
+                            template = NodeTypes.Renderable.getTemplate(content);
                         } catch (RepositoryException e) {
                             log.error("Could not resolve template for '{}'", content, e);
                             return false;

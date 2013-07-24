@@ -36,6 +36,7 @@ package info.magnolia.module.form.templates.components.multistep;
 import static org.junit.Assert.*;
 
 import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.test.mock.jcr.MockNode;
 
@@ -102,15 +103,15 @@ public class NavigationUtilsTest {
         // GIVEN
         Node page = new MockNode();
         Node subpageShouldNotBeListed = page.addNode("subpageShouldNotBeListed");
-        Renderable.set(subpageShouldNotBeListed, "form:components/formCondition");
+        NodeTypes.Renderable.set(subpageShouldNotBeListed, "form:components/formCondition");
         Node conditionList = page.addNode("content").addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("0").addNode("conditionList");
 
         Node condition1 = conditionList.addNode("0");
         Node condition2 = conditionList.addNode("1");
         conditionList.addNode("wrongCondition");
 
-        Renderable.set(condition1, "form:components/formCondition");
-        Renderable.set(condition2, "form:components/formCondition");
+        NodeTypes.Renderable.set(condition1, "form:components/formCondition");
+        NodeTypes.Renderable.set(condition2, "form:components/formCondition");
 
         condition1.addNode("condition");
         condition2.addNode("condition");
