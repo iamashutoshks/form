@@ -67,7 +67,6 @@ public class NavigationUtils {
 
     /**
      * Node filter accepting only components and areas.
-     *
      * FIXME could be handy to add this predicate in NodeUtil
      */
     private static AbstractPredicate<Node> ONLY_AREAS_AND_COMPONENTS = new AbstractPredicate<Node>() {
@@ -75,7 +74,7 @@ public class NavigationUtils {
         @Override
         public boolean evaluateTyped(Node node) {
             try {
-                return NodeUtil.isNodeType(node,MgnlNodeType.NT_AREA)
+                return NodeUtil.isNodeType(node, MgnlNodeType.NT_AREA)
                         || NodeUtil.isNodeType(node, MgnlNodeType.NT_COMPONENT);
             } catch (RepositoryException e) {
                 return false;
@@ -95,60 +94,65 @@ public class NavigationUtils {
     public static void advanceIteratorTilAfter(Iterator<Node> iterator, Node content) {
         while (iterator.hasNext()) {
             Node content1 = iterator.next();
-            if ( NodeUtil.getNodeIdentifierIfPossible(content1).equals(NodeUtil.getNodeIdentifierIfPossible(content)))
+            if (NodeUtil.getNodeIdentifierIfPossible(content1).equals(NodeUtil.getNodeIdentifierIfPossible(content)))
                 return;
         }
     }
 
     public static Node findParagraphOfType(Node content, Class<?> paragraphType) throws RepositoryException {
-            Iterable<Node> children = NodeUtil.getNodes(content, ONLY_AREAS_AND_COMPONENTS);
-            for (Node child : children) {
-                if (isParagraphOfType(child, paragraphType)) {
-                    return child;
-                }
+        Iterable<Node> children = NodeUtil.getNodes(content, ONLY_AREAS_AND_COMPONENTS);
+        for (Node child : children) {
+            if (isParagraphOfType(child, paragraphType)) {
+                return child;
+            }
             Node x = findParagraphOfType(child, paragraphType);
             if (x != null)
                 return x;
-            }
+        }
         return null;
     }
 
     public static boolean isParagraphOfType(Node child, Class<?> paragraphType) {
         MetaData metaData = MetaDataUtil.getMetaData(child);
-        if (metaData == null) return false;
+        if (metaData == null)
+            return false;
         String template = metaData.getTemplate();
-        if (StringUtils.isEmpty(template)) return false;
+        if (StringUtils.isEmpty(template))
+            return false;
         TemplateDefinition definition;
         try {
             definition = Components.getComponent(TemplateDefinitionRegistry.class).getTemplateDefinition(template);
         } catch (RegistrationException e) {
-             throw new RuntimeException(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage(), e);
         }
-        if (definition == null) return false;
+        if (definition == null)
+            return false;
         return paragraphType.isAssignableFrom(definition.getClass());
     }
 
     public static Iterable<Node> getPageParagraphsOfType(Node page, final String componentId) {
         Iterable<Node> paragraphList = new ArrayList<Node>();
-            try {
-                if(page.hasNode("main")){
-                    Node mainAreaContent = page.getNode("main");
-                    paragraphList = NodeUtil.collectAllChildren(mainAreaContent, new AbstractPredicate<Node>() {
-                        @Override
-                        public boolean evaluateTyped(Node content) {
-                            MetaData metaData = MetaDataUtil.getMetaData(content);
-                            if (metaData == null) return false;
-                            String template = metaData.getTemplate();
-                            if (StringUtils.isEmpty(template)) return false;
-                            return componentId.equals(template);
-                        }
-                    });
-                }
-            } catch (PathNotFoundException e) {
-                log.error(e.getMessage(),e);
-            } catch (RepositoryException e) {
-                throw new RuntimeException(e.getMessage(), e);
+        try {
+            if (page.hasNode("main")) {
+                Node mainAreaContent = page.getNode("main");
+                paragraphList = NodeUtil.collectAllChildren(mainAreaContent, new AbstractPredicate<Node>() {
+                    @Override
+                    public boolean evaluateTyped(Node content) {
+                        MetaData metaData = MetaDataUtil.getMetaData(content);
+                        if (metaData == null)
+                            return false;
+                        String template = metaData.getTemplate();
+                        if (StringUtils.isEmpty(template))
+                            return false;
+                        return componentId.equals(template);
+                    }
+                });
             }
+        } catch (PathNotFoundException e) {
+            log.error(e.getMessage(), e);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
         return paragraphList;
     }
 
@@ -160,7 +164,7 @@ public class NavigationUtils {
             Node criteriaParagraphContent = criteriaParagraphIterator.next();
             String linkUUID = PropertyUtil.getString(criteriaParagraphContent, "link", "");
             try {
-                if(criteriaParagraphContent.hasNode("criteria")){
+                if (criteriaParagraphContent.hasNode("criteria")) {
                     Node criteriaNode = criteriaParagraphContent.getNode("criteria");
                     Iterable<Node> criteriaCollection = NodeUtil.getNodes(criteriaNode);
                     boolean passed = true;
@@ -168,7 +172,7 @@ public class NavigationUtils {
                         Node content = iterator.next();
                         passed = evaluateCondition(content, parameters, passed);
                     }
-                    if(passed) {
+                    if (passed) {
                         return linkUUID;
                     }
                 }
@@ -188,7 +192,7 @@ public class NavigationUtils {
         String fieldName = PropertyUtil.getString(criteriaNode, "fieldName");
         String fieldValue = PropertyUtil.getString(criteriaNode, "fieldValue");
         String value = "";
-        if(parameters.containsKey(fieldName)) {
+        if (parameters.containsKey(fieldName)) {
             value = (String) parameters.get(fieldName);
         }
         return evaluateCondition(fieldValue, value, condition, passed);
@@ -199,15 +203,15 @@ public class NavigationUtils {
             Node conditionParagraphContent = conditionParagraphIterator.next();
             String linkUUID = PropertyUtil.getString(conditionParagraphContent, "link", "");
             try {
-                if(conditionParagraphContent.hasNode("condition")){
+                if (conditionParagraphContent.hasNode("condition")) {
                     Node conditionNode = conditionParagraphContent.getNode("condition");
-                    Iterable<Node> conditionCollection =  NodeUtil.getNodes(conditionNode);
+                    Iterable<Node> conditionCollection = NodeUtil.getNodes(conditionNode);
                     boolean passed = true;
                     for (Iterator<Node> iterator = conditionCollection.iterator(); iterator.hasNext();) {
                         Node content = iterator.next();
                         passed = evaluateCondition(content, parameters, passed);
                     }
-                    if(passed) {
+                    if (passed) {
                         return linkUUID;
                     }
                 }
@@ -224,7 +228,7 @@ public class NavigationUtils {
         String fieldName = PropertyUtil.getString(conditionNode, "fieldName");
         String fieldValue = PropertyUtil.getString(conditionNode, "fieldValue");
         String value = "";
-        if(parameters.containsKey(fieldName)) {
+        if (parameters.containsKey(fieldName)) {
             value = (String) parameters.get(fieldName);
         }
         return evaluateCondition(fieldValue, value, condition, passed);
@@ -246,7 +250,7 @@ public class NavigationUtils {
 
         Node page = paragraph;
 
-        while(page != null && !NodeUtil.isNodeType(page, MgnlNodeType.NT_PAGE)) {
+        while (page != null && !NodeUtil.isNodeType(page, MgnlNodeType.NT_PAGE)) {
             page = page.getParent();
         }
 
@@ -257,7 +261,7 @@ public class NavigationUtils {
         Node parent = node.getParent();
         List<Node> siblings = NodeUtil.asList(NodeUtil.getNodes(parent, node.getPrimaryNodeType().getName()));
         int fromIndex = 0;
-        for(Node sibling: siblings) {
+        for (Node sibling : siblings) {
             fromIndex++;
             if (NodeUtil.isSame(node, sibling)) {
                 break;
