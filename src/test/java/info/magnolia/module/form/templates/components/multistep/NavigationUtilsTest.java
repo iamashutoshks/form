@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2012 Magnolia International
+ * This file Copyright (c) 2012-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -34,7 +34,10 @@
 package info.magnolia.module.form.templates.components.multistep;
 
 import static org.junit.Assert.assertEquals;
+
+import info.magnolia.cms.core.MetaData;
 import info.magnolia.cms.core.MgnlNodeType;
+import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.test.mock.jcr.MockNode;
 
 import java.util.List;
@@ -45,6 +48,9 @@ import javax.jcr.RepositoryException;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests for {@link NavigationUtil}.
+ */
 public class NavigationUtilsTest {
 
     private static final String FIRST_CHILD = "1";
@@ -90,5 +96,30 @@ public class NavigationUtilsTest {
         siblings = NavigationUtils.getSameTypeSiblingsAfter(subFirst4);
         // THEN
         assertEquals(0, siblings.size());
+    }
+
+    @Test
+    public void testGetPageParagraphsOfType() throws RepositoryException {
+        // GIVEN
+        Node page = new MockNode();
+        Node conditionList = page.addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("0").addNode("conditionList");
+
+        Node condition1 = conditionList.addNode("0");
+        Node condition2 = conditionList.addNode("1");
+        conditionList.addNode("wrongCondition");
+
+        condition1.addNode(MetaData.DEFAULT_META_NODE, MgnlNodeType.NT_METADATA).setProperty("mgnl:template", "form:components/formCondition");
+        condition2.addNode(MetaData.DEFAULT_META_NODE, MgnlNodeType.NT_METADATA).setProperty("mgnl:template", "form:components/formCondition");
+
+        condition1.addNode("condition");
+        condition2.addNode("condition");
+
+        // WHEN
+        List<Node> paragraphs = NodeUtil.asList(NavigationUtils.getPageParagraphsOfType(page, "form:components/formCondition"));
+
+        // THEN
+        assertEquals(2, paragraphs.size());
+        assertEquals(condition1, paragraphs.get(0));
+        assertEquals(condition2, paragraphs.get(1));
     }
 }

@@ -133,21 +133,18 @@ public class NavigationUtils {
     public static Iterable<Node> getPageParagraphsOfType(Node page, final String componentId) {
         Iterable<Node> paragraphList = new ArrayList<Node>();
         try {
-            if (page.hasNode("main")) {
-                Node mainAreaContent = page.getNode("main");
-                paragraphList = NodeUtil.collectAllChildren(mainAreaContent, new AbstractPredicate<Node>() {
-                    @Override
-                    public boolean evaluateTyped(Node content) {
-                        MetaData metaData = MetaDataUtil.getMetaData(content);
-                        if (metaData == null)
-                            return false;
-                        String template = metaData.getTemplate();
-                        if (StringUtils.isEmpty(template))
-                            return false;
-                        return componentId.equals(template);
-                    }
-                });
-            }
+            paragraphList = NodeUtil.collectAllChildren(page, new AbstractPredicate<Node>() {
+                @Override
+                public boolean evaluateTyped(Node content) {
+                    MetaData metaData = MetaDataUtil.getMetaData(content);
+                    if (metaData == null)
+                        return false;
+                    String template = metaData.getTemplate();
+                    if (StringUtils.isEmpty(template))
+                        return false;
+                    return componentId.equals(template);
+                }
+            });
         } catch (PathNotFoundException e) {
             log.error(e.getMessage(), e);
         } catch (RepositoryException e) {
