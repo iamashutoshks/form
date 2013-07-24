@@ -33,7 +33,7 @@
  */
 package info.magnolia.module.form.templates.components.multistep;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import info.magnolia.cms.core.MetaData;
 import info.magnolia.cms.core.MgnlNodeType;
@@ -102,7 +102,9 @@ public class NavigationUtilsTest {
     public void testGetPageParagraphsOfType() throws RepositoryException {
         // GIVEN
         Node page = new MockNode();
-        Node conditionList = page.addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("0").addNode("conditionList");
+        Node subpageShouldNotBeListed = page.addNode("subpageShouldNotBeListed");
+        subpageShouldNotBeListed.addNode(MetaData.DEFAULT_META_NODE, MgnlNodeType.NT_METADATA).setProperty("mgnl:template", "form:components/formCondition");
+        Node conditionList = page.addNode("content").addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("0").addNode("conditionList");
 
         Node condition1 = conditionList.addNode("0");
         Node condition2 = conditionList.addNode("1");
@@ -118,6 +120,7 @@ public class NavigationUtilsTest {
         List<Node> paragraphs = NodeUtil.asList(NavigationUtils.getPageParagraphsOfType(page, "form:components/formCondition"));
 
         // THEN
+        assertFalse(paragraphs.contains(subpageShouldNotBeListed));
         assertEquals(2, paragraphs.size());
         assertEquals(condition1, paragraphs.get(0));
         assertEquals(condition2, paragraphs.get(1));
