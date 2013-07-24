@@ -133,17 +133,18 @@ public class NavigationUtils {
     public static Iterable<Node> getPageParagraphsOfType(Node page, final String componentId) {
         Iterable<Node> paragraphList = new ArrayList<Node>();
         try {
-            if (page.hasNode("main")) {
-                Node mainAreaContent = page.getNode("main");
+            if (page.hasNode("content")) {
+                Node mainAreaContent = page.getNode("content");
                 paragraphList = NodeUtil.collectAllChildren(mainAreaContent, new AbstractPredicate<Node>() {
                     @Override
                     public boolean evaluateTyped(Node content) {
-                        MetaData metaData = MetaDataUtil.getMetaData(content);
-                        if (metaData == null)
+                        String template;
+                        try {
+                            template = Renderable.getTemplate(content);
+                        } catch (RepositoryException e) {
+                            log.error("Could not resolve template for '{}'", content, e);
                             return false;
-                        String template = metaData.getTemplate();
-                        if (StringUtils.isEmpty(template))
-                            return false;
+                        }
                         return componentId.equals(template);
                     }
                 });
