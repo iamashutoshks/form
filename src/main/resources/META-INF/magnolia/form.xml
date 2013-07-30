@@ -14,7 +14,7 @@
     </dependency>
     <dependency>
       <name>magnolia-4-5-migration</name>
-      <version>1.2.1/*</version>
+      <version>1.2.4/*</version>
     </dependency>
     <dependency>
       <name>templating</name>
