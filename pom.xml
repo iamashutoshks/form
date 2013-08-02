@@ -3,7 +3,7 @@
   <parent>
     <groupId>info.magnolia</groupId>
     <artifactId>magnolia-parent-pom-community-module</artifactId>
-    <version>25</version>
+    <version>26</version>
   </parent>
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
@@ -15,7 +15,7 @@
   <properties>
     <!-- Tests need version 4.5.7 but module should work correctly also with older magnolia-main
            When change the dependency doublecheck it. -->
-    <magnoliaVersion>4.5.10-SNAPSHOT</magnoliaVersion>
+    <magnoliaVersion>4.5.10</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -64,7 +64,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-4-5-migration</artifactId>
-      <version>1.2.4-SNAPSHOT</version>
+      <version>1.2.4</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
