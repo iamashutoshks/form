@@ -12,8 +12,8 @@
   <description />
 
   <properties>
-    <magnoliaVersion>5.1-SNAPSHOT</magnoliaVersion>
-    <magnoliaUiVersion>5.1-SNAPSHOT</magnoliaUiVersion>
+    <magnoliaVersion>5.0.2-SNAPSHOT</magnoliaVersion>
+    <magnoliaUiVersion>5.0.2-SNAPSHOT</magnoliaUiVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -61,7 +61,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-4-5-migration</artifactId>
-      <version>1.2.4-SNAPSHOT</version>
+      <version>1.2.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
