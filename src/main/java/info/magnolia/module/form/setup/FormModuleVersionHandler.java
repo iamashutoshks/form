@@ -89,7 +89,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType", "confirmContentType"))
         );
 
-        register(DeltaBuilder.update("2.1", "")
+        register(DeltaBuilder.update("2.0.3", "")
                 .addTask(new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", "true", true,
                         new SetPropertyTask("", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", Boolean.TRUE))
                 )
