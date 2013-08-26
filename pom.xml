@@ -12,8 +12,8 @@
   <description />
 
   <properties>
-    <magnoliaVersion>5.0.2-SNAPSHOT</magnoliaVersion>
-    <magnoliaUiVersion>5.0.2-SNAPSHOT</magnoliaUiVersion>
+    <magnoliaVersion>5.0.2</magnoliaVersion>
+    <magnoliaUiVersion>5.0.2</magnoliaUiVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-module-legacy-admininterface</artifactId>
-      <version>5.0.2-SNAPSHOT</version>
+      <version>5.0.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
