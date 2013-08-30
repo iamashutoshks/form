@@ -47,8 +47,8 @@ import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.module.delta.RemoveNodeTask;
 import info.magnolia.module.delta.Task;
+import info.magnolia.module.form.setup.migration.FormDialogMigrationTask;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.ui.dialog.setup.DialogMigrationTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,7 +75,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         );
 
         register(DeltaBuilder.update("2.0", "")
-                .addTask(new DialogMigrationTask("form")));
+                .addTask(new FormDialogMigrationTask("form")));
 
         register(DeltaBuilder.update("2.0.1", "")
                 .addTask(new BootstrapSingleResource("Bootstrap formHoneypot template", "Add formHoneypot as new form component.", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formHoneypot.xml"))
@@ -102,7 +102,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
     @Override
     protected List<Task> getExtraInstallTasks(InstallContext installContext) {
         final List<Task> tasks = new ArrayList<Task>();
-        tasks.add(new DialogMigrationTask("form"));
+        tasks.add(new FormDialogMigrationTask("form"));
         return tasks;
     }
 }

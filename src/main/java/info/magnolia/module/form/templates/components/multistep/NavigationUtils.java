@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2013 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -252,7 +252,7 @@ public class NavigationUtils {
 
         Node page = paragraph;
 
-        while (page != null && !NodeUtil.isNodeType(page, MgnlNodeType.NT_PAGE)) {
+        while (page != null && !NodeUtil.isNodeType(page, NodeTypes.Page.NAME)) {
             page = page.getParent();
         }
 
