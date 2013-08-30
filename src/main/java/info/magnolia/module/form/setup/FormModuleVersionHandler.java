@@ -88,7 +88,6 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
     @Override
     protected List<Task> getExtraInstallTasks(InstallContext installContext) {
         final List<Task> tasks = new ArrayList<Task>();
-        tasks.add(new FormDialogMigrationTask("form"));
         return tasks;
     }
 }
