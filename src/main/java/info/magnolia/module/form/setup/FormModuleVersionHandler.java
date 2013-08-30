@@ -39,8 +39,6 @@ import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.MoveNodeTask;
 import info.magnolia.module.delta.NewPropertyTask;
-import info.magnolia.module.delta.PropertyValueDelegateTask;
-import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
@@ -89,14 +87,6 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType", "confirmContentType"))
         );
 
-        register(DeltaBuilder.update("2.0.3", "")
-                .addTask(new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", "true", true,
-                        new SetPropertyTask("", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", Boolean.TRUE))
-                )
-                .addTask(new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", "true", true,
-                        new SetPropertyTask("", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", Boolean.TRUE))
-                )
-        );
     }
 
     @Override
