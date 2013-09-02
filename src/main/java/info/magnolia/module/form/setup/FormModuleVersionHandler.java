@@ -67,16 +67,6 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
             .addTask(new UpdateConfirmHtmlTypeToCodeTask("", ""))
         );
 
-        register(DeltaBuilder.update("1.4.7", "")
-                .addTask(new BootstrapSingleResource("Bootstrap formHoneypot template", "Add formHoneypot as new form component.", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formHoneypot.xml"))
-                .addTask(new BootstrapSingleResource("Rebootstrap formGroupFields template", "Add formHoneypot as new available component for formGroupFields.", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formGroupFields.xml"))
-                .addTask(new BootstrapSingleResource("Bootstrap formHoneypot dialog", "Add formHoneypot as new dialog.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formHoneypot.xml"))
-                .addTask(new BootstrapSingleResource("Bootstrap 'empty' validator", "Add validator for empty field.", "/mgnl-bootstrap/form/validators/config.modules.form.config.validators.empty.xml"))
-
-                .addTask(new PartialBootstrapTask("Mail type", "Bootstraps dialog option for mail type to be sent overriding content type in the process.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmMailType"))
-                .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/tabConfirmEmail/confirmMailType", "confirmContentType"))
-        );
-
         register(DeltaBuilder.update("1.4.8", "")
             .addTask(new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", "true", true,
                     new SetPropertyTask("", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEdit/tabMain/controlName", "required", Boolean.TRUE))
@@ -84,6 +74,16 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
             .addTask(new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", "true", true,
                     new SetPropertyTask("", RepositoryConstants.CONFIG, "/modules/form/dialogs/formGroupEditItem/tabMain/controlName", "required", Boolean.TRUE))
              )
+        );
+
+        register(DeltaBuilder.update("1.4.9", "")
+                .addTask(new NodeExistsDelegateTask("Add Honeypot component", "Add Honeypot if missing", "config", "/modules/form/templates/components/formHoneypot", null, new BootstrapSingleResource("Bootstrap formHoneypot template", "Add formHoneypot as new form component.", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formHoneypot.xml")))
+                .addTask(new NodeExistsDelegateTask("Add GroupFields component", "Add GroupFields if missing", "config", "/modules/form/templates/components/formGroupFields", null, new BootstrapSingleResource("Rebootstrap formGroupFields template", "Add formHoneypot as new available component for formGroupFields.", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formGroupFields.xml")))
+                .addTask(new NodeExistsDelegateTask("Add Honeypot dialog", "Add Honeypot dialog if missing", "config", "/modules/form/dialogs/formHoneypot", null, new BootstrapSingleResource("Bootstrap formHoneypot dialog", "Add formHoneypot as new dialog.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formHoneypot.xml")))
+                .addTask(new NodeExistsDelegateTask("Add Empty validator", "Add empty validator if missing", "config", "/modules/form/config/validators/empty", null, new BootstrapSingleResource("Bootstrap 'empty' validator", "Add validator for empty field.", "/mgnl-bootstrap/form/validators/config.modules.form.config.validators.empty.xml")))
+
+                .addTask(new NodeExistsDelegateTask("Add confirmMailType", "Add confirmMailType if missing", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmMailType", null, new PartialBootstrapTask("Mail type", "Bootstraps dialog option for mail type to be sent overriding content type in the process.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmMailType")))
+                .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/tabConfirmEmail/confirmMailType", "confirmContentType"))
         );
     }
 }
