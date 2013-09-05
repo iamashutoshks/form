@@ -113,8 +113,8 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
         assertTrue(field.hasProperty("class"));
         assertEquals(CompositeFieldDefinition.class.getName(), field.getProperty("class").getString());
 
-        assertTrue(controlNode.hasProperty("transformerClass"));
-        assertEquals(NoOpCompositeTransformer.class.getName(), controlNode.getProperty("transformerClass").getString());
+        assertTrue(field.hasProperty("transformerClass"));
+        assertEquals(NoOpCompositeTransformer.class.getName(), field.getProperty("transformerClass").getString());
 
         assertTrue(field.hasNode("fields"));
     }
