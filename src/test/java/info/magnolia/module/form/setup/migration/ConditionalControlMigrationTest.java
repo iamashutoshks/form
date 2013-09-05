@@ -42,10 +42,8 @@ import info.magnolia.ui.form.field.definition.CompositeFieldDefinition;
 import info.magnolia.ui.form.field.definition.MultiFieldDefinition;
 import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
-import info.magnolia.ui.form.field.property.composite.CompositeProperty;
-import info.magnolia.ui.form.field.property.composite.NoOpCompositeHandler;
-import info.magnolia.ui.form.field.property.multi.MultiProperty;
-import info.magnolia.ui.form.field.property.multi.SubNodesMultiPropertysetItemHandler;
+import info.magnolia.ui.form.field.transformer.composite.NoOpCompositeTransformer;
+import info.magnolia.ui.form.field.transformer.multi.MultiValueSubChildrenNodePropertiesTransformer;
 
 import java.io.InputStream;
 
@@ -95,13 +93,8 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
         assertNotNull(controlNode);
         assertTrue(controlNode.hasProperty("class"));
         assertEquals(MultiFieldDefinition.class.getName(), controlNode.getProperty("class").getString());
-        assertTrue(controlNode.hasNode("propertyBuilder"));
-        Node propertyBuilder = controlNode.getNode("propertyBuilder");
-
-        assertTrue(propertyBuilder.hasProperty("propertyType"));
-        assertEquals(MultiProperty.class.getName(), propertyBuilder.getProperty("propertyType").getString());
-        assertTrue(propertyBuilder.hasProperty("propertyHandler"));
-        assertEquals(SubNodesMultiPropertysetItemHandler.class.getName(), propertyBuilder.getProperty("propertyHandler").getString());
+        assertTrue(controlNode.hasProperty("transformerClass"));
+        assertEquals(MultiValueSubChildrenNodePropertiesTransformer.class.getName(), controlNode.getProperty("transformerClass").getString());
 
         assertTrue(controlNode.hasNode("field"));
     }
@@ -119,13 +112,9 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
         Node field = controlNode.getNode("field");
         assertTrue(field.hasProperty("class"));
         assertEquals(CompositeFieldDefinition.class.getName(), field.getProperty("class").getString());
-        assertTrue(field.hasNode("propertyBuilder"));
-        Node propertyBuilder = field.getNode("propertyBuilder");
 
-        assertTrue(propertyBuilder.hasProperty("propertyType"));
-        assertEquals(CompositeProperty.class.getName(), propertyBuilder.getProperty("propertyType").getString());
-        assertTrue(propertyBuilder.hasProperty("propertyHandler"));
-        assertEquals(NoOpCompositeHandler.class.getName(), propertyBuilder.getProperty("propertyHandler").getString());
+        assertTrue(controlNode.hasProperty("transformerClass"));
+        assertEquals(NoOpCompositeTransformer.class.getName(), controlNode.getProperty("transformerClass").getString());
 
         assertTrue(field.hasNode("fields"));
     }

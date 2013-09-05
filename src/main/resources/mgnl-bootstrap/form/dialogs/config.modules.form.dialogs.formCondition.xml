@@ -199,6 +199,9 @@
             <sv:property sv:name="class" sv:type="String">
               <sv:value>info.magnolia.ui.form.field.definition.MultiFieldDefinition</sv:value>
             </sv:property>
+            <sv:property sv:name="transformerClass" sv:type="String">
+              <sv:value>info.magnolia.ui.form.field.transformer.multi.MultiValueSubChildrenNodePropertiesTransformer</sv:value>
+            </sv:property>
             <sv:property sv:name="jcr:createdBy" sv:type="String">
               <sv:value>admin</sv:value>
             </sv:property>
@@ -249,23 +252,6 @@
                 <sv:value>superuser</sv:value>
               </sv:property>
             </sv:node>
-            <sv:node sv:name="propertyBuilder">
-              <sv:property sv:name="jcr:primaryType" sv:type="Name">
-                <sv:value>mgnl:contentNode</sv:value>
-              </sv:property>
-              <sv:property sv:name="jcr:uuid" sv:type="String">
-                <sv:value>96ab7092-3ecb-40a6-b2a7-195aa99cc02a</sv:value>
-              </sv:property>
-              <sv:property sv:name="jcr:createdBy" sv:type="String">
-                <sv:value>admin</sv:value>
-              </sv:property>
-              <sv:property sv:name="propertyHandler" sv:type="String">
-                <sv:value>info.magnolia.ui.form.field.property.multi.SubNodesMultiPropertysetItemHandler</sv:value>
-              </sv:property>
-              <sv:property sv:name="propertyType" sv:type="String">
-                <sv:value>info.magnolia.ui.form.field.property.multi.MultiProperty</sv:value>
-              </sv:property>
-            </sv:node>
             <sv:node sv:name="field">
               <sv:property sv:name="jcr:primaryType" sv:type="Name">
                 <sv:value>mgnl:contentNode</sv:value>
@@ -276,26 +262,12 @@
               <sv:property sv:name="class" sv:type="String">
                 <sv:value>info.magnolia.ui.form.field.definition.CompositeFieldDefinition</sv:value>
               </sv:property>
+              <sv:property sv:name="transformerClass" sv:type="String">
+                <sv:value>info.magnolia.ui.form.field.transformer.composite.NoOpCompositeTransformer</sv:value>
+              </sv:property>
               <sv:property sv:name="jcr:createdBy" sv:type="String">
                 <sv:value>admin</sv:value>
               </sv:property>
-              <sv:node sv:name="propertyBuilder">
-                <sv:property sv:name="jcr:primaryType" sv:type="Name">
-                  <sv:value>mgnl:contentNode</sv:value>
-                </sv:property>
-                <sv:property sv:name="jcr:uuid" sv:type="String">
-                  <sv:value>f631a20d-f157-4f26-96f6-b72b4ceeefe7</sv:value>
-                </sv:property>
-                <sv:property sv:name="jcr:createdBy" sv:type="String">
-                  <sv:value>admin</sv:value>
-                </sv:property>
-                <sv:property sv:name="propertyHandler" sv:type="String">
-                  <sv:value>info.magnolia.ui.form.field.property.composite.NoOpCompositeHandler</sv:value>
-                </sv:property>
-                <sv:property sv:name="propertyType" sv:type="String">
-                  <sv:value>info.magnolia.ui.form.field.property.composite.CompositeProperty</sv:value>
-                </sv:property>
-              </sv:node>
               <sv:node sv:name="fields">
                 <sv:property sv:name="jcr:primaryType" sv:type="Name">
                   <sv:value>mgnl:contentNode</sv:value>

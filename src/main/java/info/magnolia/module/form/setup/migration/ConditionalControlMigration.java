@@ -40,10 +40,8 @@ import info.magnolia.ui.form.field.definition.CompositeFieldDefinition;
 import info.magnolia.ui.form.field.definition.MultiFieldDefinition;
 import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
-import info.magnolia.ui.form.field.property.composite.CompositeProperty;
-import info.magnolia.ui.form.field.property.composite.NoOpCompositeHandler;
-import info.magnolia.ui.form.field.property.multi.MultiProperty;
-import info.magnolia.ui.form.field.property.multi.SubNodesMultiPropertysetItemHandler;
+import info.magnolia.ui.form.field.transformer.composite.NoOpCompositeTransformer;
+import info.magnolia.ui.form.field.transformer.multi.MultiValueSubChildrenNodePropertiesTransformer;
 
 import java.util.Iterator;
 
@@ -82,15 +80,13 @@ public class ConditionalControlMigration implements ControlMigration {
     }
 
     /**
-     * Create the appropriate class property and propertyBuilder configuration node for a MultiField Definition.
+     * Create the appropriate class and transformerClass property configuration for a MultiField Definition.
      */
     private void initMultiFieldConfiguration(Node controleNode) throws RepositoryException {
         // Set appropriate Field Definition
         controleNode.setProperty("class", MultiFieldDefinition.class.getName());
-        // Add propertyBuilder
-        Node propertyBuilderNode = controleNode.addNode("propertyBuilder", NodeTypes.ContentNode.NAME);
-        propertyBuilderNode.setProperty("propertyType", MultiProperty.class.getName());
-        propertyBuilderNode.setProperty("propertyHandler", SubNodesMultiPropertysetItemHandler.class.getName());
+        // Add transformerClass
+        controleNode.setProperty("transformerClass", MultiValueSubChildrenNodePropertiesTransformer.class.getName());
 
         // Add a Field Node (used to configure the Multi field)
         controleNode.addNode("field", NodeTypes.ContentNode.NAME);
@@ -105,16 +101,14 @@ public class ConditionalControlMigration implements ControlMigration {
     }
 
     /**
-     * Create the appropriate class property and propertyBuilder configuration node for a CompositeField Definition.
+     * Create the appropriate class and transformerClass property configuration for a CompositeField Definition.
      */
     private void initFieldForMultiFieldConfiguration(Node controleNode) throws RepositoryException {
         Node fieldNode = controleNode.getNode("field");
         // Set appropriate Field Definition
         fieldNode.setProperty("class", CompositeFieldDefinition.class.getName());
-        // Add propertyBuilder
-        Node propertyBuilderNode = fieldNode.addNode("propertyBuilder", NodeTypes.ContentNode.NAME);
-        propertyBuilderNode.setProperty("propertyType", CompositeProperty.class.getName());
-        propertyBuilderNode.setProperty("propertyHandler", NoOpCompositeHandler.class.getName());
+        // Add transformerClass
+        fieldNode.setProperty("transformerClass", NoOpCompositeTransformer.class.getName());
 
         // Add a Field Node (used to configure the Multi field)
         fieldNode.addNode("fields", NodeTypes.ContentNode.NAME);
