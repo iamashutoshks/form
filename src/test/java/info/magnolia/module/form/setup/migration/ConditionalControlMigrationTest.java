@@ -39,7 +39,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.test.RepositoryTestCase;
 import info.magnolia.ui.form.field.definition.CompositeFieldDefinition;
-import info.magnolia.ui.form.field.definition.MultiFieldDefinition;
+import info.magnolia.ui.form.field.definition.MultiValueFieldDefinition;
 import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
 import info.magnolia.ui.form.field.transformer.composite.NoOpCompositeTransformer;
@@ -92,7 +92,7 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
         // THEN
         assertNotNull(controlNode);
         assertTrue(controlNode.hasProperty("class"));
-        assertEquals(MultiFieldDefinition.class.getName(), controlNode.getProperty("class").getString());
+        assertEquals(MultiValueFieldDefinition.class.getName(), controlNode.getProperty("class").getString());
         assertTrue(controlNode.hasProperty("transformerClass"));
         assertEquals(MultiValueSubChildrenNodePropertiesTransformer.class.getName(), controlNode.getProperty("transformerClass").getString());
 

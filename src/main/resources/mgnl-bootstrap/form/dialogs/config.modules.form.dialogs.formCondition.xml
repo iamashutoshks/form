@@ -197,7 +197,7 @@
               <sv:value>8c01aab0-a96d-4207-b456-b60e2b167295</sv:value>
             </sv:property>
             <sv:property sv:name="class" sv:type="String">
-              <sv:value>info.magnolia.ui.form.field.definition.MultiFieldDefinition</sv:value>
+              <sv:value>info.magnolia.ui.form.field.definition.MultiValueFieldDefinition</sv:value>
             </sv:property>
             <sv:property sv:name="transformerClass" sv:type="String">
               <sv:value>info.magnolia.ui.form.field.transformer.multi.MultiValueSubChildrenNodePropertiesTransformer</sv:value>

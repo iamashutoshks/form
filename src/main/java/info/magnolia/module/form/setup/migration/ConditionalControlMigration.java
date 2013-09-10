@@ -37,7 +37,7 @@ import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.ui.dialog.setup.migration.ControlMigration;
 import info.magnolia.ui.form.field.definition.CompositeFieldDefinition;
-import info.magnolia.ui.form.field.definition.MultiFieldDefinition;
+import info.magnolia.ui.form.field.definition.MultiValueFieldDefinition;
 import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
 import info.magnolia.ui.form.field.transformer.composite.NoOpCompositeTransformer;
@@ -84,7 +84,7 @@ public class ConditionalControlMigration implements ControlMigration {
      */
     private void initMultiFieldConfiguration(Node controleNode) throws RepositoryException {
         // Set appropriate Field Definition
-        controleNode.setProperty("class", MultiFieldDefinition.class.getName());
+        controleNode.setProperty("class", MultiValueFieldDefinition.class.getName());
         // Add transformerClass
         controleNode.setProperty("transformerClass", MultiValueSubChildrenNodePropertiesTransformer.class.getName());
 
