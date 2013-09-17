@@ -12,8 +12,8 @@
   <description />
 
   <properties>
-    <magnoliaVersion>5.1-SNAPSHOT</magnoliaVersion>
-    <magnoliaUiVersion>5.1-SNAPSHOT</magnoliaUiVersion>
+    <magnoliaVersion>5.1-rc1</magnoliaVersion>
+    <magnoliaUiVersion>5.1-rc1</magnoliaUiVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
