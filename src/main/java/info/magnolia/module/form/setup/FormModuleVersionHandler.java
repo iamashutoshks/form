@@ -36,12 +36,14 @@ package info.magnolia.module.form.setup;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapSingleResource;
+import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
+import info.magnolia.module.delta.RemovePropertyTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.form.setup.migration.FormDialogMigrationTask;
 import info.magnolia.repository.RepositoryConstants;
@@ -54,6 +56,11 @@ import java.util.List;
  * VersionHandler for the form module.
  */
 public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
+
+    private static final String DIALOGS_PATH = "/modules/form/dialogs/";
+    private static final String COMMIT_ACTION = "/actions/commit";
+    private static final String CANCEL_ACTION = "/actions/cancel";
+    private static final List<String> DIALOGS = Arrays.asList(new String[] { "form", "formCondition", "formEdit", "formFile", "formGroupEdit", "formGroupEditItem", "formGroupFields", "formHidden", "formHoneypot", "formSelection", "formStep", "formSubmit", "formSummary" });
 
     public FormModuleVersionHandler() {
         register(DeltaBuilder.update("1.4", "")
@@ -83,6 +90,21 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType", "confirmContentType"))
         );
 
+        DeltaBuilder for21 = DeltaBuilder.update("2.1", "");
+        processDialogs(for21);
+        register(for21);
+
+    }
+
+    private void processDialogs(DeltaBuilder delta) {
+        for (String dialogName : DIALOGS) {
+            addLabelRemovalTasks(delta, dialogName);
+        }
+    }
+
+    private void addLabelRemovalTasks(DeltaBuilder delta, String dialogName) {
+        delta.addTask(new RemovePropertyTask("Remove commit action label from dialog " + dialogName, "Remove commit action label from dialog " + dialogName, RepositoryConstants.CONFIG, DIALOGS_PATH + dialogName + COMMIT_ACTION, "label"));
+        delta.addTask(new RemovePropertyTask("Remove cancel action label from dialog " + dialogName, "Remove cancel action label from dialog " + dialogName, RepositoryConstants.CONFIG, DIALOGS_PATH + dialogName + CANCEL_ACTION, "label"));
     }
 
     @Override
