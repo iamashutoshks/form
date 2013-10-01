@@ -55,10 +55,7 @@
             [#if requiredAttribute?has_content && content.type="checkbox" && content.controlName?has_content && formItems?size > 1]
                 <script type="text/javascript">
                     var checkboxes = document.getElementsByName("${content.controlName}");
-                    var element = checkboxes[0];
-                    while (element.nodeName != "FORM") {
-                        element = element.parentNode;
-                    }
+                    var element = checkboxes[0].form;
                     var valid = false;
                     element.onsubmit = function () {
                         for (var i = 0; i < checkboxes.length; i++) {
