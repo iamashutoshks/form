@@ -30,6 +30,11 @@
 
         [#if content.type?index_of("select") < 0 && content.labels?has_content]
             [#assign formItems=cmsfn.decode(content).labels?split("(\r\n|\r|\n|\x0085|\x2028|\x2029)", "rm")]
+            [#if formItems?size > 1 && content.type = "checkbox"]
+                [#assign renderedRequiredValue = ""]
+            [#else]
+                [#assign renderedRequiredValue = requiredAttribute]
+            [/#if]
             [#list formItems as label]
                 [#assign checked=""]
                 [#assign data=label?split(":")]
@@ -37,17 +42,10 @@
                 [#if model.value == data[1]!data[0] ]
                     [#assign checked="checked=\"checked\""]
                 [/#if]
-                [#if formItems?size > 1 && content.type = "checkbox"]
-                    <div class="form-item">
-                        <input type="${content.type}" id="${(content.controlName!'')}_${label_index}" name="${(content.controlName!'')}" value="${(data[1]!data[0])!?html}" ${checked!} />
-                        <label for="${(content.controlName!'')}_${label_index}">${data[0]!?html}</label>
-                    </div><!-- end form-item -->
-                [#else]
-                    <div class="form-item">
-                        <input ${requiredAttribute!} type="${content.type}" id="${(content.controlName!'')}_${label_index}" name="${(content.controlName!'')}" value="${(data[1]!data[0])!?html}" ${checked!} />
-                        <label for="${(content.controlName!'')}_${label_index}">${data[0]!?html}</label>
-                    </div><!-- end form-item -->
-                [/#if]
+                <div class="form-item">
+                    <input ${renderedRequiredValue!} type="${content.type}" id="${(content.controlName!'')}_${label_index}" name="${(content.controlName!'')}" value="${(data[1]!data[0])!?html}" ${checked!} />
+                    <label for="${(content.controlName!'')}_${label_index}">${data[0]!?html}</label>
+                </div><!-- end form-item -->
             [/#list]
             <div id="checkbox-error" class="text error" style="display:none">
                 <ul>
