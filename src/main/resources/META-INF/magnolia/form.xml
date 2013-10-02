@@ -19,7 +19,7 @@
     </dependency>
     <dependency>
       <name>templating</name>
-      <version>5.0/*</version>
+      <version>5.1/*</version>
     </dependency>
     <dependency>
       <name>mail</name>
