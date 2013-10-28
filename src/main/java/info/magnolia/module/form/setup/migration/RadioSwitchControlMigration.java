@@ -35,7 +35,7 @@ package info.magnolia.module.form.setup.migration;
 
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.ui.dialog.setup.migration.ControlMigration;
+import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
 import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
 
@@ -56,14 +56,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Migrate a ConditionalControl to a Switchable Field.
  */
-public class RadioSwitchControlMigration implements ControlMigration {
+public class RadioSwitchControlMigration implements ControlMigrator {
 
     private static final Logger log = LoggerFactory.getLogger(RadioSwitchControlMigration.class);
 
 
-    private HashMap<String, ControlMigration> controlMigrationMap;
+    private HashMap<String, ControlMigrator> controlMigrationMap;
 
-    public RadioSwitchControlMigration(HashMap<String, ControlMigration> controlMigrationMap) {
+    public RadioSwitchControlMigration(HashMap<String, ControlMigrator> controlMigrationMap) {
         this.controlMigrationMap = controlMigrationMap;
     }
 
@@ -121,7 +121,7 @@ public class RadioSwitchControlMigration implements ControlMigration {
             String controlTypeName = fieldNode.getProperty("controlType").getString();
 
             if (controlMigrationMap.containsKey(controlTypeName)) {
-                ControlMigration controlMigration = controlMigrationMap.get(controlTypeName);
+                ControlMigrator controlMigration = controlMigrationMap.get(controlTypeName);
                 controlMigration.migrate(fieldNode);
             } else {
                 fieldNode.setProperty("class", StaticFieldDefinition.class.getName());

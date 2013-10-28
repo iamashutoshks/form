@@ -34,7 +34,7 @@
 package info.magnolia.module.form.setup.migration;
 
 import info.magnolia.ui.dialog.setup.DialogMigrationTask;
-import info.magnolia.ui.dialog.setup.migration.ControlMigration;
+import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
 
 import java.util.HashMap;
 
@@ -43,17 +43,15 @@ import java.util.HashMap;
  */
 public class FormDialogMigrationTask extends DialogMigrationTask {
 
-    public FormDialogMigrationTask(String moduleName) {
-        super(moduleName);
+    public FormDialogMigrationTask(String taskName, String taskDescription, String moduleName) {
+        super(taskName, taskDescription, moduleName);
     }
 
     @Override
-    protected HashMap<String, ControlMigration> getCustomMigrationTask() {
-        HashMap<String, ControlMigration> customMigrationTask = super.getCustomMigrationTask();
-        customMigrationTask.put("info.magnolia.module.form.dialogs.DialogStaticWithFormParams", new StaticWithFormControlMigration());
-        customMigrationTask.put("info.magnolia.module.form.dialogs.DialogRadioSwitch", new RadioSwitchControlMigration(customMigrationTask));
-        customMigrationTask.put("info.magnolia.module.form.controls.ConditionControl", new ConditionalControlMigration());
-        return customMigrationTask;
+    protected void registerControlsToMigrate(HashMap<String, ControlMigrator> controlsToMigrate) {
+        controlsToMigrate.put("info.magnolia.module.form.dialogs.DialogStaticWithFormParams", new StaticWithFormControlMigration());
+        controlsToMigrate.put("info.magnolia.module.form.dialogs.DialogRadioSwitch", new RadioSwitchControlMigration(controlsToMigrate));
+        controlsToMigrate.put("info.magnolia.module.form.controls.ConditionControl", new ConditionalControlMigration());
     }
 
 }

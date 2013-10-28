@@ -77,7 +77,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         );
 
         register(DeltaBuilder.update("2.0", "")
-                .addTask(new FormDialogMigrationTask("form")));
+                .addTask(new FormDialogMigrationTask("Migrate M4.5 dialog definition", "Create the new M5 dialog definition. Add actions, tabs and fields definition", "form"))
+                .addTask(new BootstrapSingleResource("Bootstrap the registration of the static field definition", "", "/mgnl-bootstrap/form/config.modules.ui-framework.fieldTypes.formStaticField.xml")));
 
         register(DeltaBuilder.update("2.0.1", "")
                 .addTask(new BootstrapSingleResource("Bootstrap formHoneypot template", "Add formHoneypot as new form component.", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formHoneypot.xml"))

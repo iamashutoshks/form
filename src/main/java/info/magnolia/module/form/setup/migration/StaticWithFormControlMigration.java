@@ -34,7 +34,7 @@
 package info.magnolia.module.form.setup.migration;
 
 import info.magnolia.module.form.fields.definition.StaticFormFieldDefinition;
-import info.magnolia.ui.dialog.setup.migration.ControlMigration;
+import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -42,7 +42,7 @@ import javax.jcr.RepositoryException;
 /**
  * Migrate an Static control to a StaticField.
  */
-public class StaticWithFormControlMigration implements ControlMigration {
+public class StaticWithFormControlMigration implements ControlMigrator {
 
 
     @Override

@@ -35,7 +35,7 @@ package info.magnolia.module.form.setup.migration;
 
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
-import info.magnolia.ui.dialog.setup.migration.ControlMigration;
+import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
 import info.magnolia.ui.form.field.definition.CompositeFieldDefinition;
 import info.magnolia.ui.form.field.definition.MultiValueFieldDefinition;
 import info.magnolia.ui.form.field.definition.SelectFieldDefinition;
@@ -60,7 +60,7 @@ import javax.jcr.RepositoryException;
  * ----        TextField Definition (Field Value)<br>
  * </code>
  */
-public class ConditionalControlMigration implements ControlMigration {
+public class ConditionalControlMigration implements ControlMigrator {
 
     @Override
     public void migrate(Node controleNode) throws RepositoryException {

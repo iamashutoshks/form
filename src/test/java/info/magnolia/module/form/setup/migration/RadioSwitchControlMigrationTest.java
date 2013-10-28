@@ -38,11 +38,11 @@ import static org.junit.Assert.*;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.test.RepositoryTestCase;
-import info.magnolia.ui.dialog.setup.migration.ControlMigration;
-import info.magnolia.ui.dialog.setup.migration.EditCodeControlMigration;
-import info.magnolia.ui.dialog.setup.migration.EditControlMigration;
-import info.magnolia.ui.dialog.setup.migration.FckEditControlMigration;
-import info.magnolia.ui.dialog.setup.migration.LinkControlMigration;
+import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
+import info.magnolia.ui.dialog.setup.migration.EditCodeControlMigrator;
+import info.magnolia.ui.dialog.setup.migration.EditControlMigrator;
+import info.magnolia.ui.dialog.setup.migration.FckEditControlMigrator;
+import info.magnolia.ui.dialog.setup.migration.LinkControlMigrator;
 import info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
@@ -62,7 +62,7 @@ import org.junit.Test;
  */
 public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
     private Node controlNode;
-    private HashMap<String, ControlMigration> controlMigrationMap;
+    private HashMap<String, ControlMigrator> controlMigrationMap;
     private RadioSwitchControlMigration controlMigration;
 
     @Override
@@ -83,11 +83,11 @@ public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
 
         controlNode = MgnlContext.getJCRSession("config").getNode("/root/confirmContentType");
 
-        controlMigrationMap = new HashMap<String, ControlMigration>();
-        controlMigrationMap.put("edit", new EditControlMigration());
-        controlMigrationMap.put("fckEdit", new FckEditControlMigration());
-        controlMigrationMap.put("editCode", new EditCodeControlMigration());
-        controlMigrationMap.put("link", new LinkControlMigration());
+        controlMigrationMap = new HashMap<String, ControlMigrator>();
+        controlMigrationMap.put("edit", new EditControlMigrator());
+        controlMigrationMap.put("fckEdit", new FckEditControlMigrator());
+        controlMigrationMap.put("editCode", new EditCodeControlMigrator());
+        controlMigrationMap.put("link", new LinkControlMigrator());
 
     }
 
