@@ -13,7 +13,7 @@
 
   <properties>
     <magnoliaVersion>5.1.1</magnoliaVersion>
-    <magnoliaUiVersion>5.1.1</magnoliaUiVersion>
+    <magnoliaUiVersion>5.2-SNAPSHOT</magnoliaUiVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
   </properties>
