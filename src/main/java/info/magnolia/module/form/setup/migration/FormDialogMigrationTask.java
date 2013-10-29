@@ -48,7 +48,7 @@ public class FormDialogMigrationTask extends DialogMigrationTask {
     }
 
     @Override
-    protected void registerControlsToMigrate(HashMap<String, ControlMigrator> controlsToMigrate) {
+    protected void addCustomControlsToMigrate(HashMap<String, ControlMigrator> controlsToMigrate) {
         controlsToMigrate.put("info.magnolia.module.form.dialogs.DialogStaticWithFormParams", new StaticWithFormControlMigration());
         controlsToMigrate.put("info.magnolia.module.form.dialogs.DialogRadioSwitch", new RadioSwitchControlMigration(controlsToMigrate));
         controlsToMigrate.put("info.magnolia.module.form.controls.ConditionControl", new ConditionalControlMigration());
