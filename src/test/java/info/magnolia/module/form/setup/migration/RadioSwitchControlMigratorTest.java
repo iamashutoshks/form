@@ -60,7 +60,7 @@ import org.junit.Test;
 /**
  * Test class.
  */
-public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
+public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
     private Node controlNode;
     private HashMap<String, ControlMigrator> controlMigrationMap;
     private RadioSwitchControlMigrator controlMigration;

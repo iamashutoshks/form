@@ -57,7 +57,7 @@ import org.junit.Test;
 /**
  * Test class.
  */
-public class ConditionalControlMigrationTest extends RepositoryTestCase {
+public class ConditionalControlMigratorTest extends RepositoryTestCase {
     private Node controlNode;
     private ConditionalControlMigrator migrationTask;
 
