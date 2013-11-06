@@ -59,7 +59,7 @@ import org.junit.Test;
  */
 public class ConditionalControlMigrationTest extends RepositoryTestCase {
     private Node controlNode;
-    private ConditionalControlMigration migrationTask;
+    private ConditionalControlMigrator migrationTask;
 
     @Override
     @Before
@@ -84,7 +84,7 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testMultiFieldCreation() throws RepositoryException {
         // GIVEN
-        migrationTask = new ConditionalControlMigration();
+        migrationTask = new ConditionalControlMigrator();
 
         // WHEN
         migrationTask.migrate(controlNode);
@@ -102,7 +102,7 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testCompositeFieldCreation() throws RepositoryException {
         // GIVEN
-        migrationTask = new ConditionalControlMigration();
+        migrationTask = new ConditionalControlMigrator();
 
         // WHEN
         migrationTask.migrate(controlNode);
@@ -122,7 +122,7 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testCompositeFieldOptionsCreation() throws RepositoryException {
         // GIVEN
-        migrationTask = new ConditionalControlMigration();
+        migrationTask = new ConditionalControlMigrator();
 
         // WHEN
         migrationTask.migrate(controlNode);
@@ -145,7 +145,7 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testCompositeFieldTextValueCreation() throws RepositoryException {
         // GIVEN
-        migrationTask = new ConditionalControlMigration();
+        migrationTask = new ConditionalControlMigrator();
 
         // WHEN
         migrationTask.migrate(controlNode);
@@ -160,7 +160,7 @@ public class ConditionalControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testCompositeFieldTextNameCreation() throws RepositoryException {
         // GIVEN
-        migrationTask = new ConditionalControlMigration();
+        migrationTask = new ConditionalControlMigrator();
 
         // WHEN
         migrationTask.migrate(controlNode);

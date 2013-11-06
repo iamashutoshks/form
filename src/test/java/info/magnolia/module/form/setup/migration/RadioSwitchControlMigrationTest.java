@@ -63,7 +63,7 @@ import org.junit.Test;
 public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
     private Node controlNode;
     private HashMap<String, ControlMigrator> controlMigrationMap;
-    private RadioSwitchControlMigration controlMigration;
+    private RadioSwitchControlMigrator controlMigration;
 
     @Override
     @Before
@@ -94,7 +94,7 @@ public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testSwitchableFieldCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigration(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
 
         // WHEN
         controlMigration.migrate(controlNode);
@@ -110,7 +110,7 @@ public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testSwitchableOptionsCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigration(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
 
         // WHEN
         controlMigration.migrate(controlNode);
@@ -126,7 +126,7 @@ public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testSwitchableFieldFieldsCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigration(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
 
         // WHEN
         controlMigration.migrate(controlNode);
@@ -142,7 +142,7 @@ public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testSwitchableFieldsHtmlCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigration(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
 
         // WHEN
         controlMigration.migrate(controlNode);
@@ -160,7 +160,7 @@ public class RadioSwitchControlMigrationTest extends RepositoryTestCase {
     @Test
     public void testSwitchableFieldsTextCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigration(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
 
         // WHEN
         controlMigration.migrate(controlNode);

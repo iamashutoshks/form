@@ -42,7 +42,7 @@ import javax.jcr.RepositoryException;
 /**
  * Migrate an Static control to a StaticField.
  */
-public class StaticWithFormControlMigration implements ControlMigrator {
+public class StaticWithFormControlMigrator implements ControlMigrator {
 
 
     @Override

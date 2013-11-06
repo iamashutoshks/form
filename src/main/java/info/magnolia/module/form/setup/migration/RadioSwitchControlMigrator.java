@@ -56,14 +56,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Migrate a ConditionalControl to a Switchable Field.
  */
-public class RadioSwitchControlMigration implements ControlMigrator {
+public class RadioSwitchControlMigrator implements ControlMigrator {
 
-    private static final Logger log = LoggerFactory.getLogger(RadioSwitchControlMigration.class);
+    private static final Logger log = LoggerFactory.getLogger(RadioSwitchControlMigrator.class);
 
 
     private HashMap<String, ControlMigrator> controlMigrationMap;
 
-    public RadioSwitchControlMigration(HashMap<String, ControlMigrator> controlMigrationMap) {
+    public RadioSwitchControlMigrator(HashMap<String, ControlMigrator> controlMigrationMap) {
         this.controlMigrationMap = controlMigrationMap;
     }
 

@@ -60,7 +60,7 @@ import javax.jcr.RepositoryException;
  * ----        TextField Definition (Field Value)<br>
  * </code>
  */
-public class ConditionalControlMigration implements ControlMigrator {
+public class ConditionalControlMigrator implements ControlMigrator {
 
     @Override
     public void migrate(Node controleNode) throws RepositoryException {
