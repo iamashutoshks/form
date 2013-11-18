@@ -39,13 +39,10 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
-import info.magnolia.migration.reporting.DefaultReportingService;
-import info.magnolia.migration.reporting.ReportingService;
 import info.magnolia.module.ModuleVersionHandler;
 import info.magnolia.module.ModuleVersionHandlerTestCase;
 import info.magnolia.module.model.Version;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.test.ComponentsTestUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +50,6 @@ import java.util.List;
 import javax.jcr.Node;
 import javax.jcr.Session;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -84,13 +80,6 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
                 "/META-INF/magnolia/activation.xml",
                 "/META-INF/magnolia/mail.xml"
                 );
-    }
-
-    @Override
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
-        ComponentsTestUtil.setInstance(ReportingService.class, new DefaultReportingService());
     }
 
     @Test
