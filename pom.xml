@@ -49,12 +49,6 @@
     </dependency>
     <dependency>
       <groupId>info.magnolia</groupId>
-      <artifactId>magnolia-module-legacy-admininterface</artifactId>
-      <version>5.0.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>info.magnolia</groupId>
       <artifactId>magnolia-templating</artifactId>
       <version>${magnoliaVersion}</version>
       <scope>provided</scope>
