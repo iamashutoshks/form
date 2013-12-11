@@ -37,8 +37,8 @@ import static org.junit.Assert.*;
 
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.test.RepositoryTestCase;
-import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.EditCodeControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.EditControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.FckEditControlMigrator;
@@ -46,9 +46,9 @@ import info.magnolia.ui.dialog.setup.migration.LinkControlMigrator;
 import info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
+import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
 
 import java.io.InputStream;
-import java.util.HashMap;
 
 import javax.jcr.ImportUUIDBehavior;
 import javax.jcr.Node;
@@ -62,7 +62,6 @@ import org.junit.Test;
  */
 public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
     private Node controlNode;
-    private HashMap<String, ControlMigrator> controlMigrationMap;
     private RadioSwitchControlMigrator controlMigration;
 
     @Override
@@ -83,21 +82,21 @@ public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
 
         controlNode = MgnlContext.getJCRSession("config").getNode("/root/confirmContentType");
 
-        controlMigrationMap = new HashMap<String, ControlMigrator>();
-        controlMigrationMap.put("edit", new EditControlMigrator());
-        controlMigrationMap.put("fckEdit", new FckEditControlMigrator());
-        controlMigrationMap.put("editCode", new EditCodeControlMigrator());
-        controlMigrationMap.put("link", new LinkControlMigrator());
+        ControlMigratorsRegistry registery = Components.getComponent(ControlMigratorsRegistry.class);
+        registery.register("edit", new EditControlMigrator());
+        registery.register("fckEdit", new FckEditControlMigrator());
+        registery.register("editCode", new EditCodeControlMigrator());
+        registery.register("link", new LinkControlMigrator());
 
     }
 
     @Test
     public void testSwitchableFieldCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator();
 
         // WHEN
-        controlMigration.migrate(controlNode);
+        controlMigration.migrate(controlNode, null);
 
         // THEN
         assertNotNull(controlNode);
@@ -110,10 +109,10 @@ public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
     @Test
     public void testSwitchableOptionsCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator();
 
         // WHEN
-        controlMigration.migrate(controlNode);
+        controlMigration.migrate(controlNode, null);
 
         // THEN
         assertNotNull(controlNode);
@@ -126,10 +125,10 @@ public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
     @Test
     public void testSwitchableFieldFieldsCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator();
 
         // WHEN
-        controlMigration.migrate(controlNode);
+        controlMigration.migrate(controlNode, null);
 
         // THEN
         assertTrue(controlNode.hasNode("fields"));
@@ -142,10 +141,10 @@ public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
     @Test
     public void testSwitchableFieldsHtmlCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator();
 
         // WHEN
-        controlMigration.migrate(controlNode);
+        controlMigration.migrate(controlNode, null);
 
         // THEN
         assertTrue(controlNode.hasNode("fields/html"));
@@ -160,10 +159,10 @@ public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
     @Test
     public void testSwitchableFieldsTextCreation() throws RepositoryException {
         // GIVEN
-        controlMigration = new RadioSwitchControlMigrator(controlMigrationMap);
+        controlMigration = new RadioSwitchControlMigrator();
 
         // WHEN
-        controlMigration.migrate(controlNode);
+        controlMigration.migrate(controlNode, null);
 
         // THEN
         assertTrue(controlNode.hasNode("fields/text"));

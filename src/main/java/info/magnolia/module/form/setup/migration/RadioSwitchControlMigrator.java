@@ -35,14 +35,18 @@ package info.magnolia.module.form.setup.migration;
 
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.module.InstallContext;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
 import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
+import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -61,10 +65,10 @@ public class RadioSwitchControlMigrator implements ControlMigrator {
     private static final Logger log = LoggerFactory.getLogger(RadioSwitchControlMigrator.class);
 
 
-    private HashMap<String, ControlMigrator> controlMigrationMap;
+    private Map<String, ControlMigrator> controlMigrationMap;
 
-    public RadioSwitchControlMigrator(HashMap<String, ControlMigrator> controlMigrationMap) {
-        this.controlMigrationMap = controlMigrationMap;
+    public RadioSwitchControlMigrator() {
+        this.controlMigrationMap = Components.getComponent(ControlMigratorsRegistry.class).getAllMigrators();
     }
 
     /**
@@ -74,7 +78,7 @@ public class RadioSwitchControlMigrator implements ControlMigrator {
      * - Handle Fields set. <br>
      */
     @Override
-    public void migrate(Node controlNode) throws RepositoryException {
+    public void migrate(Node controlNode, InstallContext installContext) throws RepositoryException {
         HashMap<String, Node> optionFieldsMap = new HashMap<String, Node>();
 
         controlNode.getProperty("controlType").remove();
@@ -85,7 +89,7 @@ public class RadioSwitchControlMigrator implements ControlMigrator {
             // Handle Options
             handleOptions(options, optionFieldsMap);
             // Handle Fields
-            handleFields(controlNode, optionFieldsMap);
+            handleFields(controlNode, optionFieldsMap, installContext);
             // Remove the option controls nodes.
             removeOptionControls(optionFieldsMap);
         } else {
@@ -94,7 +98,7 @@ public class RadioSwitchControlMigrator implements ControlMigrator {
 
     }
 
-    private void handleFields(Node controlNode, HashMap<String, Node> optionFieldsMap) throws RepositoryException {
+    private void handleFields(Node controlNode, HashMap<String, Node> optionFieldsMap, InstallContext installContext) throws RepositoryException {
         // Init
         Workspace workspace = controlNode.getSession().getWorkspace();
         // create the root Fields Node
@@ -111,24 +115,24 @@ public class RadioSwitchControlMigrator implements ControlMigrator {
         // Iterate the newly created controles and migrate them
         Iterator<Node> controlsIterator = NodeUtil.getNodes(fields, NodeTypes.ContentNode.NAME).iterator();
         while (controlsIterator.hasNext()) {
-            handleField(controlsIterator.next());
+            handleField(controlsIterator.next(), installContext);
         }
 
     }
 
-    private void handleField(Node fieldNode) throws RepositoryException {
+    private void handleField(Node fieldNode, InstallContext installContext) throws RepositoryException {
         if (fieldNode.hasProperty("controlType")) {
             String controlTypeName = fieldNode.getProperty("controlType").getString();
 
             if (controlMigrationMap.containsKey(controlTypeName)) {
                 ControlMigrator controlMigration = controlMigrationMap.get(controlTypeName);
-                controlMigration.migrate(fieldNode);
+                controlMigration.migrate(fieldNode, installContext);
             } else {
                 fieldNode.setProperty("class", StaticFieldDefinition.class.getName());
                 if (!fieldNode.hasProperty("value")) {
                     fieldNode.setProperty("value", "Field not yet supported");
                 }
-                log.warn("No dialog define for control '{}' for node '{}'", controlTypeName, fieldNode.getPath());
+                log.warn("No field defined for control '{}' for node '{}'", controlTypeName, fieldNode.getPath());
             }
         } else {
             fieldNode.setProperty("class", StaticFieldDefinition.class.getName());

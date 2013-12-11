@@ -35,6 +35,7 @@ package info.magnolia.module.form.setup.migration;
 
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.module.InstallContext;
 import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
 import info.magnolia.ui.form.field.definition.CompositeFieldDefinition;
 import info.magnolia.ui.form.field.definition.MultiValueFieldDefinition;
@@ -63,7 +64,7 @@ import javax.jcr.RepositoryException;
 public class ConditionalControlMigrator implements ControlMigrator {
 
     @Override
-    public void migrate(Node controleNode) throws RepositoryException {
+    public void migrate(Node controleNode, InstallContext installContext) throws RepositoryException {
         // Set MultiField Configuration
         initMultiFieldConfiguration(controleNode);
 

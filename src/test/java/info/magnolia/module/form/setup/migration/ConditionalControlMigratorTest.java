@@ -87,7 +87,7 @@ public class ConditionalControlMigratorTest extends RepositoryTestCase {
         migrationTask = new ConditionalControlMigrator();
 
         // WHEN
-        migrationTask.migrate(controlNode);
+        migrationTask.migrate(controlNode, null);
 
         // THEN
         assertNotNull(controlNode);
@@ -105,7 +105,7 @@ public class ConditionalControlMigratorTest extends RepositoryTestCase {
         migrationTask = new ConditionalControlMigrator();
 
         // WHEN
-        migrationTask.migrate(controlNode);
+        migrationTask.migrate(controlNode, null);
 
         // THEN
         assertTrue(controlNode.hasNode("field"));
@@ -125,7 +125,7 @@ public class ConditionalControlMigratorTest extends RepositoryTestCase {
         migrationTask = new ConditionalControlMigrator();
 
         // WHEN
-        migrationTask.migrate(controlNode);
+        migrationTask.migrate(controlNode, null);
 
         // THEN
         assertTrue(controlNode.hasNode("field/fields/condition"));
@@ -148,7 +148,7 @@ public class ConditionalControlMigratorTest extends RepositoryTestCase {
         migrationTask = new ConditionalControlMigrator();
 
         // WHEN
-        migrationTask.migrate(controlNode);
+        migrationTask.migrate(controlNode, null);
 
         // THEN
         assertTrue(controlNode.hasNode("field/fields/fieldValue"));
@@ -163,7 +163,7 @@ public class ConditionalControlMigratorTest extends RepositoryTestCase {
         migrationTask = new ConditionalControlMigrator();
 
         // WHEN
-        migrationTask.migrate(controlNode);
+        migrationTask.migrate(controlNode, null);
 
         // THEN
         assertTrue(controlNode.hasNode("field/fields/fieldName"));
