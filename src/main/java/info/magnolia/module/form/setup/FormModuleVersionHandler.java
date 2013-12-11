@@ -44,12 +44,18 @@ import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyExistsDelegateTask;
 import info.magnolia.module.delta.RemovePropertyTask;
 import info.magnolia.module.delta.Task;
-import info.magnolia.module.form.setup.migration.FormDialogMigrationTask;
+import info.magnolia.module.form.setup.migration.ConditionalControlMigrator;
+import info.magnolia.module.form.setup.migration.RadioSwitchControlMigrator;
+import info.magnolia.module.form.setup.migration.StaticWithFormControlMigrator;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
+import info.magnolia.ui.framework.setup.migration.for5_0.RegistryDialogMigrationTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.google.inject.Inject;
 
 /**
  * VersionHandler for the form module.
@@ -61,7 +67,12 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
     private static final String CANCEL_ACTION = "/actions/cancel";
     private static final List<String> DIALOGS = Arrays.asList(new String[] { "form", "formCondition", "formEdit", "formFile", "formGroupEdit", "formGroupEditItem", "formGroupFields", "formHidden", "formHoneypot", "formSelection", "formStep", "formSubmit", "formSummary" });
 
-    public FormModuleVersionHandler() {
+    @Inject
+    public FormModuleVersionHandler(ControlMigratorsRegistry controlMigratorsRegistry) {
+        // Register control migration task.
+        controlMigratorsRegistry.register("info.magnolia.module.form.dialogs.DialogStaticWithFormParams", new StaticWithFormControlMigrator());
+        controlMigratorsRegistry.register("info.magnolia.module.form.dialogs.DialogRadioSwitch", new RadioSwitchControlMigrator());
+        controlMigratorsRegistry.register("info.magnolia.module.form.controls.ConditionControl", new ConditionalControlMigrator());
 
         register(DeltaBuilder.checkPrecondition("1.4", "2.0"));
 
@@ -76,7 +87,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         );
 
         register(DeltaBuilder.update("2.0", "")
-                .addTask(new FormDialogMigrationTask("Migrate M4.5 dialog definition", "Create the new M5 dialog definition. Add actions, tabs and fields definition", "form"))
+                .addTask(new RegistryDialogMigrationTask("form"))
                 .addTask(new BootstrapSingleResource("Bootstrap the registration of the static field definition", "", "/mgnl-bootstrap/form/config.modules.ui-framework.fieldTypes.formStaticField.xml")));
 
         register(DeltaBuilder.update("2.0.1", "")

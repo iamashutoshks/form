@@ -42,7 +42,9 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.ModuleVersionHandler;
 import info.magnolia.module.ModuleVersionHandlerTestCase;
 import info.magnolia.module.model.Version;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,7 +66,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
     @Override
     protected ModuleVersionHandler newModuleVersionHandlerForTests() {
-        return new FormModuleVersionHandler();
+        return new FormModuleVersionHandler(Components.getComponent(ControlMigratorsRegistry.class));
     }
 
     @Override
