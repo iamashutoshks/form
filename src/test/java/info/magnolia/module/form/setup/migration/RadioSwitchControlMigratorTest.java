@@ -39,6 +39,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.test.RepositoryTestCase;
+import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
 import info.magnolia.ui.dialog.setup.migration.EditCodeControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.EditControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.FckEditControlMigrator;
@@ -46,7 +47,6 @@ import info.magnolia.ui.dialog.setup.migration.LinkControlMigrator;
 import info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
-import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
 
 import java.io.InputStream;
 

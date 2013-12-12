@@ -44,7 +44,7 @@ import info.magnolia.module.ModuleVersionHandlerTestCase;
 import info.magnolia.module.model.Version;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
+import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
 
 import java.util.Arrays;
 import java.util.List;

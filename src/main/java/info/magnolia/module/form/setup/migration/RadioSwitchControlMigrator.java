@@ -38,9 +38,9 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.ui.dialog.setup.migration.ControlMigrator;
+import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
 import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
-import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
 
 import java.util.Collection;
 import java.util.HashMap;

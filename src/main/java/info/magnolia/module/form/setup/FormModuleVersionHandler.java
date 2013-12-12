@@ -48,8 +48,8 @@ import info.magnolia.module.form.setup.migration.ConditionalControlMigrator;
 import info.magnolia.module.form.setup.migration.RadioSwitchControlMigrator;
 import info.magnolia.module.form.setup.migration.StaticWithFormControlMigrator;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.ui.framework.setup.migration.for5_0.ControlMigratorsRegistry;
-import info.magnolia.ui.framework.setup.migration.for5_0.RegistryDialogMigrationTask;
+import info.magnolia.ui.dialog.setup.DialogMigrationTask;
+import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -87,7 +87,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         );
 
         register(DeltaBuilder.update("2.0", "")
-                .addTask(new RegistryDialogMigrationTask("form"))
+                .addTask(new DialogMigrationTask("form"))
                 .addTask(new BootstrapSingleResource("Bootstrap the registration of the static field definition", "", "/mgnl-bootstrap/form/config.modules.ui-framework.fieldTypes.formStaticField.xml")));
 
         register(DeltaBuilder.update("2.0.1", "")
