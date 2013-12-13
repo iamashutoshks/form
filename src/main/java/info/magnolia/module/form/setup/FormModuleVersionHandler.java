@@ -55,7 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
 
 /**
  * VersionHandler for the form module.
