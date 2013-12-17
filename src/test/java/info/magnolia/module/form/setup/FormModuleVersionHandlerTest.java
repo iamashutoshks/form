@@ -52,12 +52,21 @@ import java.util.List;
 import javax.jcr.Node;
 import javax.jcr.Session;
 
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * Tests for the Form module VersionHandler.
  */
 public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
+
+    private Session session;
+
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        session = MgnlContext.getJCRSession(RepositoryConstants.CONFIG);
+    }
 
     @Override
     protected String getModuleDescriptorPath() {
@@ -88,7 +97,6 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
     public void updateTo21DialogActionsUseKeysAsLabels() throws Exception {
         // GIVEN
         List<String> dialogs = Arrays.asList(new String[] { "form", "formCondition", "formEdit", "formFile", "formGroupEdit", "formGroupEditItem", "formGroupFields", "formHidden", "formHoneypot", "formSelection", "formStep", "formSubmit", "formSummary" });
-        Session session = MgnlContext.getJCRSession(RepositoryConstants.CONFIG);
         for (String dialog : dialogs) {
             Node commit = NodeUtil.createPath(session.getRootNode(), "modules/form/dialogs/" + dialog + "/actions/commit", NodeTypes.ContentNode.NAME);
             PropertyUtil.setProperty(commit, "label", "save changes");
@@ -106,6 +114,18 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
             assertFalse("Commit action label still hardcoded in dialog [" + dialog + "]", commit.hasProperty("label"));
             assertFalse("Cancel action label still hardcoded in dialog [" + dialog + "]", cancel.hasProperty("label"));
         }
+    }
+
+    @Test
+    public void updateFrom145() throws Exception {
+        //GIVEN
+        this.setupConfigNode("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType");
+        this.setupConfigNode("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("1.4.5"));
+
+        // THEN no errors
     }
 
 }
