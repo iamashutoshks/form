@@ -63,13 +63,7 @@ import org.slf4j.LoggerFactory;
 public class RadioSwitchControlMigrator implements ControlMigrator {
 
     private static final Logger log = LoggerFactory.getLogger(RadioSwitchControlMigrator.class);
-
-
     private Map<String, ControlMigrator> controlMigrationMap;
-
-    public RadioSwitchControlMigrator() {
-        this.controlMigrationMap = Components.getComponent(ControlMigratorsRegistry.class).getAllMigrators();
-    }
 
     /**
      * Steps <br>
@@ -80,6 +74,7 @@ public class RadioSwitchControlMigrator implements ControlMigrator {
     @Override
     public void migrate(Node controlNode, InstallContext installContext) throws RepositoryException {
         HashMap<String, Node> optionFieldsMap = new HashMap<String, Node>();
+        this.controlMigrationMap = Components.getComponent(ControlMigratorsRegistry.class).getAllMigrators();
 
         controlNode.getProperty("controlType").remove();
         controlNode.setProperty("class", SwitchableFieldDefinition.class.getName());
