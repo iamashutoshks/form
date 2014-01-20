@@ -37,6 +37,7 @@ import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.DeltaBuilder;
+import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.RemovePropertyTask;
@@ -84,12 +85,21 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new BootstrapSingleResource("Bootstrap 'empty' validator", "Add validator for empty field.", "/mgnl-bootstrap/form/validators/config.modules.form.config.validators.empty.xml"))
 
                 .addTask(new PartialBootstrapTask("Mail type", "Bootstraps dialog option for mail type to be sent overriding content type in the process.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml", "/form/form/tabs/tabConfirmEmail/fields/confirmMailType"))
-                .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType", "confirmContentType"))
+                .addTask(new NodeExistsDelegateTask("Order field 'confirmMailType'", "Order field 'confirmMailType' if 'confirmContentType' field exists.", RepositoryConstants.CONFIG,
+                        "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType",
+                        new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG,
+                                "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType", "confirmContentType")))
         );
 
         DeltaBuilder for21 = DeltaBuilder.update("2.1", "");
         processDialogs(for21);
         register(for21);
+
+        register(DeltaBuilder.update("2.2.2", "")
+                .addTask(new BootstrapSingleResource("Bootstrap 'formStaticField'", "Bootstrap 'formStaticField' into 'ui-framework/fieldTypes'.",
+                        "/mgnl-bootstrap/form/config.modules.ui-framework.fieldTypes.formStaticField.xml"))
+                .addTask(new RebootstrapDialogsIfNotMigratedTask(DIALOGS))
+        );
 
     }
 
