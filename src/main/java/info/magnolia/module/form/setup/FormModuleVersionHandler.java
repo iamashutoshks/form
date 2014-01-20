@@ -71,15 +71,15 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
 
     private final Task rebootstrapBrokenDialogsTask = new ArrayDelegateTask("",
 
-            new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType", "class",
+            new PropertyValueDelegateTask("Rebootstrap 'form' 'dialog' if it's broken.", "Rebootstrap 'form' 'dialog' if it's broken.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType", "class",
                     StaticFieldDefinition.class.getCanonicalName(), true,
-                    new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml",
-                            "/form/form/tabs/")),
+                    new BootstrapSingleResource("Rebootstrap 'form' dialog", "Rebootstraps 'form' dialog.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml"
+                    )),
 
-            new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition", "class",
-                    StaticFieldDefinition.class.getCanonicalName(), true,
-                    new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formCondition.xml",
-                            "/formCondition/form/tabs/tabMain/fields/condition"))
+            new PropertyValueDelegateTask("Rebootstrap 'condition' tab into 'formCondition dialog' if broken", "Rebootstraps 'condition' tab into 'formCondition dialog' if it's broken.", RepositoryConstants.CONFIG,
+                    "/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition", "class", StaticFieldDefinition.class.getCanonicalName(), true,
+                    new PartialBootstrapTask("Rebootstrap 'condition' tab into 'formCondition dialog'", "Rebootstraps 'condition' tab into 'formCondition dialog'",
+                            "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formCondition.xml", "/formCondition/form/tabs/tabMain/fields/condition"))
             );
 
     @Inject
