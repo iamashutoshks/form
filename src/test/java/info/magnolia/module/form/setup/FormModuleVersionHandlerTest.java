@@ -45,6 +45,9 @@ import info.magnolia.module.model.Version;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
+import info.magnolia.ui.form.field.definition.MultiValueFieldDefinition;
+import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
+import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,16 +59,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the Form module VersionHandler.
+ * Tests for {@link FormModuleVersionHandler}.
  */
 public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
     private Session session;
 
+    @Override
     @Before
     public void setUp() throws Exception {
         super.setUp();
         session = MgnlContext.getJCRSession(RepositoryConstants.CONFIG);
+        // for 2.2.2 update:
+        this.setupConfigProperty("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType", "class", StaticFieldDefinition.class.getCanonicalName());
+        this.setupConfigProperty("/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition", "class", StaticFieldDefinition.class.getCanonicalName());
     }
 
     @Override
@@ -118,7 +125,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
     @Test
     public void updateFrom145() throws Exception {
-        //GIVEN
+        // GIVEN
         this.setupConfigNode("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType");
         this.setupConfigNode("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType");
 
@@ -126,6 +133,18 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("1.4.5"));
 
         // THEN no errors
+    }
+
+    @Test
+    public void updateFrom221() throws Exception {
+        // GIVEN
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.1"));
+
+        // THEN
+        assertEquals(SwitchableFieldDefinition.class.getCanonicalName(), session.getProperty("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/class").getString());
+        assertEquals(MultiValueFieldDefinition.class.getCanonicalName(), session.getProperty("/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition/class").getString());
     }
 
 }

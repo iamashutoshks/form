@@ -35,11 +35,14 @@ package info.magnolia.module.form.setup;
 
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
+import info.magnolia.module.delta.ArrayDelegateTask;
+import info.magnolia.module.delta.BootstrapConditionally;
 import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
+import info.magnolia.module.delta.PropertyValueDelegateTask;
 import info.magnolia.module.delta.RemovePropertyTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.form.setup.migration.ConditionalControlMigrator;
@@ -48,6 +51,7 @@ import info.magnolia.module.form.setup.migration.StaticWithFormControlMigrator;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.setup.DialogMigrationTask;
 import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
+import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,6 +68,19 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
     private static final String COMMIT_ACTION = "/actions/commit";
     private static final String CANCEL_ACTION = "/actions/cancel";
     private static final List<String> DIALOGS = Arrays.asList(new String[] { "form", "formCondition", "formEdit", "formFile", "formGroupEdit", "formGroupEditItem", "formGroupFields", "formHidden", "formHoneypot", "formSelection", "formStep", "formSubmit", "formSummary" });
+
+    private final Task rebootstrapBrokenDialogsTask = new ArrayDelegateTask("",
+
+            new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType", "class",
+                    StaticFieldDefinition.class.getCanonicalName(), true,
+                    new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml",
+                            "/form/form/tabs/")),
+
+            new PropertyValueDelegateTask("", "", RepositoryConstants.CONFIG, "/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition", "class",
+                    StaticFieldDefinition.class.getCanonicalName(), true,
+                    new PartialBootstrapTask("", "", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formCondition.xml",
+                            "/formCondition/form/tabs/tabMain/fields/condition"))
+            );
 
     @Inject
     public FormModuleVersionHandler(ControlMigratorsRegistry controlMigratorsRegistry) {
@@ -88,18 +105,16 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new NodeExistsDelegateTask("Order field 'confirmMailType'", "Order field 'confirmMailType' if 'confirmContentType' field exists.", RepositoryConstants.CONFIG,
                         "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType",
                         new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG,
-                                "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType", "confirmContentType")))
-        );
+                                "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType", "confirmContentType"))));
 
         DeltaBuilder for21 = DeltaBuilder.update("2.1", "");
         processDialogs(for21);
         register(for21);
 
         register(DeltaBuilder.update("2.2.2", "")
-                .addTask(new BootstrapSingleResource("Bootstrap 'formStaticField'", "Bootstrap 'formStaticField' into 'ui-framework/fieldTypes'.",
+                .addTask(new BootstrapConditionally("Bootstrap 'formStaticField'", "Bootstrap 'formStaticField' into 'ui-framework/fieldTypes'.",
                         "/mgnl-bootstrap/form/config.modules.ui-framework.fieldTypes.formStaticField.xml"))
-        );
-
+                .addTask(rebootstrapBrokenDialogsTask));
     }
 
     private void processDialogs(DeltaBuilder delta) {
