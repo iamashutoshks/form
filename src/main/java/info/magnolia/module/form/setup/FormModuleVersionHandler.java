@@ -98,7 +98,6 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("2.2.2", "")
                 .addTask(new BootstrapSingleResource("Bootstrap 'formStaticField'", "Bootstrap 'formStaticField' into 'ui-framework/fieldTypes'.",
                         "/mgnl-bootstrap/form/config.modules.ui-framework.fieldTypes.formStaticField.xml"))
-                .addTask(new RebootstrapDialogsIfNotMigratedTask(DIALOGS))
         );
 
     }
