@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2013 Magnolia International
+ * This file Copyright (c) 2013-2014 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -45,6 +45,7 @@ import info.magnolia.ui.dialog.setup.migration.EditControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.FckEditControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.LinkControlMigrator;
 import info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition;
+import info.magnolia.ui.form.field.definition.RichTextFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
 
@@ -170,4 +171,26 @@ public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
         assertTrue(text.hasProperty("class"));
         assertEquals(TextFieldDefinition.class.getName(), text.getProperty("class").getString());
     }
+
+    @Test
+    public void testControlMigratorsRegistry() throws RepositoryException {
+        // GIVEN
+        controlNode.getNode("options/html/controls/html").setProperty("controlType", "newControl");
+        controlNode.getSession().save();
+        // Init RadioSwitchControlMigrator
+        controlMigration = new RadioSwitchControlMigrator();
+        // Add a migrator to the ControlMigratorsRegistry
+        Components.getComponent(ControlMigratorsRegistry.class).register("newControl", new FckEditControlMigrator());
+
+        // WHEN
+        controlMigration.migrate(controlNode, null);
+
+        // THEN
+        // Control was successfully migrated.
+        assertTrue(controlNode.hasNode("fields/html"));
+        Node html = controlNode.getNode("fields/html");
+        assertTrue(html.hasProperty("class"));
+        assertEquals(RichTextFieldDefinition.class.getName(), html.getProperty("class").getString());
+    }
+
 }
