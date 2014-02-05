@@ -10,11 +10,11 @@
   <dependencies>
     <dependency>
       <name>core</name>
-      <version>5.2/*</version>
+      <version>5.2.2/*</version>
     </dependency>
     <dependency>
       <name>templating</name>
-      <version>5.2/*</version>
+      <version>5.2.2/*</version>
     </dependency>
     <dependency>
       <name>mail</name>
