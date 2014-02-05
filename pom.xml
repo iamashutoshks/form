@@ -3,7 +3,7 @@
   <parent>
     <groupId>info.magnolia</groupId>
     <artifactId>magnolia-parent-pom-community-module</artifactId>
-    <version>27</version>
+    <version>28</version>
   </parent>
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
