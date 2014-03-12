@@ -45,6 +45,7 @@ import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyValueDelegateTask;
 import info.magnolia.module.delta.RemovePropertyTask;
 import info.magnolia.module.delta.Task;
+import info.magnolia.module.form.setup.migration.AddMissingDefaultValuesToFieldsTask;
 import info.magnolia.module.form.setup.migration.ConditionalControlMigrator;
 import info.magnolia.module.form.setup.migration.RadioSwitchControlMigrator;
 import info.magnolia.module.form.setup.migration.StaticWithFormControlMigrator;
@@ -115,6 +116,20 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new BootstrapConditionally("Bootstrap 'formStaticField'", "Bootstrap 'formStaticField' into 'ui-framework/fieldTypes'.",
                         "/mgnl-bootstrap/form/config.modules.ui-framework.fieldTypes.formStaticField.xml"))
                 .addTask(rebootstrapBrokenDialogsTask));
+
+        register(DeltaBuilder.update("2.2.3", "")
+                .addTask(new AddMissingDefaultValuesToFieldsTask(Arrays.asList(
+                        "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/sendConfirmation/",
+                        "/modules/form/dialogs/form/form/tabs/tabMain/fields/displayStepNavigation/",
+                        "/modules/form/dialogs/form/form/tabs/tabSubmit/fields/trackMail/",
+                        "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/mandatory/",
+                        "/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/mandatory",
+                        "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/horizontal",
+                        "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/mandatory",
+                        "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/multiple",
+                        "/modules/form/dialogs/formSummary/form/tabs/tabMain/fields/onlyLast"
+                        ), "defaultValue", "false")
+                ));
     }
 
     private void processDialogs(DeltaBuilder delta) {

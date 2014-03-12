@@ -128,11 +128,29 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         // GIVEN
         this.setupConfigNode("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmMailType");
         this.setupConfigNode("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType");
+        this.bootstrapOldConfiguration();
 
         // WHEN
         executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("1.4.5"));
 
-        // THEN no errors
+        // THEN
+        assertTrue(session.propertyExists("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/sendConfirmation/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/form/form/tabs/tabMain/fields/displayStepNavigation/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/form/form/tabs/tabSubmit/fields/trackMail/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/mandatory/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/mandatory/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/horizontal/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/mandatory/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/multiple/defaultValue"));
+        assertTrue(session.propertyExists("/modules/form/dialogs/formSummary/form/tabs/tabMain/fields/onlyLast/defaultValue"));
+    }
+
+    private void bootstrapOldConfiguration() throws Exception {
+        this.bootstrapSingleResource("/mgnl-bootstrap/oldConfiguration/dialogs/config.modules.form.dialogs.form.xml");
+        this.bootstrapSingleResource("/mgnl-bootstrap/oldConfiguration/dialogs/config.modules.form.dialogs.formEdit.xml");
+        this.bootstrapSingleResource("/mgnl-bootstrap/oldConfiguration/dialogs/config.modules.form.dialogs.formGroupEditItem.xml");
+        this.bootstrapSingleResource("/mgnl-bootstrap/oldConfiguration/dialogs/config.modules.form.dialogs.formSelection.xml");
+        this.bootstrapSingleResource("/mgnl-bootstrap/oldConfiguration/dialogs/config.modules.form.dialogs.formSummary.xml");
     }
 
     @Test
