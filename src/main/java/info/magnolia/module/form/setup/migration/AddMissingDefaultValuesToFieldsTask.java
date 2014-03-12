@@ -57,7 +57,7 @@ public class AddMissingDefaultValuesToFieldsTask extends AbstractRepositoryTask 
     private final String propertyName;
 
     public AddMissingDefaultValuesToFieldsTask(List<String> fields, String propertyName, String value) {
-        super("", "");
+        super("Add missing proprties to dialogs fields", String.format("Adds properties '%s=%s' to fields: %s", propertyName, value, fields));
         this.fields = fields;
         this.propertyName = propertyName;
         this.value = value;
@@ -69,7 +69,7 @@ public class AddMissingDefaultValuesToFieldsTask extends AbstractRepositoryTask 
 
         for (String field : fields) {
             if (!config.nodeExists(field)) {
-                installContext.info("2");
+                installContext.warn(String.format("Can't set property '%s=%s' to nonexisting field: '%s'.", propertyName, value, field));
                 continue;
             }
             Node fieldNode = config.getNode(field);
