@@ -46,6 +46,7 @@ import info.magnolia.module.form.engine.RedirectView;
 import info.magnolia.module.form.engine.View;
 import info.magnolia.module.form.processors.FormProcessor;
 import info.magnolia.module.form.processors.FormProcessorFailedException;
+import info.magnolia.objectfactory.Components;
 import info.magnolia.rendering.context.RenderingContext;
 
 import java.util.HashMap;
@@ -134,8 +135,10 @@ public abstract class AbstractFormEngine extends FormEngine {
 
     @Override
     protected FormDataBinder getFormDataBinder() {
-        DefaultFormDataBinder formDataBinder = new DefaultFormDataBinder();
-        formDataBinder.setI18nBasename(getConfigurationParagraph().getI18nBasename());
+        FormDataBinder formDataBinder = Components.newInstance(FormDataBinder.class);
+        if (formDataBinder instanceof DefaultFormDataBinder) {
+            ((DefaultFormDataBinder) formDataBinder).setI18nBasename(getConfigurationParagraph().getI18nBasename());
+        }
         return formDataBinder;
     }
 

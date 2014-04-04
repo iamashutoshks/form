@@ -45,11 +45,14 @@ import info.magnolia.cms.i18n.LocaleDefinition;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.module.form.FormModule;
+import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormEngine;
 import info.magnolia.module.form.engine.FormStateUtil;
 import info.magnolia.module.form.engine.RedirectWithTokenAndParametersView;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
+import info.magnolia.module.form.templates.components.AbstractFormEngine;
+import info.magnolia.module.form.templates.components.DefaultFormDataBinder;
 import info.magnolia.module.form.templates.components.FormParagraph;
 import info.magnolia.module.form.templates.components.FormStepParagraph;
 import info.magnolia.registry.RegistrationException;
@@ -126,6 +129,8 @@ public class FormEngineTest extends RepositoryTestCase {
         initWebContext();
 
         initComponents();
+
+        ComponentsTestUtil.setImplementation(FormDataBinder.class, DefaultFormDataBinder.class);
     }
 
     private void initComponents() {
