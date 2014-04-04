@@ -67,7 +67,7 @@ public abstract class FormEngine {
     public RenderingContext context;
 
     @Inject
-    public FormEngine(RenderingContext context){
+    public FormEngine(RenderingContext context) {
         this.context = context;
     }
 
@@ -115,14 +115,14 @@ public abstract class FormEngine {
         }
 
         View view = null;
-        if(isBackButton()) {
+        if (isBackButton()) {
             log.debug("User pressed back button. Currently executing step number is {}", formState.getCurrentlyExecutingStep());
             String pageUuid = getPreviousPage();
-            if(pageUuid == null) {
+            if (pageUuid == null) {
                 return getFormView(formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content)));
             }
-            //update current step count
-            formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep()-1);
+            // update current step count
+            formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep() - 1);
             log.debug("Updated currently executing step. Now is {}", formState.getCurrentlyExecutingStep());
             Node parent = new I18nNodeWrapper(NavigationUtils.findParagraphParentPage(NodeUtil.getNodeByIdentifier(content.getSession().getWorkspace().getName(), pageUuid)));
             if (isRedirectWithParams()) {
@@ -177,7 +177,7 @@ public abstract class FormEngine {
     /**
      * Performs the processing of submitted values. If this method returns a RedirectView this is treated like an exit
      * and the formState is removed from session.
-     *
+     * 
      * @param content
      */
     private View processSubmission(Node content) throws RepositoryException {
@@ -197,8 +197,8 @@ public abstract class FormEngine {
 
         View validationSuccessfulView = getValidationSuccessfulView(formState);
         if (validationSuccessfulView != null) {
-            //on success  we move to the next step, increase count by one
-            formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep()+1);
+            // on success we move to the next step, increase count by one
+            formState.setCurrentlyExecutingStep(formState.getCurrentlyExecutingStep() + 1);
             log.debug("Updated currently executing step. Now is {}", formState.getCurrentlyExecutingStep());
             return validationSuccessfulView;
         }
@@ -226,7 +226,7 @@ public abstract class FormEngine {
         return formState;
     }
 
-    public void setFormState(FormState formState){
+    public void setFormState(FormState formState) {
         this.formState = formState;
     }
 
@@ -235,8 +235,7 @@ public abstract class FormEngine {
     }
 
     /**
-     * @return true if the user hit the back button in the form. This relies on the presence of a request param called
-     * <code>mgnlFormBackButtonPressed</code>. Check formSubmit.ftl script to see how it works on the client-side.
+     * @return true if the user hit the back button in the form. This relies on the presence of a request param called <code>mgnlFormBackButtonPressed</code>. Check formSubmit.ftl script to see how it works on the client-side.
      */
     protected boolean isBackButton() {
         return MgnlContext.getWebContext().getRequest().getParameter("mgnlFormBackButtonPressed") != null;
@@ -252,7 +251,7 @@ public abstract class FormEngine {
 
     /**
      * Called when the form is to be rendered.
-     *
+     * 
      * @param step is null when we render the page for the first time. I.e. when no validation has taken place.
      */
     protected abstract View getFormView(FormStepState step) throws RepositoryException;
@@ -289,7 +288,7 @@ public abstract class FormEngine {
 
     /**
      * Called when a processor failed.
-     *
+     * 
      * @param errorMessage can be null in case another exception than FormProcessorFailedException is thrown by processor.
      */
     protected abstract View getProcessorFailedView(String errorMessage) throws RepositoryException;
@@ -323,10 +322,10 @@ public abstract class FormEngine {
      * Returns the UUID of the previous page or null if there is no such page (i.e. there's one or no steps in current form state).
      */
     protected String getPreviousPage() {
-        if(formState.getSteps().isEmpty() || formState.getCurrentlyExecutingStep() == 0) {
+        if (formState.getSteps().isEmpty() || formState.getCurrentlyExecutingStep() == 0) {
             return null;
         }
-        String uuid = Iterables.get(formState.getSteps().entrySet(), formState.getCurrentlyExecutingStep() -1).getKey();
+        String uuid = Iterables.get(formState.getSteps().entrySet(), formState.getCurrentlyExecutingStep() - 1).getKey();
         log.debug("returning previous page uuid {}", uuid);
 
         return uuid;

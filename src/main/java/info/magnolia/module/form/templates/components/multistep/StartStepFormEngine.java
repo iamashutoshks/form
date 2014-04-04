@@ -50,7 +50,7 @@ import javax.jcr.RepositoryException;
  */
 public class StartStepFormEngine extends AbstractFormEngine {
 
-    public StartStepFormEngine(Node configurationNode, FormParagraph configurationParagraph,RenderingContext context) {
+    public StartStepFormEngine(Node configurationNode, FormParagraph configurationParagraph, RenderingContext context) {
         super(configurationNode, configurationParagraph, context);
     }
 
@@ -80,7 +80,7 @@ public class StartStepFormEngine extends AbstractFormEngine {
         Node currentPage = context.getMainContent();
         Iterator<Node> conditionParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "form:components/formCondition").iterator();
         String nextPageUUID = NavigationUtils.findNextPageBasedOnCondition(conditionParagraphIterator, this.getFormState().getValues());
-        if(nextPageUUID == null) {
+        if (nextPageUUID == null) {
             Iterator<Node> contentIterator = NodeUtil.getNodes(currentPage).iterator();
             nextPageUUID = NavigationUtils.findFirstPageWithParagraphOfType(contentIterator, FormStepParagraph.class);
         }

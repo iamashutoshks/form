@@ -87,13 +87,13 @@ public class AbstractFormEngineTest extends RepositoryTestCase {
 
     @Test
     public void testUnwrapConfigurationNode() throws Exception {
-        //GIVEN
+        // GIVEN
         Node content = new HTMLEscapingNodeWrapper(new MockNode(), true);
         content.setProperty("property", "<");
         AbstractFormEngine engine = new StartStepFormEngine(content, new FormParagraph(), null);
-        //WHEN
+        // WHEN
         Node configurationNode = engine.getConfigurationNode();
-        //THEN
+        // THEN
         assertFalse(configurationNode instanceof HTMLEscapingNodeWrapper);
         assertEquals("<", PropertyUtil.getString(configurationNode, "property"));
     }

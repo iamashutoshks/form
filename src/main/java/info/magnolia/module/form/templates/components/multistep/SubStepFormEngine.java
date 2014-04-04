@@ -94,7 +94,7 @@ public class SubStepFormEngine extends AbstractFormEngine {
         Node currentPage = context.getMainContent();
         Iterator<Node> conditionParagraphIterator = NavigationUtils.getPageParagraphsOfType(currentPage, "form:components/formCondition").iterator();
         String nextPageUUID = NavigationUtils.findNextPageBasedOnCondition(conditionParagraphIterator, this.getFormState().getValues());
-        if(nextPageUUID == null) {
+        if (nextPageUUID == null) {
             // Find first sibling with step paragraph
             Iterator<Node> contentIterator = NodeUtil.getNodes(startPage).iterator();
             NavigationUtils.advanceIteratorTilAfter(contentIterator, currentPage);
