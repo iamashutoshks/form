@@ -7,6 +7,15 @@
   <class>info.magnolia.module.form.FormModule</class>
   <versionHandler>info.magnolia.module.form.setup.FormModuleVersionHandler</versionHandler>
   <version>${project.version}</version>
+
+  <components>
+    <id>main</id>
+    <type-mapping>
+      <type>info.magnolia.module.form.engine.FormDataBinder</type>
+      <implementation>info.magnolia.module.form.templates.components.DefaultFormDataBinder</implementation>
+    </type-mapping>
+  </components>
+
   <dependencies>
     <dependency>
       <name>core</name>
