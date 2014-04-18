@@ -194,13 +194,16 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
     protected void findAndSetComplexControlLabels(Content fieldNode, Map<String, Object> stepParameters,
             Map<String, Object> templateParams, String controlName) {
         Content i18nFieldNode = new I18nContentWrapper(fieldNode);
-        String stepParamvalue = (String) stepParameters.get(controlName);
-        if(StringUtils.isNotEmpty(stepParamvalue)) {
-            String[] stepfieldValues = stepParamvalue.split("_");
+        String stepParamValue = (String) stepParameters.get(controlName);
+        if(StringUtils.isNotEmpty(stepParamValue)) {
+            String[] stepFieldValues = stepParamValue.split("_");
             Map<String, String> controlValueLabelMap = fillControlValueLabelMap(i18nFieldNode);
-            for (String value : stepfieldValues) {
+            String title = StringUtils.isNotBlank(i18nFieldNode.getTitle()) ? i18nFieldNode.getTitle() : controlName;
+            List<String> valueList = new ArrayList<String>();
+            templateParams.put(title, valueList);
+            for (String value : stepFieldValues) {
                 if(!value.equals("")) {
-                    templateParams.put(controlValueLabelMap.get(value), "*");
+                    valueList.add(controlValueLabelMap.get(value));
                 }
             }
         }
