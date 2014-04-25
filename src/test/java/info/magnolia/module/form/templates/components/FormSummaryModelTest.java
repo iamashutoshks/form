@@ -33,9 +33,11 @@
  */
 package info.magnolia.module.form.templates.components;
 
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+
 
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
@@ -45,7 +47,6 @@ import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.templating.functions.TemplatingFunctions;
 import info.magnolia.test.ComponentsTestUtil;
-import info.magnolia.test.RepositoryTestCase;
 import info.magnolia.test.mock.MockContent;
 
 import java.util.HashMap;
@@ -60,11 +61,11 @@ import org.junit.Test;
 /**
  * Tests for {@link FormSummaryModel}.
  */
-public class FormSummaryModelTest extends RepositoryTestCase{
+public class FormSummaryModelTest {
 
     @Test
     public void testFindAndSetComplexControlLabels() throws RepositoryException{
-        //
+        // GIVEN
         ComponentsTestUtil.setInstance(I18nContentSupport.class, new DefaultI18nContentSupport());
         FormSummaryModel formSummaryModel = new FormSummaryModel(mock(Node.class), mock(RenderableDefinition.class), mock(RenderingModel.class), mock(TemplatingFunctions.class), mock(RenderingContext.class));
 
@@ -81,13 +82,11 @@ public class FormSummaryModelTest extends RepositoryTestCase{
 
         // THEN
         assertEquals(1, templateParams.size());
-        assertTrue(templateParams.containsKey(controlName));
-        assertTrue(templateParams.get(controlName) instanceof List);
+        assertThat(templateParams, hasKey(controlName));
         List<String> values = (List<String>) templateParams.get(controlName);
-        assertEquals(3, values.size());
-        assertTrue(values.contains("option1"));
-        assertTrue(values.contains("option2"));
-        assertTrue(values.contains("option4"));
+        assertThat(values, instanceOf(List.class));
+        assertThat(values, hasSize(3));
+        assertThat(values, allOf(hasItem("option1"), hasItem("option2"), hasItem("option4")));
     }
 
 }
