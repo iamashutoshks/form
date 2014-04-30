@@ -3,7 +3,7 @@
   <parent>
     <groupId>info.magnolia</groupId>
     <artifactId>magnolia-parent-pom-community-module</artifactId>
-    <version>27</version>
+    <version>28</version>
   </parent>
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
@@ -13,8 +13,6 @@
   <description />
 
   <properties>
-    <!-- Tests need version 4.5.7 but module should work correctly also with older magnolia-main
-           When change the dependency doublecheck it. -->
     <magnoliaVersion>4.5.10</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
@@ -105,9 +103,7 @@
     <dependency>
       <groupId>info.magnolia</groupId>
       <artifactId>magnolia-core</artifactId>
-      <!-- Tests need version 4.5.7 but module should work correctly also with older magnolia-main
-           When change the dependency doublecheck it. -->
-      <version>4.5.7</version>
+      <version>${magnoliaVersion}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
