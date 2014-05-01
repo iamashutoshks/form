@@ -33,7 +33,7 @@
             [#if formItems?size > 1 && content.type = "checkbox"]
                 [#assign renderedRequiredValue = ""]
             [#else]
-                [#assign renderedRequiredValue = requiredAttribute]
+                [#assign renderedRequiredValue = requiredAttribute!]
             [/#if]
             [#list formItems as label]
                 [#assign checked=""]
