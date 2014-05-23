@@ -34,8 +34,10 @@
 package info.magnolia.module.form.setup;
 
 import info.magnolia.module.DefaultModuleVersionHandler;
+import info.magnolia.module.delta.ArrayDelegateTask;
 import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.DeltaBuilder;
+import info.magnolia.module.delta.MoveAndRenamePropertyTask;
 import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
@@ -84,6 +86,12 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
 
                 .addTask(new NodeExistsDelegateTask("Add confirmMailType", "Add confirmMailType if missing", "config", "/modules/form/dialogs/form/tabConfirmEmail/confirmMailType", null, new PartialBootstrapTask("Mail type", "Bootstraps dialog option for mail type to be sent overriding content type in the process.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.form.xml", "/form/tabConfirmEmail/confirmMailType")))
                 .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/tabConfirmEmail/confirmMailType", "confirmContentType"))
+        );
+
+        register(DeltaBuilder.update("1.4.11", "")
+                .addTask(new NodeExistsDelegateTask("Reconfigure Honeypot dialog", "Use 'hidden' controlType for validation field in Honeypot dialog", RepositoryConstants.CONFIG, "/modules/form/dialogs/formHoneypot/tabMain/validation", new ArrayDelegateTask("", "",
+                        new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formHoneypot/tabMain/validation", "controlType", "hidden"),
+                        new MoveAndRenamePropertyTask("Change property name 'value' to 'defaultValue' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/tabMain/validation", "value", "/modules/form/dialogs/formHoneypot/tabMain/validation", "defaultValue"))))
         );
     }
 }
