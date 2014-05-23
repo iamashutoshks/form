@@ -287,11 +287,11 @@
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>28cd33f2-8a5c-4766-9e34-c6ba20a3fc7a</sv:value>
             </sv:property>
-            <sv:property sv:name="buttonLabel" sv:type="String">
-              <sv:value>dialog.form.edit.tabMain.validation.buttonLabel</sv:value>
-            </sv:property>
             <sv:property sv:name="class" sv:type="String">
-              <sv:value>info.magnolia.ui.form.field.definition.StaticFieldDefinition</sv:value>
+              <sv:value>info.magnolia.ui.form.field.definition.HiddenFieldDefinition</sv:value>
+            </sv:property>
+            <sv:property sv:name="defaultValue" sv:type="String">
+              <sv:value>empty</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:createdBy" sv:type="String">
               <sv:value>admin</sv:value>
@@ -317,17 +317,8 @@
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
             </sv:property>
-            <sv:property sv:name="path" sv:type="String">
-              <sv:value>/modules/form/config/validators</sv:value>
-            </sv:property>
-            <sv:property sv:name="repository" sv:type="String">
-              <sv:value>config</sv:value>
-            </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>String</sv:value>
-            </sv:property>
-            <sv:property sv:name="value" sv:type="String">
-              <sv:value>empty</sv:value>
             </sv:property>
           </sv:node>
         </sv:node>

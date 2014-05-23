@@ -33,6 +33,8 @@
  */
 package info.magnolia.module.form.setup;
 
+import static info.magnolia.test.hamcrest.NodeMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
 import info.magnolia.context.MgnlContext;
@@ -163,6 +165,27 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         // THEN
         assertEquals(SwitchableFieldDefinition.class.getCanonicalName(), session.getProperty("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/class").getString());
         assertEquals(MultiValueFieldDefinition.class.getCanonicalName(), session.getProperty("/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition/class").getString());
+    }
+
+    @Test
+    public void updateFrom223() throws Exception {
+        // GIVEN
+        this.setupConfigProperty("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.StaticFieldDefinition");
+        this.setupConfigProperty("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "value", "empty");
+        this.setupConfigProperty("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "buttonLabel", "dialog.form.edit.tabMain.validation.buttonLabel");
+        this.setupConfigProperty("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "path", "/modules/form/config/validators");
+        this.setupConfigProperty("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "repository", "config");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.3"));
+
+        // THEN
+        Node validationNode = session.getNode("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation");
+        assertThat(validationNode, hasProperty("class", "info.magnolia.ui.form.field.definition.HiddenFieldDefinition"));
+        assertThat(validationNode, hasProperty("defaultValue", "empty"));
+        assertFalse(validationNode.hasProperty("buttonLabel"));
+        assertFalse(validationNode.hasProperty("path"));
+        assertFalse(validationNode.hasProperty("repository"));
     }
 
 }

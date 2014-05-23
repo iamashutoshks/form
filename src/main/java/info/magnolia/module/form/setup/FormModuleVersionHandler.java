@@ -39,11 +39,13 @@ import info.magnolia.module.delta.ArrayDelegateTask;
 import info.magnolia.module.delta.BootstrapConditionally;
 import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.DeltaBuilder;
+import info.magnolia.module.delta.MoveAndRenamePropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyValueDelegateTask;
 import info.magnolia.module.delta.RemovePropertyTask;
+import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.form.setup.migration.AddMissingDefaultValuesToFieldsTask;
 import info.magnolia.module.form.setup.migration.ConditionalControlMigrator;
@@ -130,6 +132,15 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         "/modules/form/dialogs/formSummary/form/tabs/tabMain/fields/onlyLast"
                         ), "defaultValue", "false")
                 ));
+
+        register(DeltaBuilder.update("2.2.4", "")
+                .addTask(new NodeExistsDelegateTask("Reconfigure Honeypot dialog", "Use 'HiddenFieldDefinition' for validation field in Honeypot dialog", RepositoryConstants.CONFIG, "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", new ArrayDelegateTask("", "",
+                        new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.HiddenFieldDefinition"),
+                        new MoveAndRenamePropertyTask("Change property name 'value' to 'defaultValue' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "value", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "defaultValue"),
+                        new RemovePropertyTask("Remove obsolate property 'buttonLabel' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "buttonLabel"),
+                        new RemovePropertyTask("Remove obsolate property 'path' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "path"),
+                        new RemovePropertyTask("Remove obsolate property 'repository' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "repository"))))
+        );
     }
 
     private void processDialogs(DeltaBuilder delta) {
