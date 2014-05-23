@@ -283,7 +283,7 @@
         <sv:value>dialog.form.edit.tabMain.validation.buttonLabel</sv:value>
       </sv:property>
       <sv:property sv:name="controlType" sv:type="String">
-        <sv:value>static</sv:value>
+        <sv:value>hidden</sv:value>
       </sv:property>
       <sv:property sv:name="jcr:createdBy" sv:type="String">
         <sv:value>admin</sv:value>
@@ -300,7 +300,7 @@
       <sv:property sv:name="type" sv:type="String">
         <sv:value>String</sv:value>
       </sv:property>
-      <sv:property sv:name="value" sv:type="String">
+      <sv:property sv:name="defaultValue" sv:type="String">
         <sv:value>empty</sv:value>
       </sv:property>
       <sv:node sv:name="MetaData">
