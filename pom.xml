@@ -16,6 +16,7 @@
     <magnoliaVersion>4.5.10</magnoliaVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
+    <cloverCoverageThreshold>40</cloverCoverageThreshold>
   </properties>
   <issueManagement>
     <system>Jira</system>
