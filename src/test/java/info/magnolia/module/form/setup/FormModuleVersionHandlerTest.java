@@ -33,7 +33,7 @@
  */
 package info.magnolia.module.form.setup;
 
-import static info.magnolia.test.hamcrest.NodeMatchers.*;
+import static info.magnolia.test.hamcrest.NodeMatchers.hasProperty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
@@ -186,6 +186,20 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertFalse(validationNode.hasProperty("buttonLabel"));
         assertFalse(validationNode.hasProperty("path"));
         assertFalse(validationNode.hasProperty("repository"));
+    }
+
+    @Test
+    public void testCorrectConfigurationEmailExpression() throws Exception {
+
+        // GIVEN
+        Node node = NodeUtil.createPath(session.getRootNode(), FormModuleVersionHandler.PATH_VALIDATORS_EMAIL, NodeTypes.ContentNode.NAME);
+        node.setProperty("expression", "^\\S+@\\S+$");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.3"));
+
+        // THEN
+        assertThat(session.getNode(FormModuleVersionHandler.PATH_VALIDATORS_EMAIL), hasProperty("expression", "(^$|^\\S+@\\S+$)"));
     }
 
 }

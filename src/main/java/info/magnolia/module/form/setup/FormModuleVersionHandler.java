@@ -38,6 +38,7 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.ArrayDelegateTask;
 import info.magnolia.module.delta.BootstrapConditionally;
 import info.magnolia.module.delta.BootstrapSingleResource;
+import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.MoveAndRenamePropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
@@ -66,7 +67,7 @@ import javax.inject.Inject;
  * VersionHandler for the form module.
  */
 public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
-
+    protected static final String PATH_VALIDATORS_EMAIL = "/modules/form/config/validators/email";
     private static final String DIALOGS_PATH = "/modules/form/dialogs/";
     private static final String COMMIT_ACTION = "/actions/commit";
     private static final String CANCEL_ACTION = "/actions/cancel";
@@ -140,6 +141,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         new RemovePropertyTask("Remove obsolate property 'buttonLabel' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "buttonLabel"),
                         new RemovePropertyTask("Remove obsolate property 'path' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "path"),
                         new RemovePropertyTask("Remove obsolate property 'repository' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "repository"))))
+        );
+        register(DeltaBuilder.update("2.2.5", "")
+                .addTask(new NodeExistsDelegateTask("Change validators email expression data", "Change data ^\\S+@\\S+$ in /modules/form/config/validators/email/expression from  to (^$|^\\S+@\\S+$).", RepositoryConstants.CONFIG, PATH_VALIDATORS_EMAIL,
+                        new CheckAndModifyPropertyValueTask(PATH_VALIDATORS_EMAIL, "expression", "^\\S+@\\S+$", "(^$|^\\S+@\\S+$)")))
         );
     }
 
