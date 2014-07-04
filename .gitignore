@@ -1,14 +1,11 @@
-
-# /
-/target
-/*.iml
-/*.ipr
-/*.iws
-/*.log
-/.project
-/.classpath
-/.settings
-/META-INF
-
-# /src/main/java/
-/src/main/java/META-INF
+target
+*.iml
+*.ipr
+*.iws
+*.log
+.idea
+.project
+.classpath
+.settings
+.checkstyle
+rebel.xml
