@@ -41,6 +41,7 @@ import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.DeltaBuilder;
 import info.magnolia.module.delta.MoveAndRenamePropertyTask;
+import info.magnolia.module.delta.NewPropertyTask;
 import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
@@ -145,6 +146,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("2.2.5", "")
                 .addTask(new NodeExistsDelegateTask("Change validators email expression data", "Change data ^\\S+@\\S+$ in /modules/form/config/validators/email/expression from  to (^$|^\\S+@\\S+$).", RepositoryConstants.CONFIG, PATH_VALIDATORS_EMAIL,
                         new CheckAndModifyPropertyValueTask(PATH_VALIDATORS_EMAIL, "expression", "^\\S+@\\S+$", "(^$|^\\S+@\\S+$)")))
+                .addTask(new NodeExistsDelegateTask("Add default value to HoneyPot field", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", new NewPropertyTask("Add default value to HoneyPot field", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "defaultValue", "empty")))
         );
     }
 

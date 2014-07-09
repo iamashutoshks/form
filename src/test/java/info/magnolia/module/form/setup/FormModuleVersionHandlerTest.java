@@ -190,16 +190,18 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
     @Test
     public void testCorrectConfigurationEmailExpression() throws Exception {
-
         // GIVEN
+        this.setupConfigNode("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation");
         Node node = NodeUtil.createPath(session.getRootNode(), FormModuleVersionHandler.PATH_VALIDATORS_EMAIL, NodeTypes.ContentNode.NAME);
         node.setProperty("expression", "^\\S+@\\S+$");
 
         // WHEN
-        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.3"));
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.4"));
 
         // THEN
         assertThat(session.getNode(FormModuleVersionHandler.PATH_VALIDATORS_EMAIL), hasProperty("expression", "(^$|^\\S+@\\S+$)"));
+        assertEquals("empty", session.getNode("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation").getProperty("defaultValue").getString());
+
     }
 
 }
