@@ -62,7 +62,7 @@ public class UpgradeValidationPropertyToMulti extends AbstractTask {
                 NodeIterator nodeIterator = node.getNodes();
                 while (nodeIterator.hasNext()) {
                     field = nodeIterator.nextNode();
-                    if (field.hasProperty("validation")) {
+                    if (field.hasProperty("validation") && !field.getProperty("validation").isMultiple()) {
                         Value[] values=new Value[] {field.getProperty("validation").getValue()};
                         field.getProperty("validation").remove();
                         field.setProperty("validation", values);
