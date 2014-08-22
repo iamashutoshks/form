@@ -148,6 +148,15 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         new CheckAndModifyPropertyValueTask(PATH_VALIDATORS_EMAIL, "expression", "^\\S+@\\S+$", "(^$|^\\S+@\\S+$)")))
                 .addTask(new NodeExistsDelegateTask("Add default value to HoneyPot field", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", new NewPropertyTask("Add default value to HoneyPot field", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "defaultValue", "empty")))
         );
+        register(DeltaBuilder.update("2.2.6", "")
+                .addTask(new NodeExistsDelegateTask("Reconfigure FormEdit dialog", "Change to multiple select of validators", RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation",
+                        new ArrayDelegateTask("", "",
+                            new RemovePropertyTask("Remove property 'buttonLabel' for validation field in FormEdit dialog", "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "buttonLabel"),
+                            new PropertyValueDelegateTask("","/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation","class","info.magnolia.ui.form.field.definition.SelectFieldDefinition",false,new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition")),
+                            new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"),
+                            new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"),
+                            new UpgradeValidationPropertyToMulti("",""))))
+        );
     }
 
     private void processDialogs(DeltaBuilder delta) {

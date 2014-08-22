@@ -189,6 +189,23 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
     }
 
     @Test
+    public void updateFrom225() throws Exception {
+        // GIVEN
+        this.setupConfigProperty("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.SelectFieldDefinition");
+        this.setupConfigProperty("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "buttonLabel", "test");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.5"));
+
+        // THEN
+        Node validationNode = session.getNode("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation");
+        assertThat(validationNode, hasProperty("class", "info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition"));
+        assertThat(validationNode, hasProperty("leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"));
+        assertThat(validationNode, hasProperty("rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"));
+        assertFalse(validationNode.hasProperty("buttonLabel"));
+    }
+
+    @Test
     public void testCorrectConfigurationEmailExpression() throws Exception {
         // GIVEN
         this.setupConfigNode("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation");

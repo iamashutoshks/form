@@ -49,6 +49,7 @@ import info.magnolia.module.form.validators.Validator;
 import info.magnolia.util.EscapeUtil;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Locale;
 
 import javax.jcr.Node;
@@ -115,13 +116,14 @@ public class DefaultFormDataBinder implements FormDataBinder {
                     field.setErrorMessage(getErrorMessage("mandatory", node));
 
                 } else if (value != null && node.hasProperty("validation")) {
-
-                    String validatorName = PropertyUtil.getString(node,"validation");
-                    Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
-                    if (validator != null) {
-                        ValidationResult validationResult = validator.validateWithResult(value);
-                        if (!validationResult.isSuccess()) {
-                            field.setErrorMessage(getValidatorErrorMessage(validator, validationResult, node));
+                    LinkedList<String> validatorNames = (LinkedList<String>) PropertyUtil.getPropertyValueObject(node, "validation");
+                    for (String validatorName : validatorNames) {
+                        Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
+                        if (validator != null) {
+                            ValidationResult validationResult = validator.validateWithResult(value);
+                            if (!validationResult.isSuccess()) {
+                                field.setErrorMessage(getValidatorErrorMessage(validator, validationResult, node));
+                            }
                         }
                     }
                 } else if (node.hasNode(CONTENT_NAME_TEXT_FIELD_GROUP)) {
