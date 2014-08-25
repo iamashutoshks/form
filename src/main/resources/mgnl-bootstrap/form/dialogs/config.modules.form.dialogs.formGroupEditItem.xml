@@ -463,13 +463,10 @@
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
-              <sv:value>84cbe4cd-617e-4e99-8f51-ea7dbb38386c</sv:value>
-            </sv:property>
-            <sv:property sv:name="buttonLabel" sv:type="String">
-              <sv:value>dialog.form.edit.tabMain.validation.buttonLabel</sv:value>
+              <sv:value>9224e269-4794-49da-bcf2-af1fb8627ba7</sv:value>
             </sv:property>
             <sv:property sv:name="class" sv:type="String">
-              <sv:value>info.magnolia.ui.form.field.definition.SelectFieldDefinition</sv:value>
+              <sv:value>info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:createdBy" sv:type="String">
               <sv:value>admin</sv:value>
@@ -477,20 +474,26 @@
             <sv:property sv:name="label" sv:type="String">
               <sv:value>dialog.form.edit.tabMain.validation.label</sv:value>
             </sv:property>
+            <sv:property sv:name="leftColumnCaption" sv:type="String">
+              <sv:value>dialog.form.edit.tabMain.validation.leftColumnCaption</sv:value>
+            </sv:property>
             <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
               <sv:value>false</sv:value>
             </sv:property>
-            <sv:property sv:name="mgnl:created" sv:type="String">
-              <sv:value>2004-11-03T08:48:09.632+01:00</sv:value>
+            <sv:property sv:name="mgnl:created" sv:type="Date">
+              <sv:value>2014-08-28T13:00:41.228+02:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:createdBy" sv:type="String">
+              <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
-              <sv:value>2006-05-01T21:47:58.230+02:00</sv:value>
+              <sv:value>2014-08-28T13:00:41.229+02:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-10-27T11:57:47.759+01:00</sv:value>
+              <sv:value>2014-08-28T13:02:08.907+02:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
@@ -501,8 +504,8 @@
             <sv:property sv:name="repository" sv:type="String">
               <sv:value>config</sv:value>
             </sv:property>
-            <sv:property sv:name="type" sv:type="String">
-              <sv:value>String</sv:value>
+            <sv:property sv:name="rightColumnCaption" sv:type="String">
+              <sv:value>dialog.form.edit.tabMain.validation.rightColumnCaption</sv:value>
             </sv:property>
           </sv:node>
           <sv:node sv:name="maxLength">

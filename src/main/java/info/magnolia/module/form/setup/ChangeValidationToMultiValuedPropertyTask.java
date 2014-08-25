@@ -33,60 +33,86 @@
  */
 package info.magnolia.module.form.setup;
 
+import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.NodeVisitor;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.repository.RepositoryConstants;
+
+import java.util.Arrays;
+import java.util.List;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
-import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Value;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Add to validation property multi=true attribute.
+ * Convert 'validation' property to multi-valued property.
  */
-public class UpgradeValidationPropertyToMulti extends AbstractTask {
-    private static final Logger log = LoggerFactory.getLogger(UpdateConfirmHtmlTypeToCodeTask.class);
-    NodeVisitor nodeVisitor = new NodeVisitor() {
+public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
+
+    private List<String> listOfTemplates;
+    private static String fields = "fields";
+    private static String validation = "validation";
+
+    private NodeVisitor nodeVisitor = new NodeVisitor() {
         @Override
         public void visit(Node node) throws RepositoryException {
             Node field;
-            if (node.getName().equals("fields")) {
+            if (node.getName().equals(fields)) {
                 NodeIterator nodeIterator = node.getNodes();
                 while (nodeIterator.hasNext()) {
                     field = nodeIterator.nextNode();
-                    if (field.hasProperty("validation") && !field.getProperty("validation").isMultiple()) {
-                        Value[] values=new Value[] {field.getProperty("validation").getValue()};
-                        field.getProperty("validation").remove();
-                        field.setProperty("validation", values);
+                    if (checkNode(field)) {
+                        Value value = field.getProperty(validation).getValue();
+                        field.getProperty(validation).remove();
+                        field.setProperty(validation, new Value[]{value});
                     }
                 }
             }
         }
     };
 
-    public UpgradeValidationPropertyToMulti(String taskName, String taskDescription) {
-        super("Add to validation property multi=true attribute", "");
+    public ChangeValidationToMultiValuedPropertyTask(String taskDescription, List<String> listOfTemplates) {
+        super("Change validation property from single type to multi valued property", taskDescription);
+        this.listOfTemplates = listOfTemplates;
+    }
+
+    public ChangeValidationToMultiValuedPropertyTask(String taskDescription, String[] listOfTemplates) {
+        super("Change validation property from single type to multi valued property", taskDescription);
+        this.listOfTemplates = Arrays.asList(listOfTemplates);
     }
 
     @Override
     public void execute(InstallContext ctx) throws TaskExecutionException {
         try {
-            Session session = ctx.getJCRSession("website");
+            Session session = ctx.getJCRSession(RepositoryConstants.WEBSITE);
             Node rootNode = session.getRootNode();
             NodeUtil.visit(rootNode, nodeVisitor);
-            session.save();
-        } catch (PathNotFoundException e) {
-            log.error("Switch of confirm mail type from html to code failed due to missing node(s): ", e);
         } catch (RepositoryException e) {
             throw new TaskExecutionException(e.getMessage(), e);
         }
     }
+
+    /**
+     * Checks if a node is eligible for being changed to a multi-valued property.
+     */
+    private boolean checkNode(Node node) throws RepositoryException {
+        if (!node.hasProperty(NodeTypes.Renderable.TEMPLATE) || !node.hasProperty(validation)) {
+            return false;
+        }
+        String templateName = node.getProperty(NodeTypes.Renderable.TEMPLATE).getString();
+        if (!listOfTemplates.contains(templateName)) {
+            return false;
+        }
+        if (node.getProperty(validation).isMultiple()) {
+            return false;
+        }
+        return true;
+    }
+
 }

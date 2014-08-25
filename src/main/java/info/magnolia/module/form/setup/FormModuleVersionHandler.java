@@ -143,19 +143,18 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         new RemovePropertyTask("Remove obsolate property 'path' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "path"),
                         new RemovePropertyTask("Remove obsolate property 'repository' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "repository"))))
         );
+
         register(DeltaBuilder.update("2.2.5", "")
                 .addTask(new NodeExistsDelegateTask("Change validators email expression data", "Change data ^\\S+@\\S+$ in /modules/form/config/validators/email/expression from  to (^$|^\\S+@\\S+$).", RepositoryConstants.CONFIG, PATH_VALIDATORS_EMAIL,
                         new CheckAndModifyPropertyValueTask(PATH_VALIDATORS_EMAIL, "expression", "^\\S+@\\S+$", "(^$|^\\S+@\\S+$)")))
                 .addTask(new NodeExistsDelegateTask("Add default value to HoneyPot field", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", new NewPropertyTask("Add default value to HoneyPot field", "/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation", "defaultValue", "empty")))
         );
+
         register(DeltaBuilder.update("2.2.6", "")
-                .addTask(new NodeExistsDelegateTask("Reconfigure FormEdit dialog", "Change to multiple select of validators", RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation",
-                        new ArrayDelegateTask("", "",
-                            new RemovePropertyTask("Remove property 'buttonLabel' for validation field in FormEdit dialog", "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "buttonLabel"),
-                            new PropertyValueDelegateTask("","/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation","class","info.magnolia.ui.form.field.definition.SelectFieldDefinition",false,new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition")),
-                            new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"),
-                            new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"),
-                            new UpgradeValidationPropertyToMulti("",""))))
+                .addTask(new ArrayDelegateTask("Reconfigure validation fields of form field dialogs", "Change validator field to multi select field",
+                        new MigrateValidationSelectFieldToTwinColSelectFieldTask("Migrate 'validation' field to multi select field",
+                                new String[]{"/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/validation"}),
+                        new ChangeValidationToMultiValuedPropertyTask("", new String[]{"form:components/formEdit", "form:components/formPassword", "form:components/formGroupEditItem"})))
         );
     }
 

@@ -191,18 +191,29 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
     @Test
     public void updateFrom225() throws Exception {
         // GIVEN
-        this.setupConfigProperty("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.SelectFieldDefinition");
-        this.setupConfigProperty("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "buttonLabel", "test");
+        final String[] fields = new String[] {"formEdit", "formGroupEditItem"};
+        for (String field : fields) {
+            String pathToField = String.format("/modules/form/dialogs/%s/form/tabs/tabMain/fields/validation", field);
+            this.setupConfigProperty(pathToField, "class", "info.magnolia.ui.form.field.definition.SelectFieldDefinition");
+            this.setupConfigProperty(pathToField, "buttonLabel", "test");
+        }
+        Session websiteSession = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
+        Node validationWebsiteNode = NodeUtil.createPath(websiteSession.getRootNode(), "fields/0", NodeTypes.ContentNode.NAME);
+        validationWebsiteNode.setProperty("validation", "email");
+        validationWebsiteNode.setProperty("mgnl:template", "form:components/formEdit");
 
         // WHEN
         executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.5"));
 
         // THEN
-        Node validationNode = session.getNode("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation");
-        assertThat(validationNode, hasProperty("class", "info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition"));
-        assertThat(validationNode, hasProperty("leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"));
-        assertThat(validationNode, hasProperty("rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"));
-        assertFalse(validationNode.hasProperty("buttonLabel"));
+        for (String field : fields) {
+            Node validationNode = session.getNode(String.format("/modules/form/dialogs/%s/form/tabs/tabMain/fields/validation", field));
+            assertThat(validationNode, hasProperty("class", "info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition"));
+            assertThat(validationNode, hasProperty("leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"));
+            assertThat(validationNode, hasProperty("rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"));
+            assertFalse(validationNode.hasProperty("buttonLabel"));
+        }
+        assertTrue(validationWebsiteNode.getProperty("validation").isMultiple());
     }
 
     @Test
