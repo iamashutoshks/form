@@ -193,6 +193,9 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         // GIVEN
         this.setupConfigProperty("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.SelectFieldDefinition");
         this.setupConfigProperty("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "buttonLabel", "test");
+        Session websiteSession = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
+        Node validationWebsiteNode = NodeUtil.createPath(websiteSession.getRootNode(), "fields/0", NodeTypes.ContentNode.NAME);
+        validationWebsiteNode.setProperty("validation","email");
 
         // WHEN
         executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.5"));
@@ -203,6 +206,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertThat(validationNode, hasProperty("leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"));
         assertThat(validationNode, hasProperty("rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"));
         assertFalse(validationNode.hasProperty("buttonLabel"));
+        assertTrue(validationWebsiteNode.getProperty("validation").isMultiple());
     }
 
     @Test
