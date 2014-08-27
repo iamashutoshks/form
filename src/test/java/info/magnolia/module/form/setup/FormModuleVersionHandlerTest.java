@@ -195,7 +195,8 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         this.setupConfigProperty("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "buttonLabel", "test");
         Session websiteSession = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
         Node validationWebsiteNode = NodeUtil.createPath(websiteSession.getRootNode(), "fields/0", NodeTypes.ContentNode.NAME);
-        validationWebsiteNode.setProperty("validation","email");
+        validationWebsiteNode.setProperty("validation", "email");
+        validationWebsiteNode.setProperty("mgnl:template", "form:components/formEdit");
 
         // WHEN
         executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.5"));

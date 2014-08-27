@@ -155,7 +155,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                             new PropertyValueDelegateTask("","/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation","class","info.magnolia.ui.form.field.definition.SelectFieldDefinition",false,new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "class", "info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition")),
                             new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"),
                             new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"),
-                            new UpgradeValidationPropertyToMulti("",""))))
+                            new ChangeValidationToMultiValuedPropertyTask("", "", new ArrayList<String>(Arrays.asList("form:components/formEdit"))))))
         );
     }
 

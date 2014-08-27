@@ -33,30 +33,26 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.context.MgnlContext;
-import info.magnolia.importexport.DataTransporter;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.Validator;
-import info.magnolia.rendering.template.TemplateAvailability;
-import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
+import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
-import info.magnolia.test.RepositoryTestCase;
+import info.magnolia.test.MgnlTestCase;
 import info.magnolia.test.mock.MockWebContext;
 import info.magnolia.test.mock.jcr.MockNode;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.jcr.ImportUUIDBehavior;
 import javax.jcr.Node;
+import javax.jcr.Session;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
@@ -66,7 +62,7 @@ import org.junit.Test;
 /**
  * Tests for {@link DefaultFormDataBinder}.
  */
-public class DefaultFormDataBinderTest extends RepositoryTestCase {
+public class DefaultFormDataBinderTest extends MgnlTestCase {
 
     DefaultFormDataBinder binder;
     HttpServletRequest request;
@@ -77,25 +73,15 @@ public class DefaultFormDataBinderTest extends RepositoryTestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        ComponentsTestUtil.setImplementation(TemplateAvailability.class, ConfiguredTemplateAvailability.class);
-
-        InputStream xmlStream = this.getClass().getClassLoader().getResourceAsStream("form.xml");
-        DataTransporter.importXmlStream(
-                xmlStream,
-                "website",
-                "/",
-                "name matters only when importing a file that needs XSL transformation",
-                false,
-                ImportUUIDBehavior.IMPORT_UUID_CREATE_NEW,
-                true,
-                true);
         binder = new DefaultFormDataBinder();
         request = mock(HttpServletRequest.class);
-        when(request.getParameterValues(anyString())).thenReturn(new String[] { "<", ">" });
+        when(request.getParameterValues(anyString())).thenReturn(new String[]{"<", ">"});
         ctx = (MockWebContext) MgnlContext.getWebContext();
+        ctx.addSession(RepositoryConstants.WEBSITE, mock(Session.class));
         ctx.setRequest(request);
+        MgnlContext.setInstance(ctx);
         FormModule formModule = new FormModule();
-        ArrayList validators= new ArrayList();
+        ArrayList validators = new ArrayList();
         Validator validator1 = new Validator();
         validator1.setName("test1");
         Validator validator2 = new Validator();
@@ -137,7 +123,7 @@ public class DefaultFormDataBinderTest extends RepositoryTestCase {
         final String controlName = "controlName";
         Node node = new MockNode();
         node.setProperty("controlName", controlName);
-        node.setProperty("validation",new String[] {"test1","test2"});
+        node.setProperty("validation", new String[]{"test1", "test2"});
         List<Node> list = new ArrayList<Node>();
         list.add(node);
         Iterator<Node> iterator = list.iterator();
