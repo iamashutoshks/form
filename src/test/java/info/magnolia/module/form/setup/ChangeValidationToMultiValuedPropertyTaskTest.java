@@ -42,7 +42,6 @@ import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.test.MgnlTestCase;
 import info.magnolia.test.mock.MockWebContext;
 import info.magnolia.test.mock.jcr.MockSession;
 
@@ -60,34 +59,30 @@ import org.junit.Test;
 /**
  * Tests for {@link ChangeValidationToMultiValuedPropertyTask}.
  */
-public class ChangeValidationToMultiValuedPropertyTaskTest extends MgnlTestCase {
+public class ChangeValidationToMultiValuedPropertyTaskTest {
     MockWebContext ctx;
     Session websiteSession;
     InstallContext installContext;
 
-    @Override
-    @Before
+   @Before
     public void setUp() throws Exception {
-        super.setUp();
-        ctx = (MockWebContext) MgnlContext.getWebContext();
+        ctx = new MockWebContext();
+        MgnlContext.setInstance(ctx);
         websiteSession = new MockSession(RepositoryConstants.WEBSITE);
         ctx.addSession(RepositoryConstants.WEBSITE, websiteSession);
-        MgnlContext.setInstance(ctx);
         installContext = mock(InstallContext.class);
         when(installContext.getJCRSession(RepositoryConstants.WEBSITE)).thenReturn(websiteSession);
     }
 
-    @Override
     @After
     public void tearDown() throws Exception {
-        super.tearDown();
-        MgnlContext.setInstance(null);
+       MgnlContext.setInstance(null);
     }
 
     @Test
     public void testChangeValidationToMultiValueOnlyForNodeWithTemplateInTemplateList() throws TaskExecutionException, RepositoryException {
         // GIVEN
-        ChangeValidationToMultiValuedPropertyTask changeValidationToMultiValuedPropertyTask = new ChangeValidationToMultiValuedPropertyTask("", "", new ArrayList<String>(Arrays.asList("form:components/formEdit")));
+        ChangeValidationToMultiValuedPropertyTask changeValidationToMultiValuedPropertyTask = new ChangeValidationToMultiValuedPropertyTask("", new ArrayList<String>(Arrays.asList("form:components/formEdit")));
         Node validationWebsiteNode = NodeUtil.createPath(websiteSession.getRootNode(), "fields/0", NodeTypes.ContentNode.NAME);
         validationWebsiteNode.setProperty("validation", "email");
         validationWebsiteNode.setProperty("mgnl:template", "form:components/formEdit");
