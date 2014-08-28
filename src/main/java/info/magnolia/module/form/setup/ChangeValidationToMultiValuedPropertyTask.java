@@ -41,6 +41,7 @@ import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.jcr.Node;
@@ -50,9 +51,10 @@ import javax.jcr.Session;
 import javax.jcr.Value;
 
 /**
- * Add to validation property multi=true attribute.
+ * Convert 'validation' property to multi-valued property.
  */
 public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
+
     private List<String> listOfTemplates;
     private static String fields = "fields";
     private static String validation = "validation";
@@ -65,10 +67,10 @@ public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
                 NodeIterator nodeIterator = node.getNodes();
                 while (nodeIterator.hasNext()) {
                     field = nodeIterator.nextNode();
-                    if (field.hasProperty(validation) && field.hasProperty(NodeTypes.Renderable.TEMPLATE) && listOfTemplates.contains(field.getProperty(NodeTypes.Renderable.TEMPLATE).getValue().getString()) && !field.getProperty(validation).isMultiple()) {
-                        Value[] values = new Value[]{field.getProperty(validation).getValue()};
+                    if (checkNode(field)) {
+                        Value value = field.getProperty(validation).getValue();
                         field.getProperty(validation).remove();
-                        field.setProperty(validation, values);
+                        field.setProperty(validation, new Value[]{value});
                     }
                 }
             }
@@ -78,6 +80,11 @@ public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
     public ChangeValidationToMultiValuedPropertyTask(String taskDescription, List<String> listOfTemplates) {
         super("Change validation property from single type to multi valued property", taskDescription);
         this.listOfTemplates = listOfTemplates;
+    }
+
+    public ChangeValidationToMultiValuedPropertyTask(String taskDescription, String[] listOfTemplates) {
+        super("Change validation property from single type to multi valued property", taskDescription);
+        this.listOfTemplates = Arrays.asList(listOfTemplates);
     }
 
     @Override
@@ -90,4 +97,22 @@ public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
             throw new TaskExecutionException(e.getMessage(), e);
         }
     }
+
+    /**
+     * Checks if a node is eligible for being changed to a multi-valued property.
+     */
+    private boolean checkNode(Node node) throws RepositoryException {
+        if (!node.hasProperty(NodeTypes.Renderable.TEMPLATE) || !node.hasProperty(validation)) {
+            return false;
+        }
+        String templateName = node.getProperty(NodeTypes.Renderable.TEMPLATE).getString();
+        if (!listOfTemplates.contains(templateName)) {
+            return false;
+        }
+        if (node.getProperty(validation).isMultiple()) {
+            return false;
+        }
+        return true;
+    }
+
 }

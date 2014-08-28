@@ -42,13 +42,10 @@ import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.Validator;
 import info.magnolia.repository.RepositoryConstants;
-import info.magnolia.test.ComponentsTestUtil;
-import info.magnolia.test.MgnlTestCase;
 import info.magnolia.test.mock.MockWebContext;
 import info.magnolia.test.mock.jcr.MockNode;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.jcr.Node;
@@ -62,24 +59,27 @@ import org.junit.Test;
 /**
  * Tests for {@link DefaultFormDataBinder}.
  */
-public class DefaultFormDataBinderTest extends MgnlTestCase {
+public class DefaultFormDataBinderTest {
 
-    DefaultFormDataBinder binder;
-    HttpServletRequest request;
-    MockWebContext ctx;
-    FormStepState step;
+    private final static String controlNamePropertyName = "controlName";
+    private final static String controlName = "theActualControlName";
+    private DefaultFormDataBinder binder;
+    private HttpServletRequest request;
+    private MockWebContext ctx;
+    private FormStepState step = new FormStepState();
+    private Node fieldNode;
+    private List<Node> fieldList = new ArrayList<Node>();
 
-    @Override
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         binder = new DefaultFormDataBinder();
         request = mock(HttpServletRequest.class);
-        when(request.getParameterValues(anyString())).thenReturn(new String[]{"<", ">"});
-        ctx = (MockWebContext) MgnlContext.getWebContext();
+
+        ctx = new MockWebContext();
         ctx.addSession(RepositoryConstants.WEBSITE, mock(Session.class));
         ctx.setRequest(request);
         MgnlContext.setInstance(ctx);
+
         FormModule formModule = new FormModule();
         ArrayList validators = new ArrayList();
         Validator validator1 = new Validator();
@@ -89,50 +89,54 @@ public class DefaultFormDataBinderTest extends MgnlTestCase {
         validators.add(validator1);
         validators.add(validator2);
         formModule.setValidators(validators);
+
+        fieldNode = new MockNode();
+        fieldNode.setProperty(controlNamePropertyName, controlName);
+
+        fieldList.add(fieldNode);
     }
 
-    @Override
     @After
-    public void tearDown() throws Exception {
-        super.tearDown();
+    public void tearDown() {
         MgnlContext.setInstance(null);
-        ComponentsTestUtil.clear();
     }
 
     @Test
     public void testFieldValueHaveToBeEscaped() throws Exception {
-        //GIVEN
-        final String controlName = "controlName";
-        Node node = new MockNode();
-        node.setProperty("controlName", controlName);
-        List<Node> list = new ArrayList<Node>();
-        list.add(node);
-        Iterator<Node> iterator = list.iterator();
-        step = new FormStepState();
+        // GIVEN
+        when(request.getParameterValues(anyString())).thenReturn(new String[]{"<", ">"});
 
-        //WHEN
-        binder.bindAndValidateFields(iterator, step);
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
 
-        //THEN
+        // THEN
         assertEquals("&lt;__&gt;", step.get(controlName).getValue());
     }
 
     @Test
-    public void testFieldValueIsValidatedByMultivalueValidator() throws Exception {
-        //GIVEN
-        final String controlName = "controlName";
-        Node node = new MockNode();
-        node.setProperty("controlName", controlName);
-        node.setProperty("validation", new String[]{"test1", "test2"});
-        List<Node> list = new ArrayList<Node>();
-        list.add(node);
-        Iterator<Node> iterator = list.iterator();
-        step = new FormStepState();
+    public void testFieldValueIsValidatedByMultiValuedValidator() throws Exception {
+        // GIVEN
+        fieldNode.setProperty("validation", new String[]{"test1", "test2"});
+        when(request.getParameterValues(controlName)).thenReturn(new String[]{"anyTestValue"});
 
-        //WHEN
-        binder.bindAndValidateFields(iterator, step);
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
 
-        //THEN
+        // THEN
         assertTrue(step.isValid());
     }
+
+    @Test
+    public void testFieldValueIsValidatedBySingleValuedValidator() throws Exception {
+        // GIVEN
+        fieldNode.setProperty("validation", "test1");
+        when(request.getParameterValues(controlName)).thenReturn(new String[]{"anyTestValue"});
+
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
+
+        // THEN
+        assertTrue(step.isValid());
+    }
+
 }

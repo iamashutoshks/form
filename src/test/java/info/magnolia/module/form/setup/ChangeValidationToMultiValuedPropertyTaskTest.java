@@ -47,6 +47,7 @@ import info.magnolia.test.mock.jcr.MockSession;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -60,6 +61,7 @@ import org.junit.Test;
  * Tests for {@link ChangeValidationToMultiValuedPropertyTask}.
  */
 public class ChangeValidationToMultiValuedPropertyTaskTest {
+
     MockWebContext ctx;
     Session websiteSession;
     InstallContext installContext;
@@ -97,4 +99,19 @@ public class ChangeValidationToMultiValuedPropertyTaskTest {
         assertTrue(validationWebsiteNode.getProperty("validation").isMultiple());
         assertFalse(validationWebsiteNode2.getProperty("validation").isMultiple());
     }
+
+    @Test
+    public void testChangeValidationNodeWithoutTemplateProperty() throws TaskExecutionException, RepositoryException {
+        // GIVEN
+        ChangeValidationToMultiValuedPropertyTask changeValidationToMultiValuedPropertyTask = new ChangeValidationToMultiValuedPropertyTask("", Collections.EMPTY_LIST);
+        Node validationWebsiteNode = NodeUtil.createPath(websiteSession.getRootNode(), "fields/0", NodeTypes.ContentNode.NAME);
+        validationWebsiteNode.setProperty("validation", "email");
+
+        // WHEN
+        changeValidationToMultiValuedPropertyTask.execute(installContext);
+
+        // THEN
+        assertFalse(validationWebsiteNode.getProperty("validation").isMultiple());
+    }
+
 }

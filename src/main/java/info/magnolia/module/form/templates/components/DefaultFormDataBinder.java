@@ -49,11 +49,12 @@ import info.magnolia.module.form.validators.Validator;
 import info.magnolia.util.EscapeUtil;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Locale;
 
 import javax.jcr.Node;
+import javax.jcr.Property;
 import javax.jcr.RepositoryException;
+import javax.jcr.Value;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -114,10 +115,8 @@ public class DefaultFormDataBinder implements FormDataBinder {
 
                 if (StringUtils.isEmpty(value) && isMandatory(node)) {
                     field.setErrorMessage(getErrorMessage("mandatory", node));
-
                 } else if (value != null && node.hasProperty("validation")) {
-                    LinkedList<String> validatorNames = (LinkedList<String>) PropertyUtil.getPropertyValueObject(node, "validation");
-                    for (String validatorName : validatorNames) {
+                    for (String validatorName : getValidatorNames(node)) {
                         Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
                         if (validator != null) {
                             ValidationResult validationResult = validator.validateWithResult(value);
@@ -132,6 +131,22 @@ public class DefaultFormDataBinder implements FormDataBinder {
                 }
             }
         }
+    }
+
+    /**
+     * Gets validator names from <code>validation</code> property.
+     */
+    private String[] getValidatorNames(Node node) throws RepositoryException {
+        Property validationProperty = node.getProperty("validation");
+
+        Value[] values;
+        if (validationProperty.isMultiple()) {
+            values = validationProperty.getValues();
+        } else {
+            values = new Value[]{validationProperty.getValue()};
+        }
+
+        return PropertyUtil.getValuesStringList(values).toArray(new String[values.length]);
     }
 
     protected boolean isMandatory(Node node) {
