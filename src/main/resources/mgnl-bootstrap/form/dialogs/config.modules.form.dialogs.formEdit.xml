@@ -376,6 +376,9 @@
             <sv:property sv:name="repository" sv:type="String">
               <sv:value>config</sv:value>
             </sv:property>
+             <sv:property sv:name="type" sv:type="String">
+              <sv:value>String</sv:value>
+            </sv:property>           
             <sv:property sv:name="rightColumnCaption" sv:type="String">
               <sv:value>dialog.form.edit.tabMain.validation.rightColumnCaption</sv:value>
             </sv:property>
