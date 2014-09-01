@@ -46,6 +46,7 @@ import info.magnolia.module.delta.NodeExistsDelegateTask;
 import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyValueDelegateTask;
+import info.magnolia.module.delta.RemoveNodeTask;
 import info.magnolia.module.delta.RemovePropertyTask;
 import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.Task;
@@ -156,6 +157,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                             new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "leftColumnCaption", "dialog.form.edit.tabMain.validation.leftColumnCaption"),
                             new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "rightColumnCaption", "dialog.form.edit.tabMain.validation.rightColumnCaption"),
                             new ChangeValidationToMultiValuedPropertyTask("", new ArrayList<String>(Arrays.asList("form:components/formEdit","form:components/formPassword"))))))
+                .addTask(new NodeExistsDelegateTask("Reconfigure FormEdit dialog", "Remove the none validator", RepositoryConstants.CONFIG, "/modules/form/config/validators/none",
+                        new RemoveNodeTask("", "/modules/form/config/validators/none")))
         );
     }
 

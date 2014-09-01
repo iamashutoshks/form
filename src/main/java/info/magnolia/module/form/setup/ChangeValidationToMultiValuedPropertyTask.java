@@ -49,6 +49,8 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Value;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * Add to validation property multi=true attribute.
  */
@@ -66,6 +68,13 @@ public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
                 while (nodeIterator.hasNext()) {
                     field = nodeIterator.nextNode();
                     if (field.hasProperty(validation) && field.hasProperty(NodeTypes.Renderable.TEMPLATE) && listOfTemplates.contains(field.getProperty(NodeTypes.Renderable.TEMPLATE).getValue().getString()) && !field.getProperty(validation).isMultiple()) {
+                        String stringValue = field.getProperty(validation).getString();
+                        if (StringUtils.equals("none", stringValue)) {
+                            // Remove property if set to none
+                            field.getProperty(validation).remove();
+                            continue;
+                        }
+
                         Value[] values = new Value[]{field.getProperty(validation).getValue()};
                         field.getProperty(validation).remove();
                         field.setProperty(validation, values);
