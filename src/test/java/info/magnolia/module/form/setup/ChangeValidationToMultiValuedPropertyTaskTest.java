@@ -113,5 +113,25 @@ public class ChangeValidationToMultiValuedPropertyTaskTest {
         // THEN
         assertFalse(validationWebsiteNode.getProperty("validation").isMultiple());
     }
+    
+      @Test
+    public void testChangeValidationToMultiValueOnlyForNodeWithValidValidator() throws TaskExecutionException, RepositoryException {
+        // GIVEN
+        ChangeValidationToMultiValuedPropertyTask changeValidationToMultiValuedPropertyTask = new ChangeValidationToMultiValuedPropertyTask("", new ArrayList<String>(Arrays.asList("form:components/formEdit")));
+        Node validationWebsiteNode = NodeUtil.createPath(websiteSession.getRootNode(), "fields/0", NodeTypes.ContentNode.NAME);
+        validationWebsiteNode.setProperty("validation", "email");
+        validationWebsiteNode.setProperty("mgnl:template", "form:components/formEdit");
+        Node validationWebsiteNode2 = NodeUtil.createPath(websiteSession.getRootNode(), "fields/1", NodeTypes.ContentNode.NAME);
+        validationWebsiteNode2.setProperty("validation", "none");
+        validationWebsiteNode2.setProperty("mgnl:template", "form:components/formEdit");
+
+        // WHEN
+        changeValidationToMultiValuedPropertyTask.execute(installContext);
+
+        // THEN
+        assertTrue(validationWebsiteNode.getProperty("validation").isMultiple());
+        assertFalse(validationWebsiteNode2.hasProperty("validation"));
+    }
+    
 
 }

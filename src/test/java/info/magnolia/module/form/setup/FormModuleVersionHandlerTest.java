@@ -197,6 +197,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
             this.setupConfigProperty(pathToField, "class", "info.magnolia.ui.form.field.definition.SelectFieldDefinition");
             this.setupConfigProperty(pathToField, "buttonLabel", "test");
         }
+        this.setupConfigNode("/modules/form/config/validators/none");
         Session websiteSession = MgnlContext.getJCRSession(RepositoryConstants.WEBSITE);
         Node validationWebsiteNode = NodeUtil.createPath(websiteSession.getRootNode(), "fields/0", NodeTypes.ContentNode.NAME);
         validationWebsiteNode.setProperty("validation", "email");
@@ -214,6 +215,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
             assertFalse(validationNode.hasProperty("buttonLabel"));
         }
         assertTrue(validationWebsiteNode.getProperty("validation").isMultiple());
+        assertFalse(session.getRootNode().hasNode("modules/form/config/validators/none"));
     }
 
     @Test

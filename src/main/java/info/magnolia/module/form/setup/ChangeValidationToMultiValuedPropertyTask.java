@@ -41,7 +41,6 @@ import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
 import info.magnolia.repository.RepositoryConstants;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.jcr.Node;
@@ -49,6 +48,8 @@ import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Value;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Convert 'validation' property to multi-valued property.
@@ -70,7 +71,7 @@ public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
                     if (checkNode(field)) {
                         Value value = field.getProperty(validation).getValue();
                         field.getProperty(validation).remove();
-                        field.setProperty(validation, new Value[]{value});
+                        field.setProperty(validation, new Value[] { value });
                     }
                 }
             }
@@ -80,11 +81,6 @@ public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
     public ChangeValidationToMultiValuedPropertyTask(String taskDescription, List<String> listOfTemplates) {
         super("Change validation property from single type to multi valued property", taskDescription);
         this.listOfTemplates = listOfTemplates;
-    }
-
-    public ChangeValidationToMultiValuedPropertyTask(String taskDescription, String[] listOfTemplates) {
-        super("Change validation property from single type to multi valued property", taskDescription);
-        this.listOfTemplates = Arrays.asList(listOfTemplates);
     }
 
     @Override
@@ -112,6 +108,14 @@ public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
         if (node.getProperty(validation).isMultiple()) {
             return false;
         }
+
+        String stringValue = node.getProperty(validation).getString();
+        if (StringUtils.equals("none", stringValue)) {
+            // Remove property if set to none
+            node.getProperty(validation).remove();
+            return false;
+        }
+
         return true;
     }
 
