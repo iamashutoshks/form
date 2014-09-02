@@ -33,59 +33,58 @@
  */
 package info.magnolia.module.form.setup;
 
-import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.NodeVisitor;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.TaskExecutionException;
-import info.magnolia.repository.RepositoryConstants;
-
-import java.util.List;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
+import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Value;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Add to validation property multi=true attribute.
  */
-public class ChangeValidationToMultiValuedPropertyTask extends AbstractTask {
-    private List<String> listOfTemplates;
-    private static String fields = "fields";
-    private static String validation = "validation";
-
-    private NodeVisitor nodeVisitor = new NodeVisitor() {
+public class UpgradeValidationPropertyToMulti extends AbstractTask {
+    private static final Logger log = LoggerFactory.getLogger(UpdateConfirmHtmlTypeToCodeTask.class);
+    NodeVisitor nodeVisitor = new NodeVisitor() {
         @Override
         public void visit(Node node) throws RepositoryException {
             Node field;
-            if (node.getName().equals(fields)) {
+            if (node.getName().equals("fields")) {
                 NodeIterator nodeIterator = node.getNodes();
                 while (nodeIterator.hasNext()) {
                     field = nodeIterator.nextNode();
-                    if (field.hasProperty(validation) && field.hasProperty(NodeTypes.Renderable.TEMPLATE) && listOfTemplates.contains(field.getProperty(NodeTypes.Renderable.TEMPLATE).getValue().getString()) && !field.getProperty(validation).isMultiple()) {
-                        Value[] values = new Value[]{field.getProperty(validation).getValue()};
-                        field.getProperty(validation).remove();
-                        field.setProperty(validation, values);
+                    if (field.hasProperty("validation") && !field.getProperty("validation").isMultiple()) {
+                        Value[] values=new Value[] {field.getProperty("validation").getValue()};
+                        field.getProperty("validation").remove();
+                        field.setProperty("validation", values);
                     }
                 }
             }
         }
     };
 
-    public ChangeValidationToMultiValuedPropertyTask(String taskDescription, List<String> listOfTemplates) {
-        super("Change validation property from single type to multi valued property", taskDescription);
-        this.listOfTemplates = listOfTemplates;
+    public UpgradeValidationPropertyToMulti(String taskName, String taskDescription) {
+        super("Add to validation property multi=true attribute", "");
     }
 
     @Override
     public void execute(InstallContext ctx) throws TaskExecutionException {
         try {
-            Session session = ctx.getJCRSession(RepositoryConstants.WEBSITE);
+            Session session = ctx.getJCRSession("website");
             Node rootNode = session.getRootNode();
             NodeUtil.visit(rootNode, nodeVisitor);
+            session.save();
+        } catch (PathNotFoundException e) {
+            log.error("Switch of confirm mail type from html to code failed due to missing node(s): ", e);
         } catch (RepositoryException e) {
             throw new TaskExecutionException(e.getMessage(), e);
         }
