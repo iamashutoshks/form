@@ -16,6 +16,24 @@
     </type-mapping>
   </components>
 
+  <components>
+    <id>app-form-form</id>
+    <component>
+      <type>info.magnolia.pages.app.editor.PagesEditorSubAppView</type>
+      <implementation>info.magnolia.pages.app.editor.PagesEditorSubAppViewImpl</implementation>
+    </component>
+    <component>
+      <type>info.magnolia.ui.vaadin.editor.PageEditorView</type>
+      <implementation>info.magnolia.ui.vaadin.editor.PageEditorViewImpl</implementation>
+    </component>
+    <component>
+      <type>info.magnolia.pages.app.editor.PageEditorPresenter</type>
+      <implementation>info.magnolia.pages.app.editor.PageEditorPresenter</implementation>
+    </component>
+  </components>
+
+
+
   <dependencies>
     <dependency>
       <name>core</name>
@@ -30,4 +48,15 @@
       <version>5.0/*</version>
     </dependency>
   </dependencies>
+
+    <repositories>
+    <repository>
+      <name>magnolia</name>
+      <workspaces>
+        <workspace>form</workspace>
+      </workspaces>
+    </repository>
+  </repositories>
+
+
 </module>

@@ -33,8 +33,15 @@
  */
 package info.magnolia.module.form.setup;
 
+import info.magnolia.cms.security.Permission;
+import info.magnolia.cms.security.Role;
+import info.magnolia.cms.security.RoleManager;
+import info.magnolia.cms.security.Security;
+import info.magnolia.cms.security.User;
+import info.magnolia.cms.security.UserManager;
 import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
+import info.magnolia.module.delta.AbstractTask;
 import info.magnolia.module.delta.ArrayDelegateTask;
 import info.magnolia.module.delta.BootstrapConditionally;
 import info.magnolia.module.delta.BootstrapSingleResource;
@@ -50,6 +57,8 @@ import info.magnolia.module.delta.RemoveNodeTask;
 import info.magnolia.module.delta.RemovePropertyTask;
 import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.Task;
+import info.magnolia.module.delta.TaskExecutionException;
+import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.setup.migration.AddMissingDefaultValuesToFieldsTask;
 import info.magnolia.module.form.setup.migration.ConditionalControlMigrator;
 import info.magnolia.module.form.setup.migration.RadioSwitchControlMigrator;
@@ -74,6 +83,27 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
     private static final String COMMIT_ACTION = "/actions/commit";
     private static final String CANCEL_ACTION = "/actions/cancel";
     private static final List<String> DIALOGS = Arrays.asList(new String[] { "form", "formCondition", "formEdit", "formFile", "formGroupEdit", "formGroupEditItem", "formGroupFields", "formHidden", "formHoneypot", "formSelection", "formStep", "formSubmit", "formSummary" });
+
+    final Task grantReadPermissionToAnonymousUser = new AbstractTask("Anonymous permissions for form", "Grants the anonymous user the read permission to the form.") {
+        @Override
+        public void execute(InstallContext installContext) throws TaskExecutionException {
+
+            RoleManager roleManager = Security.getRoleManager();
+            Role anonymous = roleManager.getRole("anonymous");
+
+            roleManager.addPermission(anonymous, FormModule.FORM_WORKSPACE, "/", Permission.READ);
+            roleManager.addPermission(anonymous, FormModule.FORM_WORKSPACE, "/*", Permission.READ);
+        }
+    };
+
+    final Task addReadRoleToAnonymousUser = new AbstractTask("Anonymous permissions for form", "Grants the anonymous user the read permission to the form.") {
+        @Override
+        public void execute(InstallContext installContext) throws TaskExecutionException {
+            UserManager userManager = Security.getUserManager();
+            User anonymous = userManager.getUser("anonymous");
+            userManager.addRole(anonymous, "form-base");
+        }
+    };
 
     private final Task rebootstrapBrokenDialogsTask = new ArrayDelegateTask("",
 
@@ -175,6 +205,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
     @Override
     protected List<Task> getExtraInstallTasks(InstallContext installContext) {
         final List<Task> tasks = new ArrayList<Task>();
+        tasks.add(grantReadPermissionToAnonymousUser);
         return tasks;
     }
 }

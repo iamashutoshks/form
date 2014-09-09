@@ -12,8 +12,8 @@
   <description />
 
   <properties>
-    <magnoliaVersion>5.2.2</magnoliaVersion>
-    <magnoliaUiVersion>5.2.2</magnoliaUiVersion>
+    <magnoliaVersion>5.3.3-SNAPSHOT</magnoliaVersion>
+    <magnoliaUiVersion>5.3.3-SNAPSHOT</magnoliaUiVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
     <cloverCoverageThreshold>45</cloverCoverageThreshold>
@@ -39,6 +39,12 @@
     <dependency>
       <groupId>info.magnolia.ui</groupId>
       <artifactId>magnolia-ui-admincentral</artifactId>
+      <version>${magnoliaUiVersion}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>info.magnolia.ui</groupId>
+      <artifactId>magnolia-ui-contentapp</artifactId>
       <version>${magnoliaUiVersion}</version>
       <scope>provided</scope>
     </dependency>

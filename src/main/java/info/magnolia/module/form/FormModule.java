@@ -49,6 +49,8 @@ import info.magnolia.module.form.validators.Validator;
  */
 public class FormModule {
 
+    public final static String FORM_WORKSPACE = "form";
+
     private List validators = new ArrayList();
 
     private static FormModule instance;
