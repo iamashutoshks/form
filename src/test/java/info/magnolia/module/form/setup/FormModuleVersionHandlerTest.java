@@ -234,4 +234,16 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
     }
 
+    @Test
+    public void updateFrom226() throws Exception {
+        // GIVEN
+        this.setupConfigNode("/modules/form/dialogs/formEdit/form/tabs/tabMain/fields");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.6"));
+
+        // THEN
+        assertTrue(session.getRootNode().hasNode("modules/form/dialogs/formEdit/form/tabs/tabMain/fields/escapeHtml"));
+    }
+
 }

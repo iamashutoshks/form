@@ -81,7 +81,7 @@ public class DefaultFormDataBinderTest {
         MgnlContext.setInstance(ctx);
 
         FormModule formModule = new FormModule();
-        ArrayList validators = new ArrayList();
+        ArrayList<Validator> validators = new ArrayList<Validator>();
         Validator validator1 = new Validator();
         validator1.setName("test1");
         Validator validator2 = new Validator();
@@ -102,7 +102,7 @@ public class DefaultFormDataBinderTest {
     }
 
     @Test
-    public void testFieldValueHaveToBeEscaped() throws Exception {
+    public void testFieldValueIsEcapedByDefault() throws Exception {
         // GIVEN
         when(request.getParameterValues(anyString())).thenReturn(new String[]{"<", ">"});
 
@@ -111,6 +111,19 @@ public class DefaultFormDataBinderTest {
 
         // THEN
         assertEquals("&lt;__&gt;", step.get(controlName).getValue());
+    }
+
+    @Test
+    public void testFieldValueIsNotEscapedWhenEscapeHtmlIsFalse() throws Exception {
+        // GIVEN
+        when(request.getParameterValues(anyString())).thenReturn(new String[] { "<", ">" });
+        fieldNode.setProperty("escapeHtml", false);
+
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
+
+        // THEN
+        assertEquals("<__>", step.get(controlName).getValue());
     }
 
     @Test
