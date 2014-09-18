@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.setup;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -50,7 +49,6 @@ import javax.jcr.Session;
 
 import org.junit.Before;
 import org.junit.Test;
-
 
 public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
@@ -83,7 +81,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
                 "/META-INF/magnolia/rendering.xml",
                 "/META-INF/magnolia/admininterface.xml",
                 "/META-INF/magnolia/groovy.xml"
-        );
+                );
     }
 
     @Test
