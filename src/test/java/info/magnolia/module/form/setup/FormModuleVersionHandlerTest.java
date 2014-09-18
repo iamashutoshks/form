@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.setup;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -50,7 +49,6 @@ import javax.jcr.Session;
 
 import org.junit.Before;
 import org.junit.Test;
-
 
 public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
@@ -83,21 +81,34 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
                 "/META-INF/magnolia/rendering.xml",
                 "/META-INF/magnolia/admininterface.xml",
                 "/META-INF/magnolia/groovy.xml"
-        );
+                );
     }
 
     @Test
     public void updateFrom1410() throws Exception {
         // GIVEN
-        this.setupConfigProperty("/modules/form/dialogs/formHoneypot/tabMain/validation", "controlType", "static");
-        this.setupConfigProperty("/modules/form/dialogs/formHoneypot/tabMain/validation", "value", "empty");
+        this.setupConfigProperty(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH, "controlType", "static");
+        this.setupConfigProperty(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH, "value", "empty");
 
         // WHEN
         executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("1.4.10"));
 
         // THEN
-        assertEquals("hidden", session.getProperty("/modules/form/dialogs/formHoneypot/tabMain/validation/controlType").getString());
-        assertTrue(session.propertyExists("/modules/form/dialogs/formHoneypot/tabMain/validation/defaultValue"));
-        assertEquals("empty", session.getProperty("/modules/form/dialogs/formHoneypot/tabMain/validation/defaultValue").getString());
+        assertEquals("hidden", session.getProperty(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH + "controlType").getString());
+        assertTrue(session.propertyExists(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH + "defaultValue"));
+        assertEquals("empty", session.getProperty(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH + "defaultValue").getString());
+    }
+
+    @Test
+    public void updateFrom1411() throws Exception {
+        // GIVEN
+        this.setupConfigNode(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH);
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("1.4.11"));
+
+        // THEN
+        assertTrue(session.propertyExists(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH + "defaultValue"));
+        assertEquals("empty", session.getProperty(FormModuleVersionHandler.HONEY_POT_VALIDATION_FIELD_PATH + "defaultValue").getString());
     }
 }

@@ -9,3 +9,4 @@ target
 .settings
 .checkstyle
 rebel.xml
+*.DS_Store
