@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.engine;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.link.LinkUtil;
@@ -102,16 +101,29 @@ public class FormStateUtil {
     }
 
     public static void sendRedirect(String uuid) throws RepositoryException, IOException {
-        String link = LinkUtil.createAbsoluteLink(ContentRepository.WEBSITE, uuid);
+        sendRedirect(uuid, RepositoryConstants.WEBSITE);
+    }
+
+    public static void sendRedirect(String uuid, String workspace) throws RepositoryException, IOException {
+        String link = LinkUtil.createAbsoluteLink(workspace, uuid);
         ((WebContext) MgnlContext.getInstance()).getResponse().sendRedirect(link);
     }
+
 
     public static void sendRedirectWithToken(String uuid, String formExecutionToken) throws RepositoryException, IOException {
         sendRedirectWithTokenAndParameters(uuid, formExecutionToken, null);
     }
 
+    public static void sendRedirectWithToken(String uuid, String formExecutionToken, String workspace) throws RepositoryException, IOException {
+        sendRedirectWithTokenAndParameters(uuid, formExecutionToken, null, workspace);
+    }
+
     public static void sendRedirectWithTokenAndParameters(String uuid, String formExecutionToken, Map<String, String> parameters) throws RepositoryException, IOException {
-        String link = LinkUtil.createAbsoluteLink(RepositoryConstants.WEBSITE, uuid);
+        sendRedirectWithTokenAndParameters(uuid, formExecutionToken, parameters, RepositoryConstants.WEBSITE);
+    }
+
+    public static void sendRedirectWithTokenAndParameters(String uuid, String formExecutionToken, Map<String, String> parameters, String workspace) throws RepositoryException, IOException {
+        String link = LinkUtil.createAbsoluteLink(workspace, uuid);
         link += "?" + FORM_TOKEN_PARAMETER_NAME + "=" + formExecutionToken;
         if (parameters != null) {
             for (Entry<String, String> param : parameters.entrySet()) {

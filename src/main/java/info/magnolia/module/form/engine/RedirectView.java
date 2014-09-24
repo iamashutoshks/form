@@ -33,6 +33,8 @@
  */
 package info.magnolia.module.form.engine;
 
+import info.magnolia.context.MgnlContext;
+import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.rendering.model.RenderingModel;
 
@@ -59,7 +61,8 @@ public class RedirectView implements EndView {
 
     @Override
     public String execute() throws RepositoryException, IOException {
-        FormStateUtil.sendRedirect(uuid);
+        String workspace = ((WebContext) MgnlContext.getInstance()).getAggregationState().getRepository();
+        FormStateUtil.sendRedirect(uuid, workspace);
         return RenderingModel.SKIP_RENDERING;
     }
 }

@@ -33,6 +33,8 @@
  */
 package info.magnolia.module.form.engine;
 
+import info.magnolia.context.MgnlContext;
+import info.magnolia.context.WebContext;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.rendering.model.RenderingModel;
 
@@ -62,7 +64,8 @@ public class RedirectWithTokenView implements View {
 
     @Override
     public String execute() throws RepositoryException, IOException {
-        FormStateUtil.sendRedirectWithToken(uuid, token);
+        String workspace = ((WebContext) MgnlContext.getInstance()).getAggregationState().getRepository();
+        FormStateUtil.sendRedirectWithToken(uuid, token, workspace);
         return RenderingModel.SKIP_RENDERING;
     }
 }

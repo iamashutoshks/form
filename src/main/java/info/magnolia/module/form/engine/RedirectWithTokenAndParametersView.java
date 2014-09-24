@@ -84,7 +84,8 @@ public class RedirectWithTokenAndParametersView implements View {
             }
         }
 
-        FormStateUtil.sendRedirectWithTokenAndParameters(this.uuid, this.token, parameters);
+        String workspace = ((WebContext) MgnlContext.getInstance()).getAggregationState().getRepository();
+        FormStateUtil.sendRedirectWithTokenAndParameters(this.uuid, this.token, parameters, workspace);
         return RenderingModel.SKIP_RENDERING;
     }
 

@@ -83,11 +83,13 @@ import javax.servlet.http.HttpSessionContext;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Test class for FormEngine.
  */
+@Ignore
 public class FormEngineTest extends RepositoryTestCase {
 
     private FormEngine formEngine;
