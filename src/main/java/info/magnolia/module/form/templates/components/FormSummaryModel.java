@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2014 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.cms.core.Content;
 import info.magnolia.cms.core.ItemType;
 import info.magnolia.cms.i18n.I18nContentWrapper;
@@ -49,7 +48,6 @@ import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.model.RenderingModelImpl;
 import info.magnolia.rendering.template.RenderableDefinition;
-import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.templating.functions.TemplatingFunctions;
 
 import java.util.ArrayList;
@@ -148,7 +146,7 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
         try {
             if(!stepParameters.isEmpty()) {
                 String paragraphUUID = step.getParagraphUuid();
-                Node contentParagraph = NodeUtil.getNodeByIdentifier(RepositoryConstants.WEBSITE, paragraphUUID);
+                Node contentParagraph = NodeUtil.getNodeByIdentifier(getNode().getSession().getWorkspace().getName(), paragraphUUID);
 
                 //FIXME I18nContentWrapper has to be migrated
                 Content page = new I18nContentWrapper(ContentUtil.asContent(NavigationUtils.findParagraphParentPage(contentParagraph)));
@@ -231,7 +229,12 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
 
         String query = "select * from " + ItemType.CONTENTNODE + " where jcr:path like '"
                 + contentParagraph.getHandle() +"/%' and controlName is not null";
-        return QueryUtil.query(ContentRepository.WEBSITE, query);
+
+        try {
+            return QueryUtil.query(getNode().getSession().getWorkspace().getName(), query);
+        } catch (RepositoryException e) {
+            return null;
+        }
     }
 
 }

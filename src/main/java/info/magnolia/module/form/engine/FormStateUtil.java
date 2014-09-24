@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2014 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,7 +33,6 @@
  */
 package info.magnolia.module.form.engine;
 
-import info.magnolia.cms.beans.config.ContentRepository;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.link.LinkUtil;
@@ -47,6 +46,7 @@ import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Utility class for storing FormState in session and getting the form state token from a request.
@@ -102,16 +102,33 @@ public class FormStateUtil {
     }
 
     public static void sendRedirect(String uuid) throws RepositoryException, IOException {
-        String link = LinkUtil.createAbsoluteLink(ContentRepository.WEBSITE, uuid);
+        sendRedirect(uuid, RepositoryConstants.WEBSITE);
+    }
+
+    public static void sendRedirect(String uuid, String workspace) throws RepositoryException, IOException {
+        // be sure that workspace is not null
+        workspace = StringUtils.isBlank(workspace) ? RepositoryConstants.WEBSITE : workspace;
+        String link = LinkUtil.createAbsoluteLink(workspace, uuid);
         ((WebContext) MgnlContext.getInstance()).getResponse().sendRedirect(link);
     }
+
 
     public static void sendRedirectWithToken(String uuid, String formExecutionToken) throws RepositoryException, IOException {
         sendRedirectWithTokenAndParameters(uuid, formExecutionToken, null);
     }
 
+    public static void sendRedirectWithToken(String uuid, String formExecutionToken, String workspace) throws RepositoryException, IOException {
+        sendRedirectWithTokenAndParameters(uuid, formExecutionToken, null, workspace);
+    }
+
     public static void sendRedirectWithTokenAndParameters(String uuid, String formExecutionToken, Map<String, String> parameters) throws RepositoryException, IOException {
-        String link = LinkUtil.createAbsoluteLink(RepositoryConstants.WEBSITE, uuid);
+        sendRedirectWithTokenAndParameters(uuid, formExecutionToken, parameters, RepositoryConstants.WEBSITE);
+    }
+
+    public static void sendRedirectWithTokenAndParameters(String uuid, String formExecutionToken, Map<String, String> parameters, String workspace) throws RepositoryException, IOException {
+        // be sure that workspace is not null
+        workspace = StringUtils.isBlank(workspace) ? RepositoryConstants.WEBSITE : workspace;
+        String link = LinkUtil.createAbsoluteLink(workspace, uuid);
         link += "?" + FORM_TOKEN_PARAMETER_NAME + "=" + formExecutionToken;
         if (parameters != null) {
             for (Entry<String, String> param : parameters.entrySet()) {
