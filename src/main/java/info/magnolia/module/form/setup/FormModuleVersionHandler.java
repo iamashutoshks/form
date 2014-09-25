@@ -54,6 +54,8 @@ import java.util.Arrays;
  */
 public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
 
+    protected static final String HONEY_POT_VALIDATION_FIELD_PATH = "/modules/form/dialogs/formHoneypot/tabMain/validation/";
+
     public FormModuleVersionHandler() {
         register(DeltaBuilder.update("1.4", "")
                 .addTask(new FormMigrationTask("Migration task: Migrate Form configuration repository", "Migrate configuration of templates, dialogs and site definitions", "form", false, Arrays.asList(""))));
@@ -84,8 +86,16 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new OrderNodeBeforeTask("Order field", "Ensure the proper order of form confirmation email dialog field.", RepositoryConstants.CONFIG, "/modules/form/dialogs/form/tabConfirmEmail/confirmMailType", "confirmContentType")));
 
         register(DeltaBuilder.update("1.4.11", "")
-                .addTask(new NodeExistsDelegateTask("Reconfigure Honeypot dialog", "Use 'hidden' controlType for validation field in Honeypot dialog", RepositoryConstants.CONFIG, "/modules/form/dialogs/formHoneypot/tabMain/validation", new ArrayDelegateTask("", "",
-                        new SetPropertyTask(RepositoryConstants.CONFIG, "/modules/form/dialogs/formHoneypot/tabMain/validation", "controlType", "hidden"),
-                        new MoveAndRenamePropertyTask("Change property name 'value' to 'defaultValue' for validation field in Honeypot dialog", "/modules/form/dialogs/formHoneypot/tabMain/validation", "value", "/modules/form/dialogs/formHoneypot/tabMain/validation", "defaultValue")))));
+                .addTask(new NodeExistsDelegateTask("Reconfigure Honeypot dialog", "Use 'hidden' controlType for validation field in Honeypot dialog", RepositoryConstants.CONFIG,
+                        HONEY_POT_VALIDATION_FIELD_PATH, new ArrayDelegateTask("", "",
+                                new SetPropertyTask(RepositoryConstants.CONFIG, HONEY_POT_VALIDATION_FIELD_PATH, "controlType", "hidden"),
+                                new MoveAndRenamePropertyTask("Change property name 'value' to 'defaultValue' for validation field in Honeypot dialog",
+                                        HONEY_POT_VALIDATION_FIELD_PATH, "value", HONEY_POT_VALIDATION_FIELD_PATH, "defaultValue")))));
+
+        register(DeltaBuilder.update("1.4.12", "")
+                .addTask(new PropertyExistsDelegateTask("Fix Honeypot dialog", "Set 'defaultValue' for validation field in Honeypot dialog", RepositoryConstants.CONFIG,
+                        HONEY_POT_VALIDATION_FIELD_PATH, "defaultValue", null,
+                        new NewPropertyTask("", "", RepositoryConstants.CONFIG, HONEY_POT_VALIDATION_FIELD_PATH, "defaultValue", "empty"))));
+
     }
 }
