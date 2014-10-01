@@ -38,6 +38,7 @@ import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.i18n.MessagesUtil;
 import info.magnolia.context.MgnlContext;
+import info.magnolia.jcr.util.NodeTypes.Renderable;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.FormModule;
@@ -46,6 +47,7 @@ import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.ValidationResult;
 import info.magnolia.module.form.validators.Validator;
+import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.util.EscapeUtil;
 
 import java.util.Iterator;
@@ -57,6 +59,8 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default {@link info.magnolia.module.form.engine.FormDataBinder} that performs binding and validation for the
@@ -64,9 +68,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class DefaultFormDataBinder implements FormDataBinder {
 
+    private static final Logger log = LoggerFactory.getLogger(DefaultFormDataBinder.class);
+
     private static final String CONTENT_NAME_TEXT_FIELD_GROUP = "edits";
 
     private static final String DEFAULT_PATH = "info.magnolia.module.form.messages";
+
+    private static final String PATH_TO_TEMPLATES = "/modules/%s/templates/%s";
 
     private String i18nBasename;
 
@@ -99,14 +107,24 @@ public class DefaultFormDataBinder implements FormDataBinder {
         }
     }
 
+    /**
+     * Besides validating the fields for this step, it will also check for the existence of a <code>escapeHtml</code> property in a field configuration.
+     * If such property value is false, HTML won't be escaped. Default value is true.
+     */
     protected void bindAndValidateFields(Iterator<Node> iterator, FormStepState step) throws RepositoryException {
         while (iterator.hasNext()) {
             final Node node = iterator.next();
 
             if (node.hasProperty("controlName")) {
-
                 final String controlName = node.getProperty("controlName").getString();
-                final boolean escapeHtml = node.hasProperty("escapeHtml") ? node.getProperty("escapeHtml").getBoolean() : true;
+
+                Node config = getFieldConfiguration(node);
+                boolean escapeHtml = true;
+
+                if (config != null) {
+                    escapeHtml = PropertyUtil.getBoolean(config, "escapeHtml", true);
+                }
+
                 final String values = StringUtils.join(MgnlContext.getParameterValues(controlName), "__");
                 final String value = escapeHtml ? EscapeUtil.escapeXss(values) : values;
 
@@ -185,5 +203,35 @@ public class DefaultFormDataBinder implements FormDataBinder {
         String errorMessage = messages.getWithDefault(key, defaultMsg);
         String title = PropertyUtil.getString(node, "title");
         return title + ": " + errorMessage;
+    }
+
+    /**
+     * @return The field configuration for the current node or null if such config doesn't exist or couldn't be retrieved.
+     */
+    protected Node getFieldConfiguration(Node node) {
+
+        try {
+            String template = Renderable.getTemplate(node);
+            if (template == null) {
+                log.warn("Could not find mgnl:template for node at {}", node.getPath());
+                return null;
+            }
+            String[] idAndPath = template.split(":");
+
+            String path = null;
+
+            if (idAndPath.length > 1) {
+                path = String.format(PATH_TO_TEMPLATES, idAndPath[0], idAndPath[1]);
+            } else {
+                path = String.format(PATH_TO_TEMPLATES, "form", idAndPath[0]);
+            }
+
+            log.debug("Trying to get field configuration at {}", path);
+            return MgnlContext.getJCRSession(RepositoryConstants.CONFIG).getNode(path);
+
+        } catch (RepositoryException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

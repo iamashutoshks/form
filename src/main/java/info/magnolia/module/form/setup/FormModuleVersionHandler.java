@@ -160,7 +160,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         new RemoveNodeTask("", "/modules/form/config/validators/none")))
         );
         register(DeltaBuilder.update("2.2.7", "")
-                .addTask(new PartialBootstrapTask("Escape Html", "Adds the ability to skip the default HTML escaping at a field level.", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formEdit.xml", "/formEdit/form/tabs/tabMain/fields/escapeHtml")));
+                .addTask(new NewPropertyTask("Escape Html", "Skips the default HTML escaping in password component.", RepositoryConstants.CONFIG, "/modules/form/templates/components/formPassword", "escapeHtml", false)));
     }
 
     private void processDialogs(DeltaBuilder delta) {
