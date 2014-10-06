@@ -37,6 +37,7 @@ import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.i18n.MessagesUtil;
+import info.magnolia.cms.security.SilentSessionOp;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeTypes.Renderable;
 import info.magnolia.jcr.util.NodeUtil;
@@ -56,6 +57,7 @@ import java.util.Locale;
 import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.Value;
 
 import org.apache.commons.lang.StringUtils;
@@ -218,7 +220,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
             }
             String[] idAndPath = template.split(":");
 
-            String path = null;
+            final String path;
 
             if (idAndPath.length > 1) {
                 path = String.format(PATH_TO_TEMPLATES, idAndPath[0], idAndPath[1]);
@@ -227,7 +229,13 @@ public class DefaultFormDataBinder implements FormDataBinder {
             }
 
             log.debug("Trying to get field configuration at {}", path);
-            return MgnlContext.getJCRSession(RepositoryConstants.CONFIG).getNode(path);
+            return MgnlContext.doInSystemContext(new SilentSessionOp<Node>(RepositoryConstants.CONFIG) {
+
+                @Override
+                public Node doExec(Session session) throws Throwable {
+                    return session.getNode(path);
+                }
+            });
 
         } catch (RepositoryException e) {
             e.printStackTrace();

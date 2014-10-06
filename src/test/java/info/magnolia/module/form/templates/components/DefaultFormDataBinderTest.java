@@ -38,11 +38,13 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
 import info.magnolia.jcr.util.NodeTypes.Renderable;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.Validator;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.mock.MockWebContext;
 import info.magnolia.test.mock.jcr.MockNode;
 
@@ -67,6 +69,7 @@ public class DefaultFormDataBinderTest {
     private DefaultFormDataBinder binder;
     private HttpServletRequest request;
     private MockWebContext ctx;
+    private MockWebContext systemCtx;
     private FormStepState step = new FormStepState();
     private Node fieldNode;
     private List<Node> fieldList = new ArrayList<Node>();
@@ -80,10 +83,15 @@ public class DefaultFormDataBinderTest {
 
         ctx = new MockWebContext();
         ctx.addSession(RepositoryConstants.WEBSITE, session);
-        ctx.addSession(RepositoryConstants.CONFIG, session);
+
         ctx.setRequest(request);
 
         MgnlContext.setInstance(ctx);
+
+        systemCtx = new MockWebContext();
+        systemCtx.addSession(RepositoryConstants.CONFIG, session);
+
+        ComponentsTestUtil.setInstance(SystemContext.class, systemCtx);
 
         FormModule formModule = new FormModule();
         ArrayList<Validator> validators = new ArrayList<Validator>();
