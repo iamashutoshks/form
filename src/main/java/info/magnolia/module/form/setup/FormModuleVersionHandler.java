@@ -161,6 +161,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         );
         register(DeltaBuilder.update("2.2.7", "")
                 .addTask(new NewPropertyTask("Escape Html", "Skips the default HTML escaping in password component.", RepositoryConstants.CONFIG, "/modules/form/templates/components/formPassword", "escapeHtml", false)));
+
+        register(DeltaBuilder.update("2.2.8", "")
+                .addTask(new UpdateValidatorsClassTask())
+        );
     }
 
     private void processDialogs(DeltaBuilder delta) {

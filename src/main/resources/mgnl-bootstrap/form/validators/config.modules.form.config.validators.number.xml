@@ -10,7 +10,7 @@
     <sv:value>2bdebc30-3425-42cf-9824-b32090ee9361</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
-    <sv:value>info.magnolia.module.form.validators.ValidateExpression</sv:value>
+    <sv:value>info.magnolia.module.form.validators.RegexValidator</sv:value>
   </sv:property>
   <sv:property sv:name="expression" sv:type="String">
     <sv:value>^[0-9]*$</sv:value>

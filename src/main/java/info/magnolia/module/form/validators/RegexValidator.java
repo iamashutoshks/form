@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2012 Magnolia International
+ * This file Copyright (c) 2014 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -37,23 +37,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Regular expression validator.
- *
- * @deprecated since 2.2.8, please use {@link RegexValidator} instead.
+ * A validator using a regular expression.
  */
-@Deprecated
-public class ValidateExpression extends NoHTMLValidator {
-
-    public String expression;
-
-    @Override
-    public boolean validate(String value) {
-        if (!super.validate(value))
-            return false;
-        Pattern pattern = Pattern.compile(getExpression());
-        Matcher matcher = pattern.matcher(value);
-        return matcher.matches();
-    }
+public class RegexValidator extends Validator {
+    private String expression;
 
     public String getExpression() {
         return expression;
@@ -61,5 +48,12 @@ public class ValidateExpression extends NoHTMLValidator {
 
     public void setExpression(String expression) {
         this.expression = expression;
+    }
+
+    @Override
+    public boolean validate(String value) {
+        Pattern pattern = Pattern.compile(getExpression());
+        Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
     }
 }

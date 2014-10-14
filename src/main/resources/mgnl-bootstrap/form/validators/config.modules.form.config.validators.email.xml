@@ -10,7 +10,7 @@
     <sv:value>d828a939-ed77-4bc1-9642-d5e012c192f3</sv:value>
   </sv:property>
   <sv:property sv:name="class" sv:type="String">
-    <sv:value>info.magnolia.module.form.validators.ValidateExpression</sv:value>
+    <sv:value>info.magnolia.module.form.validators.RegexValidator</sv:value>
   </sv:property>
   <sv:property sv:name="expression" sv:type="String">
     <sv:value>(^$|^\S+@\S+$)</sv:value>

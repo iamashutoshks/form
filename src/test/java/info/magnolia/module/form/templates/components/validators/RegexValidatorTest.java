@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2012 Magnolia International
+ * This file Copyright (c) 2014 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -31,35 +31,55 @@
  * intact.
  *
  */
-package info.magnolia.module.form.validators;
+package info.magnolia.module.form.templates.components.validators;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import static org.junit.Assert.*;
+
+import info.magnolia.module.form.validators.RegexValidator;
+
+import org.junit.Test;
 
 /**
- * Regular expression validator.
- *
- * @deprecated since 2.2.8, please use {@link RegexValidator} instead.
+ * Tests for {@link RegexValidator}.
  */
-@Deprecated
-public class ValidateExpression extends NoHTMLValidator {
+public class RegexValidatorTest {
 
-    public String expression;
+    private RegexValidator validator = new RegexValidator();
 
-    @Override
-    public boolean validate(String value) {
-        if (!super.validate(value))
-            return false;
-        Pattern pattern = Pattern.compile(getExpression());
-        Matcher matcher = pattern.matcher(value);
-        return matcher.matches();
+    @Test
+    public void allowSpecialHtmlChars() throws Exception {
+        // GIVEN
+        validator.setExpression("<a([^>]+)>(.+?)</a>");
+
+        // WHEN
+        boolean valid = validator.validate("<a href='/foobar'>Foo & Bar</a>");
+
+        // THEN
+        assertTrue(valid);
     }
 
-    public String getExpression() {
-        return expression;
+    @Test
+    public void testEmptyExpression() throws Exception {
+        // GIVEN
+        validator.setExpression("");
+
+        // WHEN
+        boolean valid = validator.validate("<a href='/foobar'>Foo & Bar</a>");
+
+        // THEN
+        assertFalse(valid);
     }
 
-    public void setExpression(String expression) {
-        this.expression = expression;
+    @Test
+    public void testEmptyExpressionShouldValidate() throws Exception {
+        // GIVEN
+        validator.setExpression("");
+
+        // WHEN
+        boolean valid = validator.validate("");
+
+        // THEN
+        assertTrue(valid);
     }
+
 }

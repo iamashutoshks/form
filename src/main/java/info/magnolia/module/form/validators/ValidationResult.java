@@ -36,7 +36,6 @@ package info.magnolia.module.form.validators;
 /**
  * Represents the result of a validation operation.
  *
- * @version $Id$
  * @see Validator
  */
 public class ValidationResult {

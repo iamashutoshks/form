@@ -246,4 +246,20 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertThat(session.getNode("/modules/form/templates/components/formPassword"), hasProperty("escapeHtml", false));
     }
 
+    @Test
+    public void updateFrom227() throws Exception {
+        // GIVEN
+        setupConfigProperty("/modules/form/config/validators/empty", "class", "info.magnolia.module.form.validators.ValidateExpression");
+        setupConfigProperty("/modules/form/config/validators/email", "class", "info.magnolia.module.form.validators.ValidateExpression");
+        setupConfigProperty("/modules/form/config/validators/number", "class", "info.magnolia.module.form.validators.ValidateExpression");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.7"));
+
+        // THEN
+        assertThat(session.getNode("/modules/form/config/validators/empty"), hasProperty("class", "info.magnolia.module.form.validators.RegexValidator"));
+        assertThat(session.getNode("/modules/form/config/validators/email"), hasProperty("class", "info.magnolia.module.form.validators.RegexValidator"));
+        assertThat(session.getNode("/modules/form/config/validators/number"), hasProperty("class", "info.magnolia.module.form.validators.RegexValidator"));
+    }
+
 }
