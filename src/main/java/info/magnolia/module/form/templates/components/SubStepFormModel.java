@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2012 Magnolia International
+ * This file Copyright (c) 2010-2014 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -47,7 +47,6 @@ import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
-import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.templating.functions.TemplatingFunctions;
 
 import java.util.ArrayList;
@@ -109,7 +108,7 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
             Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
             while (stepsIt.hasNext()) {
                 FormStepState step = stepsIt.next();
-                Node stepNode = NodeUtil.getNodeByIdentifier(RepositoryConstants.WEBSITE, step.getParagraphUuid());
+                Node stepNode = NodeUtil.getNodeByIdentifier(getNode().getSession().getWorkspace().getName(), step.getParagraphUuid());
                 if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }

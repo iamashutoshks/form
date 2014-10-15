@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2012-2013 Magnolia International
+ * This file Copyright (c) 2012-2014 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -84,7 +84,8 @@ public class RedirectWithTokenAndParametersView implements View {
             }
         }
 
-        FormStateUtil.sendRedirectWithTokenAndParameters(this.uuid, this.token, parameters);
+        String workspace = ((WebContext) MgnlContext.getInstance()).getAggregationState().getRepository();
+        FormStateUtil.sendRedirectWithTokenAndParameters(this.uuid, this.token, parameters, workspace);
         return RenderingModel.SKIP_RENDERING;
     }
 

@@ -75,6 +75,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         // for 2.2.2 update:
         this.setupConfigProperty("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType", "class", StaticFieldDefinition.class.getCanonicalName());
         this.setupConfigProperty("/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition", "class", StaticFieldDefinition.class.getCanonicalName());
+        this.setupConfigNode("/modules/form/templates/components/formPassword");
     }
 
     @Override
@@ -232,6 +233,17 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertThat(session.getNode(FormModuleVersionHandler.PATH_VALIDATORS_EMAIL), hasProperty("expression", "(^$|^\\S+@\\S+$)"));
         assertEquals("empty", session.getNode("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation").getProperty("defaultValue").getString());
 
+    }
+
+    @Test
+    public void updateFrom226() throws Exception {
+        // GIVEN
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.6"));
+
+        // THEN
+        assertThat(session.getNode("/modules/form/templates/components/formPassword"), hasProperty("escapeHtml", false));
     }
 
 }

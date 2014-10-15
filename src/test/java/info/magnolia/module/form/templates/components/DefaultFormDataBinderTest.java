@@ -34,14 +34,17 @@
 package info.magnolia.module.form.templates.components;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.context.MgnlContext;
+import info.magnolia.context.SystemContext;
+import info.magnolia.jcr.util.NodeTypes.Renderable;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.Validator;
 import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.mock.MockWebContext;
 import info.magnolia.test.mock.jcr.MockNode;
 
@@ -66,22 +69,32 @@ public class DefaultFormDataBinderTest {
     private DefaultFormDataBinder binder;
     private HttpServletRequest request;
     private MockWebContext ctx;
+    private MockWebContext systemCtx;
     private FormStepState step = new FormStepState();
     private Node fieldNode;
     private List<Node> fieldList = new ArrayList<Node>();
+    private Session session;
 
     @Before
     public void setUp() throws Exception {
         binder = new DefaultFormDataBinder();
         request = mock(HttpServletRequest.class);
+        session = mock(Session.class);
 
         ctx = new MockWebContext();
-        ctx.addSession(RepositoryConstants.WEBSITE, mock(Session.class));
+        ctx.addSession(RepositoryConstants.WEBSITE, session);
+
         ctx.setRequest(request);
+
         MgnlContext.setInstance(ctx);
 
+        systemCtx = new MockWebContext();
+        systemCtx.addSession(RepositoryConstants.CONFIG, session);
+
+        ComponentsTestUtil.setInstance(SystemContext.class, systemCtx);
+
         FormModule formModule = new FormModule();
-        ArrayList validators = new ArrayList();
+        ArrayList<Validator> validators = new ArrayList<Validator>();
         Validator validator1 = new Validator();
         validator1.setName("test1");
         Validator validator2 = new Validator();
@@ -102,7 +115,7 @@ public class DefaultFormDataBinderTest {
     }
 
     @Test
-    public void testFieldValueHaveToBeEscaped() throws Exception {
+    public void testFieldValueIsEcapedByDefault() throws Exception {
         // GIVEN
         when(request.getParameterValues(anyString())).thenReturn(new String[]{"<", ">"});
 
@@ -111,6 +124,24 @@ public class DefaultFormDataBinderTest {
 
         // THEN
         assertEquals("&lt;__&gt;", step.get(controlName).getValue());
+    }
+
+    @Test
+    public void testFieldValueIsNotEscapedWhenEscapeHtmlIsFalse() throws Exception {
+        // GIVEN
+        fieldNode.setProperty(Renderable.TEMPLATE, "form:foo/bar");
+        when(request.getParameterValues(anyString())).thenReturn(new String[] { "<", ">" });
+
+        MockNode configNode = new MockNode();
+        configNode.setProperty("escapeHtml", false);
+
+        when(session.getNode(anyString())).thenReturn(configNode);
+
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
+
+        // THEN
+        assertEquals("<__>", step.get(controlName).getValue());
     }
 
     @Test
@@ -137,6 +168,53 @@ public class DefaultFormDataBinderTest {
 
         // THEN
         assertTrue(step.isValid());
+    }
+
+    @Test
+    public void testGetFieldConfiguration() throws Exception {
+        // GIVEN
+        fieldNode.setProperty(Renderable.TEMPLATE, "form:foo/bar");
+        String expectedPath = "/modules/form/templates/foo/bar";
+
+        Node configNode = mock(Node.class);
+        when(configNode.getPath()).thenReturn(expectedPath);
+
+        when(session.getNode(eq(expectedPath))).thenReturn(configNode);
+
+        // WHEN
+        Node returnedNode = binder.getFieldConfiguration(fieldNode);
+
+        // THEN
+        assertEquals(expectedPath, returnedNode.getPath());
+    }
+
+    @Test
+    public void testGetFieldConfigurationReturnsNullIfNoTemplatePropertyIsFound() throws Exception {
+        // GIVEN
+
+        // WHEN
+        Node returnedNode = binder.getFieldConfiguration(fieldNode);
+
+        // THEN
+        assertNull(returnedNode);
+    }
+
+    @Test
+    public void testGetFieldConfigurationDefaultsToFormModuleIfTemplatePropertyIsIncomplete() throws Exception {
+        // GIVEN
+        fieldNode.setProperty(Renderable.TEMPLATE, "foo/bar");
+        String expectedPath = "/modules/form/templates/foo/bar";
+
+        Node configNode = mock(Node.class);
+        when(configNode.getPath()).thenReturn(expectedPath);
+
+        when(session.getNode(eq(expectedPath))).thenReturn(configNode);
+
+        // WHEN
+        Node returnedNode = binder.getFieldConfiguration(fieldNode);
+
+        // THEN
+        assertEquals(expectedPath, returnedNode.getPath());
     }
 
 }

@@ -189,6 +189,8 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                .addTask(new NodeExistsDelegateTask("Reconfigure FormEdit dialog", "Remove the none validator", RepositoryConstants.CONFIG, "/modules/form/config/validators/none",
                         new RemoveNodeTask("", "/modules/form/config/validators/none")))
         );
+        register(DeltaBuilder.update("2.2.7", "")
+                .addTask(new NewPropertyTask("Escape Html", "Skips the default HTML escaping in password component.", RepositoryConstants.CONFIG, "/modules/form/templates/components/formPassword", "escapeHtml", false)));
     }
 
     private void processDialogs(DeltaBuilder delta) {
