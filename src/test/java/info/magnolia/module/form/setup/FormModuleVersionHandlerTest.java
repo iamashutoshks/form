@@ -41,6 +41,7 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
+import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleVersionHandler;
 import info.magnolia.module.ModuleVersionHandlerTestCase;
 import info.magnolia.module.model.Version;
@@ -260,6 +261,24 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertThat(session.getNode("/modules/form/config/validators/empty"), hasProperty("class", "info.magnolia.module.form.validators.RegexValidator"));
         assertThat(session.getNode("/modules/form/config/validators/email"), hasProperty("class", "info.magnolia.module.form.validators.RegexValidator"));
         assertThat(session.getNode("/modules/form/config/validators/number"), hasProperty("class", "info.magnolia.module.form.validators.RegexValidator"));
+    }
+
+    @Test
+    public void updateFrom228() throws Exception {
+        // GIVEN
+        String existingParentPath = "/modules/form/dialogs/formSubmit/form/tabs/tabMain/fields";
+        String newNodePath = existingParentPath + "/" + "cancelButtonText";
+        setupConfigNode(existingParentPath);
+
+        // WHEN
+        InstallContext installContext = executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.8"));
+        Session installSession = installContext.getJCRSession(RepositoryConstants.CONFIG);
+
+        // THEN
+        assertTrue(installSession.nodeExists(newNodePath));
+        assertThat(session.getNode(newNodePath), hasProperty("class", "info.magnolia.ui.form.field.definition.TextFieldDefinition"));
+        assertThat(session.getNode(newNodePath), hasProperty("description", "dialog.form.submit.tabMain.cancelButtonText.description"));
+        assertThat(session.getNode(newNodePath), hasProperty("label", "dialog.form.submit.tabMain.cancelButtonText.label"));
     }
 
 }

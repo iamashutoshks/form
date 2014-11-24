@@ -165,6 +165,19 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("2.2.8", "")
                 .addTask(new UpdateValidatorsClassTask())
         );
+
+
+        DeltaBuilder for229 = DeltaBuilder.update("2.2.9", "");
+        addCancelButtonTextFieldToFormSubmitTemplate(for229);
+        register(for229);
+    }
+
+    private void addCancelButtonTextFieldToFormSubmitTemplate(DeltaBuilder delta) {
+        final String parentPath = "/modules/form/dialogs/formSubmit/form/tabs/tabMain/fields";
+        String generalDescTxt = " an additional field 'cancelButtonLabel' to" + parentPath + ".";
+        PartialBootstrapTask partialBootstrapTask = new PartialBootstrapTask("Add" + generalDescTxt, "Adds" + generalDescTxt, "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formSubmit.xml", "/formSubmit/form/tabs/tabMain/fields/cancelButtonText");
+        NodeExistsDelegateTask nodeExistsDelegateTask = new NodeExistsDelegateTask("Conditionally add" + generalDescTxt + "(If " + parentPath + " exists.)", parentPath, partialBootstrapTask);
+        delta.addTask(nodeExistsDelegateTask);
     }
 
     private void processDialogs(DeltaBuilder delta) {

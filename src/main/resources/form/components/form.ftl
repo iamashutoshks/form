@@ -23,7 +23,7 @@
 
 [#else]
     [#if model.view.validationErrors?size > 0]
-        <div class="text error">
+        <div id="formErrorsDisplay" class="text error">
             <h1>${model.view.errorTitle!i18n['form.default.errorTitle']}</h1>
             <ul>
                 [#assign keys = model.view.validationErrors?keys]
