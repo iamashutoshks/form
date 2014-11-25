@@ -37,10 +37,13 @@
     [/#if]
 
     [#assign page = model.root.content]
-    [#assign title = content.formTitle!page.title!page.@name]
 
     <div class="text">
-        <h1>${title}</h1>
+
+        [#if content.formTitle?has_content]
+            <h1>${content.formTitle}</h1>
+        [/#if]
+
         [#if content.formText?has_content]
             <p>${content.formText!}</p>
         [/#if]
