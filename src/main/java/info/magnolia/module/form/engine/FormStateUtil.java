@@ -39,6 +39,7 @@ import info.magnolia.link.LinkUtil;
 import info.magnolia.repository.RepositoryConstants;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -129,6 +130,11 @@ public class FormStateUtil {
         // be sure that workspace is not null
         workspace = StringUtils.isBlank(workspace) ? RepositoryConstants.WEBSITE : workspace;
         String link = LinkUtil.createAbsoluteLink(workspace, uuid);
+        String[] paths = link.split("/");
+        for (int i = 0; i < paths.length; i++) {
+            link = link.replace(paths[i], URLEncoder.encode(paths[i], "UTF-8"));
+        }
+
         link += "?" + FORM_TOKEN_PARAMETER_NAME + "=" + formExecutionToken;
         if (parameters != null) {
             for (Entry<String, String> param : parameters.entrySet()) {
