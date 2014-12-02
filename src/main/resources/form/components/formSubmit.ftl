@@ -42,7 +42,9 @@
                 }
                 // remove the "formErrors"-div
                 var errorBox = document.getElementById("formErrorsDisplay");
-                errorBox.parentNode.removeChild(errorBox);
+                if(errorBox != null) {
+                  errorBox.parentNode.removeChild(errorBox);
+                }
                 el.focus();
                 return false;
             }
