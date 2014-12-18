@@ -13,7 +13,7 @@
     <sv:value>info.magnolia.module.form.validators.RegexValidator</sv:value>
   </sv:property>
   <sv:property sv:name="expression" sv:type="String">
-    <sv:value>(^$|^\S+@\S+$)</sv:value>
+    <sv:value>(^([a-zA-Z0-9_\.\-+])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$)</sv:value>
   </sv:property>
   <sv:property sv:name="jcr:createdBy" sv:type="String">
     <sv:value>admin</sv:value>
