@@ -231,7 +231,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.4"));
 
         // THEN
-        assertThat(session.getNode(FormModuleVersionHandler.PATH_VALIDATORS_EMAIL), hasProperty("expression", "(^$|^\\S+@\\S+$)"));
+        assertThat(session.getNode(FormModuleVersionHandler.PATH_VALIDATORS_EMAIL), hasProperty("expression", "(^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$)"));
         assertEquals("empty", session.getNode("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation").getProperty("defaultValue").getString());
 
     }
@@ -279,6 +279,21 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertThat(session.getNode(newNodePath), hasProperty("class", "info.magnolia.ui.form.field.definition.TextFieldDefinition"));
         assertThat(session.getNode(newNodePath), hasProperty("description", "dialog.form.submit.tabMain.cancelButtonText.description"));
         assertThat(session.getNode(newNodePath), hasProperty("label", "dialog.form.submit.tabMain.cancelButtonText.label"));
+    }
+
+    @Test
+    public void updateFrom229() throws Exception {
+        // GIVEN
+        this.setupConfigNode("/modules/form/dialogs/formHoneypot/form/tabs/tabMain/fields/validation");
+        Node node = NodeUtil.createPath(session.getRootNode(), FormModuleVersionHandler.PATH_VALIDATORS_EMAIL, NodeTypes.ContentNode.NAME);
+        node.setProperty("expression", "(^$|^\\S+@\\S+$)");
+
+        // WHEN
+        InstallContext installContext = executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.9"));
+        Session installSession = installContext.getJCRSession(RepositoryConstants.CONFIG);
+
+        // THEN
+        assertThat(session.getNode(FormModuleVersionHandler.PATH_VALIDATORS_EMAIL), hasProperty("expression", "(^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$)"));
     }
 
 }

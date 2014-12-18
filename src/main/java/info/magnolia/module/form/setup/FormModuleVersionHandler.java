@@ -165,6 +165,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("2.2.8", "")
                 .addTask(new UpdateValidatorsClassTask())
         );
+        register(DeltaBuilder.update("2.2.10", "")
+                .addTask(new NodeExistsDelegateTask("Change validators email expression data", "Change data (^$|^\\S+@\\S+$) in /modules/form/config/validators/email/expression from  to (^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$).", RepositoryConstants.CONFIG, PATH_VALIDATORS_EMAIL,
+                        new CheckAndModifyPropertyValueTask(PATH_VALIDATORS_EMAIL, "expression", "(^$|^\\S+@\\S+$)", "(^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$)")))
+        );
 
 
         DeltaBuilder for229 = DeltaBuilder.update("2.2.9", "");
