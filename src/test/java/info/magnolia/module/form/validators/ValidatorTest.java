@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2008-2015 Magnolia International
+ * This file Copyright (c) 2015 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -33,55 +33,28 @@
  */
 package info.magnolia.module.form.validators;
 
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 /**
- * Base class for validators. Kept in a registry in the module class. The actual validation is performed by FormModel.
- *
- * @see info.magnolia.module.form.FormModule
- * @see info.magnolia.module.form.templates.components.FormModel
+ * Tests for {@link Validator}.
  */
-public class Validator {
+public class ValidatorTest {
 
-    private String name;
-    private String i18nBasename;
-    private String errorMessage;
+    private Validator validator = new Validator();
+    private static String CUSTOM_ERROR_MESSAGE = "customErrorMessage";
 
-    /*
-    * @deprecated since 2.2.11 use validateWithResult. This method should just keep validation logic and be protected.
-    */
-    @Deprecated
-    public boolean validate(String value) {
-        return true;
-    }
+    @Test
+    public void testValidateWithResult() throws Exception {
+        // GIVEN
+        validator.setErrorMessage(CUSTOM_ERROR_MESSAGE);
 
-    public ValidationResult validateWithResult(String value) {
-        if (errorMessage == null) {
-            return new ValidationResult(validate(value));
-        } else {
-            return new ValidationResult(validate(value), errorMessage);
-        }
-    }
+        // WHEN
+        ValidationResult result = validator.validateWithResult("");
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getI18nBasename() {
-        return i18nBasename;
-    }
-
-    public void setI18nBasename(String i18nBasename) {
-        this.i18nBasename = i18nBasename;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+        // THEN
+        assertTrue(result.isSuccess());
+        assertEquals(CUSTOM_ERROR_MESSAGE, result.getErrorMessage());
     }
 }

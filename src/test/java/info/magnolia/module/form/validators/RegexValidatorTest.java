@@ -31,11 +31,9 @@
  * intact.
  *
  */
-package info.magnolia.module.form.templates.components.validators;
+package info.magnolia.module.form.validators;
 
 import static org.junit.Assert.*;
-
-import info.magnolia.module.form.validators.RegexValidator;
 
 import org.junit.Test;
 
