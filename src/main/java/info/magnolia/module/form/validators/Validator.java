@@ -43,13 +43,22 @@ public class Validator {
 
     private String name;
     private String i18nBasename;
+    private String errorMessage;
 
+    /*
+    * @deprecated since 2.2.11 use validateWithResult. @validate should just keep validation logic and should be protected.
+    */
+    @Deprecated
     public boolean validate(String value) {
         return true;
     }
 
     public ValidationResult validateWithResult(String value) {
-        return new ValidationResult(validate(value));
+        if (errorMessage == null) {
+            return new ValidationResult(validate(value));
+        } else {
+            return new ValidationResult(validate(value), errorMessage);
+        }
     }
 
     public String getName() {
@@ -66,5 +75,13 @@ public class Validator {
 
     public void setI18nBasename(String i18nBasename) {
         this.i18nBasename = i18nBasename;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 }
