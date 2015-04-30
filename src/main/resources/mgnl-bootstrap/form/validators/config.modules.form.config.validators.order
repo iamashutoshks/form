@@ -1,6 +1,5 @@
 config.modules.form.config.validators.none.xml
 config.modules.form.config.validators.number.xml
 config.modules.form.config.validators.email.xml
-config.modules.form.config.validators.username.xml
 config.modules.form.config.validators.password.xml
 config.modules.form.config.validators.empty.xml

@@ -262,7 +262,7 @@
             <sv:value>Username:</sv:value>
           </sv:property>
           <sv:property sv:name="validation" sv:type="String">
-            <sv:value>username</sv:value>
+            <sv:value>noHTML</sv:value>
           </sv:property>
           <sv:node sv:name="MetaData">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
