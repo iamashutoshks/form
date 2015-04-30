@@ -45,9 +45,9 @@ public class Validator {
     private String i18nBasename;
     private String errorMessage;
 
-    /*
-    * @deprecated since 2.2.11 use validateWithResult. This method should just keep validation logic and be protected.
-    */
+    /**
+     * @deprecated since 2.2.11 use {@link #validateWithResult(String)} instead. This method should just keep validation logic and be protected.
+     */
     @Deprecated
     public boolean validate(String value) {
         return true;
