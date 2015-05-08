@@ -10,7 +10,7 @@
   <packaging>jar</packaging>
   <version>2.2.12-SNAPSHOT</version>
   <name>Magnolia Form Module</name>
-  <description />
+  <description/>
 
   <properties>
     <magnoliaVersion>5.2.2</magnoliaVersion>
@@ -19,10 +19,12 @@
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
     <cloverCoverageThreshold>48</cloverCoverageThreshold>
   </properties>
+
   <issueManagement>
     <system>Jira</system>
     <url>http://jira.magnolia-cms.com/browse/MGNLFORM</url>
   </issueManagement>
+
   <scm>
     <connection>scm:git:http://git.magnolia-cms.com/modules/form</connection>
     <developerConnection>scm:git:https://git.magnolia-cms.com/modules/form</developerConnection>
@@ -74,10 +76,10 @@
       <classifier>jdk15</classifier>
       <scope>provided</scope>
       <exclusions>
-          <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-          </exclusion>
+        <exclusion>
+          <groupId>commons-logging</groupId>
+          <artifactId>commons-logging</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
