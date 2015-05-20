@@ -312,6 +312,56 @@
               <sv:value>superuser</sv:value>
             </sv:property>
           </sv:node>
+          <sv:node sv:name="validation">
+            <sv:property sv:name="jcr:primaryType" sv:type="Name">
+              <sv:value>mgnl:contentNode</sv:value>
+            </sv:property>
+            <sv:property sv:name="jcr:uuid" sv:type="String">
+              <sv:value>9d190a93-11ab-4db9-b005-e41685cff4b6</sv:value>
+            </sv:property>
+            <sv:property sv:name="class" sv:type="String">
+              <sv:value>info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition</sv:value>
+            </sv:property>
+            <sv:property sv:name="jcr:createdBy" sv:type="String">
+              <sv:value>admin</sv:value>
+            </sv:property>
+            <sv:property sv:name="label" sv:type="String">
+              <sv:value>dialog.form.edit.tabMain.validation.label</sv:value>
+            </sv:property>
+            <sv:property sv:name="leftColumnCaption" sv:type="String">
+              <sv:value>dialog.form.edit.tabMain.validation.leftColumnCaption</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
+              <sv:value>false</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:created" sv:type="Date">
+              <sv:value>2015-05-19T11:07:48.333+02:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:createdBy" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastActivated" sv:type="Date">
+              <sv:value>2015-05-19T11:07:48.334+02:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastActivatedBy" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastModified" sv:type="Date">
+              <sv:value>2015-05-19T11:08:55.450+02:00</sv:value>
+            </sv:property>
+            <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
+              <sv:value>superuser</sv:value>
+            </sv:property>
+            <sv:property sv:name="path" sv:type="String">
+              <sv:value>/modules/form/config/validators</sv:value>
+            </sv:property>
+            <sv:property sv:name="repository" sv:type="String">
+              <sv:value>config</sv:value>
+            </sv:property>
+            <sv:property sv:name="rightColumnCaption" sv:type="String">
+              <sv:value>dialog.form.edit.tabMain.validation.rightColumnCaption</sv:value>
+            </sv:property>
+          </sv:node>
         </sv:node>
       </sv:node>
     </sv:node>

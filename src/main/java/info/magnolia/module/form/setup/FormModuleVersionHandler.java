@@ -37,6 +37,7 @@ import info.magnolia.module.DefaultModuleVersionHandler;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.ArrayDelegateTask;
 import info.magnolia.module.delta.BootstrapConditionally;
+import info.magnolia.module.delta.BootstrapResourcesTask;
 import info.magnolia.module.delta.BootstrapSingleResource;
 import info.magnolia.module.delta.CheckAndModifyPropertyValueTask;
 import info.magnolia.module.delta.DeltaBuilder;
@@ -174,6 +175,19 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         DeltaBuilder for229 = DeltaBuilder.update("2.2.9", "");
         addCancelButtonTextFieldToFormSubmitTemplate(for229);
         register(for229);
+
+        register(DeltaBuilder.update("2.2.13", "")
+                .addTask(new NodeExistsDelegateTask("Add the validator 'fileUpload' to /modules/form/config/validators", "/modules/form/config/validators/fileUpload", null,
+                        new BootstrapResourcesTask() {
+                           @Override
+                            protected String[] getResourcesToBootstrap(InstallContext installContext) {
+                                return new String[]{"/mgnl-bootstrap/form/validators/config.modules.form.config.validators.fileUpload.xml"};
+                                }
+                            }))
+                .addTask(new NodeExistsDelegateTask("Add a TwinColSelectField to the formFile dialog which allows to specify a validator to the formFile field.", "/modules/form/dialogs/formFile/form/tabs/tabMain/fields/validation", null,
+                        new PartialBootstrapTask("", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formFile.xml", "/formFile/form/tabs/tabMain/fields/validation")))
+        );
+
     }
 
     private void addCancelButtonTextFieldToFormSubmitTemplate(DeltaBuilder delta) {

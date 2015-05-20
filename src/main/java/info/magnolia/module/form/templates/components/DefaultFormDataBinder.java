@@ -33,6 +33,7 @@
  */
 package info.magnolia.module.form.templates.components;
 
+import info.magnolia.cms.beans.runtime.MultipartForm;
 import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
@@ -46,6 +47,7 @@ import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormField;
 import info.magnolia.module.form.engine.FormStepState;
+import info.magnolia.module.form.validators.ExtendedValidator;
 import info.magnolia.module.form.validators.ValidationResult;
 import info.magnolia.module.form.validators.Validator;
 import info.magnolia.repository.RepositoryConstants;
@@ -84,7 +86,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
         this.i18nBasename = i18nBasename;
     }
 
-    public static String getDefaultPath(){
+    public static String getDefaultPath() {
         return DEFAULT_PATH;
     }
 
@@ -137,11 +139,18 @@ public class DefaultFormDataBinder implements FormDataBinder {
 
                 if (StringUtils.isEmpty(value) && isMandatory(node)) {
                     field.setErrorMessage(getErrorMessage("mandatory", node));
-                } else if (value != null && node.hasProperty("validation")) {
+                } else if ((value != null || isFileFieldWithUploadedFile(node, controlName))
+                        && node.hasProperty("validation")) { // Info.nl change
                     for (String validatorName : getValidatorNames(node)) {
                         Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
                         if (validator != null) {
-                            ValidationResult validationResult = validator.validateWithResult(value);
+                            ValidationResult validationResult;
+                            // if validator is an 'extended validator' pass on control name
+                            if (validator instanceof ExtendedValidator) {
+                                validationResult = ((ExtendedValidator) validator).validateWithResult(value, controlName);
+                            } else {
+                                validationResult = validator.validateWithResult(value);
+                            }
                             if (!validationResult.isSuccess()) {
                                 field.setErrorMessage(getValidatorErrorMessage(validator, validationResult, node));
                             }
@@ -153,6 +162,26 @@ public class DefaultFormDataBinder implements FormDataBinder {
                 }
             }
         }
+    }
+
+    /**
+     * Checks if node is of type attachment (i.e. file input field) and if so, checks if related file has been
+     * uploaded as part of posted form data.
+     *
+     * @return true if node if of type 'attachment' and file with provided control name has been posted in form; false otherwise
+     * @throws RepositoryException
+     */
+    private boolean isFileFieldWithUploadedFile(Node node, String controlName) throws RepositoryException {
+        boolean isFileFieldWithUploadedFile = false;
+        if (node.hasProperty("type") && "attachment".equals(node.getProperty("type").getString())) {
+            log.debug("controlName: {} is of type attachment", controlName);
+            // now check if file has actually been uploaded
+            MultipartForm form = MgnlContext.getWebContext().getPostedForm();
+            if (form.getDocuments().containsKey(controlName)) {
+                isFileFieldWithUploadedFile = true;
+            }
+        }
+        return isFileFieldWithUploadedFile;
     }
 
     /**
@@ -208,7 +237,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
     }
 
     /**
-     * @return The field configuration for the current node or null if such config doesn't exist or couldn't be retrieved.
+     * Returns the field configuration as {@link Node} for the current node or null if such config doesn't exist or couldn't be retrieved.
      */
     protected Node getFieldConfiguration(Node node) {
 

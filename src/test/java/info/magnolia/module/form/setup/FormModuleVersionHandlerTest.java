@@ -44,6 +44,7 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleVersionHandler;
 import info.magnolia.module.ModuleVersionHandlerTestCase;
+import info.magnolia.module.form.validators.FileUploadValidator;
 import info.magnolia.module.model.Version;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
@@ -51,6 +52,7 @@ import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
 import info.magnolia.ui.form.field.definition.MultiValueFieldDefinition;
 import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
+import info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition;
 
 import java.util.Arrays;
 import java.util.List;
@@ -294,6 +296,26 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
         // THEN
         assertThat(session.getNode(FormModuleVersionHandler.PATH_VALIDATORS_EMAIL), hasProperty("expression", "(^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,4})+$)"));
+    }
+
+    /**
+     * Tests the update tasks when updating from 2.2.12 to 2.2.13.
+     */
+    @Test
+    public void updateFrom2212() throws Exception {
+        // GIVEN
+        setupConfigNode("/modules/form/config/validators");
+        setupConfigNode("/modules/form/dialogs/formFile/form/tabs/tabMain/fields");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.12"));
+
+        // THEN
+        assertTrue(session.nodeExists("/modules/form/dialogs/formFile/form/tabs/tabMain/fields/validation"));
+        assertTrue(session.nodeExists("/modules/form/config/validators/fileUpload"));
+        assertThat(session.getNode("/modules/form/dialogs/formFile/form/tabs/tabMain/fields/validation"), hasProperty("class", TwinColSelectFieldDefinition.class.getName()));
+        assertThat(session.getNode("/modules/form/config/validators/fileUpload"), hasProperty("class", FileUploadValidator.class.getName()));
+
     }
 
 }
