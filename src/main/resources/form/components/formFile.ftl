@@ -3,7 +3,7 @@
 <div ${model.style!}>
     [#if content.title?has_content]
         <label for="${content.controlName!}">
-            ${content.title}
+            <span>${content.title}</span>
         </label>
     [/#if]
 
