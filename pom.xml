@@ -17,7 +17,7 @@
     <magnoliaUiVersion>5.2.2</magnoliaUiVersion>
     <javaVersion>1.6</javaVersion>
     <documentationURL>http://documentation.magnolia-cms.com/modules/form.html</documentationURL>
-    <cloverCoverageThreshold>48</cloverCoverageThreshold>
+    <cloverCoverageThreshold>52</cloverCoverageThreshold>
   </properties>
 
   <issueManagement>
