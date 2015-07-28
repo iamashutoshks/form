@@ -4,6 +4,7 @@ target
 *.ipr
 *.iws
 *.log
+*.DS_Store
 .project
 .classpath
 .settings

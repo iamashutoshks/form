@@ -44,7 +44,6 @@ import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.LocaleDefinition;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
-import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormEngine;
 import info.magnolia.module.form.engine.FormStateUtil;
@@ -59,6 +58,7 @@ import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.TemplateDefinition;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 import info.magnolia.rendering.template.registry.TemplateDefinitionProvider;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.repository.RepositoryConstants;
@@ -123,8 +123,6 @@ public class FormEngineTest extends RepositoryTestCase {
         renderingContext = mock(RenderingContext.class);
         when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form"));
 
-        FormModule formModule = new FormModule();
-
         initWebContext();
 
         initComponents();
@@ -134,9 +132,10 @@ public class FormEngineTest extends RepositoryTestCase {
 
     private void initComponents() {
         TemplateDefinitionRegistry templateDefinitionRegistry = new TemplateDefinitionRegistry();
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formStep", new FormStepParagraph()));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formGroupFields", null));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formSelection", null));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formStep", new FormStepParagraph(null)));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formEdit", new ConfiguredTemplateDefinition(null)));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formGroupFields", new ConfiguredTemplateDefinition(null)));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formSelection", new ConfiguredTemplateDefinition(null)));
 
         ComponentsTestUtil.setImplementation(I18nContentSupport.class, DefaultI18nContentSupport.class);
         ComponentsTestUtil.setImplementation(ServerConfiguration.class, ServerConfiguration.class);

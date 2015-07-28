@@ -49,6 +49,7 @@ import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.TemplateDefinition;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
+import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 import info.magnolia.rendering.template.registry.TemplateDefinitionProvider;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.repository.RepositoryConstants;
@@ -68,10 +69,6 @@ import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.ValueFormatException;
-import javax.jcr.lock.LockException;
-import javax.jcr.nodetype.ConstraintViolationException;
-import javax.jcr.version.VersionException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,12 +83,11 @@ public class SubStepFormModelTest extends RepositoryTestCase {
     private Session session;
     private Node content;
     private RenderingContext renderingContext;
-    private FormParagraph configurationParagraph;
     private HttpServletResponse response;
     private HttpServletRequest request;
     private final HttpSession httpSession = new DummyHttpSession();
     private MockWebContext ctx;
-    private final String templateName = "someTemplateName";
+    private final String templateName = "someModule:someTemplateName";
     private final String formStepNode = "/multi-step-form/upload-photo";
 
     @Override
@@ -128,7 +124,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
     @Test
     public void testNextStepsNavigation() throws RepositoryException {
         //GIVEN
-        SubStepFormModel model = new SubStepFormModel(content, configurationParagraph, null, null);
+        SubStepFormModel model = new SubStepFormModel(content, null, null, null);
         Collection<Link> nextSteps;
         setStepNavigation(true);
 
@@ -166,7 +162,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
     @Test
     public void testNextStepsNavigationWrongNode() throws PathNotFoundException, RepositoryException {
         //GIVEN
-        SubStepFormModel model = new SubStepFormModel(content, configurationParagraph, null, null);
+        SubStepFormModel model = new SubStepFormModel(content, null, null, null);
         Collection<Link> nextSteps;
 
         //WHEN
@@ -176,9 +172,10 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         assertEquals(0, nextSteps.size());
     }
 
+    @Test
     public void testGetDisplayNavigation() throws RepositoryException {
         //GIVEN
-        SubStepFormModel model = new SubStepFormModel(content, configurationParagraph, null, null);
+        SubStepFormModel model = new SubStepFormModel(content, null, null, null);
         Boolean displayNavigation;
 
         //GIVEN
@@ -206,7 +203,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         assertFalse(displayNavigation);
     }
 
-    private void setStepNavigation(boolean value) throws PathNotFoundException, ValueFormatException, VersionException, LockException, ConstraintViolationException, RepositoryException {
+    private void setStepNavigation(boolean value) throws RepositoryException {
         Node currentPage = session.getNode("/multi-step-form");
         Node formParagraph = NavigationUtils.findParagraphOfType(currentPage, FormParagraph.class);
         formParagraph.setProperty("displayStepNavigation", value);
@@ -214,16 +211,17 @@ public class SubStepFormModelTest extends RepositoryTestCase {
 
     private void initComponents() {
         TemplateDefinitionRegistry templateDefinitionRegistry = new TemplateDefinitionRegistry();
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formStep", new FormStepParagraph()));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formGroupFields", null));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formSelection", null));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formEdit", null));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/form", null));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formSubmit", null));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider(templateName, new FormParagraph()));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:pages/stkFormStep", new FormStepParagraph()));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:pages/stkArticle", null));
-        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:components/content/stkTextImage", null));
+        TemplateDefinition definition = new ConfiguredTemplateDefinition(null);
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formStep", new FormStepParagraph(null)));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formGroupFields", definition));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formSelection", definition));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formEdit", definition));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/form", definition));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formSubmit", definition));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider(templateName, new FormParagraph(null)));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:pages/stkFormStep", new FormStepParagraph(null)));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:pages/stkArticle", definition));
+        templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:components/content/stkTextImage", definition));
 
         ComponentsTestUtil.setImplementation(I18nContentSupport.class, DefaultI18nContentSupport.class);
         ComponentsTestUtil.setImplementation(ServerConfiguration.class, ServerConfiguration.class);
@@ -253,7 +251,6 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         public DummyTemplateDefinitionProvider(String id, TemplateDefinition templateDefinition) {
             this.id = id;
             this.templateDefinition = templateDefinition;
-            //            templateDefinition.setId("someTemplate");
         }
 
         @Override

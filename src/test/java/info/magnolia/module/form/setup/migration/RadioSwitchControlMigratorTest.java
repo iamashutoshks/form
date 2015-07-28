@@ -44,7 +44,7 @@ import info.magnolia.ui.dialog.setup.migration.EditCodeControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.EditControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.FckEditControlMigrator;
 import info.magnolia.ui.dialog.setup.migration.LinkControlMigrator;
-import info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition;
+import info.magnolia.ui.form.field.definition.CodeFieldDefinition;
 import info.magnolia.ui.form.field.definition.RichTextFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
 import info.magnolia.ui.form.field.definition.TextFieldDefinition;
@@ -151,7 +151,7 @@ public class RadioSwitchControlMigratorTest extends RepositoryTestCase {
         assertTrue(controlNode.hasNode("fields/html"));
         Node html = controlNode.getNode("fields/html");
         assertTrue(html.hasProperty("class"));
-        assertEquals(BasicTextCodeFieldDefinition.class.getName(), html.getProperty("class").getString());
+        assertEquals(CodeFieldDefinition.class.getName(), html.getProperty("class").getString());
         assertTrue(html.hasProperty("language"));
         assertEquals("html", html.getProperty("language").getString());
 
