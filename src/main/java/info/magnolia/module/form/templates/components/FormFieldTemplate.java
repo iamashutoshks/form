@@ -33,48 +33,20 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import info.magnolia.module.form.processors.FormProcessor;
-import info.magnolia.rendering.template.TemplateAvailability;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.inject.Inject;
-
 /**
- * Paragraph customization for the form paragraph, enables configuration of FormProcessors and sub paragraphs.
+ *  Form field template definition.
  */
-public class FormParagraph extends ConfiguredTemplateDefinition {
+public class FormFieldTemplate extends ConfiguredTemplateDefinition {
 
-    private List<FormProcessor> formProcessors = new ArrayList<FormProcessor>();
+    private boolean escapeHtml = true;
 
-    private boolean redirectWithParams = false;
-
-    /**
-     * @deprecated use {@link #FormParagraph(TemplateAvailability templateAvailability)}
-     */
-    public FormParagraph() {
+    public boolean isEscapeHtml() {
+        return escapeHtml;
     }
 
-    @Inject
-    public FormParagraph(TemplateAvailability templateAvailability) {
-        super(templateAvailability);
-    }
-
-    public List<FormProcessor> getFormProcessors() {
-        return formProcessors;
-    }
-
-    public void setFormProcessors(List<FormProcessor> formProcessors) {
-        this.formProcessors = formProcessors;
-    }
-
-    public boolean isRedirectWithParams() {
-        return redirectWithParams;
-    }
-
-    public void setRedirectWithParams(boolean redirectWithParams) {
-        this.redirectWithParams = redirectWithParams;
+    public void setEscapeHtml(boolean escapeHtml) {
+        this.escapeHtml = escapeHtml;
     }
 }

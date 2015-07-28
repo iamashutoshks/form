@@ -44,6 +44,7 @@ import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.InstallContext;
 import info.magnolia.module.ModuleVersionHandler;
 import info.magnolia.module.ModuleVersionHandlerTestCase;
+import info.magnolia.module.form.templates.components.FormFieldTemplate;
 import info.magnolia.module.form.validators.FileUploadValidator;
 import info.magnolia.module.model.Version;
 import info.magnolia.objectfactory.Components;
@@ -94,22 +95,14 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
     @Override
     protected List<String> getModuleDescriptorPathsForTests() {
         return Arrays.asList(
-                "/META-INF/magnolia/core.xml",
-                "/META-INF/magnolia/templating.xml",
-                "/META-INF/magnolia/rendering.xml",
-                "/META-INF/magnolia/admininterface-legacy.xml",
-                "/META-INF/magnolia/ui-admincentral.xml",
-                "/META-INF/magnolia/ui-framework.xml",
-                "/META-INF/magnolia/imaging.xml",
-                "/META-INF/magnolia/activation.xml",
-                "/META-INF/magnolia/mail.xml"
-                );
+                "/META-INF/magnolia/core.xml"
+        );
     }
 
     @Test
     public void updateTo21DialogActionsUseKeysAsLabels() throws Exception {
         // GIVEN
-        List<String> dialogs = Arrays.asList(new String[] { "form", "formCondition", "formEdit", "formFile", "formGroupEdit", "formGroupEditItem", "formGroupFields", "formHidden", "formHoneypot", "formSelection", "formStep", "formSubmit", "formSummary" });
+        List<String> dialogs = Arrays.asList(new String[]{"form", "formCondition", "formEdit", "formFile", "formGroupEdit", "formGroupEditItem", "formGroupFields", "formHidden", "formHoneypot", "formSelection", "formStep", "formSubmit", "formSummary"});
         for (String dialog : dialogs) {
             Node commit = NodeUtil.createPath(session.getRootNode(), "modules/form/dialogs/" + dialog + "/actions/commit", NodeTypes.ContentNode.NAME);
             PropertyUtil.setProperty(commit, "label", "save changes");
@@ -195,7 +188,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
     @Test
     public void updateFrom225() throws Exception {
         // GIVEN
-        final String[] fields = new String[] {"formEdit", "formGroupEditItem"};
+        final String[] fields = new String[]{"formEdit", "formGroupEditItem"};
         for (String field : fields) {
             String pathToField = String.format("/modules/form/dialogs/%s/form/tabs/tabMain/fields/validation", field);
             this.setupConfigProperty(pathToField, "class", "info.magnolia.ui.form.field.definition.SelectFieldDefinition");
@@ -315,7 +308,18 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertTrue(session.nodeExists("/modules/form/config/validators/fileUpload"));
         assertThat(session.getNode("/modules/form/dialogs/formFile/form/tabs/tabMain/fields/validation"), hasProperty("class", TwinColSelectFieldDefinition.class.getName()));
         assertThat(session.getNode("/modules/form/config/validators/fileUpload"), hasProperty("class", FileUploadValidator.class.getName()));
+    }
 
+    @Test
+    public void updateFrom2213() throws Exception {
+        // GIVEN
+        Node formPasswordTemplate = session.getNode("/modules/form/templates/components/formPassword");
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.2.13"));
+
+        // THEN
+        assertThat(formPasswordTemplate, hasProperty("class", FormFieldTemplate.class.getName()));
     }
 
 }

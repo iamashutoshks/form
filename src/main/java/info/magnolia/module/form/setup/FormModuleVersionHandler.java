@@ -55,6 +55,7 @@ import info.magnolia.module.form.setup.migration.AddMissingDefaultValuesToFields
 import info.magnolia.module.form.setup.migration.ConditionalControlMigrator;
 import info.magnolia.module.form.setup.migration.RadioSwitchControlMigrator;
 import info.magnolia.module.form.setup.migration.StaticWithFormControlMigrator;
+import info.magnolia.module.form.templates.components.FormFieldTemplate;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.setup.DialogMigrationTask;
 import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
@@ -187,6 +188,9 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                 .addTask(new NodeExistsDelegateTask("Add a TwinColSelectField to the formFile dialog which allows to specify a validator to the formFile field.", "/modules/form/dialogs/formFile/form/tabs/tabMain/fields/validation", null,
                         new PartialBootstrapTask("", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formFile.xml", "/formFile/form/tabs/tabMain/fields/validation")))
         );
+
+        register(DeltaBuilder.update("2.3", "")
+                .addTask(new NewPropertyTask("Set template class to formPassword field", "/modules/form/templates/components/formPassword", "class", FormFieldTemplate.class.getName())));
 
     }
 

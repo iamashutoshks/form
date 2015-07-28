@@ -144,9 +144,7 @@ public abstract class AbstractFormEngine extends FormEngine {
 
     @Override
     protected void executeProcessors(Map<String, Object> parameters) throws RepositoryException, FormProcessorFailedException {
-
-        FormProcessor[] processors = configurationParagraph.getFormProcessors();
-        for (FormProcessor processor : processors) {
+        for (FormProcessor processor : configurationParagraph.getFormProcessors()) {
             processor.process(configurationNode, parameters);
         }
     }

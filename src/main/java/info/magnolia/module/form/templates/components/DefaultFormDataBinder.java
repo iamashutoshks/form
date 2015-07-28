@@ -38,7 +38,6 @@ import info.magnolia.cms.i18n.I18nContentSupportFactory;
 import info.magnolia.cms.i18n.Messages;
 import info.magnolia.cms.i18n.MessagesManager;
 import info.magnolia.cms.i18n.MessagesUtil;
-import info.magnolia.cms.security.SilentSessionOp;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.jcr.util.NodeTypes.Renderable;
 import info.magnolia.jcr.util.NodeUtil;
@@ -50,16 +49,18 @@ import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.ExtendedValidator;
 import info.magnolia.module.form.validators.ValidationResult;
 import info.magnolia.module.form.validators.Validator;
-import info.magnolia.repository.RepositoryConstants;
+import info.magnolia.objectfactory.Components;
+import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.util.EscapeUtil;
 
 import java.util.Iterator;
 import java.util.Locale;
 
+import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
-import javax.jcr.Session;
 import javax.jcr.Value;
 
 import org.apache.commons.lang.StringUtils;
@@ -78,9 +79,24 @@ public class DefaultFormDataBinder implements FormDataBinder {
 
     private static final String DEFAULT_PATH = "info.magnolia.module.form.messages";
 
-    private static final String PATH_TO_TEMPLATES = "/modules/%s/templates/%s";
-
     private String i18nBasename;
+
+    private final TemplateDefinitionRegistry templateDefinitionRegistry;
+    private final FormModule formModule;
+
+    /**
+     * @deprecated since 2.3. Use {@link #DefaultFormDataBinder(info.magnolia.rendering.template.registry.TemplateDefinitionRegistry, info.magnolia.module.form.FormModule)} instead.
+     */
+    @Deprecated
+    public DefaultFormDataBinder() {
+        this(Components.getComponent(TemplateDefinitionRegistry.class), Components.getComponent(FormModule.class));
+    }
+
+    @Inject
+    public DefaultFormDataBinder(TemplateDefinitionRegistry templateDefinitionRegistry, FormModule formModule) {
+        this.templateDefinitionRegistry = templateDefinitionRegistry;
+        this.formModule = formModule;
+    }
 
     public void setI18nBasename(String i18nBasename) {
         this.i18nBasename = i18nBasename;
@@ -121,15 +137,8 @@ public class DefaultFormDataBinder implements FormDataBinder {
 
             if (node.hasProperty("controlName")) {
                 final String controlName = node.getProperty("controlName").getString();
-
-                Node config = getFieldConfiguration(node);
-                boolean escapeHtml = true;
-
-                if (config != null) {
-                    escapeHtml = PropertyUtil.getBoolean(config, "escapeHtml", true);
-                }
-
                 final String values = StringUtils.join(MgnlContext.getParameterValues(controlName), "__");
+                final boolean escapeHtml = this.shouldEscapeHtml(node);
                 final String value = escapeHtml ? EscapeUtil.escapeXss(values) : values;
 
                 FormField field = new FormField();
@@ -142,7 +151,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
                 } else if ((value != null || isFileFieldWithUploadedFile(node, controlName))
                         && node.hasProperty("validation")) { // Info.nl change
                     for (String validatorName : getValidatorNames(node)) {
-                        Validator validator = FormModule.getInstance().getValidatorByName(validatorName);
+                        Validator validator = formModule.getValidatorByName(validatorName);
                         if (validator != null) {
                             ValidationResult validationResult;
                             // if validator is an 'extended validator' pass on control name
@@ -169,7 +178,6 @@ public class DefaultFormDataBinder implements FormDataBinder {
      * uploaded as part of posted form data.
      *
      * @return true if node if of type 'attachment' and file with provided control name has been posted in form; false otherwise
-     * @throws RepositoryException
      */
     private boolean isFileFieldWithUploadedFile(Node node, String controlName) throws RepositoryException {
         boolean isFileFieldWithUploadedFile = false;
@@ -236,39 +244,20 @@ public class DefaultFormDataBinder implements FormDataBinder {
         return title + ": " + errorMessage;
     }
 
-    /**
-     * Returns the field configuration as {@link Node} for the current node or null if such config doesn't exist or couldn't be retrieved.
-     */
-    protected Node getFieldConfiguration(Node node) {
-
+    private boolean shouldEscapeHtml(Node node) {
         try {
             String template = Renderable.getTemplate(node);
-            if (template == null) {
-                log.warn("Could not find mgnl:template for node at {}", node.getPath());
-                return null;
-            }
-            String[] idAndPath = template.split(":");
-
-            final String path;
-
-            if (idAndPath.length > 1) {
-                path = String.format(PATH_TO_TEMPLATES, idAndPath[0], idAndPath[1]);
-            } else {
-                path = String.format(PATH_TO_TEMPLATES, "form", idAndPath[0]);
-            }
-
-            log.debug("Trying to get field configuration at {}", path);
-            return MgnlContext.doInSystemContext(new SilentSessionOp<Node>(RepositoryConstants.CONFIG) {
-
-                @Override
-                public Node doExec(Session session) throws Throwable {
-                    return session.getNode(path);
+            if (template != null) {
+                final TemplateDefinition templateDefinition = templateDefinitionRegistry.getProvider(template).get();
+                if (templateDefinition instanceof FormFieldTemplate) {
+                    return ((FormFieldTemplate) templateDefinition).isEscapeHtml();
                 }
-            });
-
+            } else {
+                log.warn("Could not find mgnl:template for node at {}", node.getPath());
+            }
         } catch (RepositoryException e) {
-            e.printStackTrace();
+            log.warn("Could not find mgnl:template for {}", node);
         }
-        return null;
+        return true; //keep compatibility, true by default
     }
 }

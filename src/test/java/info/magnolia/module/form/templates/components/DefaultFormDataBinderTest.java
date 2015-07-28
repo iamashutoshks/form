@@ -37,12 +37,15 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
+import info.magnolia.config.registry.DefinitionProvider;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.SystemContext;
 import info.magnolia.jcr.util.NodeTypes.Renderable;
 import info.magnolia.module.form.FormModule;
 import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.validators.Validator;
+import info.magnolia.rendering.template.TemplateDefinition;
+import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
 import info.magnolia.test.mock.MockWebContext;
@@ -74,10 +77,16 @@ public class DefaultFormDataBinderTest {
     private Node fieldNode;
     private List<Node> fieldList = new ArrayList<Node>();
     private Session session;
+    private FormFieldTemplate formFieldTemplate = new FormFieldTemplate();
 
     @Before
     public void setUp() throws Exception {
-        binder = new DefaultFormDataBinder();
+        TemplateDefinitionRegistry templateDefinitionRegistry = mock(TemplateDefinitionRegistry.class);
+        DefinitionProvider<TemplateDefinition> templateDefinitionProvider = mock(DefinitionProvider.class);
+        when(templateDefinitionRegistry.getProvider(anyString())).thenReturn(templateDefinitionProvider);
+        when(templateDefinitionProvider.get()).thenReturn(formFieldTemplate);
+
+        binder = new DefaultFormDataBinder(templateDefinitionRegistry, new FormModule());
         request = mock(HttpServletRequest.class);
         session = mock(Session.class);
 
@@ -89,7 +98,6 @@ public class DefaultFormDataBinderTest {
         MgnlContext.setInstance(ctx);
 
         systemCtx = new MockWebContext();
-        systemCtx.addSession(RepositoryConstants.CONFIG, session);
 
         ComponentsTestUtil.setInstance(SystemContext.class, systemCtx);
 
@@ -131,11 +139,7 @@ public class DefaultFormDataBinderTest {
         // GIVEN
         fieldNode.setProperty(Renderable.TEMPLATE, "form:foo/bar");
         when(request.getParameterValues(anyString())).thenReturn(new String[] { "<", ">" });
-
-        MockNode configNode = new MockNode();
-        configNode.setProperty("escapeHtml", false);
-
-        when(session.getNode(anyString())).thenReturn(configNode);
+        formFieldTemplate.setEscapeHtml(false);
 
         // WHEN
         binder.bindAndValidateFields(fieldList.iterator(), step);
@@ -170,51 +174,5 @@ public class DefaultFormDataBinderTest {
         assertTrue(step.isValid());
     }
 
-    @Test
-    public void testGetFieldConfiguration() throws Exception {
-        // GIVEN
-        fieldNode.setProperty(Renderable.TEMPLATE, "form:foo/bar");
-        String expectedPath = "/modules/form/templates/foo/bar";
-
-        Node configNode = mock(Node.class);
-        when(configNode.getPath()).thenReturn(expectedPath);
-
-        when(session.getNode(eq(expectedPath))).thenReturn(configNode);
-
-        // WHEN
-        Node returnedNode = binder.getFieldConfiguration(fieldNode);
-
-        // THEN
-        assertEquals(expectedPath, returnedNode.getPath());
-    }
-
-    @Test
-    public void testGetFieldConfigurationReturnsNullIfNoTemplatePropertyIsFound() throws Exception {
-        // GIVEN
-
-        // WHEN
-        Node returnedNode = binder.getFieldConfiguration(fieldNode);
-
-        // THEN
-        assertNull(returnedNode);
-    }
-
-    @Test
-    public void testGetFieldConfigurationDefaultsToFormModuleIfTemplatePropertyIsIncomplete() throws Exception {
-        // GIVEN
-        fieldNode.setProperty(Renderable.TEMPLATE, "foo/bar");
-        String expectedPath = "/modules/form/templates/foo/bar";
-
-        Node configNode = mock(Node.class);
-        when(configNode.getPath()).thenReturn(expectedPath);
-
-        when(session.getNode(eq(expectedPath))).thenReturn(configNode);
-
-        // WHEN
-        Node returnedNode = binder.getFieldConfiguration(fieldNode);
-
-        // THEN
-        assertEquals(expectedPath, returnedNode.getPath());
-    }
 
 }
