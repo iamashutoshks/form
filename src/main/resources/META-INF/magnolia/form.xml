@@ -27,7 +27,7 @@
     </dependency>
     <dependency>
       <name>mail</name>
-      <version>5.0/*</version>
+      <version>5.2/*</version>
     </dependency>
   </dependencies>
 </module>
