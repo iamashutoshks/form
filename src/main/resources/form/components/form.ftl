@@ -1,3 +1,12 @@
+[#-- Shared setup for all components. --]
+[#assign divIDPrefix = def.parameters.divIDPrefix!]
+[#assign divClass = def.parameters.divClass!"form"]
+
+[#if divIDPrefix?has_content]
+    [#assign divID = ' id="${divIDPrefix}-${content.@id}"']
+[/#if]
+
+<div class="${divClass!}"${divID!}>
 [#if actionResult == "go-to-first-page"]
     <div class="text">
         ${i18n.get("form.user.errorMessage.go-to-first-page", [cmsfn.link("website", model.view.firstPage)])}
@@ -10,11 +19,19 @@
     </div><!-- end text success -->
 
 [#elseif actionResult == "session-expired"]
+    [#if content.formTitle?has_content]
+        <h1>${content.formTitle}</h1>
+    [/#if]
+
     <div class="text error">
         ${i18n.get("form.user.errorMessage.session-expired", [cmsfn.link("website", model.view.firstPage)])}
     </div><!-- end text error -->
 
 [#elseif actionResult == "failure"]
+    [#if content.formTitle?has_content]
+        <h1>${content.formTitle}</h1>
+    [/#if]
+
     <div class="text error">
         <ul>
             <li>${model.view.errorMessage}</li>
@@ -22,21 +39,6 @@
     </div><!-- end text error -->
 
 [#else]
-    [#if model.view.validationErrors?size > 0]
-        <div id="formErrorsDisplay" class="text error">
-            <h1>${model.view.errorTitle!i18n['form.default.errorTitle']}</h1>
-            <ul>
-                [#assign keys = model.view.validationErrors?keys]
-                [#list keys as key]
-                    <li>
-                        <a href="#${key}_label">${model.view.validationErrors[key]!}</a>
-                    </li>
-                [/#list]
-            </ul>
-        </div><!-- end text error -->
-    [/#if]
-
-    [#assign page = model.root.content]
 
     <div class="text">
 
@@ -62,6 +64,20 @@
         [/#if]
     </div><!-- end text -->
 
+    [#if model.view.validationErrors?size > 0]
+        <div id="formErrorsDisplay" class="text error">
+            <h1>${model.view.errorTitle!i18n['form.default.errorTitle']}</h1>
+            <ul>
+                [#assign keys = model.view.validationErrors?keys]
+                [#list keys as key]
+                    <li>
+                        <a href="#${key}_label">${model.view.validationErrors[key]!}</a>
+                    </li>
+                [/#list]
+            </ul>
+        </div><!-- end text error -->
+    [/#if]
+
     <div class="form-wrapper" >
         <form id="${content.formName?default("form0")}" method="post" action="" enctype="${def.parameters.formEnctype?default("multipart/form-data")}" >
             <div class="form-item-hidden">
@@ -77,3 +93,4 @@
     </div><!-- end form-wrapper -->
 
 [/#if]
+</div><!-- end ${divClass} -->
