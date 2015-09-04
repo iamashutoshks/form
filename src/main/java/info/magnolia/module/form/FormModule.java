@@ -33,6 +33,8 @@
  */
 package info.magnolia.module.form;
 
+import info.magnolia.module.form.validators.Validator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,12 +42,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
-import info.magnolia.module.form.validators.Validator;
-
 /**
  * Module class for the form module. Maintains a registry of validators.
- *
- * @author tmiyar
  */
 public class FormModule {
 
@@ -57,6 +55,9 @@ public class FormModule {
         instance = this;
     }
 
+    /**
+     * @deprecated since 2.3.1, use IoC instead
+     */
     public static FormModule getInstance() {
         return instance;
     }
