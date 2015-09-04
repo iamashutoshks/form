@@ -1,4 +1,3 @@
-[#-- Shared setup for all components. --]
 [#assign divIDPrefix = def.parameters.divIDPrefix!]
 [#assign divClass = def.parameters.divClass!"form"]
 
