@@ -58,18 +58,26 @@ public class FormStateUtil {
     private static final String FORM_STATE_ATTRIBUTE_PREFIX = FormEngine.class.getName() + "-formState-";
 
     public static FormState createAndSetFormState() {
+        return FormStateUtil.createAndSetFormState(RandomStringUtils.randomAlphanumeric(32));
+    }
+
+    public static FormState createAndSetFormState(String formToken) {
 
         // This can fail if the response is already committed
         HttpSession session = MgnlContext.getWebContext().getRequest().getSession();
 
-        FormState formState = newFormState();
+        FormState formState = newFormState(formToken);
         session.setAttribute(FORM_STATE_ATTRIBUTE_PREFIX + formState.getToken(), formState);
         return formState;
     }
 
     public static FormState newFormState() {
+        return FormStateUtil.newFormState(RandomStringUtils.randomAlphanumeric(32));
+    }
+
+    public static FormState newFormState(String formToken) {
         FormState formState = new FormState();
-        formState.setToken(RandomStringUtils.randomAlphanumeric(32));
+        formState.setToken(formToken);
         return formState;
     }
 
