@@ -34,7 +34,10 @@
 package info.magnolia.module.form.templates.components.multistep;
 
 import info.magnolia.jcr.util.NodeUtil;
+import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStateTokenMissingException;
+import info.magnolia.module.form.engine.FormStateUtil;
+import info.magnolia.module.form.engine.NoSuchFormStateException;
 import info.magnolia.module.form.templates.components.AbstractFormEngine;
 import info.magnolia.module.form.templates.components.FormParagraph;
 import info.magnolia.module.form.templates.components.FormStepParagraph;
@@ -44,6 +47,8 @@ import java.util.Iterator;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * FormEngine implementation for the first step of a multi step form, or a single step form.
@@ -59,15 +64,40 @@ public class StartStepFormEngine extends AbstractFormEngine {
      * is being submitted.
      */
     @Override
-    protected String getFormStateToken() throws FormStateTokenMissingException {
+    protected String getFormStateToken() throws FormStateTokenMissingException, RepositoryException {
+        final String formId = getConfigurationNode().getIdentifier();
+        final String formStateToken;
+
         try {
-            return super.getFormStateToken();
+            formStateToken = super.getFormStateToken();
         } catch (FormStateTokenMissingException e) {
             // The token is allowed to be missing when the first step is submitted.
             if (isFormSubmission()) {
-                return createAndSetFormState().getToken();
+                return createAndSetFormState(formId).getToken();
             }
             throw e;
+        }
+
+        // check if resolved form state token is for current form
+        if (!StringUtils.equals(formStateToken, formId)) {
+            if (isFormSubmission()) {
+                // Destroy form state for another form and create new one for current form
+                destroyFormState(formStateToken);
+                return createAndSetFormState(formId).getToken();
+            } else {
+                throw new FormStateTokenMissingException();
+            }
+        }
+
+        return formStateToken;
+    }
+
+    private void destroyFormState(String formStateToken) {
+        try {
+            FormState formState = getFormState(formStateToken);
+            FormStateUtil.destroyFormState(formState);
+        } catch (NoSuchFormStateException e) {
+            // no form state registered for the token -> ignoring
         }
     }
 
