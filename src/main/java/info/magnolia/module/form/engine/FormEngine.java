@@ -158,11 +158,19 @@ public abstract class FormEngine {
         return redirectWithParams;
     }
 
+    protected FormState createAndSetFormState(String formToken) {
+        return FormStateUtil.createAndSetFormState(formToken);
+    }
+
+    /**
+     * @deprecated since 2.2.14 - use {@link #createAndSetFormState(String)} instead.
+     */
+    @Deprecated
     protected FormState createAndSetFormState() {
         return FormStateUtil.createAndSetFormState();
     }
 
-    protected String getFormStateToken() throws FormStateTokenMissingException {
+    protected String getFormStateToken() throws FormStateTokenMissingException, RepositoryException {
         return FormStateUtil.getFormStateToken();
     }
 
