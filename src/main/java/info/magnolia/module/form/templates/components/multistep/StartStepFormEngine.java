@@ -48,7 +48,7 @@ import java.util.Iterator;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * FormEngine implementation for the first step of a multi step form, or a single step form.
