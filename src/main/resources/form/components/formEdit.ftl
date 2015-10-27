@@ -1,10 +1,5 @@
 
-
 [#-------------- INCLUDE AND ASSIGN PART --------------]
-
-[#-- Include: Global --]
-[#include "/form/components/init.required.ftl"]
-
 
 [#-------------- RENDERING PART --------------]
 
@@ -24,10 +19,12 @@
         </label>
     [/#if]
 
+    [#assign attributes]name="${content.controlName}" id="${content.controlName}"[#if content.maxlength?has_content] maxlength="${content.maxlength}"[/#if][#if content.placeholder?has_content] placeholder="${content.placeholder}"[/#if][#if content.min?has_content] min="${content.min}"[/#if][#if content.max?has_content] max="${content.max}"[/#if][#if content.step?has_content] step="${content.step}"[/#if][#if content.patternDescription?has_content] title="${content.patternDescription!}"[/#if][#if content.readonly!false] readonly[/#if][#if content.disabled!false] disabled[/#if][#if content.mandatory!false] required[/#if][#if content.autofocus!false] autofocus[/#if] autocomplete=[#if content.autocomplete!false]"on"[#else]"off"[/#if][/#assign]
+
     [#if content.rows?default(1) == 1]
-        <input ${requiredAttribute!} type="text" name="${content.controlName}" id="${content.controlName}" value="${model.value!}" maxlength="${content.maxLength!'50'}"/>
+        <input ${attributes} type="${content.inputType!"text"}" value="${model.value!}" />
     [#else]
-        <textarea ${requiredAttribute!} id="${content.controlName}" name="${content.controlName}" rows="${content.rows}">${model.value!}</textarea>
+        <textarea ${attributes}[#if content.rows?has_content] rows="${content.rows}"[/#if]>${model.value!}</textarea>
     [/#if]
 
     [#if content.description?has_content]

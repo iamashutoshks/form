@@ -1,4 +1,4 @@
-
+[#-------------- DEPRECATED, use formEdit.ftl with inputType = password instead --------------]
 
 [#-------------- INCLUDE AND ASSIGN PART --------------]
 

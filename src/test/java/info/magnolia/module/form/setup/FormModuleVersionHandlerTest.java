@@ -33,6 +33,7 @@
  */
 package info.magnolia.module.form.setup;
 
+import static info.magnolia.test.hamcrest.NodeMatchers.hasNode;
 import static info.magnolia.test.hamcrest.NodeMatchers.hasProperty;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
@@ -320,6 +321,21 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
         // THEN
         assertThat(formPasswordTemplate, hasProperty("class", FormFieldTemplate.class.getName()));
+    }
+
+    @Test
+    public void updateFrom231() throws Exception {
+        // GIVEN
+        Node templates = session.getNode("/modules/form/templates/components/");
+        Node dialogs = NodeUtil.createPath(session.getRootNode(), "/modules/form/dialogs/formEdit", NodeTypes.ContentNode.NAME).getParent();
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.3.1"));
+
+        // THEN
+        assertThat(templates, hasNode("formNumber"));
+        assertThat(dialogs, hasNode("formNumber"));
+        assertThat(dialogs, hasNode("formEdit/form/tabs/tabAdvanced"));
     }
 
 }
