@@ -61,7 +61,6 @@ import info.magnolia.ui.dialog.setup.DialogMigrationTask;
 import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
 import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -159,7 +158,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                 new String[]{"/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/validation", "/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/validation"}),
                         new ChangeValidationToMultiValuedPropertyTask("", Arrays.asList("form:components/formEdit", "form:components/formPassword", "form:components/formGroupEditItem"))))
                                .addTask(new NodeExistsDelegateTask("Reconfigure FormEdit dialog", "Remove the none validator", RepositoryConstants.CONFIG, "/modules/form/config/validators/none",
-                        new RemoveNodeTask("", "/modules/form/config/validators/none")))
+                                       new RemoveNodeTask("", "/modules/form/config/validators/none")))
         );
         register(DeltaBuilder.update("2.2.7", "")
                 .addTask(new NewPropertyTask("Escape Html", "Skips the default HTML escaping in password component.", RepositoryConstants.CONFIG, "/modules/form/templates/components/formPassword", "escapeHtml", false)));
@@ -192,6 +191,13 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("2.3", "")
                 .addTask(new NewPropertyTask("Set template class to formPassword field", "/modules/form/templates/components/formPassword", "class", FormFieldTemplate.class.getName())));
 
+        register(DeltaBuilder.update("2.3.2", "")
+                .addTask(new ArrayDelegateTask("Bootstrap configuration for HTML5 input types support",
+                        new BootstrapSingleResource("", "", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formNumber.xml"),
+                        new BootstrapSingleResource("", "", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formNumber.xml"),
+                        new PartialBootstrapTask("", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formEdit.xml", "/formEdit/form/tabs/tabAdvanced/")
+                )
+        ));
     }
 
     private void addCancelButtonTextFieldToFormSubmitTemplate(DeltaBuilder delta) {
@@ -211,11 +217,5 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
     private void addLabelRemovalTasks(DeltaBuilder delta, String dialogName) {
         delta.addTask(new RemovePropertyTask("Remove commit action label from dialog " + dialogName, "Remove commit action label from dialog " + dialogName, RepositoryConstants.CONFIG, DIALOGS_PATH + dialogName + COMMIT_ACTION, "label"));
         delta.addTask(new RemovePropertyTask("Remove cancel action label from dialog " + dialogName, "Remove cancel action label from dialog " + dialogName, RepositoryConstants.CONFIG, DIALOGS_PATH + dialogName + CANCEL_ACTION, "label"));
-    }
-
-    @Override
-    protected List<Task> getExtraInstallTasks(InstallContext installContext) {
-        final List<Task> tasks = new ArrayList<Task>();
-        return tasks;
     }
 }
