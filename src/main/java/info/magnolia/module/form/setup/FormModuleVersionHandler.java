@@ -194,6 +194,7 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("2.3.2", "")
                 .addTask(new ArrayDelegateTask("Bootstrap configuration for HTML5 input types support",
                         new BootstrapSingleResource("", "", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formNumber.xml"),
+                        new PartialBootstrapTask("", "/mgnl-bootstrap/form/templates/components/config.modules.form.templates.components.formGroupFields.xml", "formGroupFields/areas/fields/availableComponents/formNumber"),
                         new BootstrapSingleResource("", "", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formNumber.xml"),
                         new PartialBootstrapTask("", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formEdit.xml", "/formEdit/form/tabs/tabAdvanced/")
                 )

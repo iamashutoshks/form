@@ -327,6 +327,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
     public void updateFrom231() throws Exception {
         // GIVEN
         Node templates = session.getNode("/modules/form/templates/components/");
+        NodeUtil.createPath(templates, "components/formGroupFields/areas/fields/availableComponents/", NodeTypes.ContentNode.NAME);
         Node dialogs = NodeUtil.createPath(session.getRootNode(), "/modules/form/dialogs/formEdit", NodeTypes.ContentNode.NAME).getParent();
 
         // WHEN
@@ -334,6 +335,7 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
 
         // THEN
         assertThat(templates, hasNode("formNumber"));
+        assertThat(templates, hasNode("formGroupFields/areas/fields/availableComponents/formNumber"));
         assertThat(dialogs, hasNode("formNumber"));
         assertThat(dialogs, hasNode("formEdit/form/tabs/tabAdvanced"));
     }
