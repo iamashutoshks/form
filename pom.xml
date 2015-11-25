@@ -29,7 +29,7 @@
     <connection>scm:git:ssh://git@git.magnolia-cms.com/modules/form</connection>
     <developerConnection>scm:git:ssh://git@git.magnolia-cms.com/modules/form</developerConnection>
     <url>https://git.magnolia-cms.com/projects/MODULES/repos/form</url>
-    <tag>magnolia-module-form-2.2.13</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <dependencies>
