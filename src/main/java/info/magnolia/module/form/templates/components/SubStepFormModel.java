@@ -91,7 +91,7 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
         try {
             startParagraph = (FormParagraph) Components.getComponent(TemplateDefinitionRegistry.class).getTemplateDefinition(templateId);
         } catch (RegistrationException e) {
-             throw new RuntimeException(e.getMessage(), e);
+            throw new RuntimeException(e.getMessage(), e);
         }
         SubStepFormEngine subStepFormEngine = Components.newInstance(SubStepFormEngine.class, startParagraphNode, startParagraph, startPage);
         //FIXME SCRUM-628: once IoC will support constructor containing several paramater with the same type we could remove the next line.
@@ -104,12 +104,12 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
         List<Link> items = new ArrayList<Link>();
         Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
-        if(this.getFormState() != null) {
+        if (this.getFormState() != null) {
             Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
             while (stepsIt.hasNext()) {
                 FormStepState step = stepsIt.next();
                 Node stepNode = NodeUtil.getNodeByIdentifier(getNode().getSession().getWorkspace().getName(), step.getParagraphUuid());
-                if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
+                if (step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
                 items.add((new LinkImpl(stepNode)));
@@ -120,17 +120,17 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
 
     public Collection<Link> getNextStepsNavigation() throws RepositoryException {
 
-      List<Link> items = new ArrayList<Link>();
-      Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
-      List<Node> list = NavigationUtils.getSameTypeSiblingsAfter(currentPage);
+        List<Link> items = new ArrayList<Link>();
+        Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
+        List<Node> list = NavigationUtils.getSameTypeSiblingsAfter(currentPage);
 
-      for (Node stepNode: list) {
-                Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
-                if (currentStepContent != null) {
-                    items.add((new LinkImpl(stepNode)));
-                }
-      }
-      return items;
+        for (Node stepNode : list) {
+            Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
+            if (currentStepContent != null) {
+                items.add((new LinkImpl(stepNode)));
+            }
+        }
+        return items;
     }
 
     public boolean getDisplayNavigation() throws RepositoryException {
