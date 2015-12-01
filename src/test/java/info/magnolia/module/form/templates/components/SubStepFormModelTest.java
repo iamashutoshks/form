@@ -36,21 +36,19 @@ package info.magnolia.module.form.templates.components;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import info.magnolia.cms.beans.config.ServerConfiguration;
-import info.magnolia.cms.i18n.DefaultI18nContentSupport;
-import info.magnolia.cms.i18n.I18nContentSupport;
+import info.magnolia.cms.core.AggregationState;
+import info.magnolia.config.registry.DefinitionMetadata;
+import info.magnolia.config.registry.DefinitionMetadataBuilder;
+import info.magnolia.config.registry.DefinitionProvider;
+import info.magnolia.config.registry.DefinitionRawView;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.module.form.stepnavigation.Link;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
-import info.magnolia.registry.RegistrationException;
-import info.magnolia.rendering.context.RenderingContext;
-import info.magnolia.rendering.template.TemplateAvailability;
+import info.magnolia.objectfactory.guice.GuiceUtils;
 import info.magnolia.rendering.template.TemplateDefinition;
-import info.magnolia.rendering.template.configured.ConfiguredTemplateAvailability;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
-import info.magnolia.rendering.template.registry.TemplateDefinitionProvider;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.test.ComponentsTestUtil;
@@ -61,12 +59,12 @@ import java.io.InputStream;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.jcr.ImportUUIDBehavior;
 import javax.jcr.Node;
-import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.servlet.ServletContext;
@@ -78,22 +76,27 @@ import javax.servlet.http.HttpSessionContext;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests for {@link SubStepFormModel}.
+ */
 public class SubStepFormModelTest extends RepositoryTestCase {
 
     private Session session;
     private Node content;
-    private RenderingContext renderingContext;
+    private AggregationState aggregationState = new AggregationState();
     private HttpServletResponse response;
     private HttpServletRequest request;
     private final HttpSession httpSession = new DummyHttpSession();
     private MockWebContext ctx;
     private final String templateName = "someModule:someTemplateName";
     private final String formStepNode = "/multi-step-form/upload-photo";
+    private final SubStepFormModel model = new SubStepFormModel(content, null, null, null, GuiceUtils.<AggregationState>providerForInstance(aggregationState), null, null);
 
     @Override
     @Before
     public void setUp() throws Exception {
         super.setUp();
+
         InputStream xmlStream = this.getClass().getClassLoader().getResourceAsStream("form.xml");
         DataTransporter.importXmlStream(
                 xmlStream,
@@ -111,62 +114,54 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         Node child = parent.addNode("formParagraph", NodeTypes.Component.NAME);
         NodeTypes.Renderable.set(child, templateName);
 
-        renderingContext = mock(RenderingContext.class);
-        ComponentsTestUtil.setInstance(RenderingContext.class, renderingContext);
-        ComponentsTestUtil.setImplementation(TemplateAvailability.class, ConfiguredTemplateAvailability.class);
-
         initWebContext();
         initComponents();
-
-        when(request.getMethod()).thenReturn("POST");
     }
 
     @Test
     public void testNextStepsNavigation() throws RepositoryException {
         //GIVEN
-        SubStepFormModel model = new SubStepFormModel(content, null, null, null);
         Collection<Link> nextSteps;
         setStepNavigation(true);
 
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form"));
         nextSteps = model.getNextStepsNavigation();
         //THEN
         assertEquals(0, nextSteps.size());
 
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form/enter-topic"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form/enter-topic"));
         nextSteps = model.getNextStepsNavigation();
         //THEN
         assertEquals(3, nextSteps.size());
 
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form/enter-bio"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form/enter-bio"));
         nextSteps = model.getNextStepsNavigation();
         //THEN
         assertEquals(2, nextSteps.size());
 
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form/upload-photo"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form/upload-photo"));
         nextSteps = model.getNextStepsNavigation();
         //THEN
         assertEquals(1, nextSteps.size());
 
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form/thanks"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form/thanks"));
         nextSteps = model.getNextStepsNavigation();
         //THEN
         assertEquals(0, nextSteps.size());
     }
 
     @Test
-    public void testNextStepsNavigationWrongNode() throws PathNotFoundException, RepositoryException {
+    public void testNextStepsNavigationWrongNode() throws Exception {
         //GIVEN
-        SubStepFormModel model = new SubStepFormModel(content, null, null, null);
         Collection<Link> nextSteps;
 
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form"));
         nextSteps = model.getNextStepsNavigation();
         //THEN
         assertEquals(0, nextSteps.size());
@@ -175,13 +170,12 @@ public class SubStepFormModelTest extends RepositoryTestCase {
     @Test
     public void testGetDisplayNavigation() throws RepositoryException {
         //GIVEN
-        SubStepFormModel model = new SubStepFormModel(content, null, null, null);
         Boolean displayNavigation;
 
         //GIVEN
         //navigation isn't set
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form"));
         displayNavigation = model.getDisplayNavigation();
         //THEN
         assertFalse(displayNavigation);
@@ -189,7 +183,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         //GIVEN
         setStepNavigation(true);
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form/enter-topic"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form/enter-topic"));
         displayNavigation = model.getDisplayNavigation();
         //THEN
         assertTrue(displayNavigation);
@@ -197,7 +191,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         //GIVEN
         setStepNavigation(false);
         //WHEN
-        when(renderingContext.getMainContent()).thenReturn(session.getNode("/multi-step-form"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form"));
         displayNavigation = model.getDisplayNavigation();
         //THEN
         assertFalse(displayNavigation);
@@ -212,6 +206,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
     private void initComponents() {
         TemplateDefinitionRegistry templateDefinitionRegistry = new TemplateDefinitionRegistry();
         TemplateDefinition definition = new ConfiguredTemplateDefinition(null);
+
         templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formStep", new FormStepParagraph(null)));
         templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formGroupFields", definition));
         templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("form:components/formSelection", definition));
@@ -223,8 +218,6 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:pages/stkArticle", definition));
         templateDefinitionRegistry.register(new DummyTemplateDefinitionProvider("standard-templating-kit:components/content/stkTextImage", definition));
 
-        ComponentsTestUtil.setImplementation(I18nContentSupport.class, DefaultI18nContentSupport.class);
-        ComponentsTestUtil.setImplementation(ServerConfiguration.class, ServerConfiguration.class);
         ComponentsTestUtil.setInstance(TemplateDefinitionRegistry.class, templateDefinitionRegistry);
     }
 
@@ -232,18 +225,20 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
 
-        ctx = (MockWebContext) MgnlContext.getInstance();
+        ctx = new MockWebContext();
         Map<String, String> parameters = new HashMap<String, String>();
         ctx.setParameters(parameters);
         ctx.setRequest(request);
         ctx.setResponse(response);
         ctx.setLocale(new Locale("en"));
+        MgnlContext.setInstance(ctx);
 
         when(request.getSession()).thenReturn(httpSession);
         when(request.getQueryString()).thenReturn("param1=firstValue&param2=secondValue");
+        when(request.getMethod()).thenReturn("POST");
     }
 
-    public static class DummyTemplateDefinitionProvider implements TemplateDefinitionProvider {
+    public static class DummyTemplateDefinitionProvider implements DefinitionProvider<TemplateDefinition> {
 
         private final String id;
         private final TemplateDefinition templateDefinition;
@@ -254,15 +249,29 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         }
 
         @Override
-        public String getId() {
-            return this.id;
-        }
-
-        @Override
-        public TemplateDefinition getTemplateDefinition() throws RegistrationException {
+        public TemplateDefinition get() {
             return this.templateDefinition;
         }
 
+        @Override
+        public DefinitionMetadata getMetadata() {
+            return new DefinitionMetadataBuilder.DefinitionMetadataImpl(null, id, null, null, null, null);
+        }
+
+        @Override
+        public DefinitionRawView getRaw() {
+            return null;
+        }
+
+        @Override
+        public boolean isValid() {
+            return false;
+        }
+
+        @Override
+        public List<String> getErrorMessages() {
+            return null;
+        }
     }
 
     public static class DummyHttpSession implements HttpSession {
