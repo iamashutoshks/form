@@ -199,6 +199,10 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                         new PartialBootstrapTask("", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formEdit.xml", "/formEdit/form/tabs/tabAdvanced/")
                 )
         ));
+
+        register(DeltaBuilder.update("2.3.3", "")
+                .addTask(new PartialBootstrapTask("Bootstrap new hideInStepNavigation field into formStep component", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formStep.xml", "formStep/form/tabs/tabMain/fields/hideInStepNavigation"))
+        );
     }
 
     private void addCancelButtonTextFieldToFormSubmitTemplate(DeltaBuilder delta) {

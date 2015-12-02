@@ -340,4 +340,16 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertThat(dialogs, hasNode("formEdit/form/tabs/tabAdvanced"));
     }
 
+    @Test
+    public void updateFrom232() throws Exception {
+        // GIVEN
+        Node formStepFields = NodeUtil.createPath(session.getRootNode(), "/modules/form/dialogs/formStep/form/tabs/tabMain/fields/", NodeTypes.ContentNode.NAME);
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.3.2"));
+
+        // THEN
+        assertThat(formStepFields, hasNode("hideInStepNavigation"));
+    }
+
 }

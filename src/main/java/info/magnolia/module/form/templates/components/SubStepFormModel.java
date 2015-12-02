@@ -65,6 +65,7 @@ import javax.jcr.RepositoryException;
  */
 public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
 
+    protected final static String PROPERTY_HIDE_IN_STEP_NAVIGATION = "hideInStepNavigation";
     private final static String PROPERTY_DISPLAY_STEP_NAVIGATION = "displayStepNavigation";
 
     private final Provider<AggregationState> aggregationStateProvider;
@@ -123,7 +124,9 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
                 if (step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
-                items.add((new LinkImpl(stepNode)));
+                if (!PropertyUtil.getBoolean(stepNode, PROPERTY_HIDE_IN_STEP_NAVIGATION, false)) {
+                    items.add((new LinkImpl(stepNode)));
+                }
             }
         }
         return items;
@@ -138,7 +141,9 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
         for (Node stepNode : list) {
             Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
             if (currentStepContent != null) {
-                items.add((new LinkImpl(stepNode)));
+                if (!PropertyUtil.getBoolean(stepNode, PROPERTY_HIDE_IN_STEP_NAVIGATION, false)) {
+                    items.add((new LinkImpl(stepNode)));
+                }
             }
         }
         return items;
