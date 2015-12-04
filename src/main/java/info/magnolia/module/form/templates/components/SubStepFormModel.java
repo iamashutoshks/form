@@ -33,7 +33,8 @@
  */
 package info.magnolia.module.form.templates.components;
 
-import info.magnolia.jcr.util.MetaDataUtil;
+import info.magnolia.cms.core.AggregationState;
+import info.magnolia.jcr.util.NodeTypes;
 import info.magnolia.jcr.util.NodeUtil;
 import info.magnolia.jcr.util.PropertyUtil;
 import info.magnolia.module.form.engine.FormStepState;
@@ -41,9 +42,8 @@ import info.magnolia.module.form.stepnavigation.Link;
 import info.magnolia.module.form.stepnavigation.LinkImpl;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.module.form.templates.components.multistep.SubStepFormEngine;
+import info.magnolia.objectfactory.ComponentProvider;
 import info.magnolia.objectfactory.Components;
-import info.magnolia.registry.RegistrationException;
-import info.magnolia.rendering.context.RenderingContext;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.rendering.template.registry.TemplateDefinitionRegistry;
@@ -54,65 +54,79 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements behaviour for sub pages in multi step forms. Finds the next step by searching for the first subsequent
  * sibling that has a paragraph that uses or extends {@link info.magnolia.module.form.templates.components.FormStepParagraph}.
- *
- * @version $Id$
  */
 public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
 
-    private static Logger log = LoggerFactory.getLogger(SubStepFormModel.class);
+    protected final static String PROPERTY_HIDE_IN_STEP_NAVIGATION = "hideInStepNavigation";
+    private final static String PROPERTY_DISPLAY_STEP_NAVIGATION = "displayStepNavigation";
 
-    public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel<?> parent, TemplatingFunctions functions) {
+    private final Provider<AggregationState> aggregationStateProvider;
+    private final TemplateDefinitionRegistry templateDefinitionRegistry;
+    private final ComponentProvider componentProvider;
+
+    @Inject
+    public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel<?> parent, TemplatingFunctions functions, Provider<AggregationState> aggregationStateProvider, TemplateDefinitionRegistry templateDefinitionRegistry, ComponentProvider componentProvider) {
         super(content, definition, parent, functions);
+        this.aggregationStateProvider = aggregationStateProvider;
+        this.templateDefinitionRegistry = templateDefinitionRegistry;
+        this.componentProvider = componentProvider;
+    }
+
+    /**
+     * @deprecated since 2.3.3. User {@link #SubStepFormModel(javax.jcr.Node, info.magnolia.rendering.template.RenderableDefinition, info.magnolia.rendering.model.RenderingModel, info.magnolia.templating.functions.TemplatingFunctions, javax.inject.Provider, info.magnolia.rendering.template.registry.TemplateDefinitionRegistry, info.magnolia.objectfactory.ComponentProvider)} instead.
+     */
+    @Deprecated
+    public SubStepFormModel(Node content, RenderableDefinition definition, RenderingModel<?> parent, TemplatingFunctions functions) {
+        this(content, definition, parent, functions, new Provider<AggregationState>() {
+            @Override
+            public AggregationState get() {
+                return Components.getComponent(AggregationState.class);
+            }
+        }, Components.getComponent(TemplateDefinitionRegistry.class), Components.getComponentProvider());
     }
 
     @Override
     protected SubStepFormEngine createFormEngine() throws RepositoryException {
 
-        Node startPage = Components.getComponent(RenderingContext.class).getMainContent().getParent();//MgnlContext.getAggregationState().getMainContent().getParent().getJCRNode();
+        Node startPage = aggregationStateProvider.get().getMainContentNode().getParent();
 
         Node startParagraphNode = NavigationUtils.findParagraphOfType(startPage, FormParagraph.class);
-
         if (startParagraphNode == null) {
             // Ideally we would return a view that describes the problem and how to resolve it
             throw new IllegalStateException("FormStepParagraph on page [" + NodeUtil.getPathIfPossible(content) + "] could not find a FormParagraph in its parent");
         }
 
-        String templateId = MetaDataUtil.getTemplate(startParagraphNode);
-        FormParagraph startParagraph = null;
-        try {
-            startParagraph = (FormParagraph) Components.getComponent(TemplateDefinitionRegistry.class).getTemplateDefinition(templateId);
-        } catch (RegistrationException e) {
-             throw new RuntimeException(e.getMessage(), e);
-        }
-        SubStepFormEngine subStepFormEngine = Components.newInstance(SubStepFormEngine.class, startParagraphNode, startParagraph, startPage);
-        //FIXME SCRUM-628: once IoC will support constructor containing several paramater with the same type we could remove the next line.
+        String templateId = NodeTypes.Renderable.getTemplate(startParagraphNode);
+        FormParagraph startParagraph = (FormParagraph) templateDefinitionRegistry.getProvider(templateId).get();
+        SubStepFormEngine subStepFormEngine = componentProvider.newInstance(SubStepFormEngine.class, startParagraphNode, startParagraph, startPage);
+        //FIXME SCRUM-628: once IoC will support constructor containing several parameter with the same type we could remove the next line.
         subStepFormEngine.setStartPage(startPage);
         return subStepFormEngine;
     }
 
-
     public Collection<Link> getPreviousStepsNavigation() throws RepositoryException {
-        List<Link> items = new ArrayList<Link>();
-        Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
+        List<Link> items = new ArrayList<>();
+        Node currentPage = aggregationStateProvider.get().getMainContentNode();
         Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
-        if(this.getFormState() != null) {
+        if (this.getFormState() != null) {
             Iterator<FormStepState> stepsIt = this.getFormState().getSteps().values().iterator();
             while (stepsIt.hasNext()) {
                 FormStepState step = stepsIt.next();
                 Node stepNode = NodeUtil.getNodeByIdentifier(getNode().getSession().getWorkspace().getName(), step.getParagraphUuid());
-                if(step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
+                if (step.getParagraphUuid().equals(NodeUtil.getNodeIdentifierIfPossible(currentStepContent))) {
                     break;
                 }
-                items.add((new LinkImpl(stepNode)));
+                if (!PropertyUtil.getBoolean(stepNode, PROPERTY_HIDE_IN_STEP_NAVIGATION, false)) {
+                    items.add((new LinkImpl(stepNode)));
+                }
             }
         }
         return items;
@@ -120,29 +134,31 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
 
     public Collection<Link> getNextStepsNavigation() throws RepositoryException {
 
-      List<Link> items = new ArrayList<Link>();
-      Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
-      List<Node> list = NavigationUtils.getSameTypeSiblingsAfter(currentPage);
+        List<Link> items = new ArrayList<>();
+        Node currentPage = aggregationStateProvider.get().getMainContentNode();
+        List<Node> list = NavigationUtils.getSameTypeSiblingsAfter(currentPage);
 
-      for (Node stepNode: list) {
-                Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
-                if (currentStepContent != null) {
+        for (Node stepNode : list) {
+            Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
+            if (currentStepContent != null) {
+                if (!PropertyUtil.getBoolean(stepNode, PROPERTY_HIDE_IN_STEP_NAVIGATION, false)) {
                     items.add((new LinkImpl(stepNode)));
                 }
-      }
-      return items;
+            }
+        }
+        return items;
     }
 
     public boolean getDisplayNavigation() throws RepositoryException {
 
-        Node currentPage = Components.getComponent(RenderingContext.class).getMainContent();
+        Node currentPage = aggregationStateProvider.get().getMainContentNode();
         boolean displayStepNavigation = false;
         Node formParagraph = NavigationUtils.findParagraphOfType(currentPage, FormParagraph.class);
         if (formParagraph == null) {
             formParagraph = NavigationUtils.findParagraphOfType(currentPage.getParent(), FormParagraph.class);
         }
         if (formParagraph != null) {
-            displayStepNavigation = PropertyUtil.getBoolean(formParagraph, "displayStepNavigation", false);
+            displayStepNavigation = PropertyUtil.getBoolean(formParagraph, PROPERTY_DISPLAY_STEP_NAVIGATION, false);
         }
         return displayStepNavigation;
     }
