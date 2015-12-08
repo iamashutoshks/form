@@ -17,13 +17,13 @@
                         [#if parameterValues?is_enumerable]
                             [#list parameterValues as parameterValue]
                                 <tr>
-                                    <td>${parameterKey}</td>
-                                    <td>${parameterValue}</td>
+                                    <td>${parameterKey!}</td>
+                                    <td>${parameterValue!}</td>
                                 </tr>
                             [/#list]
                         [#else]
                             <tr>
-                                <td>${parameterKey}</td>
+                                <td>${parameterKey!}</td>
                                 <td>${parametersMap[parameterKey]!}</td>
                             </tr>
                         [/#if]
