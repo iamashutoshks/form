@@ -141,7 +141,8 @@ public class SubStepFormModel extends AbstractFormModel<RenderableDefinition> {
         for (Node stepNode : list) {
             Node currentStepContent = NavigationUtils.findParagraphOfType(currentPage, FormStepParagraph.class);
             if (currentStepContent != null) {
-                if (!PropertyUtil.getBoolean(stepNode, PROPERTY_HIDE_IN_STEP_NAVIGATION, false)) {
+                Node stepNodeContent = NavigationUtils.findParagraphOfType(stepNode, FormStepParagraph.class);
+                if (!PropertyUtil.getBoolean(stepNodeContent, PROPERTY_HIDE_IN_STEP_NAVIGATION, false)) {
                     items.add((new LinkImpl(stepNode)));
                 }
             }

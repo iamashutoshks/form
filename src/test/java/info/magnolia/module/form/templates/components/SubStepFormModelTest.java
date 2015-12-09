@@ -175,17 +175,17 @@ public class SubStepFormModelTest extends RepositoryTestCase {
     @Test
     public void testNextStepsNavigationHiddenItems() throws RepositoryException {
         //GIVEN
-        aggregationState.setMainContentNode(session.getNode("/multi-step-form/upload-photo"));
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form/enter-bio"));
         setStepNavigation(true);
         Collection<Link> nextSteps = model.getNextStepsNavigation();
-        assertEquals(1, nextSteps.size());
+        assertEquals(2, nextSteps.size());
 
         //WHEN
-        session.getNode("/multi-step-form/thanks").setProperty(SubStepFormModel.PROPERTY_HIDE_IN_STEP_NAVIGATION, true);
+        session.getNode("/multi-step-form/upload-photo/content/singleton").setProperty(SubStepFormModel.PROPERTY_HIDE_IN_STEP_NAVIGATION, true);
         nextSteps = model.getNextStepsNavigation();
 
         //THEN
-        assertEquals(0, nextSteps.size());
+        assertEquals(1, nextSteps.size());
     }
 
     @Test
