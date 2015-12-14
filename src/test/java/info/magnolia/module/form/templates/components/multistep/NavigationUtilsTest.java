@@ -102,9 +102,9 @@ public class NavigationUtilsTest {
     public void testGetPageParagraphsOfType() throws RepositoryException {
         // GIVEN
         Node page = new MockNode();
-        Node subpageShouldNotBeListed = page.addNode("subpageShouldNotBeListed");
+        Node subpageShouldNotBeListed = page.addNode("subpageShouldNotBeListed", NodeTypes.Page.NAME);
         NodeTypes.Renderable.set(subpageShouldNotBeListed, "form:components/formCondition");
-        Node conditionList = page.addNode("content").addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("0").addNode("conditionList");
+        Node conditionList = page.addNode("content", NodeTypes.Area.NAME).addNode("condition").addNode("condition").addNode("condition").addNode("condition").addNode("0").addNode("conditionList");
 
         Node condition1 = conditionList.addNode("0");
         Node condition2 = conditionList.addNode("1");
@@ -117,7 +117,7 @@ public class NavigationUtilsTest {
         condition2.addNode("condition");
 
         // WHEN
-        List<Node> paragraphs = NodeUtil.asList(NavigationUtils.getPageParagraphsOfType(page, "form:components/formCondition"));
+        List<Node> paragraphs = NodeUtil.asList(NavigationUtils.getParagraphsOfType(page, "form:components/formCondition"));
 
         // THEN
         assertFalse(paragraphs.contains(subpageShouldNotBeListed));

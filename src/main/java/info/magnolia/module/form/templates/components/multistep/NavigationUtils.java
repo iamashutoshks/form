@@ -130,12 +130,23 @@ public class NavigationUtils {
         return paragraphType.isAssignableFrom(definition.getClass());
     }
 
+
+    /**
+     * @deprecated since 2.3.3 - use {@link #getParagraphsOfType(Node, String)} instead.
+     */
+    @Deprecated
     public static Iterable<Node> getPageParagraphsOfType(Node page, final String componentId) {
-        Iterable<Node> paragraphList = new ArrayList<Node>();
+        return getParagraphsOfType(page, componentId);
+    }
+
+    public static Iterable<Node> getParagraphsOfType(Node node, final String componentId) {
+        List<Node> paragraphList = new ArrayList<>();
+
         try {
-            if (page.hasNode("content")) {
-                Node mainAreaContent = page.getNode("content");
-                paragraphList = NodeUtil.collectAllChildren(mainAreaContent, new AbstractPredicate<Node>() {
+            Iterable<Node> nodeIterator = NodeUtil.getNodes(node, ONLY_AREAS_AND_COMPONENTS);
+            for(Node subNode : nodeIterator) {
+                List<Node> nodes = new ArrayList<>();
+                NodeUtil.collectAllChildren(nodes, subNode, new AbstractPredicate<Node>() {
                     @Override
                     public boolean evaluateTyped(Node content) {
                         String template;
@@ -148,6 +159,7 @@ public class NavigationUtils {
                         return componentId.equals(template);
                     }
                 });
+                paragraphList.addAll(nodes);
             }
         } catch (PathNotFoundException e) {
             log.error(e.getMessage(), e);
