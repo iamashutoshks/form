@@ -70,7 +70,7 @@ public class FormSummaryModelTest {
         FormSummaryModel formSummaryModel = new FormSummaryModel(mock(Node.class), mock(RenderableDefinition.class), mock(RenderingModel.class), mock(TemplatingFunctions.class), mock(RenderingContext.class));
 
         Content content = new MockContent("testContent");
-        content.setNodeData("labels", "option1\r\noption2\r\noption3\r\noption4");
+        content.setNodeData("labels", "option1" + FormSummaryModel.LINE_SEPARATOR + "option2" + FormSummaryModel.LINE_SEPARATOR + "option3" + FormSummaryModel.LINE_SEPARATOR + "option4");
 
         final String controlName = "checkbox";
         Map<String, Object> stepParameters = new HashMap<String, Object>();
