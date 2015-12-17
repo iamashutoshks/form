@@ -78,6 +78,7 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
     protected FormState formState;
     protected final TemplatingFunctions functions;
     private RenderingContext context;
+    protected static final String LINE_SEPARATOR = System.lineSeparator();
 
     @Inject
     public FormSummaryModel(Node content, RD definition, RenderingModel<?> parent, TemplatingFunctions functions, RenderingContext context) {
@@ -210,7 +211,7 @@ public class FormSummaryModel<RD extends RenderableDefinition> extends Rendering
     private Map<String, String> fillControlValueLabelMap(Content fieldNode) {
         Map<String, String> controlValueLabelMap = new HashMap<String,String>();
         String controlLabels = NodeDataUtil.getString(fieldNode, "labels");
-        String[] labelsArray = controlLabels.split("\r\n");
+        String[] labelsArray = controlLabels.split(LINE_SEPARATOR);
         for (String controlLabelValue : labelsArray) {
             String[] labelValueArray = controlLabelValue.split(":");
             if(labelValueArray.length > 0) {
