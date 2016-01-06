@@ -199,6 +199,7 @@ public class SubStepFormModelTest extends RepositoryTestCase {
         FormStepState formStepState = new FormStepState();
         formStepState.setParagraphUuid(formParagraph.getIdentifier());
         formState.addStep(formStepState);
+        formState.setCurrentlyExecutingStep(1);
         MgnlContext.getParameters().put("mgnlFormToken", aggregationState.getMainContentNode().getIdentifier());
         httpSession.setAttribute(FormEngine.class.getName() + "-formState-" + aggregationState.getMainContentNode().getIdentifier(), formState);
 

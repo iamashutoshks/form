@@ -37,6 +37,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.cms.beans.config.ServerConfiguration;
+import info.magnolia.cms.core.AggregationState;
 import info.magnolia.cms.i18n.AbstractI18nContentSupport;
 import info.magnolia.cms.i18n.DefaultI18nContentSupport;
 import info.magnolia.cms.i18n.I18nContentSupport;
@@ -46,7 +47,9 @@ import info.magnolia.context.MgnlContext;
 import info.magnolia.importexport.DataTransporter;
 import info.magnolia.module.form.engine.FormDataBinder;
 import info.magnolia.module.form.engine.FormEngine;
+import info.magnolia.module.form.engine.FormState;
 import info.magnolia.module.form.engine.FormStateUtil;
+import info.magnolia.module.form.engine.FormStepState;
 import info.magnolia.module.form.engine.RedirectWithTokenAndParametersView;
 import info.magnolia.module.form.engine.RedirectWithTokenView;
 import info.magnolia.module.form.engine.View;
@@ -286,6 +289,42 @@ public class FormEngineTest extends RepositoryTestCase {
                 "null/multi-step-form/enter-bio?mgnlFormToken=" + formEngine.getFormState().getToken() + "&param1=firstValue&param2=secondValue");
         verify(response, times(1)).sendRedirect(
                 "null/multi-step-form/upload-photo?mgnlFormToken=" + formEngine.getFormState().getToken() + "&param1=firstValue&param2=secondValue");
+    }
+
+    @Test
+    public void testMultiStepFormRemoveConditionalStatesIfNotUsed() throws Exception {
+        // GIVEN
+        AggregationState aggregationState = new AggregationState();
+        aggregationState.setMainContentNode(session.getNode("/multi-step-form/content/singleton"));
+        when(renderingContext.getMainContent()).thenReturn(aggregationState.getMainContentNode());
+        when(request.getMethod()).thenReturn("GET");
+
+        FormState formState = new FormState();
+        FormStepState formStepState1 = new FormStepState();
+        formStepState1.setParagraphUuid(session.getNode("/multi-step-form/content/singleton").getIdentifier());
+        formState.addStep(formStepState1);
+        FormStepState formStepState2 = new FormStepState();
+        formStepState2.setParagraphUuid(session.getNode("/multi-step-form/enter-topic/content/singleton").getIdentifier());
+        formState.addStep(formStepState2);
+        FormStepState formStepState3 = new FormStepState();
+        formStepState3.setParagraphUuid(session.getNode("/multi-step-form/enter-bio/content/singleton").getIdentifier());
+        formState.addStep(formStepState3);
+        formState.setCurrentlyExecutingStep(1);
+        MgnlContext.getParameters().put("mgnlFormToken", aggregationState.getMainContentNode().getIdentifier());
+        httpSession.setAttribute(FormEngine.class.getName() + "-formState-" + aggregationState.getMainContentNode().getIdentifier(), formState);
+        configurationParagraph = new FormParagraph(mock(TemplateAvailability.class));
+        configurationParagraph.setRedirectWithParams(true);
+        formEngine = new SubStepFormEngine(content, configurationParagraph, content, renderingContext);
+
+        //WHEN
+        View view = formEngine.handleRequest(session.getNode("/multi-step-form/enter-bio/content/singleton"));
+        view.execute();
+
+        //THEN
+        Map<String, FormStepState> steps = formEngine.getFormState().getSteps();
+        assertTrue(steps.containsKey(formStepState1.getParagraphUuid()));
+        assertFalse(steps.containsKey(formStepState2.getParagraphUuid()));
+        assertTrue(steps.containsKey(formStepState3.getParagraphUuid()));
     }
 
     @Test
