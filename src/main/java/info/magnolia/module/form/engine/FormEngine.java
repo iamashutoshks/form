@@ -40,6 +40,7 @@ import info.magnolia.module.form.processors.FormProcessorFailedException;
 import info.magnolia.module.form.templates.components.multistep.NavigationUtils;
 import info.magnolia.rendering.context.RenderingContext;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -87,10 +88,27 @@ public abstract class FormEngine {
                 return handleNoSuchFormState(e.getToken());
             }
 
+            //remove conditional states that will be stepped over
+            Iterator iterator = formState.getSteps().entrySet().iterator();
+            int currentlyExecutingStep = formState.getCurrentlyExecutingStep();
+            FormStepState nextStep = formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content));
+            int counter = 0;
+            while (iterator.hasNext()) {
+                counter++;
+                Map.Entry pair = (Map.Entry) iterator.next();
+                if (pair.getValue().equals(nextStep)) {
+                    break;
+                }
+                if (counter > currentlyExecutingStep) {
+                    iterator.remove();
+                }
+            }
+
+
             View view = formState.getView();
             formState.setView(null);
             if (view == null) {
-                return getFormView(formState.getStep(NodeUtil.getNodeIdentifierIfPossible(content)));
+                return getFormView(nextStep);
             }
             if (formState.isEnded()) {
                 destroyFormState();
