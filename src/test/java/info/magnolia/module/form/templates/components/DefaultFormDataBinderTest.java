@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2013-2015 Magnolia International
+ * This file Copyright (c) 2013-2016 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -34,7 +34,7 @@
 package info.magnolia.module.form.templates.components;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import info.magnolia.config.registry.DefinitionProvider;
@@ -78,15 +78,16 @@ public class DefaultFormDataBinderTest {
     private List<Node> fieldList = new ArrayList<Node>();
     private Session session;
     private FormFieldTemplate formFieldTemplate = new FormFieldTemplate();
+    private TemplateDefinitionRegistry templateDefinitionRegistry;
+    private FormModule formModule;
 
     @Before
     public void setUp() throws Exception {
-        TemplateDefinitionRegistry templateDefinitionRegistry = mock(TemplateDefinitionRegistry.class);
+        templateDefinitionRegistry = mock(TemplateDefinitionRegistry.class);
         DefinitionProvider<TemplateDefinition> templateDefinitionProvider = mock(DefinitionProvider.class);
         when(templateDefinitionRegistry.getProvider(anyString())).thenReturn(templateDefinitionProvider);
         when(templateDefinitionProvider.get()).thenReturn(formFieldTemplate);
 
-        binder = new DefaultFormDataBinder(templateDefinitionRegistry, new FormModule());
         request = mock(HttpServletRequest.class);
         session = mock(Session.class);
 
@@ -101,8 +102,8 @@ public class DefaultFormDataBinderTest {
 
         ComponentsTestUtil.setInstance(SystemContext.class, systemCtx);
 
-        FormModule formModule = new FormModule();
-        ArrayList<Validator> validators = new ArrayList<Validator>();
+        formModule = new FormModule();
+        List<Validator> validators = new ArrayList<>();
         Validator validator1 = new Validator();
         validator1.setName("test1");
         Validator validator2 = new Validator();
@@ -110,6 +111,7 @@ public class DefaultFormDataBinderTest {
         validators.add(validator1);
         validators.add(validator2);
         formModule.setValidators(validators);
+        binder = new DefaultFormDataBinder(templateDefinitionRegistry, formModule);
 
         fieldNode = new MockNode();
         fieldNode.setProperty(controlNamePropertyName, controlName);
@@ -174,5 +176,68 @@ public class DefaultFormDataBinderTest {
         assertTrue(step.isValid());
     }
 
+    @Test
+    public void nonMandatoryFieldIsValidWhenItHasValidatorAndIsEmpty() throws Exception {
+        // GIVEN
+        Validator validator = mock(Validator.class);
+        when(validator.getName()).thenReturn("validator");
+        formModule.addValidators(validator);
+        fieldNode.setProperty("validation", "validator");
+        fieldNode.setProperty("mandatory", false);
+        when(request.getParameterValues(controlName)).thenReturn(new String[] { "" });
 
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
+
+        // THEN
+        assertTrue(step.isValid());
+    }
+
+    @Test
+    public void mandatoryFieldIsNotValidWhenItHasValidatorAndIsEmpty() throws Exception {
+        // GIVEN
+        Validator validator = mock(Validator.class);
+        when(validator.getName()).thenReturn("validator");
+        formModule.addValidators(validator);
+        fieldNode.setProperty("validation", "validator");
+        fieldNode.setProperty("mandatory", true);
+        when(request.getParameterValues(controlName)).thenReturn(new String[] { "" });
+        MockDefaultFormDataBinder binder = new MockDefaultFormDataBinder(templateDefinitionRegistry, formModule);
+
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
+
+        // THEN
+        assertFalse(step.isValid());
+    }
+
+    @Test
+    public void mandatoryFieldsWithMultipleValuesIsNotValidWhenTheyAreEmpty() throws Exception {
+        // GIVEN
+        Node fieldNode1 = new MockNode();
+        fieldNode1.setProperty(controlNamePropertyName, controlName);
+        fieldNode1.setProperty("mandatory", true);
+        fieldList.add(fieldNode1);
+        fieldNode.setProperty("mandatory", true);
+        when(request.getParameterValues(controlName)).thenReturn(new String[] { "", "" });
+        MockDefaultFormDataBinder binder = new MockDefaultFormDataBinder(templateDefinitionRegistry, formModule);
+
+        // WHEN
+        binder.bindAndValidateFields(fieldList.iterator(), step);
+
+        // THEN
+        assertFalse(step.isValid());
+    }
+
+    private class MockDefaultFormDataBinder extends DefaultFormDataBinder {
+
+        public MockDefaultFormDataBinder(TemplateDefinitionRegistry templateDefinitionRegistry, FormModule formModule) {
+            super(templateDefinitionRegistry, formModule);
+        }
+
+        @Override
+        protected String getErrorMessage(String message, Node node) {
+            return "Error";
+        }
+    }
 }
