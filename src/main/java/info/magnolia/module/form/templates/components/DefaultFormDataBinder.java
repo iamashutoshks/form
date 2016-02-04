@@ -1,5 +1,5 @@
 /**
- * This file Copyright (c) 2010-2015 Magnolia International
+ * This file Copyright (c) 2010-2016 Magnolia International
  * Ltd.  (http://www.magnolia-cms.com). All rights reserved.
  *
  *
@@ -56,6 +56,7 @@ import info.magnolia.util.EscapeUtil;
 
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -137,7 +138,13 @@ public class DefaultFormDataBinder implements FormDataBinder {
 
             if (node.hasProperty("controlName")) {
                 final String controlName = node.getProperty("controlName").getString();
-                final String values = StringUtils.join(MgnlContext.getParameterValues(controlName), "__");
+                String values = StringUtils.join(MgnlContext.getParameterValues(controlName), "__");
+
+                // In case multiple empty values we should keep them as empty
+                if (values != null) {
+                    values = Pattern.matches("^__+$", values) ? StringUtils.EMPTY : values;
+                }
+
                 final boolean escapeHtml = this.shouldEscapeHtml(node);
                 final String value = escapeHtml ? EscapeUtil.escapeXss(values) : values;
 
@@ -148,7 +155,7 @@ public class DefaultFormDataBinder implements FormDataBinder {
 
                 if (StringUtils.isEmpty(value) && isMandatory(node)) {
                     field.setErrorMessage(getErrorMessage("mandatory", node));
-                } else if ((value != null || isFileFieldWithUploadedFile(node, controlName))
+                } else if ((StringUtils.isNotEmpty(value) || isFileFieldWithUploadedFile(node, controlName))
                         && node.hasProperty("validation")) { // Info.nl change
                     for (String validatorName : getValidatorNames(node)) {
                         Validator validator = formModule.getValidatorByName(validatorName);
