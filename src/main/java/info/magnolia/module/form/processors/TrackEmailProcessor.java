@@ -59,7 +59,7 @@ public class TrackEmailProcessor extends AbstractEMailFormProcessor {
         try {
 
             if (PropertyUtil.getBoolean(content, "trackMail", false)) {
-                MailUtil.logMail(parameters, loggerName);
+                MailUtil.logMail(resolveParameters("text", parameters), loggerName);
             }
 
         } catch (Exception e) {
