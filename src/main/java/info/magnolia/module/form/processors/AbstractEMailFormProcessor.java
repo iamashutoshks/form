@@ -33,14 +33,18 @@
  */
 package info.magnolia.module.form.processors;
 
-import java.util.List;
-import java.util.Map;
-
 import info.magnolia.module.mail.MailModule;
 import info.magnolia.module.mail.MgnlMailFactory;
 import info.magnolia.module.mail.templates.MailAttachment;
 import info.magnolia.module.mail.templates.MgnlEmail;
 import info.magnolia.module.mail.util.MailUtil;
+import info.magnolia.util.EscapeUtil;
+
+import java.util.List;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 
 /**
  * Base implementation for FormProcessors that send mail.
@@ -49,13 +53,30 @@ import info.magnolia.module.mail.util.MailUtil;
  */
 public abstract class AbstractEMailFormProcessor extends AbstractFormProcessor {
 
+    /**
+     * Checks if contentType is "text" type and return parameters with unescaped characters.
+     */
+    protected final Map resolveParameters(String contentType, Map<String, Object> parameters) {
+        if (!"text".equals(contentType)) {
+            return parameters;
+        }
+
+        return Maps.transformEntries(parameters, new Maps.EntryTransformer<String, Object, Object>() {
+            @Override
+            public Object transformEntry(String key, Object value) {
+                return (value instanceof String) ? EscapeUtil.unescapeXss((String) value) : value;
+            }
+        });
+    }
+
     protected void sendMail(String body, String from, String subject, String to, String contentType, Map<String, Object> parameters) throws Exception {
 
         MgnlMailFactory mgnlMailFactory = MailModule.getInstance().getFactory();
 
         List<MailAttachment> attachments = MailUtil.createAttachmentList();
+        Map<String, Object> resolvedParameters = resolveParameters(contentType, parameters);
 
-        MgnlEmail email = mgnlMailFactory.getEmailFromType(parameters, "freemarker", contentType, attachments);
+        MgnlEmail email = mgnlMailFactory.getEmailFromType(resolvedParameters, "freemarker", contentType, attachments);
         email.setFrom(from);
         email.setSubject(subject);
         email.setToList(to);
