@@ -35,7 +35,7 @@ package info.magnolia.module.form.engine;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Binding and validation result for a field.

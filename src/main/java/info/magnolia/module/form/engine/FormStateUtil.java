@@ -46,8 +46,8 @@ import java.util.Map.Entry;
 import javax.jcr.RepositoryException;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Utility class for storing FormState in session and getting the form state token from a request.

@@ -33,7 +33,7 @@
  */
 package info.magnolia.module.form.validators;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Validates that a field does not contain html.
