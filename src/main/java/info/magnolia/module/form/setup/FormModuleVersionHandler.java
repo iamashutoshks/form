@@ -59,6 +59,7 @@ import info.magnolia.module.form.templates.components.FormFieldTemplate;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.setup.DialogMigrationTask;
 import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
+import info.magnolia.ui.form.field.definition.CodeFieldDefinition;
 import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 
 import java.util.Arrays;
@@ -203,6 +204,15 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
         register(DeltaBuilder.update("2.3.3", "")
                 .addTask(new PartialBootstrapTask("Bootstrap new hideInStepNavigation field into formStep component", "/mgnl-bootstrap/form/dialogs/config.modules.form.dialogs.formStep.xml", "formStep/form/tabs/tabMain/fields/hideInStepNavigation"))
         );
+
+        register(DeltaBuilder.update("2.3.7", "")
+                .addTask(new ArrayDelegateTask("Replace deprecated BasicTextCodeFieldDefinition to CodeFieldDefinition",
+                        new NodeExistsDelegateTask("", "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/html",
+                                new CheckAndModifyPropertyValueTask("/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/html", "class", "info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition", CodeFieldDefinition.class.getName())),
+                        new NodeExistsDelegateTask("", "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code",
+                                new CheckAndModifyPropertyValueTask("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code", "class", "info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition", CodeFieldDefinition.class.getName()))
+                )
+        ));
     }
 
     private void addCancelButtonTextFieldToFormSubmitTemplate(DeltaBuilder delta) {
