@@ -1115,7 +1115,7 @@
                   <sv:value>1Col</sv:value>
                 </sv:property>
                 <sv:property sv:name="class" sv:type="String">
-                  <sv:value>info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition</sv:value>
+                  <sv:value>info.magnolia.ui.form.field.definition.CodeFieldDefinition</sv:value>
                 </sv:property>
                 <sv:property sv:name="description" sv:type="String">
                   <sv:value/>
@@ -1749,7 +1749,7 @@
                   <sv:value>1Col</sv:value>
                 </sv:property>
                 <sv:property sv:name="class" sv:type="String">
-                  <sv:value>info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition</sv:value>
+                  <sv:value>info.magnolia.ui.form.field.definition.CodeFieldDefinition</sv:value>
                 </sv:property>
                 <sv:property sv:name="description" sv:type="String">
                   <sv:value/>

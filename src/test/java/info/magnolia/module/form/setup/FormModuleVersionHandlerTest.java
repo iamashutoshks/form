@@ -33,8 +33,7 @@
  */
 package info.magnolia.module.form.setup;
 
-import static info.magnolia.test.hamcrest.NodeMatchers.hasNode;
-import static info.magnolia.test.hamcrest.NodeMatchers.hasProperty;
+import static info.magnolia.test.hamcrest.NodeMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
@@ -51,6 +50,7 @@ import info.magnolia.module.model.Version;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.repository.RepositoryConstants;
 import info.magnolia.ui.dialog.setup.migration.ControlMigratorsRegistry;
+import info.magnolia.ui.form.field.definition.CodeFieldDefinition;
 import info.magnolia.ui.form.field.definition.MultiValueFieldDefinition;
 import info.magnolia.ui.form.field.definition.StaticFieldDefinition;
 import info.magnolia.ui.form.field.definition.SwitchableFieldDefinition;
@@ -352,4 +352,20 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         assertThat(formStepFields, hasNode("hideInStepNavigation"));
     }
 
+    @Test
+    public void updateFrom236ReplaceBasicTextCodeFieldDefinition() throws Exception {
+        // GIVEN
+        String htmlPath = "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/html";
+        String codePath = "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code";
+        setupConfigProperty(htmlPath, "class", "info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition");
+        setupConfigProperty(codePath, "class", "info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition");
+
+        // WHEN
+        InstallContext context = executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.3.6"));
+
+        // THEN
+        Session configSession = context.getConfigJCRSession();
+        assertThat(configSession.getNode(htmlPath), hasProperty("class", CodeFieldDefinition.class.getName()));
+        assertThat(configSession.getNode(codePath), hasProperty("class", CodeFieldDefinition.class.getName()));
+    }
 }
