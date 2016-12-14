@@ -373,13 +373,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2011-12-05T11:50:20.324+01:00</sv:value>
+              <sv:value>2016-12-14T16:09:15.727+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -561,9 +558,6 @@
             <sv:property sv:name="appName" sv:type="String">
               <sv:value>pages</sv:value>
             </sv:property>
-            <sv:property sv:name="buttonLabel" sv:type="String">
-              <sv:value>dialog.form.tabSubmit.redirect.buttonLabel</sv:value>
-            </sv:property>
             <sv:property sv:name="class" sv:type="String">
               <sv:value>info.magnolia.ui.form.field.definition.LinkFieldDefinition</sv:value>
             </sv:property>
@@ -589,7 +583,7 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-11-07T18:24:22.511+01:00</sv:value>
+              <sv:value>2016-12-14T16:10:16.564+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
@@ -653,13 +647,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-11-04T13:36:13.627+01:00</sv:value>
+              <sv:value>2016-12-14T16:10:46.501+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -1028,9 +1019,6 @@
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>e5ca33f3-680e-46b4-8f58-c8101c6fa5f0</sv:value>
                 </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
-                </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.TextFieldDefinition</sv:value>
                 </sv:property>
@@ -1059,7 +1047,7 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2011-06-21T10:25:11.890+02:00</sv:value>
+                  <sv:value>2016-12-14T16:13:41.034+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
@@ -1074,9 +1062,6 @@
                 </sv:property>
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>449dd04f-89f1-486c-a551-99e8386bb32e</sv:value>
-                </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
                 </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.CodeFieldDefinition</sv:value>
@@ -1109,13 +1094,10 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2011-06-24T08:36:58.457+02:00</sv:value>
+                  <sv:value>2016-12-14T16:13:31.523+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
-                </sv:property>
-                <sv:property sv:name="source" sv:type="String">
-                  <sv:value>true</sv:value>
                 </sv:property>
               </sv:node>
             </sv:node>
@@ -1201,13 +1183,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-11-13T16:09:17.638+01:00</sv:value>
+              <sv:value>2016-12-14T16:12:40.860+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -1612,9 +1591,6 @@
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>babd434d-1d7e-40db-a19d-af3e276fcfb1</sv:value>
                 </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
-                </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.TextFieldDefinition</sv:value>
                 </sv:property>
@@ -1643,7 +1619,7 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2011-06-24T08:25:35.690+02:00</sv:value>
+                  <sv:value>2016-12-14T16:12:16.798+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
@@ -1706,9 +1682,6 @@
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>3146d346-e8c6-4526-99a0-92c96de03da1</sv:value>
                 </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
-                </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.CodeFieldDefinition</sv:value>
                 </sv:property>
@@ -1740,13 +1713,10 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2013-03-05T14:00:48.526+01:00</sv:value>
+                  <sv:value>2016-12-14T16:12:06.291+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
-                </sv:property>
-                <sv:property sv:name="source" sv:type="String">
-                  <sv:value>true</sv:value>
                 </sv:property>
               </sv:node>
             </sv:node>

@@ -197,13 +197,10 @@
               <sv:value>2010-07-23T11:15:57.195+02:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2011-06-16T12:00:04.995+02:00</sv:value>
+              <sv:value>2016-12-14T16:27:29.113+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>

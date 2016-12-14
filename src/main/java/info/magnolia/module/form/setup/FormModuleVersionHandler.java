@@ -48,6 +48,8 @@ import info.magnolia.module.delta.OrderNodeBeforeTask;
 import info.magnolia.module.delta.PartialBootstrapTask;
 import info.magnolia.module.delta.PropertyValueDelegateTask;
 import info.magnolia.module.delta.RemoveNodeTask;
+import info.magnolia.module.delta.RemoveNodesTask;
+import info.magnolia.module.delta.RemovePropertiesTask;
 import info.magnolia.module.delta.RemovePropertyTask;
 import info.magnolia.module.delta.SetPropertyTask;
 import info.magnolia.module.delta.Task;
@@ -213,6 +215,34 @@ public class FormModuleVersionHandler extends DefaultModuleVersionHandler {
                                 new CheckAndModifyPropertyValueTask("/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code", "class", "info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition", CodeFieldDefinition.class.getName()))
                 )
         ));
+
+        register(DeltaBuilder.update("2.3.8", "")
+                .addTask(new RemovePropertiesTask("Remove obsolete properties", RepositoryConstants.CONFIG, Arrays.asList(
+                        "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code/boxType",
+                        "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code/source",
+                        "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/text/boxType",
+                        "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/sendConfirmation/selected",
+                        "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/html/boxType",
+                        "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/html/source",
+                        "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/text/boxType",
+                        "/modules/form/dialogs/form/form/tabs/tabMain/fields/displayStepNavigation/selected",
+                        "/modules/form/dialogs/form/form/tabs/tabSubmit/fields/redirect/buttonLabel",
+                        "/modules/form/dialogs/form/form/tabs/tabSubmit/fields/trackMail/selected",
+                        "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/horizontal/selected",
+                        "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/mandatory/selected",
+                        "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/multiple/selected",
+                        "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/mandatory/selected",
+                        "/modules/form/dialogs/formCondition/saveHandler",
+                        "/modules/form/dialogs/formHidden/form/tabs/tabMain/description",
+                        "/modules/form/dialogs/formSummary/form/tabs/tabMain/fields/onlyLast/selected",
+                        "/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/mandatory/selected",
+                        "/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/rows/value"
+                ), false))
+                .addTask(new RemoveNodesTask("Remove obsolete nodes", RepositoryConstants.CONFIG, Arrays.asList(
+                        "/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition/options-conditions"
+                ), false))
+        );
+
     }
 
     private void addCancelButtonTextFieldToFormSubmitTemplate(DeltaBuilder delta) {

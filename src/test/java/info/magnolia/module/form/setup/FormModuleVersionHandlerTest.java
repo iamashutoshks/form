@@ -34,6 +34,7 @@
 package info.magnolia.module.form.setup;
 
 import static info.magnolia.test.hamcrest.NodeMatchers.*;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
@@ -62,6 +63,7 @@ import java.util.List;
 import javax.jcr.Node;
 import javax.jcr.Session;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -361,11 +363,49 @@ public class FormModuleVersionHandlerTest extends ModuleVersionHandlerTestCase {
         setupConfigProperty(codePath, "class", "info.magnolia.ui.form.field.definition.BasicTextCodeFieldDefinition");
 
         // WHEN
-        InstallContext context = executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.3.6"));
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.3.6"));
 
         // THEN
-        Session configSession = context.getConfigJCRSession();
-        assertThat(configSession.getNode(htmlPath), hasProperty("class", CodeFieldDefinition.class.getName()));
-        assertThat(configSession.getNode(codePath), hasProperty("class", CodeFieldDefinition.class.getName()));
+        assertThat(session.getNode(htmlPath), hasProperty("class", CodeFieldDefinition.class.getName()));
+        assertThat(session.getNode(codePath), hasProperty("class", CodeFieldDefinition.class.getName()));
+    }
+
+    @Test
+    public void updateFrom237RemoveObsoleteNodesAndProperties() throws Exception {
+        // GIVEN
+        setupConfigNode("/modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition/options-conditions");
+        List<String> propertiesToRemove = Arrays.asList(
+                "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code/boxType",
+                "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/code/source",
+                "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/confirmContentType/fields/text/boxType",
+                "/modules/form/dialogs/form/form/tabs/tabConfirmEmail/fields/sendConfirmation/selected",
+                "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/html/boxType",
+                "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/html/source",
+                "/modules/form/dialogs/form/form/tabs/tabContactEmail/fields/contentType/fields/text/boxType",
+                "/modules/form/dialogs/form/form/tabs/tabMain/fields/displayStepNavigation/selected",
+                "/modules/form/dialogs/form/form/tabs/tabSubmit/fields/redirect/buttonLabel",
+                "/modules/form/dialogs/form/form/tabs/tabSubmit/fields/trackMail/selected",
+                "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/horizontal/selected",
+                "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/mandatory/selected",
+                "/modules/form/dialogs/formSelection/form/tabs/tabMain/fields/multiple/selected",
+                "/modules/form/dialogs/formEdit/form/tabs/tabMain/fields/mandatory/selected",
+                "/modules/form/dialogs/formCondition/saveHandler",
+                "/modules/form/dialogs/formHidden/form/tabs/tabMain/description",
+                "/modules/form/dialogs/formSummary/form/tabs/tabMain/fields/onlyLast/selected",
+                "/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/mandatory/selected",
+                "/modules/form/dialogs/formGroupEditItem/form/tabs/tabMain/fields/rows/value"
+        );
+        for (String propertyPath : propertiesToRemove) {
+            setupConfigProperty(StringUtils.substringBeforeLast(propertyPath, "/"), StringUtils.substringAfterLast(propertyPath, "/"), "foo");
+        }
+
+        // WHEN
+        executeUpdatesAsIfTheCurrentlyInstalledVersionWas(Version.parseVersion("2.3.7"));
+
+        // THEN
+        assertThat(session.getRootNode(), not(hasNode("modules/form/dialogs/formCondition/form/tabs/tabMain/fields/condition/options-conditions")));
+        for (String propertyPath : propertiesToRemove) {
+            assertThat(session.getNode(StringUtils.substringBeforeLast(propertyPath, "/")), not(hasProperty(StringUtils.substringAfterLast(propertyPath, "/"))));
+        }
     }
 }
