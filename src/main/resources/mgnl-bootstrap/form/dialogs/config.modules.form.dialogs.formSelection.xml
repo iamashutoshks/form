@@ -459,9 +459,6 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>fa640dab-eb05-402b-9802-8317562e02d0</sv:value>
             </sv:property>
@@ -484,13 +481,10 @@
               <sv:value>2010-07-23T11:15:57.195+02:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2010-07-23T13:44:10.567+02:00</sv:value>
+              <sv:value>2016-12-14T16:17:48.169+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -531,13 +525,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-12-01T09:14:32.254+01:00</sv:value>
+              <sv:value>2016-12-14T16:17:40.067+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -578,13 +569,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2009-01-09T11:44:32.940+01:00</sv:value>
+              <sv:value>2016-12-14T16:17:33.074+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>

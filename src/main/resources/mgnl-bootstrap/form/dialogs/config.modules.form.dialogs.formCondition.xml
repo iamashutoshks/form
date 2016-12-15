@@ -22,16 +22,13 @@
     <sv:value>superuser</sv:value>
   </sv:property>
   <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-    <sv:value>2011-05-09T15:13:49.255+02:00</sv:value>
+    <sv:value>2016-12-14T16:24:32.244+01:00</sv:value>
   </sv:property>
   <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
     <sv:value>superuser</sv:value>
   </sv:property>
   <sv:property sv:name="mgnl:template" sv:type="String">
     <sv:value>sampleTwoColumns</sv:value>
-  </sv:property>
-  <sv:property sv:name="saveHandler" sv:type="String">
-    <sv:value>info.magnolia.module.form.controls.MultiControlSaveHandler</sv:value>
   </sv:property>
   <sv:node sv:name="actions">
     <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -143,9 +140,6 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>ae9153d3-de46-48d2-82f5-ec82364a3199</sv:value>
             </sv:property>
@@ -193,9 +187,6 @@
             <sv:property sv:name="class" sv:type="String">
               <sv:value>info.magnolia.ui.form.field.definition.MultiValueFieldDefinition</sv:value>
             </sv:property>
-            <sv:property sv:name="transformerClass" sv:type="String">
-              <sv:value>info.magnolia.ui.form.field.transformer.multi.MultiValueSubChildrenNodePropertiesTransformer</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:createdBy" sv:type="String">
               <sv:value>admin</sv:value>
             </sv:property>
@@ -220,32 +211,9 @@
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
             </sv:property>
-            <sv:node sv:name="options-conditions">
-              <sv:property sv:name="jcr:primaryType" sv:type="Name">
-                <sv:value>mgnl:contentNode</sv:value>
-              </sv:property>
-              <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-                <sv:value>mix:lockable</sv:value>
-              </sv:property>
-              <sv:property sv:name="jcr:uuid" sv:type="String">
-                <sv:value>f19a75fc-5814-43c4-b49d-5e60bbeba8d5</sv:value>
-              </sv:property>
-              <sv:property sv:name="jcr:createdBy" sv:type="String">
-                <sv:value>admin</sv:value>
-              </sv:property>
-              <sv:property sv:name="mgnl:activationStatus" sv:type="Boolean">
-                <sv:value>false</sv:value>
-              </sv:property>
-              <sv:property sv:name="mgnl:created" sv:type="Date">
-                <sv:value>2008-08-20T18:46:28.953+02:00</sv:value>
-              </sv:property>
-              <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                <sv:value>2011-05-10T13:29:33.067+02:00</sv:value>
-              </sv:property>
-              <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
-                <sv:value>superuser</sv:value>
-              </sv:property>
-            </sv:node>
+            <sv:property sv:name="transformerClass" sv:type="String">
+              <sv:value>info.magnolia.ui.form.field.transformer.multi.MultiValueSubChildrenNodePropertiesTransformer</sv:value>
+            </sv:property>
             <sv:node sv:name="field">
               <sv:property sv:name="jcr:primaryType" sv:type="Name">
                 <sv:value>mgnl:contentNode</sv:value>
@@ -256,11 +224,11 @@
               <sv:property sv:name="class" sv:type="String">
                 <sv:value>info.magnolia.ui.form.field.definition.CompositeFieldDefinition</sv:value>
               </sv:property>
-              <sv:property sv:name="transformerClass" sv:type="String">
-                <sv:value>info.magnolia.ui.form.field.transformer.composite.NoOpCompositeTransformer</sv:value>
-              </sv:property>
               <sv:property sv:name="jcr:createdBy" sv:type="String">
                 <sv:value>admin</sv:value>
+              </sv:property>
+              <sv:property sv:name="transformerClass" sv:type="String">
+                <sv:value>info.magnolia.ui.form.field.transformer.composite.NoOpCompositeTransformer</sv:value>
               </sv:property>
               <sv:node sv:name="fields">
                 <sv:property sv:name="jcr:primaryType" sv:type="Name">
@@ -302,9 +270,6 @@
                       <sv:property sv:name="jcr:primaryType" sv:type="Name">
                         <sv:value>mgnl:contentNode</sv:value>
                       </sv:property>
-                      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-                        <sv:value>mix:lockable</sv:value>
-                      </sv:property>
                       <sv:property sv:name="jcr:uuid" sv:type="String">
                         <sv:value>71700689-5f35-4c40-811f-9d1eb03ed71b</sv:value>
                       </sv:property>
@@ -334,9 +299,6 @@
                       <sv:property sv:name="jcr:primaryType" sv:type="Name">
                         <sv:value>mgnl:contentNode</sv:value>
                       </sv:property>
-                      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-                        <sv:value>mix:lockable</sv:value>
-                      </sv:property>
                       <sv:property sv:name="jcr:uuid" sv:type="String">
                         <sv:value>b2ffae88-33ef-41cb-9bed-66dbb3d26264</sv:value>
                       </sv:property>
@@ -365,9 +327,6 @@
                     <sv:node sv:name="condition3">
                       <sv:property sv:name="jcr:primaryType" sv:type="Name">
                         <sv:value>mgnl:contentNode</sv:value>
-                      </sv:property>
-                      <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-                        <sv:value>mix:lockable</sv:value>
                       </sv:property>
                       <sv:property sv:name="jcr:uuid" sv:type="String">
                         <sv:value>847429c4-2ef9-42b6-bf5c-3c7603970a88</sv:value>

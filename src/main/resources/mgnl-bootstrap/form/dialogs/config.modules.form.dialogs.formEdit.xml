@@ -321,13 +321,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-10-28T11:55:07.304+01:00</sv:value>
+              <sv:value>2016-12-14T16:21:06.400+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>

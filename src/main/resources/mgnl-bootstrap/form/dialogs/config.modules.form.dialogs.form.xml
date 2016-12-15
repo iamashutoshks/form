@@ -3,9 +3,6 @@
   <sv:property sv:name="jcr:primaryType" sv:type="Name">
     <sv:value>mgnl:contentNode</sv:value>
   </sv:property>
-  <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-    <sv:value>mix:lockable</sv:value>
-  </sv:property>
   <sv:property sv:name="jcr:uuid" sv:type="String">
     <sv:value>1a840e98-8a07-4205-a338-803ca1434b40</sv:value>
   </sv:property>
@@ -99,9 +96,6 @@
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
         </sv:property>
-        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-          <sv:value>mix:lockable</sv:value>
-        </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
           <sv:value>d7cb8bce-36fd-48e9-9908-2fb36c435e58</sv:value>
         </sv:property>
@@ -142,9 +136,6 @@
           <sv:node sv:name="formTitle">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>23cd51a0-3477-4f15-8a96-6d9305bd8c37</sv:value>
@@ -187,9 +178,6 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>ba402c15-a7d5-4ff2-8487-7f4f1fa07ad4</sv:value>
             </sv:property>
@@ -227,9 +215,6 @@
           <sv:node sv:name="formText">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>097b318b-10c6-40eb-bb79-c7b5ea9aee3c</sv:value>
@@ -275,9 +260,6 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>9c0d2d3c-a5ca-4103-9acd-17dbb4ffa75b</sv:value>
             </sv:property>
@@ -318,9 +300,6 @@
           <sv:node sv:name="rightText">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>a76579c5-8abe-4fea-8118-894942d9edb6</sv:value>
@@ -394,13 +373,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2011-12-05T11:50:20.324+01:00</sv:value>
+              <sv:value>2016-12-14T16:09:15.727+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -411,9 +387,6 @@
       <sv:node sv:name="tabSubmit">
         <sv:property sv:name="jcr:primaryType" sv:type="Name">
           <sv:value>mgnl:contentNode</sv:value>
-        </sv:property>
-        <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-          <sv:value>mix:lockable</sv:value>
         </sv:property>
         <sv:property sv:name="jcr:uuid" sv:type="String">
           <sv:value>779ea138-f0ee-4973-9d17-6509da562d6c</sv:value>
@@ -456,9 +429,6 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>adc3603b-721d-44a9-bf8b-5a4abc89585d</sv:value>
             </sv:property>
@@ -500,9 +470,6 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>568fc48e-751d-43c7-b9ee-7ba84bbbc815</sv:value>
             </sv:property>
@@ -543,9 +510,6 @@
           <sv:node sv:name="successMessage">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>18775068-8323-4cb7-b6ac-063e67cb8315</sv:value>
@@ -594,9 +558,6 @@
             <sv:property sv:name="appName" sv:type="String">
               <sv:value>pages</sv:value>
             </sv:property>
-            <sv:property sv:name="buttonLabel" sv:type="String">
-              <sv:value>dialog.form.tabSubmit.redirect.buttonLabel</sv:value>
-            </sv:property>
             <sv:property sv:name="class" sv:type="String">
               <sv:value>info.magnolia.ui.form.field.definition.LinkFieldDefinition</sv:value>
             </sv:property>
@@ -622,7 +583,7 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-11-07T18:24:22.511+01:00</sv:value>
+              <sv:value>2016-12-14T16:10:16.564+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
@@ -686,13 +647,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-11-04T13:36:13.627+01:00</sv:value>
+              <sv:value>2016-12-14T16:10:46.501+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -883,9 +841,6 @@
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
             </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
-            </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>eb0d1b82-2035-4097-afee-d77a48b7b4c5</sv:value>
             </sv:property>
@@ -1064,9 +1019,6 @@
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>e5ca33f3-680e-46b4-8f58-c8101c6fa5f0</sv:value>
                 </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
-                </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.TextFieldDefinition</sv:value>
                 </sv:property>
@@ -1095,7 +1047,7 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2011-06-21T10:25:11.890+02:00</sv:value>
+                  <sv:value>2016-12-14T16:13:41.034+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
@@ -1110,9 +1062,6 @@
                 </sv:property>
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>449dd04f-89f1-486c-a551-99e8386bb32e</sv:value>
-                </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
                 </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.CodeFieldDefinition</sv:value>
@@ -1145,13 +1094,10 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2011-06-24T08:36:58.457+02:00</sv:value>
+                  <sv:value>2016-12-14T16:13:31.523+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
-                </sv:property>
-                <sv:property sv:name="source" sv:type="String">
-                  <sv:value>true</sv:value>
                 </sv:property>
               </sv:node>
             </sv:node>
@@ -1237,13 +1183,10 @@
               <sv:value>superuser</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-              <sv:value>2008-11-13T16:09:17.638+01:00</sv:value>
+              <sv:value>2016-12-14T16:12:40.860+01:00</sv:value>
             </sv:property>
             <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
               <sv:value>superuser</sv:value>
-            </sv:property>
-            <sv:property sv:name="selected" sv:type="String">
-              <sv:value>false</sv:value>
             </sv:property>
             <sv:property sv:name="type" sv:type="String">
               <sv:value>Boolean</sv:value>
@@ -1387,9 +1330,6 @@
           <sv:node sv:name="freemarkerParams">
             <sv:property sv:name="jcr:primaryType" sv:type="Name">
               <sv:value>mgnl:contentNode</sv:value>
-            </sv:property>
-            <sv:property sv:name="jcr:mixinTypes" sv:type="Name" sv:multiple="true">
-              <sv:value>mix:lockable</sv:value>
             </sv:property>
             <sv:property sv:name="jcr:uuid" sv:type="String">
               <sv:value>5003fb56-73bc-4fe9-859b-e0b56f0cce45</sv:value>
@@ -1651,9 +1591,6 @@
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>babd434d-1d7e-40db-a19d-af3e276fcfb1</sv:value>
                 </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
-                </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.TextFieldDefinition</sv:value>
                 </sv:property>
@@ -1682,7 +1619,7 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2011-06-24T08:25:35.690+02:00</sv:value>
+                  <sv:value>2016-12-14T16:12:16.798+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
@@ -1745,9 +1682,6 @@
                 <sv:property sv:name="jcr:uuid" sv:type="String">
                   <sv:value>3146d346-e8c6-4526-99a0-92c96de03da1</sv:value>
                 </sv:property>
-                <sv:property sv:name="boxType" sv:type="String">
-                  <sv:value>1Col</sv:value>
-                </sv:property>
                 <sv:property sv:name="class" sv:type="String">
                   <sv:value>info.magnolia.ui.form.field.definition.CodeFieldDefinition</sv:value>
                 </sv:property>
@@ -1779,13 +1713,10 @@
                   <sv:value>superuser</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-                  <sv:value>2013-03-05T14:00:48.526+01:00</sv:value>
+                  <sv:value>2016-12-14T16:12:06.291+01:00</sv:value>
                 </sv:property>
                 <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
                   <sv:value>superuser</sv:value>
-                </sv:property>
-                <sv:property sv:name="source" sv:type="String">
-                  <sv:value>true</sv:value>
                 </sv:property>
               </sv:node>
             </sv:node>

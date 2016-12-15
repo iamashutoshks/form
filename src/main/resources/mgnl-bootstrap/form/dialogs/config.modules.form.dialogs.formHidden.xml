@@ -102,9 +102,6 @@
         <sv:property sv:name="jcr:uuid" sv:type="String">
           <sv:value>9a7e41eb-c5db-4844-8118-72a9e595622c</sv:value>
         </sv:property>
-        <sv:property sv:name="description" sv:type="String">
-          <sv:value>dialog.form.hidden.tabMain.description</sv:value>
-        </sv:property>
         <sv:property sv:name="jcr:createdBy" sv:type="String">
           <sv:value>admin</sv:value>
         </sv:property>
@@ -124,7 +121,7 @@
           <sv:value>superuser</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastModified" sv:type="Date">
-          <sv:value>2009-10-16T15:27:16.872+02:00</sv:value>
+          <sv:value>2016-12-14T16:25:57.250+01:00</sv:value>
         </sv:property>
         <sv:property sv:name="mgnl:lastModifiedBy" sv:type="String">
           <sv:value>superuser</sv:value>
