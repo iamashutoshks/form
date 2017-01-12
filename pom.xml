@@ -8,7 +8,7 @@
   <groupId>info.magnolia</groupId>
   <artifactId>magnolia-module-form</artifactId>
   <packaging>jar</packaging>
-  <version>2.3.8-SNAPSHOT</version>
+  <version>2.3.8</version>
   <name>Magnolia Form Module</name>
   <description />
 
@@ -29,7 +29,7 @@
     <connection>scm:git:ssh://git.magnolia-cms.com/MODULES/form</connection>
     <developerConnection>scm:git:ssh://git.magnolia-cms.com/MODULES/form</developerConnection>
     <url>https://git.magnolia-cms.com/projects/MODULES/repos/form</url>
-    <tag>HEAD</tag>
+    <tag>magnolia-module-form-2.3.8</tag>
   </scm>
 
   <dependencyManagement>
